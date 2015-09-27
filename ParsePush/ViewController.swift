@@ -21,5 +21,11 @@ class ViewController: UIViewController {
     }
 
 
+    @IBOutlet weak var btnLogin: UIButton!
+    
+    
+    @IBAction func loginPressed(sender: AnyObject) {
+         Services.login("joe.contact", token: "foobar")
+    }
 }
 

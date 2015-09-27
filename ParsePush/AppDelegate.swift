@@ -8,20 +8,14 @@
 
 import UIKit
 
-import Parse
-import Firebase
 import Alamofire
 
-let ipStAug = "10.0.0.2"
-let ipTampa = "192.168.1.9"
-
+//let ipStAug = "10.0.0.2"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    let url = "http://\(ipStAug)/Offline/api/login"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -32,47 +26,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings (settings)
         application.registerForRemoteNotifications()
         
-//        let session = NSURLSession.sharedSession()
+     
+        
+//        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                print("GET: \(JSON(result.value!))")
+//                //print(response)
+//        }
+//
+//        Alamofire.request(.GET, url + "/1", parameters: nil, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                print("GET with ID: \(JSON(result.value!))")
+//                //print(response)
+//        }
 //        
-//        // Use NSURLSession to get data from an NSURL
-//        let loadDataTask = session.dataTaskWithURL(NSURL(string: url)!, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-//            if let httpResponse = response as? NSHTTPURLResponse {
-//                if httpResponse.statusCode == 200 {
-//                    let json = JSON(data: data!)
-//                    print(json)
-//                    
-//                } else {
-//                }
-//            }
-//        })
-        
-//        loadDataTask.resume()
-
-        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON)
-            .responseJSON { request, response, result in
-                print("GET: \(JSON(result.value!))")
-                //print(response)
-        }
-
-        Alamofire.request(.GET, url + "/1", parameters: nil, encoding: .JSON)
-            .responseJSON { request, response, result in
-                print("GET with ID: \(JSON(result.value!))")
-                //print(response)
-        }
-        
-
-        let dict = ["LoginName":"tommy", "DeviceToken":"FFF-AAA"]
-        Alamofire.request(.POST, url, parameters: dict, encoding: .JSON)
-            .responseJSON { request, response, result in
-                print("POST: \(JSON(result.value!))")
-                //print(JSON(response!))
-        }
-        
-        Alamofire.request(.PUT, url + "/1", parameters: dict, encoding: .JSON)
-            .responseJSON { request, response, result in
-                print(result.value)
-                print(response)
-        }
+//
+//        let dict = ["LoginName":"tommy", "DeviceToken":"FFF-AAA"]
+//        Alamofire.request(.POST, url, parameters: dict, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                print("POST: \(JSON(result.value!))")
+//                //print(JSON(response!))
+//        }
+//        
+//        Alamofire.request(.PUT, url + "/1", parameters: dict, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                print(result.value)
+//                print(response)
+//        }
         
         
         
@@ -115,6 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let tokenString = PushHelper.tokenToString(deviceToken)
 //        let vals = ["name":"joe.contact", "token":"\(tokenString)"]
 //        node.updateChildValues(vals)
+        
+        Services.login("joe.contact", token: deviceToken)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

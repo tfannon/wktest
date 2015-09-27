@@ -8,15 +8,4 @@
 import Foundation
 
 class PushHelper {
-    static func tokenToString(data: NSData) -> String {
-        let tokenChars = UnsafePointer<CChar>(data.bytes)
-        var tokenString = ""
-        
-        for var i = 0; i < data.length; i++ {
-            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
-        }
-        
-        print("tokenString: \(tokenString)")
-        return tokenString
     }
-}
