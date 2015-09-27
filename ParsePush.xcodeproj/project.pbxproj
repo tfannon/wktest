@@ -13,12 +13,9 @@
 		65768AE81BA641C500DADD43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE71BA641C500DADD43 /* Images.xcassets */; };
 		65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE91BA641C500DADD43 /* LaunchScreen.xib */; };
 		65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* ParsePushTests.swift */; };
-		65768B011BA6436400DADD43 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B001BA6436400DADD43 /* Parse.framework */; };
-		65768B031BA6442A00DADD43 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B021BA6442A00DADD43 /* Bolts.framework */; };
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
 		65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B081BA6455B00DADD43 /* libsqlite3.dylib */; };
-		65768B0B1BA6456400DADD43 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B0A1BA6456400DADD43 /* AudioToolbox.framework */; };
 		659D1C6A1BA7C3EF0023AAFD /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C691BA7C3EF0023AAFD /* Firebase.framework */; };
 		659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6B1BA7C4430023AAFD /* libicucore.dylib */; };
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
@@ -53,12 +50,9 @@
 		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AF61BA641C500DADD43 /* ParsePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsePushTests.swift; sourceTree = "<group>"; };
-		65768B001BA6436400DADD43 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ParsePush/Parse.framework; sourceTree = "<group>"; };
-		65768B021BA6442A00DADD43 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ParsePush/Bolts.framework; sourceTree = "<group>"; };
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		65768B061BA644AE00DADD43 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		65768B081BA6455B00DADD43 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		65768B0A1BA6456400DADD43 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		659D1C691BA7C3EF0023AAFD /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		659D1C6B1BA7C4430023AAFD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		659D1C6D1BA7C44E0023AAFD /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -82,13 +76,10 @@
 				659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */,
 				659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */,
 				659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */,
-				65768B0B1BA6456400DADD43 /* AudioToolbox.framework in Frameworks */,
 				65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */,
 				65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */,
 				659D1C6A1BA7C3EF0023AAFD /* Firebase.framework in Frameworks */,
 				65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */,
-				65768B011BA6436400DADD43 /* Parse.framework in Frameworks */,
-				65768B031BA6442A00DADD43 /* Bolts.framework in Frameworks */,
 				E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				65768B041BA6448700DADD43 /* SystemConfiguration.framework */,
-				65768B0A1BA6456400DADD43 /* AudioToolbox.framework */,
 				659D1C711BA7C45C0023AAFD /* Security.framework */,
 				659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */,
 				659D1C6D1BA7C44E0023AAFD /* libc++.dylib */,
@@ -186,8 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				659D1C691BA7C3EF0023AAFD /* Firebase.framework */,
-				65768B001BA6436400DADD43 /* Parse.framework */,
-				65768B021BA6442A00DADD43 /* Bolts.framework */,
 				D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -251,7 +239,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Crazy8Dev;
 				TargetAttributes = {
 					65768ADA1BA641C500DADD43 = {
@@ -425,6 +413,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -440,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -479,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -502,6 +491,7 @@
 				);
 				INFOPLIST_FILE = ParsePush/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParsePush/ParsePush-Bridging-Header.h";
@@ -525,6 +515,7 @@
 				);
 				INFOPLIST_FILE = ParsePush/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParsePush/ParsePush-Bridging-Header.h";
@@ -535,16 +526,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ParsePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.crazy8dev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ParsePush.app/ParsePush";
 			};
@@ -554,12 +543,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ParsePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.crazy8dev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ParsePush.app/ParsePush";
 			};
