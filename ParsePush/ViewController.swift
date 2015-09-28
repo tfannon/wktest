@@ -21,11 +21,29 @@ class ViewController: UIViewController {
     }
 
 
-    @IBOutlet weak var btnLogin: UIButton!
-    
-    
+    @IBOutlet weak var lblLoginResult: UILabel!
     @IBAction func loginPressed(sender: AnyObject) {
-         Services.login("joe.contact", token: "foobar")
+        Services.login("joe.contact", token: "foobar") { result in
+            self.lblLoginResult.text = result
+        }
+    }
+    
+    
+    @IBOutlet weak var lblCount: UILabel!
+    @IBAction func countPressed(sender: AnyObject) {
+        Services.getUnreadCount() { result in
+            self.lblCount.text = String(result)
+        }
+    }
+    
+    
+    @IBOutlet weak var txtNotifications: UITextView!
+    @IBAction func getNotificationsPressed(sender: AnyObject) {
+        Services.getUnreadNotifications() { result in
+            for x in result! {
+                print("\(x.title!): \(x.description!)")
+            }
+        }
     }
 }
 

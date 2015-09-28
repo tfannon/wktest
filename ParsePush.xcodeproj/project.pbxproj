@@ -24,6 +24,7 @@
 		659D1C791BA7C5E50023AAFD /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */; };
 		659D1C7B1BA7CB2B0023AAFD /* PushHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
+		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
 		65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */; settings = {ASSET_TAGS = (); }; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHelper.swift; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 				659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */,
 				659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */,
 				65D507311BB5DC1D00EC8E1F /* Services.swift */,
+				65E85BB61BB8E99B00C5C272 /* Notification.swift */,
 			);
 			path = ParsePush;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				65768AE31BA641C500DADD43 /* ViewController.swift in Sources */,
 				65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */,
 				659D1C791BA7C5E50023AAFD /* FirebaseHelper.swift in Sources */,
+				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */,
 				659D1C7B1BA7CB2B0023AAFD /* PushHelper.swift in Sources */,

@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let vals = ["name":"joe.contact", "token":"\(tokenString)"]
 //        node.updateChildValues(vals)
         
-        Services.login("joe.contact", token: deviceToken)
+//        Services.login("joe.contact", token: deviceToken)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
