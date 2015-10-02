@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
-		65768AE31BA641C500DADD43 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* ViewController.swift */; };
+		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
 		65768AE81BA641C500DADD43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE71BA641C500DADD43 /* Images.xcassets */; };
 		65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE91BA641C500DADD43 /* LaunchScreen.xib */; };
@@ -16,13 +16,13 @@
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
 		65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B081BA6455B00DADD43 /* libsqlite3.dylib */; };
-		659D1C6A1BA7C3EF0023AAFD /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C691BA7C3EF0023AAFD /* Firebase.framework */; };
+		659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C51BBEDEE10047AAD3 /* NotificationController.swift */; settings = {ASSET_TAGS = (); }; };
+		659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* MyWorkController.swift */; settings = {ASSET_TAGS = (); }; };
+		659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */; settings = {ASSET_TAGS = (); }; };
 		659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6B1BA7C4430023AAFD /* libicucore.dylib */; };
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
-		659D1C791BA7C5E50023AAFD /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */; };
-		659D1C7B1BA7CB2B0023AAFD /* PushHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
 		65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */; settings = {ASSET_TAGS = (); }; };
@@ -44,7 +44,7 @@
 		65768ADB1BA641C500DADD43 /* ParsePush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParsePush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768ADF1BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		65768AE21BA641C500DADD43 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		65768AE21BA641C500DADD43 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65768AE71BA641C500DADD43 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		65768AEA1BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -54,14 +54,14 @@
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		65768B061BA644AE00DADD43 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		65768B081BA6455B00DADD43 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		659D1C691BA7C3EF0023AAFD /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		659A64C51BBEDEE10047AAD3 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		659A64C71BBEDF050047AAD3 /* MyWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWorkController.swift; sourceTree = "<group>"; };
+		659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		659D1C6B1BA7C4430023AAFD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		659D1C6D1BA7C44E0023AAFD /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		659D1C711BA7C45C0023AAFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParsePush-Bridging-Header.h"; sourceTree = "<group>"; };
-		659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
-		659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHelper.swift; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -80,7 +80,6 @@
 				659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */,
 				65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */,
 				65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */,
-				659D1C6A1BA7C3EF0023AAFD /* Firebase.framework in Frameworks */,
 				65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */,
 				E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */,
 			);
@@ -120,16 +119,13 @@
 		65768ADD1BA641C500DADD43 /* ParsePush */ = {
 			isa = PBXGroup;
 			children = (
+				659A64C91BBEE8B40047AAD3 /* UI */,
 				65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
-				65768AE21BA641C500DADD43 /* ViewController.swift */,
-				65768AE41BA641C500DADD43 /* Main.storyboard */,
 				65768AE71BA641C500DADD43 /* Images.xcassets */,
 				65768AE91BA641C500DADD43 /* LaunchScreen.xib */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
 				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
-				659D1C781BA7C5E50023AAFD /* FirebaseHelper.swift */,
-				659D1C7A1BA7CB2B0023AAFD /* PushHelper.swift */,
 				65D507311BB5DC1D00EC8E1F /* Services.swift */,
 				65E85BB61BB8E99B00C5C272 /* Notification.swift */,
 			);
@@ -161,6 +157,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		659A64C91BBEE8B40047AAD3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				65768AE41BA641C500DADD43 /* Main.storyboard */,
+				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
+				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
+				65768AE21BA641C500DADD43 /* TestController.swift */,
+				659A64C71BBEDF050047AAD3 /* MyWorkController.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		659D1C731BA7C4750023AAFD /* SystemFrameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +186,6 @@
 		659D1C741BA7C4B00023AAFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				659D1C691BA7C3EF0023AAFD /* Firebase.framework */,
 				D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -347,13 +354,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65768AE31BA641C500DADD43 /* ViewController.swift in Sources */,
+				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
+				65768AE31BA641C500DADD43 /* TestController.swift in Sources */,
 				65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */,
-				659D1C791BA7C5E50023AAFD /* FirebaseHelper.swift in Sources */,
+				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */,
-				659D1C7B1BA7CB2B0023AAFD /* PushHelper.swift in Sources */,
+				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
