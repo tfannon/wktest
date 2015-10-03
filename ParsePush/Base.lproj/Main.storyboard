@@ -164,6 +164,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TeamMateLogo-Gray" id="8yv-Gu-QNN">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="105" id="zLL-Jl-QHR" customClass="NotificationCell" customModule="ParsePush" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="600" height="105"/>
@@ -328,6 +333,7 @@
     </scenes>
     <resources>
         <image name="Procedure" width="32" height="32"/>
+        <image name="TeamMateLogo-Gray" width="56" height="9"/>
         <image name="Workflow" width="240" height="240"/>
     </resources>
 </document>

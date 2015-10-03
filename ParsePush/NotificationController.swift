@@ -71,4 +71,6 @@ class NotificationController: UITableViewController {
         //handle the icons
         return cell
     }
+    
+    
 }
