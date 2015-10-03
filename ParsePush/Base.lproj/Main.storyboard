@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AFy-h1-jey">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -53,7 +54,7 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="119" y="110" width="125" height="26"/>
@@ -74,7 +75,7 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="119" y="54" width="244" height="26"/>
@@ -221,7 +222,7 @@
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test procedure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-Ry-DCj">
@@ -231,7 +232,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="ax7-Gc-tuZ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -271,17 +272,17 @@
                                             <exclude reference="jdb-Ry-DCj"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="UET-Le-7cn"/>
-                                            <exclude reference="Zea-w8-qkF"/>
-                                            <exclude reference="Fc7-y9-LpZ"/>
-                                            <exclude reference="KYd-P5-Z7e"/>
-                                            <exclude reference="HTo-dW-RiB"/>
-                                            <exclude reference="SBJ-Bp-7fa"/>
-                                            <exclude reference="SSG-cS-SJI"/>
                                             <exclude reference="6OS-B4-dkp"/>
                                             <exclude reference="YRg-id-eqG"/>
                                             <exclude reference="bjx-TS-hH1"/>
                                             <exclude reference="jib-Gb-V1p"/>
+                                            <exclude reference="HTo-dW-RiB"/>
+                                            <exclude reference="SBJ-Bp-7fa"/>
+                                            <exclude reference="SSG-cS-SJI"/>
+                                            <exclude reference="UET-Le-7cn"/>
+                                            <exclude reference="Zea-w8-qkF"/>
+                                            <exclude reference="Fc7-y9-LpZ"/>
+                                            <exclude reference="KYd-P5-Z7e"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -292,17 +293,17 @@
                                             <include reference="jdb-Ry-DCj"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="UET-Le-7cn"/>
-                                            <include reference="Zea-w8-qkF"/>
-                                            <include reference="Fc7-y9-LpZ"/>
-                                            <include reference="KYd-P5-Z7e"/>
-                                            <include reference="HTo-dW-RiB"/>
-                                            <include reference="SBJ-Bp-7fa"/>
-                                            <include reference="SSG-cS-SJI"/>
                                             <include reference="6OS-B4-dkp"/>
                                             <include reference="YRg-id-eqG"/>
                                             <include reference="bjx-TS-hH1"/>
                                             <include reference="jib-Gb-V1p"/>
+                                            <include reference="HTo-dW-RiB"/>
+                                            <include reference="SBJ-Bp-7fa"/>
+                                            <include reference="SSG-cS-SJI"/>
+                                            <include reference="UET-Le-7cn"/>
+                                            <include reference="Zea-w8-qkF"/>
+                                            <include reference="Fc7-y9-LpZ"/>
+                                            <include reference="KYd-P5-Z7e"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
