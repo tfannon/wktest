@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Notification : Mappable {
+class Notification : Mappable, CustomDebugStringConvertible {
     required init(_ map: Map){}
     
     var title: String?
@@ -24,4 +24,7 @@ class Notification : Mappable {
         objectType <- map["ObjectType"]
     }
     
+    var debugDescription: String {
+        return "\(title!): \(description!)"
+    }
 }

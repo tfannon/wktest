@@ -11,10 +11,12 @@ import Alamofire
 import ObjectMapper
 
 //let ipAddress = "192.168.1.16"
-let ipAddress = "10.0.0.2"
+let ipAddress = "10.0.0.9"
 
 let url = "http://\(ipAddress)/Offline/api/login"
 let notUrl = "http://\(ipAddress)/Offline/api/Notification"
+
+let assessmentId = "572301013"
 
 
 public class Services {
@@ -56,7 +58,7 @@ public class Services {
                 switch result {
                 case .Success(let data):
                     let json = JSON(data)
-                    print(json)
+                    debugPrint(json)
                     completed(result: json.int!)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
@@ -70,12 +72,9 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    //let json = JSON(data)
                     let jsonAlamo = data as? [[String:AnyObject]]
                     let result = jsonAlamo?.map { Mapper<Notification>().map($0)! }
-                    //print(json[0].string)
-                    //let notification = Mapper<Notification>().map(jsonAlamo?[0])
-                    //print(notification)
+                    result!.each { a in print(a) }
                     completed(result: result)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")

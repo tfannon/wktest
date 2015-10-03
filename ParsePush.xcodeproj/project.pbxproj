@@ -10,7 +10,6 @@
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
-		65768AE81BA641C500DADD43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE71BA641C500DADD43 /* Images.xcassets */; };
 		65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE91BA641C500DADD43 /* LaunchScreen.xib */; };
 		65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* ParsePushTests.swift */; };
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
@@ -19,6 +18,8 @@
 		659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C51BBEDEE10047AAD3 /* NotificationController.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* MyWorkController.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */; settings = {ASSET_TAGS = (); }; };
+		659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CD1BBF3A340047AAD3 /* Extensions.swift */; settings = {ASSET_TAGS = (); }; };
+		659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */; settings = {ASSET_TAGS = (); }; };
 		659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6B1BA7C4430023AAFD /* libicucore.dylib */; };
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
@@ -46,7 +47,6 @@
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65768AE21BA641C500DADD43 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65768AE71BA641C500DADD43 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		65768AEA1BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +57,8 @@
 		659A64C51BBEDEE10047AAD3 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		659A64C71BBEDF050047AAD3 /* MyWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWorkController.swift; sourceTree = "<group>"; };
 		659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		659A64CD1BBF3A340047AAD3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		659D1C6B1BA7C4430023AAFD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		659D1C6D1BA7C44E0023AAFD /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -119,15 +121,14 @@
 		65768ADD1BA641C500DADD43 /* ParsePush */ = {
 			isa = PBXGroup;
 			children = (
+				659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */,
+				659A64CC1BBF1C6D0047AAD3 /* BOS */,
 				659A64C91BBEE8B40047AAD3 /* UI */,
 				65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
-				65768AE71BA641C500DADD43 /* Images.xcassets */,
 				65768AE91BA641C500DADD43 /* LaunchScreen.xib */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
 				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
-				65D507311BB5DC1D00EC8E1F /* Services.swift */,
-				65E85BB61BB8E99B00C5C272 /* Notification.swift */,
 			);
 			path = ParsePush;
 			sourceTree = "<group>";
@@ -167,6 +168,16 @@
 				659A64C71BBEDF050047AAD3 /* MyWorkController.swift */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		659A64CC1BBF1C6D0047AAD3 /* BOS */ = {
+			isa = PBXGroup;
+			children = (
+				65D507311BB5DC1D00EC8E1F /* Services.swift */,
+				65E85BB61BB8E99B00C5C272 /* Notification.swift */,
+				659A64CD1BBF3A340047AAD3 /* Extensions.swift */,
+			);
+			name = BOS;
 			sourceTree = "<group>";
 		};
 		659D1C731BA7C4750023AAFD /* SystemFrameworks */ = {
@@ -288,7 +299,7 @@
 			files = (
 				65768AE61BA641C500DADD43 /* Main.storyboard in Resources */,
 				65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */,
-				65768AE81BA641C500DADD43 /* Images.xcassets in Resources */,
+				659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
+				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				65768AE31BA641C500DADD43 /* TestController.swift in Sources */,
 				65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */,
 				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
@@ -492,6 +504,7 @@
 			baseConfigurationReference = BCB731A34F86733301978B50 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -516,6 +529,7 @@
 			baseConfigurationReference = 1E216A450469A08FEC9B7CD5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
