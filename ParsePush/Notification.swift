@@ -12,12 +12,14 @@ import ObjectMapper
 class Notification : Mappable, CustomDebugStringConvertible {
     required init(_ map: Map){}
     
+    var id: Int?
     var title: String?
     var description: String?
     var eventType: Int?
     var objectType: Int?
     
     func mapping(map: Map) {
+        id <- map["Id"]
         title <- map["Title"]
         description <- map["Description"]
         eventType <- map["EventType"]

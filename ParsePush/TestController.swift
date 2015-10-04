@@ -36,6 +36,11 @@ class TestController: UIViewController {
         }
     }
     
+    @IBAction func markReadPressed(sender: AnyObject) {
+        Services.markRead([2,3]) { result in
+            
+        }
+    }
     
     @IBOutlet weak var txtNotifications: UITextView!
     @IBAction func getNotificationsPressed(sender: AnyObject) {

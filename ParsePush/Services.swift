@@ -11,7 +11,7 @@ import Alamofire
 import ObjectMapper
 
 //let ipAddress = "192.168.1.16"
-let ipAddress = "10.0.0.9"
+let ipAddress = "10.0.0.2"
 
 let url = "http://\(ipAddress)/Offline/api/login"
 let notUrl = "http://\(ipAddress)/Offline/api/Notification"
@@ -81,6 +81,23 @@ public class Services {
                 }
         }
         
+    }
+    
+    
+    static func markRead(ids: [Int], completed: (result: String)->()) {
+        //let dict = ["ids":"foo"]
+        let dict = ["ids":ids]
+        Alamofire.request(.POST, notUrl + "/MarkRead", parameters: dict, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let data):
+                    let json = data as? String
+                    print(json!)
+                    completed(result: json!)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
 
 

@@ -81,6 +81,17 @@
                                     <rect key="frame" x="119" y="54" width="244" height="26"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PL-UW-pNg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Mark Read"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="48" y="451" width="74" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="markReadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m76-sq-vQ2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -92,6 +103,7 @@
                                 <exclude reference="pO1-0o-na5"/>
                                 <exclude reference="5Wn-G2-Qdd"/>
                                 <exclude reference="nPj-3P-XeL"/>
+                                <exclude reference="0PL-UW-pNg"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -102,6 +114,7 @@
                                 <include reference="pO1-0o-na5"/>
                                 <include reference="5Wn-G2-Qdd"/>
                                 <include reference="nPj-3P-XeL"/>
+                                <include reference="0PL-UW-pNg"/>
                             </mask>
                         </variation>
                     </view>
@@ -165,13 +178,13 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TeamMateLogo-Gray" id="8yv-Gu-QNN">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="105" id="zLL-Jl-QHR" customClass="NotificationCell" customModule="ParsePush" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="105"/>
+                                <rect key="frame" x="0.0" y="156" width="600" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zLL-Jl-QHR" id="OoJ-bs-nyf">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="104.5"/>
@@ -328,7 +341,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuR-S4-K5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="948" y="-39.75"/>
+            <point key="canvasLocation" x="946.5" y="-36.75"/>
         </scene>
     </scenes>
     <resources>

@@ -13,8 +13,6 @@ class NotificationController: UITableViewController {
     
     var items: [Notification] = []
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,12 +29,13 @@ class NotificationController: UITableViewController {
             if notifications?.count > 0 {
                 self.items = notifications!
                 self.tableView.separatorStyle = .SingleLine;
-                self.tableView.reloadData()
             }
             else {
+                self.items = []
                 self.tableView.separatorStyle = .None
                 self.displayEmptyMessage()
             }
+            self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
         }
     }
@@ -72,5 +71,30 @@ class NotificationController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let shareAction = UITableViewRowAction(style: .Normal, title: "Mark as read") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+            
+//            let firstActivityItem = self.items[indexPath.row]
+//            let activityViewController = UIActivityViewController(activityItems: [firstActivityItem], applicationActivities: nil)
+//            self.presentViewController(activityViewController, animated: true, completion: nil)
+//            
+            
+            Services.markRead([self.items[indexPath.row].id!]) { _ in
+                self.getNotifications()
+            }
+        }
+        shareAction.backgroundColor = UIColor.blueColor()
+        let editAction = UITableViewRowAction(style: .Normal, title: "Edit") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+            let firstActivityItem = self.items[indexPath.row]
+            let activityViewController = UIActivityViewController(activityItems: [firstActivityItem], applicationActivities: nil)
+            self.presentViewController(activityViewController, animated: true, completion: nil)
+        }
+        editAction.backgroundColor = UIColor.greenColor()
+        return [shareAction, editAction]
+    }
     
 }
