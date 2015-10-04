@@ -9,7 +9,7 @@
         <!--Test-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="TestController" customModule="ParsePush" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="TestController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -132,7 +132,7 @@
         <!--My Work-->
         <scene sceneID="F0i-f2-eBA">
             <objects>
-                <viewController id="ijE-Ru-gol" customClass="MyWorkController" customModule="ParsePush" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ijE-Ru-gol" customClass="MyWorkController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="W49-nF-pBv"/>
                         <viewControllerLayoutGuide type="bottom" id="pJk-Sa-gT4"/>
@@ -171,7 +171,7 @@
         <!--Notification Controller-->
         <scene sceneID="ZH4-8f-Ybb">
             <objects>
-                <tableViewController id="AFy-h1-jey" customClass="NotificationController" customModule="ParsePush" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="AFy-h1-jey" customClass="NotificationController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="105" sectionHeaderHeight="28" sectionFooterHeight="28" id="1vF-MQ-jMb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -183,7 +183,7 @@
                             <animations/>
                         </imageView>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="105" id="zLL-Jl-QHR" customClass="NotificationCell" customModule="ParsePush" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="105" id="zLL-Jl-QHR" customClass="NotificationCell" customModule="TeamMate" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="156" width="600" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zLL-Jl-QHR" id="OoJ-bs-nyf">

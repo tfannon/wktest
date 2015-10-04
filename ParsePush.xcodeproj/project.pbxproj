@@ -42,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		1E216A450469A08FEC9B7CD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		65768ADB1BA641C500DADD43 /* ParsePush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParsePush.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		65768ADB1BA641C500DADD43 /* TeamMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768ADF1BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65768AE21BA641C500DADD43 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 		65768ADC1BA641C500DADD43 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				65768ADB1BA641C500DADD43 /* ParsePush.app */,
+				65768ADB1BA641C500DADD43 /* TeamMate.app */,
 				65768AF01BA641C500DADD43 /* ParsePushTests.xctest */,
 			);
 			name = Products;
@@ -214,9 +214,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		65768ADA1BA641C500DADD43 /* ParsePush */ = {
+		65768ADA1BA641C500DADD43 /* TeamMate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65768AFA1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "ParsePush" */;
+			buildConfigurationList = 65768AFA1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "TeamMate" */;
 			buildPhases = (
 				BCBE5D022436F25D613A0640 /* Check Pods Manifest.lock */,
 				65768AD71BA641C500DADD43 /* Sources */,
@@ -229,9 +229,9 @@
 			);
 			dependencies = (
 			);
-			name = ParsePush;
+			name = TeamMate;
 			productName = ParsePush;
-			productReference = 65768ADB1BA641C500DADD43 /* ParsePush.app */;
+			productReference = 65768ADB1BA641C500DADD43 /* TeamMate.app */;
 			productType = "com.apple.product-type.application";
 		};
 		65768AEF1BA641C500DADD43 /* ParsePushTests */ = {
@@ -286,7 +286,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				65768ADA1BA641C500DADD43 /* ParsePush */,
+				65768ADA1BA641C500DADD43 /* TeamMate */,
 				65768AEF1BA641C500DADD43 /* ParsePushTests */,
 			);
 		};
@@ -390,7 +390,7 @@
 /* Begin PBXTargetDependency section */
 		65768AF21BA641C500DADD43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 65768ADA1BA641C500DADD43 /* ParsePush */;
+			target = 65768ADA1BA641C500DADD43 /* TeamMate */;
 			targetProxy = 65768AF11BA641C500DADD43 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -590,7 +590,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65768AFA1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "ParsePush" */ = {
+		65768AFA1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "TeamMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65768AFB1BA641C500DADD43 /* Debug */,
