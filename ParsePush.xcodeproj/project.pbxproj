@@ -15,6 +15,7 @@
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
 		65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B081BA6455B00DADD43 /* libsqlite3.dylib */; };
+		65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C51BBEDEE10047AAD3 /* NotificationController.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* MyWorkController.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -54,6 +55,7 @@
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		65768B061BA644AE00DADD43 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		65768B081BA6455B00DADD43 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHeaderCell.swift; sourceTree = "<group>"; };
 		659A64C51BBEDEE10047AAD3 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		659A64C71BBEDF050047AAD3 /* MyWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWorkController.swift; sourceTree = "<group>"; };
 		659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
@@ -126,7 +128,6 @@
 				659A64C91BBEE8B40047AAD3 /* UI */,
 				65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
-				65768AE91BA641C500DADD43 /* LaunchScreen.xib */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
 				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
 			);
@@ -162,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
+				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
+				65768AE91BA641C500DADD43 /* LaunchScreen.xib */,
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
@@ -374,6 +377,7 @@
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
+				65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

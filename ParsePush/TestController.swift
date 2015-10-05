@@ -8,11 +8,11 @@
 
 import UIKit
 
-class TestController: UIViewController {
+class TestController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        txtIPAddress.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +42,15 @@ class TestController: UIViewController {
         }
     }
     
-    @IBOutlet weak var txtNotifications: UITextView!
+    
+    @IBOutlet weak var txtIPAddress: UITextField!
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        Services.ipAddress = textField.text!
+        textField.resignFirstResponder();
+        return true;
+    }
+    
+    
     @IBAction func getNotificationsPressed(sender: AnyObject) {
         Services.getUnreadNotifications() { result in
             for x in result! {

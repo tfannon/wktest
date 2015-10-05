@@ -44,6 +44,11 @@ class NotificationController: UITableViewController {
         return 1
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+         let cell = tableView.dequeueReusableCellWithIdentifier("NotificationHeaderCell") as! NotificationHeaderCell
+         return cell
+    }
+    
     func displayEmptyMessage() {
         // Display a message when the table is empty
         let messageLabel = UILabel(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
@@ -96,5 +101,12 @@ class NotificationController: UITableViewController {
         editAction.backgroundColor = UIColor.greenColor()
         return [shareAction, editAction]
     }
+    
+//    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView //recast your view as a UITableViewHeaderFooterView
+//        header.contentView.backgroundColor = UIColor(red: 0/255, green: 181/255, blue: 229/255, alpha: 1.0) //make the background color light blue
+//        header.textLabel!.textColor = UIColor.whiteColor() //make the text white
+//        header.alpha = 0.5 //make the header transparent
+//    }
     
 }

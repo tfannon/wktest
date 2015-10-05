@@ -10,16 +10,19 @@ import Foundation
 import Alamofire
 import ObjectMapper
 
-//let ipAddress = "192.168.1.16"
-let ipAddress = "10.0.0.2"
-
-let url = "http://\(ipAddress)/Offline/api/login"
-let notUrl = "http://\(ipAddress)/Offline/api/Notification"
-
-let assessmentId = "572301013"
-
 
 public class Services {
+    static var ipAddress = "192.168.1.14"
+    static var assessmentId = "572301013"
+    
+    static var loginUrl: String {
+        return "http://\(Services.ipAddress)/Offline/api/login"
+    }
+    
+    static var notificationUrl: String {
+        return "http://\(Services.ipAddress)/Offline/api/Notification"
+    }
+    
  
     public static func login(name: String, token: NSData, completed: (result: String)->()) {
         return login(name, token: tokenToString(token), completed: completed)
@@ -27,7 +30,7 @@ public class Services {
     
     static func login(name: String, token: String, completed: (result: String)->()) {
         let dict = ["LoginName":name, "DeviceToken":token]
-        Alamofire.request(.POST, url + "/PostLogin", parameters: dict, encoding: .JSON)
+        Alamofire.request(.POST, loginUrl + "/PostLogin", parameters: dict, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -53,7 +56,7 @@ public class Services {
     }
     
     static func getUnreadCount(completed: (result: Int)->()) {
-        Alamofire.request(.GET, notUrl + "/GetCount", parameters: nil, encoding: .JSON)
+        Alamofire.request(.GET, notificationUrl + "/GetCount", parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -68,7 +71,7 @@ public class Services {
     }
     
     static func getUnreadNotifications(completed: (result: [Notification]?)->()) {
-        Alamofire.request(.GET, notUrl + "/Get", parameters: nil, encoding: .JSON)
+        Alamofire.request(.GET, notificationUrl + "/Get", parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -87,7 +90,7 @@ public class Services {
     static func markRead(ids: [Int], completed: (result: String)->()) {
         //let dict = ["ids":"foo"]
         let dict = ["ids":ids]
-        Alamofire.request(.POST, notUrl + "/MarkRead", parameters: dict, encoding: .JSON)
+        Alamofire.request(.POST, notificationUrl + "/MarkRead", parameters: dict, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
