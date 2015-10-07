@@ -73,6 +73,9 @@ class NotificationController: UITableViewController {
         cell.labelTitle.text = item.title
         cell.labelDescription.text = item.description
         //handle the icons
+        switch item.objectType {
+            default: cell.imageWorkflowState.image = UIImage(named: "icons_risk")
+        }
         return cell
     }
     
