@@ -17,6 +17,8 @@ class Notification : Mappable, CustomDebugStringConvertible {
     var description: String?
     var eventType: Int?
     var objectType: Int?
+    var workflowState: Int?
+    var role: Int?
     
     func mapping(map: Map) {
         id <- map["Id"]
@@ -24,6 +26,8 @@ class Notification : Mappable, CustomDebugStringConvertible {
         description <- map["Description"]
         eventType <- map["EventType"]
         objectType <- map["ObjectType"]
+        workflowState <- map["WorkflowState"]
+        role <- map["Role"]
     }
     
     var debugDescription: String {

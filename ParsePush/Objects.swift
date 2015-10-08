@@ -14,20 +14,20 @@ enum ObjectType: Int {
     case Procedure = 48
 }
 
-enum NotificationType {
-    case Assignment
-    case Workflow
+enum NotificationType: Int {
+    case Assignment = 2
+    case Workflow = 1
 }
 
-enum WorkflowState {
-    case NotStarted
-    case InProgress
-    case Completed
-    case Implemented
-    case Reviewed
-    case Closed
-    case Responded
-    case Issued
+enum WorkflowState: Int {
+    case NotStarted = 1
+    case InProgress = 2
+    case Completed = 3
+    //case Implemented
+    case Reviewed = 4
+    //case Closed
+    //case Responded
+    //case Issued
 }
 
 enum SecurityRole {

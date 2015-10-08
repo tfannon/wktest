@@ -10,16 +10,8 @@ import UIKit
 
 class NotificationCell: UITableViewCell {
 
+    @IBOutlet weak var imageObjectType: UIImageView!
     @IBOutlet weak var imageWorkflowState: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelDescription: UILabel!
-    
-    
-    @IBAction func OnWorkClicked(sender: AnyObject) {
-    }
-   
-    @IBOutlet weak var buttonWork: UIButton!
-    
-    
-    
 }

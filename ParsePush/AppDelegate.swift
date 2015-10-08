@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings (settings)
         application.registerForRemoteNotifications()
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ipAddress = defaults.objectForKey("ipAddress") as? String {
+            Services.ipAddress = ipAddress
+        }
+        
      
         
 //        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON)

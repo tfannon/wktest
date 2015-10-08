@@ -11,10 +11,21 @@ import UIKit
 
 class NotificationController: UITableViewController {
     
-    var items: [Notification] = []
+    var items: [[Notification]] = [[],[]]  //0 - workflow,  1 - assignment
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var image = UIImage(named: "notification")!
+        //image.drawInRect(CGRect(x: 0,y: 0,width: 30,height: 30))
+        var item =  self.tabBarController?.tabBar.items![0]
+        item!.image = image.imageWithRenderingMode(.AlwaysOriginal)
+        
+        image = UIImage(named: "icons_procedure")!
+        item =  self.tabBarController?.tabBar.items![2]
+        item!.image = image.imageWithRenderingMode(.AlwaysOriginal)
+        
+
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.purpleColor()
@@ -27,11 +38,17 @@ class NotificationController: UITableViewController {
     func getNotifications() {
         Services.getUnreadNotifications() { (notifications:[Notification]?) in
             if notifications?.count > 0 {
-                self.items = notifications!
+                notifications?.each {
+                    let type = NotificationType(rawValue: $0.eventType!)!
+                    switch type {
+                        case .Assignment: self.items[0].append($0)
+                        case .Workflow: self.items[1].append($0)
+                    }
+                }
                 self.tableView.separatorStyle = .SingleLine;
             }
             else {
-                self.items = []
+                self.items.removeAll()
                 self.tableView.separatorStyle = .None
                 self.displayEmptyMessage()
             }
@@ -41,12 +58,23 @@ class NotificationController: UITableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return items.count
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-         let cell = tableView.dequeueReusableCellWithIdentifier("NotificationHeaderCell") as! NotificationHeaderCell
-         return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("NotificationHeaderCell") as! NotificationHeaderCell
+        var image: UIImage
+        var title: String = ""
+        switch section {
+            case 0: image = UIImage(named: "Workflow")!
+                title = "Workflow"
+            case 1: image = UIImage(named: "icons_users")!
+                title = "Assignments"
+            default: image = UIImage(named: "bad")!
+        }
+        cell.imageNotificationType.image = image
+        cell.labelNotificationType.text = title
+        return cell
     }
     
     func displayEmptyMessage() {
@@ -64,17 +92,39 @@ class NotificationController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return items[section].count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! NotificationCell
-        let item = self.items[indexPath.row]
+        let item = self.items[indexPath.section][indexPath.row]
         cell.labelTitle.text = item.title
         cell.labelDescription.text = item.description
+        var image: UIImage
+        let objectType = ObjectType(rawValue: item.objectType!)!
         //handle the icons
-        switch item.objectType {
-            default: cell.imageWorkflowState.image = UIImage(named: "icons_risk")
+        switch objectType {
+            case .Procedure: image = UIImage(named: "icons_procedure")!
+            case .Control: image = UIImage(named: "icons_control")!
+            default: image = UIImage(named: "icons_xxx")!
+        }
+        cell.imageObjectType.image = image
+        //handle workflow state if workflow
+        var imageName: String?
+        if let state = item.workflowState {
+            let workflowState = WorkflowState(rawValue: state)!
+            switch workflowState {
+                case .NotStarted: imageName = "icons_notstarted"
+                case .InProgress: imageName =  "icons_inprogress"
+                case .Completed: imageName = "icons_completed"
+                case .Reviewed: imageName = "icons_completed"
+            }
+        }
+        if imageName != nil {
+            cell.imageWorkflowState.image = UIImage(named: imageName!)
+        }
+        else {
+            cell.imageWorkflowState.image = nil
         }
         return cell
     }
@@ -91,7 +141,7 @@ class NotificationController: UITableViewController {
 //            self.presentViewController(activityViewController, animated: true, completion: nil)
 //            
             
-            Services.markRead([self.items[indexPath.row].id!]) { _ in
+            Services.markRead([self.items[indexPath.section][indexPath.row].id!]) { _ in
                 self.getNotifications()
             }
         }

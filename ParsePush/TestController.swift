@@ -13,6 +13,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         txtIPAddress.delegate = self
+        txtIPAddress.text = Services.ipAddress
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +47,9 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtIPAddress: UITextField!
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         Services.ipAddress = textField.text!
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(textField.text!, forKey: "ipAddress")
+        defaults.synchronize()
         textField.resignFirstResponder();
         return true;
     }
@@ -56,7 +60,9 @@ class TestController: UIViewController, UITextFieldDelegate {
             for x in result! {
                 print("\(x.title!): \(x.description!)")
             }
+            self.lblNotifications.text = "\(result!.count) received"
         }
     }
+    @IBOutlet weak var lblNotifications: UILabel!
 }
 

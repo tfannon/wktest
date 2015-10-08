@@ -56,7 +56,7 @@ public class Services {
     }
     
     static func getUnreadCount(completed: (result: Int)->()) {
-        Alamofire.request(.GET, notificationUrl + "/GetCount", parameters: nil, encoding: .JSON)
+        Alamofire.request(.GET, notificationUrl + "/GetUnreadCount", parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
