@@ -141,7 +141,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Test" id="1lT-eR-BPV"/>
+                    <tabBarItem key="tabBarItem" title="Test" image="739-question" id="1lT-eR-BPV"/>
                     <connections>
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
                         <outlet property="lblLoginResult" destination="nPj-3P-XeL" id="Kpn-5F-zcZ"/>
@@ -167,7 +167,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Work" id="Rlm-2a-ick"/>
+                    <tabBarItem key="tabBarItem" title="My Work" image="740-gear" id="Rlm-2a-ick"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBr-tS-B5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -203,33 +203,13 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationHeaderCell" rowHeight="75" id="zLL-Jl-QHR" customClass="NotificationHeaderCell" customModule="TeamMate" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationHeaderCell" rowHeight="55" id="zLL-Jl-QHR" customClass="NotificationHeaderCell" customModule="TeamMate" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="156" width="600" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zLL-Jl-QHR" id="OoJ-bs-nyf">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="104.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_workflow" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-rs-K8u" userLabel="NotificationType">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="Mhc-FQ-nbm"/>
-                                                <constraint firstAttribute="height" constant="50" id="hSn-tt-vv1"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Mhc-FQ-nbm"/>
-                                                    <exclude reference="hSn-tt-vv1"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="Mhc-FQ-nbm"/>
-                                                    <include reference="hSn-tt-vv1"/>
-                                                </mask>
-                                            </variation>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workflow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-Ry-DCj">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <animations/>
@@ -252,18 +232,38 @@
                                                 </mask>
                                             </variation>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_workflow" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-rs-K8u" userLabel="NotificationType">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="Mhc-FQ-nbm"/>
+                                                <constraint firstAttribute="height" constant="50" id="hSn-tt-vv1"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Mhc-FQ-nbm"/>
+                                                    <exclude reference="hSn-tt-vv1"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="Mhc-FQ-nbm"/>
+                                                    <include reference="hSn-tt-vv1"/>
+                                                </mask>
+                                            </variation>
+                                        </imageView>
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="jdb-Ry-DCj" firstAttribute="leading" secondItem="Koj-rs-K8u" secondAttribute="trailing" constant="24" id="3vn-ZV-7sK"/>
-                                        <constraint firstItem="Koj-rs-K8u" firstAttribute="leading" secondItem="OoJ-bs-nyf" secondAttribute="leadingMargin" constant="60" id="766-Tt-y3k"/>
+                                        <constraint firstItem="jdb-Ry-DCj" firstAttribute="leading" secondItem="Koj-rs-K8u" secondAttribute="trailing" constant="10" id="3vn-ZV-7sK"/>
+                                        <constraint firstItem="Koj-rs-K8u" firstAttribute="leading" secondItem="OoJ-bs-nyf" secondAttribute="leadingMargin" id="766-Tt-y3k"/>
                                         <constraint firstItem="jdb-Ry-DCj" firstAttribute="centerY" secondItem="Koj-rs-K8u" secondAttribute="centerY" id="a1F-7L-GVt"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Koj-rs-K8u" secondAttribute="bottom" constant="-5" id="gYU-kq-gXd"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
-                                            <exclude reference="Koj-rs-K8u"/>
                                             <exclude reference="jdb-Ry-DCj"/>
+                                            <exclude reference="Koj-rs-K8u"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="766-Tt-y3k"/>
@@ -274,8 +274,8 @@
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
-                                            <include reference="Koj-rs-K8u"/>
                                             <include reference="jdb-Ry-DCj"/>
+                                            <include reference="Koj-rs-K8u"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="766-Tt-y3k"/>
@@ -286,6 +286,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="imageNotificationType" destination="Koj-rs-K8u" id="CQg-aY-j34"/>
                                     <outlet property="labelNotificationType" destination="jdb-Ry-DCj" id="OA7-SF-rLf"/>
@@ -441,7 +442,7 @@
                             <outlet property="delegate" destination="AFy-h1-jey" id="MR6-kp-t7h"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Notifications" id="BYH-d1-VUc"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" image="756-bell" id="BYH-d1-VUc"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuR-S4-K5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -449,6 +450,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="739-question" width="28" height="28"/>
+        <image name="740-gear" width="28" height="28"/>
+        <image name="756-bell" width="24" height="28"/>
         <image name="icons_completed" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>
         <image name="icons_workflow" width="42" height="42"/>

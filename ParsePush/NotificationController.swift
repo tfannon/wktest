@@ -16,17 +16,6 @@ class NotificationController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var image = UIImage(named: "notification")!
-        //image.drawInRect(CGRect(x: 0,y: 0,width: 30,height: 30))
-        var item =  self.tabBarController?.tabBar.items![0]
-        item!.image = image.imageWithRenderingMode(.AlwaysOriginal)
-        
-        image = UIImage(named: "icons_procedure")!
-        item =  self.tabBarController?.tabBar.items![2]
-        item!.image = image.imageWithRenderingMode(.AlwaysOriginal)
-        
-
-        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.purpleColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
@@ -36,6 +25,7 @@ class NotificationController: UITableViewController {
     }
     
     func getNotifications() {
+        self.items = [[],[]]
         Services.getUnreadNotifications() { (notifications:[Notification]?) in
             if notifications?.count > 0 {
                 notifications?.each {
@@ -53,6 +43,13 @@ class NotificationController: UITableViewController {
                 self.displayEmptyMessage()
             }
             self.tableView.reloadData()
+
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "MMM d, h:mm a"
+            let title = "Last update: \(formatter.stringFromDate(NSDate()))"
+            let attrs = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+            let attributedString = NSAttributedString(string: title, attributes: attrs)
+            self.refreshControl?.attributedTitle = attributedString
             self.refreshControl?.endRefreshing()
         }
     }
@@ -66,7 +63,7 @@ class NotificationController: UITableViewController {
         var image: UIImage
         var title: String = ""
         switch section {
-            case 0: image = UIImage(named: "Workflow")!
+            case 0: image = UIImage(named: "icons_workflow")!
                 title = "Workflow"
             case 1: image = UIImage(named: "icons_users")!
                 title = "Assignments"
