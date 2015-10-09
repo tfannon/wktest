@@ -23,11 +23,11 @@ enum WorkflowState: Int {
     case NotStarted = 1
     case InProgress = 2
     case Completed = 3
-    //case Implemented
-    case Reviewed = 4
-    //case Closed
-    //case Responded
-    //case Issued
+    case Implemented = 4
+    case Reviewed = 5
+    case Closed = 6
+    case Responded = 7
+    case Issued = 8
 }
 
 enum SecurityRole {

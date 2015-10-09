@@ -114,7 +114,8 @@ class NotificationController: UITableViewController {
                 case .NotStarted: imageName = "icons_notstarted"
                 case .InProgress: imageName =  "icons_inprogress"
                 case .Completed: imageName = "icons_completed"
-                case .Reviewed: imageName = "icons_completed"
+                case .Reviewed: imageName = "icons_reviewed"
+            default: "icons_notstarted"
             }
         }
         if imageName != nil {
