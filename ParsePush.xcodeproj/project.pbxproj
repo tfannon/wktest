@@ -10,7 +10,6 @@
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
-		65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE91BA641C500DADD43 /* LaunchScreen.xib */; };
 		65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* ParsePushTests.swift */; };
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
@@ -50,7 +49,6 @@
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65768AE21BA641C500DADD43 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65768AEA1BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AF61BA641C500DADD43 /* ParsePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsePushTests.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
 				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
-				65768AE91BA641C500DADD43 /* LaunchScreen.xib */,
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
@@ -307,7 +304,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65768AE61BA641C500DADD43 /* Main.storyboard in Resources */,
-				65768AEB1BA641C500DADD43 /* LaunchScreen.xib in Resources */,
 				659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,14 +410,6 @@
 				65768AE51BA641C500DADD43 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		65768AE91BA641C500DADD43 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				65768AEA1BA641C500DADD43 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

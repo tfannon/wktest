@@ -55,6 +55,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func getNotificationsPressed(sender: AnyObject) {
+        self.lblNotifications.text = ""
         Services.getUnreadNotifications() { result in
             for x in result! {
                 print("\(x.title!): \(x.description!)")
@@ -67,9 +68,19 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var txtAssessment: UITextField!
     @IBAction func assessmentPressed(sender: AnyObject) {
+        self.txtAssessment.text = ""
         Services.GetPOCAssessmentId { id in
             self.txtAssessment.text = String(id!)
         }
     }
+    
+    @IBOutlet weak var lblProcedures: UILabel!
+    @IBAction func proceduresPressed(sender: AnyObject) {
+        self.txtAssessment.text = ""
+        Services.GetProcedures { result in
+            self.lblProcedures.text = String(result!.count)
+        }
+    }
+    
 }
 

@@ -123,7 +123,8 @@ public class Services {
     }
     
     static func GetProcedures(completed: (result: [Procedure]?)->()) {
-        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, encoding: .JSON)
+        Services.GetPOCAssessmentId { id in
+            Alamofire.request(.GET, procedureUrl + "/GetProcedures/\(id!)", parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -134,6 +135,7 @@ public class Services {
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                 }
+        }
         }
     }
 
