@@ -39,7 +39,6 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     @IBAction func markReadPressed(sender: AnyObject) {
         Services.markRead([2,3]) { result in
-            
         }
     }
     
@@ -64,5 +63,13 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
     @IBOutlet weak var lblNotifications: UILabel!
+    
+    
+    @IBOutlet weak var txtAssessment: UITextField!
+    @IBAction func assessmentPressed(sender: AnyObject) {
+        Services.GetPOCAssessmentId { id in
+            self.txtAssessment.text = String(id!)
+        }
+    }
 }
 

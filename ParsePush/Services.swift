@@ -23,6 +23,11 @@ public class Services {
         return "http://\(Services.ipAddress)/Offline/api/Notification"
     }
     
+    static var procedureUrl: String {
+        return "http://\(Services.ipAddress)/Offline/api/BO"
+    }
+    
+    
  
     public static func login(name: String, token: NSData, completed: (result: String)->()) {
         return login(name, token: tokenToString(token), completed: completed)
@@ -103,5 +108,33 @@ public class Services {
         }
     }
 
+    //MARK: procedure
+    static func GetPOCAssessmentId(completed: (result: Int?)->()) {
+        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let data):
+                    let result = data as? Int
+                    completed(result: result)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+    }
+    
+    static func GetProcedures(completed: (result: [Procedure]?)->()) {
+        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let data):
+                    let jsonAlamo = data as? [[String:AnyObject]]
+                    let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                    result!.each { a in print(a) }
+                    completed(result: result)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+    }
 
 }

@@ -111,6 +111,26 @@
                                     <rect key="frame" x="161" y="179" width="170" height="21"/>
                                 </variation>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="62N-cu-uIJ">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="161" y="318" width="170" height="30"/>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieA-pj-E5J">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Assessment"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="50" y="317" width="84" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="assessmentPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="IDG-0w-2Ey"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -125,6 +145,8 @@
                                 <exclude reference="toG-cj-t0E"/>
                                 <exclude reference="zvx-9e-MNm"/>
                                 <exclude reference="PZ2-SF-Efm"/>
+                                <exclude reference="62N-cu-uIJ"/>
+                                <exclude reference="ieA-pj-E5J"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -138,6 +160,8 @@
                                 <include reference="toG-cj-t0E"/>
                                 <include reference="zvx-9e-MNm"/>
                                 <include reference="PZ2-SF-Efm"/>
+                                <include reference="62N-cu-uIJ"/>
+                                <include reference="ieA-pj-E5J"/>
                             </mask>
                         </variation>
                     </view>
@@ -146,6 +170,7 @@
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
                         <outlet property="lblLoginResult" destination="nPj-3P-XeL" id="Kpn-5F-zcZ"/>
                         <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
+                        <outlet property="txtAssessment" destination="62N-cu-uIJ" id="5ic-6r-itT"/>
                         <outlet property="txtIPAddress" destination="zvx-9e-MNm" id="qV5-vQ-2hz"/>
                     </connections>
                 </viewController>
