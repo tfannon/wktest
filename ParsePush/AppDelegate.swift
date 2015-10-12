@@ -30,78 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let ipAddress = defaults.objectForKey("ipAddress") as? String {
             Services.ipAddress = ipAddress
         }
-        
-     
-        
-//        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                print("GET: \(JSON(result.value!))")
-//                //print(response)
-//        }
-//
-//        Alamofire.request(.GET, url + "/1", parameters: nil, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                print("GET with ID: \(JSON(result.value!))")
-//                //print(response)
-//        }
-//        
-//
-//        let dict = ["LoginName":"tommy", "DeviceToken":"FFF-AAA"]
-//        Alamofire.request(.POST, url, parameters: dict, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                print("POST: \(JSON(result.value!))")
-//                //print(JSON(response!))
-//        }
-//        
-//        Alamofire.request(.PUT, url + "/1", parameters: dict, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                print(result.value)
-//                print(response)
-//        }
-        
-        
-        
-        //let jsonData = JSON(dict).arrayObject
-//        do {
-//            let post = try dict.rawData()
-//            let postLength = String(post.length)
-//            let req = NSMutableURLRequest(URL: NSURL(string: url)!)
-//            req.HTTPMethod = "POST"
-//            req.HTTPBody = post
-//            req.setValue(postLength, forHTTPHeaderField: "Content-Length")
-//            req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//            req.setValue("application/json", forHTTPHeaderField: "Accept")
-//            
-//            session.dataTaskWithRequest(req, completionHandler: {(data, response, error) in
-//                print(data)
-//                print(response)
-//                print(error)
-//            }).resume()
-//            
-//        }
-//        catch {
-//            
-//        }
-        
-        
-        
-
-        
         return true
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-//        let installation = PFInstallation.currentInstallation()
-//        installation.setDeviceTokenFromData(deviceToken)
-//        installation.saveInBackground()
-
-        // Create a reference to a Firebase location
-//        let node = FirebaseHelper.Devices.childByAutoId()
-//        let tokenString = PushHelper.tokenToString(deviceToken)
-//        let vals = ["name":"joe.contact", "token":"\(tokenString)"]
-//        node.updateChildValues(vals)
-        
-//        Services.login("joe.contact", token: deviceToken)
+        Services.login("joe.contact", token: deviceToken) { _ in
+        }
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
