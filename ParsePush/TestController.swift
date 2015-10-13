@@ -76,7 +76,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var lblProcedures: UILabel!
     @IBAction func proceduresPressed(sender: AnyObject) {
-        self.txtAssessment.text = ""
+        self.lblProcedures.text = ""
         Services.GetProcedures { result in
             self.lblProcedures.text = String(result!.count)
         }
