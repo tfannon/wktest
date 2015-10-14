@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' elementFormDefault='qualified'>
+
+    <xs:element name='form'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='1' ref='sections'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='fieldGroups'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='sections'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='section'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='section'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='1' ref='title'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='fields'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='fieldGroups'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='fieldGroup'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='fieldGroup'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='fieldName'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='fieldName' type='xs:string'/>
+
+    <xs:element name='title' type='xs:string'/>
+
+    <xs:element name='fields'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='unbounded'>
+                <xs:choice minOccurs='1' maxOccurs='1'>
+                    <xs:element ref='choiceField'/>
+                    <xs:element ref='booleanField'/>
+                    <xs:element ref='dateField'/>
+                    <xs:element ref='numberField'/>
+                    <xs:element ref='emailField'/>
+                    <xs:element ref='pickerField'/>
+                    <xs:element ref='rangedNumberField'/>
+                    <xs:element ref='textField'/>
+                    <xs:element ref='field'/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name='field-names-must-be-unique'>
+            <xs:selector xpath='.//*' />
+            <xs:field xpath='@name' />
+        </xs:unique>
+    </xs:element>
+
+    <xs:complexType name='baseField'>
+        <xs:sequence minOccurs='0' maxOccurs='1'>
+            <xs:element minOccurs='0' maxOccurs='1' ref='title'/>
+            <xs:element minOccurs='0' maxOccurs='1' ref='required'/>
+            <xs:element minOccurs='0' maxOccurs='1' ref='validators'/>
+        </xs:sequence>
+        <xs:attribute name='name' use='required' type='xs:NCName'/>
+    </xs:complexType>
+
+    <xs:complexType name='singleValueField'>
+        <xs:complexContent>
+            <xs:extension base='baseField'>
+                <xs:sequence minOccurs='0' maxOccurs='1'>
+                    <xs:element minOccurs='0' maxOccurs='1' ref='value'/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name='multiValueField'>
+        <xs:complexContent>
+            <xs:extension base='baseField'>
+                <xs:sequence minOccurs='0' maxOccurs='1'>
+                    <xs:element minOccurs='0' maxOccurs='1' ref='values'/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name='booleanField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='choiceField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'>
+                    <xs:sequence minOccurs='0' maxOccurs='1'>
+                        <xs:element minOccurs='0' maxOccurs='1' ref='choices'/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='choices'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='choice'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='choice' type='xs:string'/>
+
+    <xs:element name='dateField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='numberField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='emailField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='pickerField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='multiValueField'>
+                    <xs:sequence minOccurs='0' maxOccurs='1'>
+                        <xs:element minOccurs='0' maxOccurs='1' ref='options'/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='options'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='component'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='component'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='option'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='option' type='xs:string'/>
+
+    <xs:element name='rangedNumberField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'>
+                    <xs:sequence minOccurs='0' maxOccurs='1'>
+                        <xs:element minOccurs='0' maxOccurs='1' ref='minimum'/>
+                        <xs:element minOccurs='0' maxOccurs='1' ref='maximum'/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='minimum' type='xs:decimal'/>
+    <xs:element name='maximum' type='xs:decimal'/>
+
+    <xs:element name='textField'>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base='singleValueField'/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='field'>
+        <xs:complexType>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='required' type='xs:NCName'/>
+
+    <xs:element name='values'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='1'>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='value'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='value' />
+
+    <xs:element name='validators'>
+        <xs:complexType>
+            <xs:sequence minOccurs='0' maxOccurs='unbounded'>
+                <xs:choice minOccurs='1' maxOccurs='1'>
+                    <xs:element ref='textEmailValidator'/>
+                    <xs:element ref='textNumericValidator'/>
+                    <xs:element ref='textRegexValidator'/>
+                    <xs:element ref='textNotEmptyValidator'/>
+                    <xs:element ref='textComparisonValidator'/>
+
+                    <xs:element ref='choiceNotEmptyValidator'/>
+                    <xs:element ref='choiceComparisonValidator'/>
+
+                    <xs:element ref='booleanTrueValidator'/>
+                    <xs:element ref='booleanFalseValidator'/>
+                    <xs:element ref='booleanComparisonValidator'/>
+
+                    <xs:element ref='rangedNumberComparisonValidator'/>
+
+                    <xs:element ref='pickerNotEmptyValidator'/>
+
+                    <xs:element ref='dateNotEmptyValidator'/>
+                    <xs:element ref='dateComparisonValidator'/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='textEmailValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='booleanTrueValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='choiceNotEmptyValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='textNotEmptyValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='booleanFalseValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='pickerNotEmptyValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='textNumericValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='textRegexValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='regexString'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='regexString' type='xs:string'/>
+
+    <xs:element name='dateNotEmptyValidator'>
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name='rangedNumberComparisonValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='toCompare'/>
+                <xs:element minOccurs='1' maxOccurs='1' ref='validResult'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='textComparisonValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='toCompare'/>
+                <xs:element minOccurs='1' maxOccurs='1' ref='validResult'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='comparisonMode'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='choiceComparisonValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='toCompare'/>
+                <xs:element minOccurs='1' maxOccurs='1' ref='validResult'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='dateComparisonValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='toCompare'/>
+                <xs:element minOccurs='1' maxOccurs='1' ref='validResult'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='booleanComparisonValidator'>
+        <xs:complexType>
+            <xs:sequence minOccurs='1' maxOccurs='1'>
+                <xs:element minOccurs='1' maxOccurs='1' ref='toCompare'/>
+                <xs:element minOccurs='1' maxOccurs='1' ref='validResult'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name='toCompare' type='xs:NCName'/>
+
+    <xs:element name='validResult' type='validResultEnum' />
+
+    <xs:element name='comparisonMode' type='comparisonModeEnum' />
+
+    <xs:simpleType name='validResultEnum'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value="SFormComparisonRuleEqual" />
+            <xs:enumeration value="SFormComparisonRuleNotEqual" />
+            <xs:enumeration value="SFormComparisonRuleGreaterThan" />
+            <xs:enumeration value="SFormComparisonRuleLessThan" />
+            <xs:enumeration value="SFormComparisonRuleGreaterThanOrEqual" />
+            <xs:enumeration value="SFormComparisonRuleLessThanOrEqual" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name='comparisonModeEnum'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value="SFormTextComparisonModeTextValue" />
+            <xs:enumeration value="SFormTextComparisonModeNumberValue" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

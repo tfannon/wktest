@@ -1,5 +1,5 @@
 .DS_Store
-*.xcworkspace
+# *.xcworkspace
 !default.xcworkspace
 profile
 

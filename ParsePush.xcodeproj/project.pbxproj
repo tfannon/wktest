@@ -26,9 +26,11 @@
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
+		65D381241BCDFC9B00E4C74B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D381231BCDFC9B00E4C74B /* QuartzCore.framework */; };
+		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; settings = {ASSET_TAGS = (); }; };
+		65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812D1BCE078000E4C74B /* ShinobiForms.framework */; settings = {ASSET_TAGS = (); }; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
-		65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */; settings = {ASSET_TAGS = (); }; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -68,9 +70,11 @@
 		659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		659D1C711BA7C45C0023AAFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParsePush-Bridging-Header.h"; sourceTree = "<group>"; };
+		65D381231BCDFC9B00E4C74B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiGrids.framework; sourceTree = "<group>"; };
+		65D3812D1BCE078000E4C74B /* ShinobiForms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiForms.framework; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -80,10 +84,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65D381241BCDFC9B00E4C74B /* QuartzCore.framework in Frameworks */,
 				659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */,
 				659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */,
 				659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */,
 				659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */,
+				65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */,
+				65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */,
 				65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */,
 				65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */,
 				65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */,
@@ -104,6 +111,8 @@
 		65768AD21BA641C500DADD43 = {
 			isa = PBXGroup;
 			children = (
+				65D3812D1BCE078000E4C74B /* ShinobiForms.framework */,
+				65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */,
 				659D1C741BA7C4B00023AAFD /* Frameworks */,
 				659D1C731BA7C4750023AAFD /* SystemFrameworks */,
 				65768ADD1BA641C500DADD43 /* ParsePush */,
@@ -126,12 +135,10 @@
 			isa = PBXGroup;
 			children = (
 				659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */,
-				659A64CC1BBF1C6D0047AAD3 /* BOS */,
-				659A64C91BBEE8B40047AAD3 /* UI */,
-				65ECB0991BABB56600BE81C0 /* SwiftyJSON.swift */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
+				659A64CC1BBF1C6D0047AAD3 /* MT */,
+				659A64C91BBEE8B40047AAD3 /* UI */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
-				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
 			);
 			path = ParsePush;
 			sourceTree = "<group>";
@@ -139,6 +146,7 @@
 		65768ADE1BA641C500DADD43 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
 				65768ADF1BA641C500DADD43 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -174,7 +182,7 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		659A64CC1BBF1C6D0047AAD3 /* BOS */ = {
+		659A64CC1BBF1C6D0047AAD3 /* MT */ = {
 			isa = PBXGroup;
 			children = (
 				65D507311BB5DC1D00EC8E1F /* Services.swift */,
@@ -183,12 +191,13 @@
 				65890DF71BC33A3900506192 /* Objects.swift */,
 				65890DF91BC763D700506192 /* Procedure.swift */,
 			);
-			name = BOS;
+			name = MT;
 			sourceTree = "<group>";
 		};
 		659D1C731BA7C4750023AAFD /* SystemFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65D381231BCDFC9B00E4C74B /* QuartzCore.framework */,
 				65768B041BA6448700DADD43 /* SystemConfiguration.framework */,
 				659D1C711BA7C45C0023AAFD /* Security.framework */,
 				659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */,
@@ -379,7 +388,6 @@
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
-				65ECB09A1BABB56600BE81C0 /* SwiftyJSON.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
 				65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */,
 			);

@@ -39,9 +39,9 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    let json = JSON(data)
+                    let json = data as? String
                     print(json)
-                    completed(result: json.string!)
+                    completed(result: json!)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                 }
@@ -65,9 +65,9 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    let json = JSON(data)
-                    debugPrint(json)
-                    completed(result: json.int!)
+                    let json = data as? Int
+                    //debugPrint(json)
+                    completed(result: json!)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                 }
