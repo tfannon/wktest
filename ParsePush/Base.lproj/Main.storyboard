@@ -500,10 +500,10 @@
             </objects>
             <point key="canvasLocation" x="946.5" y="-36.75"/>
         </scene>
-        <!--Tests-->
+        <!--Procedures-->
         <scene sceneID="deR-Ka-Aoh">
             <objects>
-                <viewControllerPlaceholder storyboardName="Tests" id="Aw2-1R-ivo" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Procedures" id="Aw2-1R-ivo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="KZP-m2-ay0"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPo-N4-IZc" userLabel="First Responder" sceneMemberID="firstResponder"/>

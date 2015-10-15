@@ -31,7 +31,9 @@
 		65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812D1BCE078000E4C74B /* ShinobiForms.framework */; settings = {ASSET_TAGS = (); }; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
-		664DEC4D1BCF1D9600C48A8D /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664DEC4C1BCF1D9600C48A8D /* Tests.storyboard */; settings = {ASSET_TAGS = (); }; };
+		664DEC4D1BCF1D9600C48A8D /* Procedures.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664DEC4C1BCF1D9600C48A8D /* Procedures.storyboard */; settings = {ASSET_TAGS = (); }; };
+		664DEC4F1BCF1EEA00C48A8D /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664DEC4E1BCF1EE900C48A8D /* Mock.swift */; settings = {ASSET_TAGS = (); }; };
+		668F6DA41BCF4823002BCED5 /* ProceduresControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F6DA31BCF4823002BCED5 /* ProceduresControllerTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -76,7 +78,9 @@
 		65D3812D1BCE078000E4C74B /* ShinobiForms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiForms.framework; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		664DEC4C1BCF1D9600C48A8D /* Tests.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tests.storyboard; path = ../../../Tests.storyboard; sourceTree = "<group>"; };
+		664DEC4C1BCF1D9600C48A8D /* Procedures.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Procedures.storyboard; path = ../../../Procedures.storyboard; sourceTree = "<group>"; };
+		664DEC4E1BCF1EE900C48A8D /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
+		668F6DA31BCF4823002BCED5 /* ProceduresControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProceduresControllerTableViewController.swift; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -175,7 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
-				664DEC4C1BCF1D9600C48A8D /* Tests.storyboard */,
+				664DEC4C1BCF1D9600C48A8D /* Procedures.storyboard */,
+				668F6DA31BCF4823002BCED5 /* ProceduresControllerTableViewController.swift */,
 				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
@@ -193,6 +198,7 @@
 				659A64CD1BBF3A340047AAD3 /* Extensions.swift */,
 				65890DF71BC33A3900506192 /* Objects.swift */,
 				65890DF91BC763D700506192 /* Procedure.swift */,
+				664DEC4E1BCF1EE900C48A8D /* Mock.swift */,
 			);
 			name = MT;
 			sourceTree = "<group>";
@@ -316,7 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65768AE61BA641C500DADD43 /* Main.storyboard in Resources */,
-				664DEC4D1BCF1D9600C48A8D /* Tests.storyboard in Resources */,
+				664DEC4D1BCF1D9600C48A8D /* Procedures.storyboard in Resources */,
 				659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,7 +399,9 @@
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
+				668F6DA41BCF4823002BCED5 /* ProceduresControllerTableViewController.swift in Sources */,
 				65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */,
+				664DEC4F1BCF1EEA00C48A8D /* Mock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
