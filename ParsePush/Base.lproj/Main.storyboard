@@ -253,10 +253,10 @@
                                     </subviews>
                                     <animations/>
                                     <constraints>
+                                        <constraint firstItem="Koj-rs-K8u" firstAttribute="bottom" secondItem="OoJ-bs-nyf" secondAttribute="bottomMargin" constant="6.5" id="2lv-RZ-O3e"/>
                                         <constraint firstItem="Koj-rs-K8u" firstAttribute="leading" secondItem="OoJ-bs-nyf" secondAttribute="leadingMargin" constant="5" id="766-Tt-y3k"/>
-                                        <constraint firstItem="jdb-Ry-DCj" firstAttribute="top" secondItem="OoJ-bs-nyf" secondAttribute="topMargin" constant="7" id="Tly-jg-Z3j"/>
+                                        <constraint firstItem="jdb-Ry-DCj" firstAttribute="centerY" secondItem="Koj-rs-K8u" secondAttribute="centerY" constant="-1" id="7Dx-op-NN1"/>
                                         <constraint firstItem="jdb-Ry-DCj" firstAttribute="leading" secondItem="Koj-rs-K8u" secondAttribute="trailing" constant="5" id="YwE-0O-PGa"/>
-                                        <constraint firstItem="Koj-rs-K8u" firstAttribute="top" secondItem="OoJ-bs-nyf" secondAttribute="topMargin" id="bhS-Q7-fzF"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
@@ -289,15 +289,15 @@
                                                 <constraint firstAttribute="width" constant="40" id="wSb-BL-Rr9"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Test procedure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4Y-zs-aze" userLabel="Title">
-                                            <rect key="frame" x="108" y="13" width="383.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test procedure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4Y-zs-aze" userLabel="Title">
+                                            <rect key="frame" x="108" y="8" width="124" height="20.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-fF-smf" userLabel="Description">
-                                            <rect key="frame" x="108" y="41.5" width="383.5" height="25"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-fF-smf" userLabel="Description">
+                                            <rect key="frame" x="108" y="28.5" width="484" height="29"/>
                                             <animations/>
                                             <string key="text">Changed from Not Started to In Progress by Tommy Fannon on 10/31  Now is the time for all good men to come to the aid of their party.</string>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
@@ -307,16 +307,15 @@
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="9NS-fF-smf" firstAttribute="top" secondItem="z4Y-zs-aze" secondAttribute="bottom" constant="8" symbolic="YES" id="E1H-46-Wcf"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="9NS-fF-smf" secondAttribute="bottom" id="O1g-4f-7y2"/>
-                                        <constraint firstItem="9NS-fF-smf" firstAttribute="leading" secondItem="z4Y-zs-aze" secondAttribute="leading" id="RED-Wh-N8U"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="trailing" secondItem="VKR-RR-zFF" secondAttribute="trailingMargin" id="Baf-ca-sTu"/>
+                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="top" secondItem="VKR-RR-zFF" secondAttribute="topMargin" id="NGV-8e-dQr"/>
                                         <constraint firstItem="6w5-fo-Hlt" firstAttribute="centerY" secondItem="VKR-RR-zFF" secondAttribute="centerY" id="dbk-D1-gRS"/>
                                         <constraint firstItem="z4Y-zs-aze" firstAttribute="leading" secondItem="1H4-9Z-mBa" secondAttribute="trailing" constant="10" id="eY1-1T-JhQ"/>
                                         <constraint firstItem="1H4-9Z-mBa" firstAttribute="top" secondItem="6w5-fo-Hlt" secondAttribute="top" id="f4j-pv-ehc"/>
-                                        <constraint firstItem="9NS-fF-smf" firstAttribute="centerX" secondItem="z4Y-zs-aze" secondAttribute="centerX" id="hIM-O0-fpp"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="leading" secondItem="z4Y-zs-aze" secondAttribute="leading" id="gaN-L0-m6c"/>
                                         <constraint firstItem="6w5-fo-Hlt" firstAttribute="leading" secondItem="VKR-RR-zFF" secondAttribute="leadingMargin" constant="5" id="l7J-Et-jE2"/>
                                         <constraint firstItem="1H4-9Z-mBa" firstAttribute="leading" secondItem="6w5-fo-Hlt" secondAttribute="trailing" constant="5" id="nAp-3n-280"/>
-                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="top" secondItem="VKR-RR-zFF" secondAttribute="topMargin" constant="5" id="xme-LL-SBJ"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="top" secondItem="z4Y-zs-aze" secondAttribute="bottom" id="zgr-Md-W22"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>

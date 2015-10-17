@@ -16,6 +16,16 @@ class NotificationController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let messageLabel = UILabel(frame:CGRectMake(0, 0, self.view.bounds.size.width, 10))
+//        messageLabel.text = "Placeholder";
+//        messageLabel.textColor = UIColor.blackColor()
+//        messageLabel.numberOfLines = 0;
+//        messageLabel.textAlignment = NSTextAlignment.Center;
+//        messageLabel.font = UIFont(name: "Palatino-Italic", size:20)
+//        messageLabel.sizeToFit()
+//        self.view.addSubview(messageLabel)
+
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.purpleColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
@@ -128,7 +138,12 @@ class NotificationController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50.0
+        if section == 0 {
+            return 60;
+        }
+        else {
+            return 50.0
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
