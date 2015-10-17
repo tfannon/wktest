@@ -10,19 +10,23 @@ import Foundation
 import UIKit
 
 
-class MyWorkController: UIViewController, SDataGridDataSource {
+class MyWorkController: UIViewController, SDataGridDataSource/*, SDataGridDataSourceHelperDelegate*/ {
     
     var items: [Procedure] = []
     var grid: ShinobiDataGrid!
+    var dataSourceHelper: SDataGridDataSourceHelper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let grid = ShinobiDataGrid(frame: self.view.bounds)
+        //let grid = ShinobiDataGrid(frame: self.view.bounds)
+        let grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 10, 50))
+        grid.defaultCellStyleForAlternateRows = SDataGridCellStyle(backgroundColor: UIColor.lightGrayColor(), withTextColor: nil, withFont: nil)
         grid.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         grid.dataSource = self
         
-        let titleColumn = SDataGridColumn(title: "Title")
+        let titleColumn = SDataGridColumn(title: "Title", forProperty: "title")
+        titleColumn.sortMode = SDataGridColumnSortModeBiState
         grid.addColumn(titleColumn)
         
         let dueDateColumn = SDataGridColumn(title: "Due Date")
@@ -37,6 +41,8 @@ class MyWorkController: UIViewController, SDataGridDataSource {
         self.view.addSubview(grid)
         self.grid = grid
         
+        //self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
+        //self.dataSourceHelper.delegate = self
         getProcedures()
     }
     
