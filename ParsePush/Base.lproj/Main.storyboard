@@ -232,7 +232,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workflow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-Ry-DCj" userLabel="Type Label">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_workflow" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-rs-K8u" userLabel="Icon">
+                                            <rect key="frame" x="13" y="8" width="40" height="40"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="Mhc-FQ-nbm"/>
+                                                <constraint firstAttribute="height" constant="40" id="hSn-tt-vv1"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workflow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-Ry-DCj" userLabel="Label">
                                             <rect key="frame" x="58" y="15" width="408" height="24"/>
                                             <animations/>
                                             <constraints>
@@ -242,14 +250,6 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_workflow" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-rs-K8u" userLabel="Type Icon">
-                                            <rect key="frame" x="13" y="8" width="40" height="40"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="Mhc-FQ-nbm"/>
-                                                <constraint firstAttribute="height" constant="40" id="hSn-tt-vv1"/>
-                                            </constraints>
-                                        </imageView>
                                     </subviews>
                                     <animations/>
                                     <constraints>
@@ -266,64 +266,57 @@
                                     <outlet property="labelNotificationType" destination="jdb-Ry-DCj" id="OA7-SF-rLf"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="105" id="BRN-Ha-hYh" customClass="NotificationCell" customModule="TeamMate" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="125" width="600" height="105"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="75" id="BRN-Ha-hYh" customClass="NotificationCell" customModule="TeamMate" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="125" width="600" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BRN-Ha-hYh" id="VKR-RR-zFF">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="104.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_procedure" translatesAutoresizingMaskIntoConstraints="NO" id="6w5-fo-Hlt" userLabel="ObjectType">
-                                            <rect key="frame" x="8" y="43" width="40" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_procedure" translatesAutoresizingMaskIntoConstraints="NO" id="6w5-fo-Hlt" userLabel="Type">
+                                            <rect key="frame" x="13" y="17" width="40" height="40"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="XDd-Zk-7ph"/>
                                                 <constraint firstAttribute="height" constant="40" id="w9n-om-teN"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Changed from Not Started to In Progress by Tommy Fannon on 10/31" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-fF-smf">
-                                            <rect key="frame" x="117" y="65" width="457" height="31.5"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test procedure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4Y-zs-aze">
-                                            <rect key="frame" x="117" y="16" width="457" height="21"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="jZD-aw-4e8"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_completed" translatesAutoresizingMaskIntoConstraints="NO" id="1H4-9Z-mBa" userLabel="WorkflowState">
-                                            <rect key="frame" x="62" y="43" width="40" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_completed" translatesAutoresizingMaskIntoConstraints="NO" id="1H4-9Z-mBa" userLabel="State">
+                                            <rect key="frame" x="58" y="17" width="40" height="40"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="bSi-fR-oRC"/>
                                                 <constraint firstAttribute="width" constant="40" id="wSb-BL-Rr9"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Test procedure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4Y-zs-aze" userLabel="Title">
+                                            <rect key="frame" x="108" y="13" width="383.5" height="20.5"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-fF-smf" userLabel="Description">
+                                            <rect key="frame" x="108" y="41.5" width="383.5" height="25"/>
+                                            <animations/>
+                                            <string key="text">Changed from Not Started to In Progress by Tommy Fannon on 10/31  Now is the time for all good men to come to the aid of their party.</string>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="9NS-fF-smf" firstAttribute="leading" secondItem="1H4-9Z-mBa" secondAttribute="trailing" constant="15" id="4Cn-gV-g1B"/>
-                                        <constraint firstItem="9NS-fF-smf" firstAttribute="top" secondItem="z4Y-zs-aze" secondAttribute="bottom" constant="28" id="66H-Nq-6bL">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                                        </constraint>
-                                        <constraint firstAttribute="bottomMargin" secondItem="6w5-fo-Hlt" secondAttribute="bottom" constant="13.5" id="7C9-bU-pml"/>
-                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="top" secondItem="VKR-RR-zFF" secondAttribute="topMargin" constant="8" id="DUy-Wk-pRI">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
-                                        </constraint>
-                                        <constraint firstAttribute="trailingMargin" secondItem="9NS-fF-smf" secondAttribute="trailing" constant="18" id="OfE-XN-4Uy"/>
-                                        <constraint firstItem="1H4-9Z-mBa" firstAttribute="top" secondItem="6w5-fo-Hlt" secondAttribute="top" id="aml-Wm-lo6"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="9NS-fF-smf" secondAttribute="bottom" id="cc7-Y4-kXM"/>
-                                        <constraint firstItem="1H4-9Z-mBa" firstAttribute="leading" secondItem="6w5-fo-Hlt" secondAttribute="trailing" constant="14" id="hH1-2n-UYW"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="6w5-fo-Hlt" secondAttribute="leading" id="ifP-EM-1m5"/>
-                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="leading" secondItem="9NS-fF-smf" secondAttribute="leading" id="nKF-Zh-RqV"/>
-                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="width" secondItem="9NS-fF-smf" secondAttribute="width" id="uHv-5H-g0T"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="top" secondItem="z4Y-zs-aze" secondAttribute="bottom" constant="8" symbolic="YES" id="E1H-46-Wcf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="9NS-fF-smf" secondAttribute="bottom" id="O1g-4f-7y2"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="leading" secondItem="z4Y-zs-aze" secondAttribute="leading" id="RED-Wh-N8U"/>
+                                        <constraint firstItem="6w5-fo-Hlt" firstAttribute="centerY" secondItem="VKR-RR-zFF" secondAttribute="centerY" id="dbk-D1-gRS"/>
+                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="leading" secondItem="1H4-9Z-mBa" secondAttribute="trailing" constant="10" id="eY1-1T-JhQ"/>
+                                        <constraint firstItem="1H4-9Z-mBa" firstAttribute="top" secondItem="6w5-fo-Hlt" secondAttribute="top" id="f4j-pv-ehc"/>
+                                        <constraint firstItem="9NS-fF-smf" firstAttribute="centerX" secondItem="z4Y-zs-aze" secondAttribute="centerX" id="hIM-O0-fpp"/>
+                                        <constraint firstItem="6w5-fo-Hlt" firstAttribute="leading" secondItem="VKR-RR-zFF" secondAttribute="leadingMargin" constant="5" id="l7J-Et-jE2"/>
+                                        <constraint firstItem="1H4-9Z-mBa" firstAttribute="leading" secondItem="6w5-fo-Hlt" secondAttribute="trailing" constant="5" id="nAp-3n-280"/>
+                                        <constraint firstItem="z4Y-zs-aze" firstAttribute="top" secondItem="VKR-RR-zFF" secondAttribute="topMargin" constant="5" id="xme-LL-SBJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
