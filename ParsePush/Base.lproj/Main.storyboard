@@ -17,49 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnH-4i-QhM">
-                                <rect key="frame" x="58" y="318" width="91" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Notifications"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="170" width="87" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="getNotificationsPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XzZ-Oq-I8U"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-G2-Qdd">
-                                <rect key="frame" x="34" y="204" width="91" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Count"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="108" width="42" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="countPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aRS-0s-L9z"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPj-3P-XeL">
-                                <rect key="frame" x="58" y="259" width="42" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="119" y="54" width="244" height="26"/>
-                                </variation>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PL-UW-pNg">
-                                <rect key="frame" x="54" y="371" width="102" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Mark Read"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="214" width="74" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="markReadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m76-sq-vQ2"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="IP Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toG-cj-t0E">
                                 <rect key="frame" x="54" y="57" width="129" height="21"/>
                                 <animations/>
@@ -79,29 +36,20 @@
                                     <rect key="frame" x="161" y="265" width="170" height="30"/>
                                 </variation>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ2-SF-Efm">
-                                <rect key="frame" x="405" y="244" width="42" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="161" y="179" width="170" height="21"/>
-                                </variation>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="62N-cu-uIJ">
-                                <rect key="frame" x="177" y="158" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z25-cC-dZS">
+                                <rect key="frame" x="177" y="107" width="97" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="161" y="318" width="170" height="30"/>
-                                </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieA-pj-E5J">
-                                <rect key="frame" x="54" y="157" width="95" height="30"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icons_implemented" translatesAutoresizingMaskIntoConstraints="NO" id="BGA-ai-Bla" userLabel="Login Result">
+                                <rect key="frame" x="288" y="109" width="25" height="25"/>
                                 <animations/>
-                                <state key="normal" title="Assessment"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieA-pj-E5J">
+                                <rect key="frame" x="6" y="158" width="147" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Get POC Assessment"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="50" y="317" width="84" height="30"/>
                                 </variation>
@@ -109,8 +57,19 @@
                                     <action selector="assessmentPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="IDG-0w-2Ey"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-G2-Qdd">
+                                <rect key="frame" x="34" y="204" width="91" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Count"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="50" y="108" width="42" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="countPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aRS-0s-L9z"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKb-wJ-uMH">
-                                <rect key="frame" x="54" y="259" width="89" height="30"/>
+                                <rect key="frame" x="54" y="257" width="89" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Procedures"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
@@ -121,7 +80,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-xO-4kp">
-                                <rect key="frame" x="44" y="219" width="42" height="21"/>
+                                <rect key="frame" x="177" y="261" width="97" height="26"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -130,25 +89,54 @@
                                     <rect key="frame" x="161" y="373" width="170" height="30"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9j-nt-hyy">
-                                <rect key="frame" x="54" y="99" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnH-4i-QhM">
+                                <rect key="frame" x="58" y="318" width="91" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Login"/>
+                                <state key="normal" title="Notifications"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="48" y="52" width="38" height="30"/>
+                                    <rect key="frame" x="50" y="170" width="87" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="loginPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1Gf-pd-e0D"/>
+                                    <action selector="getNotificationsPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XzZ-Oq-I8U"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z25-cC-dZS">
-                                <rect key="frame" x="177" y="107" width="97" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ2-SF-Efm">
+                                <rect key="frame" x="177" y="322" width="97" height="26"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="161" y="179" width="170" height="21"/>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PL-UW-pNg">
+                                <rect key="frame" x="54" y="371" width="102" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Mark Read"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="50" y="214" width="74" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="markReadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m76-sq-vQ2"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AkQ-tf-u7H">
+                                <rect key="frame" x="54" y="107" width="95" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-3V-S1u">
+                                <rect key="frame" x="177" y="158" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pO1-0o-na5">
-                                <rect key="frame" x="259" y="333" width="42" height="21"/>
+                                <rect key="frame" x="177" y="213" width="97" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -163,12 +151,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Test" image="739-question" id="1lT-eR-BPV"/>
                     <connections>
+                        <outlet property="imgLoginResult" destination="BGA-ai-Bla" id="hCM-HC-Mde"/>
+                        <outlet property="lblAssessment" destination="tnx-3V-S1u" id="KGe-aj-Hd8"/>
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
-                        <outlet property="lblLoginResult" destination="nPj-3P-XeL" id="Kpn-5F-zcZ"/>
                         <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
                         <outlet property="lblProcedures" destination="Kht-xO-4kp" id="Wzd-EA-ea5"/>
-                        <outlet property="txtAssessment" destination="62N-cu-uIJ" id="5ic-6r-itT"/>
                         <outlet property="txtIPAddress" destination="zvx-9e-MNm" id="qV5-vQ-2hz"/>
+                        <outlet property="txtUserName" destination="z25-cC-dZS" id="zBp-Ku-Hst"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -206,9 +195,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
                         <segue destination="ijE-Ru-gol" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xoQ-ZQ-jm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -344,6 +333,7 @@
         <image name="740-gear" width="28" height="28"/>
         <image name="756-bell" width="24" height="28"/>
         <image name="icons_completed" width="42" height="42"/>
+        <image name="icons_implemented" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>
         <image name="icons_workflow" width="42" height="42"/>
     </resources>

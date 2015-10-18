@@ -28,6 +28,18 @@ enum WorkflowState: Int {
     case Closed = 6
     case Responded = 7
     case Issued = 8
+    
+    var imageName: String {
+        get {
+            switch self {
+            case .NotStarted: return "icons_notstarted"
+            case .InProgress: return  "icons_inprogress"
+            case .Completed: return "icons_completed"
+            case .Reviewed: return "icons_reviewed"
+            default: return "icons_notstarted"
+            }
+        }
+    }
 }
 
 enum SecurityRole {

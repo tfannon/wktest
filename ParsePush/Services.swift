@@ -14,6 +14,12 @@ import ObjectMapper
 public class Services {
     static var ipAddress = "192.168.1.14"
     static var assessmentId = "572301013"
+    static var userName = "joe.tester"
+    static var deviceToken = ""
+    
+    public static func setDeviceToken(token: NSData) {
+        Services.deviceToken = tokenToString(token)
+    }
     
     static var loginUrl: String {
         return "http://\(Services.ipAddress)/Offline/api/login"
@@ -29,21 +35,21 @@ public class Services {
     
     
  
-    public static func login(name: String, token: NSData, completed: (result: String)->()) {
+    public static func login(name: String, token: NSData, completed: (result: String?)->()) {
         return login(name, token: tokenToString(token), completed: completed)
     }
     
-    static func login(name: String, token: String, completed: (result: String)->()) {
+    static func login(name: String, token: String, completed: (result: String?)->()) {
         let dict = ["LoginName":name, "DeviceToken":token]
         Alamofire.request(.POST, loginUrl + "/PostLogin", parameters: dict, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
                     let json = data as? String
-                    print(json)
-                    completed(result: json!)
+                    completed(result: json)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
+                    completed(result: nil)
                 }
         }
     }

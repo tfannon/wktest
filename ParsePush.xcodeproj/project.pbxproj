@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6518EF781BD3464400DD558A /* WorkflowStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* WorkflowStateCell.swift */; settings = {ASSET_TAGS = (); }; };
+		6518EF7A1BD347C000DD558A /* PassFailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF791BD347C000DD558A /* PassFailCell.swift */; settings = {ASSET_TAGS = (); }; };
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		1E216A450469A08FEC9B7CD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6518EF771BD3464400DD558A /* WorkflowStateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowStateCell.swift; sourceTree = "<group>"; };
+		6518EF791BD347C000DD558A /* PassFailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassFailCell.swift; sourceTree = "<group>"; };
 		65768ADB1BA641C500DADD43 /* TeamMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768ADF1BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
 				659A64C71BBEDF050047AAD3 /* MyWorkController.swift */,
+				6518EF771BD3464400DD558A /* WorkflowStateCell.swift */,
+				6518EF791BD347C000DD558A /* PassFailCell.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -379,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6518EF7A1BD347C000DD558A /* PassFailCell.swift in Sources */,
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,
@@ -389,6 +396,7 @@
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
+				6518EF781BD3464400DD558A /* WorkflowStateCell.swift in Sources */,
 				65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

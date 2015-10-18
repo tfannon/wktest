@@ -39,8 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        Services.login("joe.contact", token: deviceToken) { _ in
-        }
+        Services.setDeviceToken(deviceToken)
+//        Services.login("joe.contact", token: deviceToken) { _ in
+//        }
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

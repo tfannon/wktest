@@ -25,21 +25,30 @@ class Procedure : Mappable, CustomDebugStringConvertible {
     var resultsText2: String?
     var resultsText3: String?
     var resultsText4: String?
+    var reviewDueDate: String?
+    var tester: String?
+    var reviewer: String?
+    var workflowState: Int?
+    var readOnly  : Bool?
 
     func mapping(map: Map) {
         id <- map["Id"]
         title <- map["Title"]
         code <- map["Code"]
         dueDate <- map["DueDate"]
+        reviewDueDate <- map["ReviewDueDate"]
         text1 <- map["Text1"]
         text2 <- map["Text2"]
         text3 <- map["Text3"]
         text4 <- map["Text4"]
+        tester <- map["Tester"]
+        reviewer <- map["Reviewer"]
         testResults <- map["Results.TestResults"]
         resultsText1 <- map["Results.ResultsText1"]
         resultsText2 <- map["Results.ResultsText2"]
         resultsText3 <- map["Results.ResultsText3"]
         resultsText4 <- map["Results.ResultsText4"]
+        readOnly <- map["ReadOnly"]
     }
     
     var debugDescription: String {

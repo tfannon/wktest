@@ -14,23 +14,31 @@ class TestController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         txtIPAddress.delegate = self
         txtIPAddress.text = Services.ipAddress
+        
+        txtUserName.delegate = self
+        txtUserName.text = Services.userName
     }
+    
+    //MARK - view controller
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
-    @IBOutlet weak var lblLoginResult: UILabel!
-    @IBAction func loginPressed(sender: AnyObject) {
-        Services.login("joe.contact", token: "foobar") { result in
-            self.lblLoginResult.text = result
-        }
-    }
     
-    
+    //MARK - Outlets
+    @IBOutlet weak var txtIPAddress: UITextField!
+    @IBOutlet weak var txtUserName: UITextField!
+    @IBOutlet weak var imgLoginResult: UIImageView!
+    @IBOutlet weak var lblAssessment: UILabel!
     @IBOutlet weak var lblCount: UILabel!
+    @IBOutlet weak var lblProcedures: UILabel!
+    @IBOutlet weak var lblNotifications: UILabel!
+    
+    //MARK - Actions
+
+
+
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in
             self.lblCount.text = String(result)
@@ -41,13 +49,28 @@ class TestController: UIViewController, UITextFieldDelegate {
         Services.markRead([2,3]) { result in
         }
     }
+   
+
     
     
-    @IBOutlet weak var txtIPAddress: UITextField!
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        Services.ipAddress = textField.text!
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(textField.text!, forKey: "ipAddress")
+        var key = ""
+        if (textField == self.txtIPAddress) {
+            Services.ipAddress = textField.text!
+            key = "ipAddress"
+        }
+        else if (textField == self.txtUserName) {
+            self.imgLoginResult.hidden = false
+            Services.userName = textField.text!
+            key == "userName"
+            Services.login(Services.userName, token: "foobar") { result in
+                let imageName = result != nil ? "icons_implemented" : "icons_issue"
+                self.imgLoginResult.image = UIImage(named: imageName)
+            }
+        }
+        defaults.setObject(textField.text!, forKey: key)
         defaults.synchronize()
         textField.resignFirstResponder();
         return true;
@@ -63,18 +86,16 @@ class TestController: UIViewController, UITextFieldDelegate {
             self.lblNotifications.text = "\(result!.count) received"
         }
     }
-    @IBOutlet weak var lblNotifications: UILabel!
-    
-    
-    @IBOutlet weak var txtAssessment: UITextField!
+
+
     @IBAction func assessmentPressed(sender: AnyObject) {
-        self.txtAssessment.text = ""
+        self.lblAssessment.text = ""
         Services.GetPOCAssessmentId { id in
-            self.txtAssessment.text = String(id!)
+            self.lblAssessment.text = String(id!)
         }
     }
     
-    @IBOutlet weak var lblProcedures: UILabel!
+
     @IBAction func proceduresPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
         Services.GetProcedures { result in

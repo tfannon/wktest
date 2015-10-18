@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class MyWorkController: UIViewController, SDataGridDataSource/*, SDataGridDataSourceHelperDelegate*/ {
+class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSourceHelperDelegate {
     
     var items: [Procedure] = []
     var grid: ShinobiDataGrid!
@@ -25,24 +25,40 @@ class MyWorkController: UIViewController, SDataGridDataSource/*, SDataGridDataSo
         grid.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         grid.dataSource = self
         
-        let titleColumn = SDataGridColumn(title: "Title", forProperty: "title")
-        titleColumn.sortMode = SDataGridColumnSortModeBiState
-        grid.addColumn(titleColumn)
+        var col = SDataGridColumn(title: "Title", forProperty: "title")
+        col.width = 100
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
         
-        let dueDateColumn = SDataGridColumn(title: "Due Date")
-        grid.addColumn(dueDateColumn)
+        col = SDataGridColumn(title: "State", forProperty: "workflowState", cellType:WorkflowStateCell.self, headerCellType:nil)
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
+
+        col = SDataGridColumn(title: "Test Results", forProperty: "testResults", cellType:PassFailCell.self, headerCellType:nil)
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
         
-        let text1 = SDataGridColumn(title: "Text1")
-        grid.addColumn(text1)
+        col = SDataGridColumn(title: "Tester", forProperty: "tester")
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
         
-        let result = SDataGridColumn(title: "Result")
-        grid.addColumn(result)
+        col = SDataGridColumn(title: "Due Date", forProperty: "dueDate")
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
+        
+        col = SDataGridColumn(title: "Reviewer", forProperty: "reviewer")
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
+        
+        col = SDataGridColumn(title: "Review Due Date", forProperty: "reviewDueDate")
+        col.sortMode = SDataGridColumnSortModeTriState
+        grid.addColumn(col)
         
         self.view.addSubview(grid)
         self.grid = grid
         
-        //self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
-        //self.dataSourceHelper.delegate = self
+        self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
+        self.dataSourceHelper.delegate = self
         getProcedures()
     }
     
@@ -53,7 +69,6 @@ class MyWorkController: UIViewController, SDataGridDataSource/*, SDataGridDataSo
                 result?.each {
                     self.items.append($0)
                 }
-
                 self.grid.reload()
             }
         }
@@ -72,9 +87,34 @@ class MyWorkController: UIViewController, SDataGridDataSource/*, SDataGridDataSo
             case "Title" : text = procedure.title
             case "Due Date": text = procedure.dueDate
             case "Text1": text = procedure.text1
-            case "Result": text = procedure.testResults! == 0 ? "Fail" : "Pass"
+            case "Text2": text = procedure.text2
+            case "Text3": text = procedure.text3
+            case "Result": text = procedure.testResults! == 1 ? "Fail" : "Pass"
+            case "Result 1": text = procedure.resultsText1
+            case "Result 2": text = procedure.resultsText2
+            case "Result 3": text = procedure.resultsText3
             default: text = ""
         }
         textCell.textField.text = text
+    }
+    
+    func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
+        let procedure = items[cell.coordinate.row.rowIndex]
+        switch (propertyKey) {
+            
+        case "workflowState" :
+            let workflowState = WorkflowState(rawValue: procedure.workflowState!)!
+            let resultsCell = cell as! SDataGridTextCell
+            resultsCell.text = workflowState.imageName
+            return true
+            
+        case "testResults" :
+            let resultsCell = cell as! SDataGridTextCell
+            resultsCell.text = procedure.testResults! == 1 ? "Fail" : "Pass"
+            return true;
+//            let passFailCell = cell as! PassFailCell
+            
+        default: return false
+        }
     }
 }
