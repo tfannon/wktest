@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let ipAddress = defaults.objectForKey("ipAddress") as? String {
             Services.ipAddress = ipAddress
         }
+        if let userName = defaults.objectForKey("userName") as? String {
+            Services.userName = userName
+        }
         
         ShinobiDataGrids.setLicenseKey("EDIbU1AQ6dg/S8xMjAxNTExMTB0ZmFubm9uQGdtYWlsLmNvbQ==5Sgf5Zf7jl+R01RJkXXGVbb7mODIcXZNF0VuQn2qKfTktBXR+QgS/UMI4KGfwdUUhnfqXH51UK6Ycd/6fBe1p6c0VVnAylUWnN72f2sjWOtzHv/o8fp3vHWUtjwhWBCri4axRyWb7w/0yEtpru6l56DE0xwg=AXR/y+mxbZFM+Bz4HYAHkrZ/ekxdI/4Aa6DClSrE4o73czce7pcia/eHXffSfX9gssIRwBWEPX9e+kKts4mY6zZWsReM+aaVF0BL6G9Vj2249wYEThll6JQdqaKda41AwAbZXwcssavcgnaHc3rxWNBjJDOk6Cd78fr/LwdW8q7gmlj4risUXPJV0h7d21jO1gzaaFCPlp5G8l05UUe2qe7rKbarpjoddMoXrpErC9j8Lm5Oj7XKbmciqAKap+71+9DGNE2sBC+sY4V/arvEthfhk52vzLe3kmSOsvg5q+DQG/W9WbgZTmlMdWHY2B2nbgm3yZB7jFCiXH/KfzyE1A==PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+") 
         

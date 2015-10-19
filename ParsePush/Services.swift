@@ -33,6 +33,11 @@ public class Services {
         return "http://\(Services.ipAddress)/Offline/api/BO"
     }
     
+    static var headers: [String:String] {
+        let headers = ["UserName":Services.userName]
+        return headers
+    }
+    
     
  
     public static func login(name: String, token: NSData, completed: (result: String?)->()) {
@@ -99,7 +104,6 @@ public class Services {
     
     
     static func markRead(ids: [Int], completed: (result: String)->()) {
-        //let dict = ["ids":"foo"]
         let dict = ["ids":ids]
         Alamofire.request(.POST, notificationUrl + "/MarkRead", parameters: dict, encoding: .JSON)
             .responseJSON { request, response, result in
@@ -115,6 +119,22 @@ public class Services {
     }
 
     //MARK: procedure
+    static func getMyProcedures(completed: (result: [Procedure]?)->()) {
+        Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let data):
+                    let jsonAlamo = data as? [[String:AnyObject]]
+                    let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                    result!.each { a in print(a) }
+                    completed(result: result)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+    }
+    
+    
     static func GetPOCAssessmentId(completed: (result: Int?)->()) {
         Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in

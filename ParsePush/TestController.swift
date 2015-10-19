@@ -36,9 +36,6 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblNotifications: UILabel!
     
     //MARK - Actions
-
-
-
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in
             self.lblCount.text = String(result)
@@ -49,28 +46,27 @@ class TestController: UIViewController, UITextFieldDelegate {
         Services.markRead([2,3]) { result in
         }
     }
-   
-
-    
     
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
         var key = ""
+        let value = textField.text!
         if (textField == self.txtIPAddress) {
-            Services.ipAddress = textField.text!
             key = "ipAddress"
+            Services.ipAddress = value
         }
         else if (textField == self.txtUserName) {
             self.imgLoginResult.hidden = false
-            Services.userName = textField.text!
             key == "userName"
+            Services.userName = value
+
             Services.login(Services.userName, token: "foobar") { result in
                 let imageName = result != nil ? "icons_implemented" : "icons_issue"
                 self.imgLoginResult.image = UIImage(named: imageName)
             }
         }
-        defaults.setObject(textField.text!, forKey: key)
+        defaults.setObject(value, forKey: key)
         defaults.synchronize()
         textField.resignFirstResponder();
         return true;
@@ -98,10 +94,9 @@ class TestController: UIViewController, UITextFieldDelegate {
 
     @IBAction func proceduresPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
-        Services.GetProcedures { result in
+        Services.getMyProcedures { result in
             self.lblProcedures.text = String(result!.count)
         }
     }
-    
 }
 
