@@ -12,6 +12,9 @@ import ObjectMapper
 class Procedure : Mappable, CustomDebugStringConvertible {
     required init(_ map: Map){}
     
+    // used for creating one from scratch
+    init() {}
+    
     var id: Int?
     var title: String?
     var code: String?
