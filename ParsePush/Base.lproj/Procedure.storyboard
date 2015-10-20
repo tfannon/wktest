@@ -15,12 +15,46 @@
                     <view key="view" contentMode="scaleToFill" id="hFJ-8o-ltO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rdm-DO-hXw">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rdm-DO-hXw" firstAttribute="top" secondItem="hFJ-8o-ltO" secondAttribute="top" id="2M4-00-bI2"/>
+                            <constraint firstItem="rdm-DO-hXw" firstAttribute="bottom" secondItem="zXY-dq-eHW" secondAttribute="top" id="cxJ-9e-48v"/>
+                            <constraint firstItem="rdm-DO-hXw" firstAttribute="leading" secondItem="hFJ-8o-ltO" secondAttribute="leading" id="gJf-ms-6us"/>
+                            <constraint firstAttribute="trailing" secondItem="rdm-DO-hXw" secondAttribute="trailing" id="ptZ-0c-uaS"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="rdm-DO-hXw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="2M4-00-bI2"/>
+                                <exclude reference="cxJ-9e-48v"/>
+                                <exclude reference="gJf-ms-6us"/>
+                                <exclude reference="ptZ-0c-uaS"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="rdm-DO-hXw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="2M4-00-bI2"/>
+                                <include reference="cxJ-9e-48v"/>
+                                <include reference="gJf-ms-6us"/>
+                                <include reference="ptZ-0c-uaS"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJp-Fl-VOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1546.5" y="0.75"/>
+            <point key="canvasLocation" x="-1579.5" y="-41.25"/>
         </scene>
     </scenes>
 </document>

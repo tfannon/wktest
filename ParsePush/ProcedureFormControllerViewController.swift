@@ -7,74 +7,67 @@
 //
 
 import UIKit
+import Eureka
 
-class ProcedureFormControllerViewController: UIViewController, SFormDelegate {
+
+
+class ProcedureFormControllerViewController: FormViewController {
     
-    private var scrollView : UIScrollView!
-    private var scrollManager : SFormScrollViewManager!
     var procedure : Procedure!
+    
+    private func t(key : String) -> String
+    {
+        return Procedure.getTerminology(key)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // background color
         self.view.backgroundColor = UIColor.whiteColor()
         
-        // Do any additional setup after loading the view.
-        // Create the section & field models.
-        let section = SFormSection(fields: createFields());
-        // Create the form model.
-        let form = ShinobiForm ()
-        form.sections.append(section)
-        form.delegate = self
-        
-        // Build the views.
-        let formView = SFormFormViewBuilder().buildViewFromModel(form)
-        formView.sizeToFit()
-        
-        // Create a scroll view.
-        let scrollView = UIScrollView(frame: self.view.bounds)
-        scrollView.autoresizingMask = [
-            .FlexibleBottomMargin,
-            .FlexibleHeight,
-            .FlexibleLeftMargin,
-            .FlexibleRightMargin,
-            .FlexibleTopMargin,
-            .FlexibleWidth]
-        self.scrollView = scrollView;
-        self.view.addSubview(self.scrollView)
-        
-        // Add the form view to the scroll view and size the content.
-        self.scrollView.addSubview(formView)
-        self.scrollView.contentSize = formView.bounds.size
-        
-        // Create a scroll view manager to manage your field navigation & inset management.
-        self.scrollManager = SFormScrollViewManager(scrollView: self.scrollView)
+        self.form
+            +++ Section()
+            <<< TextRow() {
+                $0.title = self.t("title") + ":"
+                $0.placeholder = self.t("title")
+                $0.value = self.procedure.title
+            }
+            .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
+            }
+            <<< TextRow() {
+                $0.title = self.t("code") + ":"
+                $0.placeholder = self.t("code")
+                $0.value = self.procedure.code
+            }
+                .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
+            }
+            +++ Section()
+            <<< DateRow() {
+                $0.title = self.t("dueDate") + ":"
+                $0.value = self.procedure.dueDate
+            }
+                .cellUpdate {
+                    $0.cell.textLabel?.textAlignment = .Right
+            }
+            +++ Section()
+            <<< TextRow() {
+                $0.title = self.t("tester") + ":"
+                $0.value = self.procedure.tester
+             }
+                .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    private func createFields() -> [SFormField]
-    {
-        //Create enough fields to be scrollable.
-        var fields = [SFormField]()
-        
-        fields.append(SFormTextField(title: "Title"))
-        fields.append(SFormTextField(title: "Code"))
-        fields.append(SFormDateField(title: "Due Date"))
-        fields.append(SFormTextField(title: "Details"))
-        
-        fields[0].value = procedure.title
-        fields[1].value = procedure.code
-        fields[2].value = procedure.dueDate
-        fields[3].value = procedure.text1
-        
-        return fields
-    }
-    
     
     /*
     // MARK: - Navigation

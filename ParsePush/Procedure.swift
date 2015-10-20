@@ -44,6 +44,10 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         "resultsText3":"Notes"
     ]
     
+    static func getTerminology(key : String) -> String{
+        return terminology[key] ?? ""
+    }
+    
     var id: Int?
     var parent: String?
     var parentType: Int = 0
