@@ -19,9 +19,10 @@ extension NSDate {
         return self.toString(dateStyle: .ShortStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false)
     }
     
-    convenience init(isoString : String) {
-        let stringWithTime = isoString + "T00:00:00-05:00"
-        self.init(fromString: stringWithTime, format: DateFormat.ISO8601(.Date))
-    }
+//    convenience init(isoString : String) {
+//        //let stringWithTime = isoString + "T00:00:00-05:00"
+//        let stringWithTime = isoString + "-05:00"        
+//        self.init(fromString: stringWithTime, format: DateFormat.ISO8601(.Date))
+//    }
     
 }

@@ -23,6 +23,7 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate {
         
         self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 10, 50))
         self.view.addSubview(grid)
+        self.grid.showPullToAction = true
         
         self.addColumns()
         self.createDataSource()
@@ -46,13 +47,13 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate {
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["title","parent","workflowState","testResults","dueDate"]
+            gridColumnsOrder = ["title","parentType","workflowState","testResults","dueDate","reviewer"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             let title = Procedure.terminology[key]!
             switch key {
-            case "title": addColumnWithTitle(key, title: title, width: 285, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "title": addColumnWithTitle(key, title: title, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
             default: addColumnWithTitle(key, title: title, width: 150, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
             }

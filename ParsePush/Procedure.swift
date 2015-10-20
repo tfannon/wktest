@@ -13,20 +13,23 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
 
         self.testResults = 0
-        self.dueDate = NSDate()
+        self.parentType = 0
+        //self.dueDate = NSDate()
         self.resultsText1 = ""
     }
     
     // used for creating one from scratch
     override init() {
         self.testResults = 0
-        self.dueDate = NSDate()
+        self.parentType = 0
+        //self.dueDate = NSDate()
         self.resultsText1 = ""
     }
     
     static var terminology = [
         "title":"Title",
         "parent":"Parent",
+        "parentType":"Parent Type",
         "dueDate":"Due Date",
         "tester":"Tester",
         "reviewer":"Reviewer",
@@ -42,19 +45,21 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     ]
     
     var id: Int?
+    var parent: String?
+    var parentType: Int = 0
     var title: String?
     var code: String?
     var text1: String?
     var text2: String?
     var text3: String?
     var text4: String?
-    var dueDate: NSDate
+    var dueDate: NSDate?
     var testResults: Int = 0
     var resultsText1: String
     var resultsText2: String?
     var resultsText3: String?
     var resultsText4: String?
-    var reviewDueDate: String?
+    var reviewDueDate: NSDate?
     var tester: String?
     var reviewer: String?
     var workflowState: Int = 0
@@ -65,10 +70,10 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     func mapping(map: Map) {
         id <- map["Id"]
         title <- map["Title"]
+        parent <- map["Parent"]
+        parentType <- map["ParentType"]
         workflowState <- map["WorkflowState"]
         code <- map["Code"]
-        dueDate <- map["DueDate"]
-        reviewDueDate <- map["ReviewDueDate"]
         text1 <- map["Text1"]
         text2 <- map["Text2"]
         text3 <- map["Text3"]
@@ -81,9 +86,20 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText3 <- map["Results.ResultsText3"]
         resultsText4 <- map["Results.ResultsText4"]
         readOnly <- map["ReadOnly"]
+        
+        //todo: make this a shared function pointer
+        dueDate <- (map["DueDate"], TransformOf<NSDate?, String>(
+            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
+            toJSON: { $0.map { $0!.toIsoString() } }))
+        
+        dueDate <- (map["ReviewDueDate"], TransformOf<NSDate?, String>(
+            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
+            toJSON: { $0.map { $0!.toIsoString() } }))
     }
     
+    
     override var description: String {
-        return "\(title!) \(text1!) \(testResults) \(resultsText1) \(dueDate)"
+        return "\(title!) \(text1) \(testResults) \(resultsText1) \(dueDate)"
     }
 }
+
