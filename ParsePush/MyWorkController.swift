@@ -26,11 +26,12 @@ class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSour
         grid.dataSource = self
         
         var col = SDataGridColumn(title: "Title", forProperty: "title")
-        col.width = 250
+        col.width = 225
         col.sortMode = SDataGridColumnSortModeTriState
         grid.addColumn(col)
         
         col = SDataGridColumn(title: "State", forProperty: "workflowState"/* cellType:WorkflowStateCell.self, headerCellType:nil*/)
+        col.width = 150
         col.sortMode = SDataGridColumnSortModeTriState
         grid.addColumn(col)
 
@@ -91,7 +92,7 @@ class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSour
             case "Text1": text = procedure.text1
             case "Text2": text = procedure.text2
             case "Text3": text = procedure.text3
-            case "Result": text = procedure.testResults! == 1 ? "Fail" : "Pass"
+            case "Result": text = procedure.testResults == 1 ? "Fail" : "Pass"
             case "Result 1": text = procedure.resultsText1
             case "Result 2": text = procedure.resultsText2
             case "Result 3": text = procedure.resultsText3

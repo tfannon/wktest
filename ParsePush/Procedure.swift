@@ -11,12 +11,14 @@ import ObjectMapper
 
 class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
-        self.workflowState = 1
+        self.workflowState = 0
+        self.testResults = 1
     }
     
     // used for creating one from scratch
     override init() {
         self.workflowState = 1
+        self.testResults = 1
     }
     
     static var terminology = [
@@ -43,7 +45,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var text3: String?
     var text4: String?
     var dueDate: String?
-    var testResults: Int?
+    dynamic var testResults: Int
     var resultsText1: String?
     var resultsText2: String?
     var resultsText3: String?
@@ -53,10 +55,13 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var reviewer: String?
     dynamic var workflowState: Int
     var readOnly  : Bool?
+    
+    var foo: String?
 
     func mapping(map: Map) {
         id <- map["Id"]
         title <- map["Title"]
+        workflowState <- map["WorkflowState"]
         code <- map["Code"]
         dueDate <- map["DueDate"]
         reviewDueDate <- map["ReviewDueDate"]
