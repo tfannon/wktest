@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Test-->
+        <!--Test Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="TestController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
@@ -27,8 +27,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="269" width="103" height="21"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="57" width="105" height="21"/>
                                 </variation>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zvx-9e-MNm">
@@ -39,8 +39,8 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="161" y="265" width="170" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="150" y="54" width="143" height="30"/>
                                 </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AkQ-tf-u7H">
@@ -71,8 +71,8 @@
                                 <rect key="frame" x="25" y="270" width="105" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Count"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="108" width="42" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="269.5" width="105" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="countPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aRS-0s-L9z"/>
@@ -82,8 +82,8 @@
                                 <rect key="frame" x="25" y="157" width="105" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Procedures"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="373" width="79" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="156.5" width="105" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="proceduresPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="epQ-sX-NE5"/>
@@ -95,16 +95,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="161" y="373" width="170" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="150" y="148" width="143" height="30"/>
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnH-4i-QhM">
                                 <rect key="frame" x="25" y="318" width="105" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Notifications"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="170" width="87" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="317.5" width="105" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="getNotificationsPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XzZ-Oq-I8U"/>
@@ -134,6 +134,9 @@
                                 <rect key="frame" x="25" y="204" width="105" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Edit Proc"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="203" width="105" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="editProcedurePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Exy-Hf-rpI"/>
                                 </connections>
@@ -142,8 +145,8 @@
                                 <rect key="frame" x="28" y="362" width="102" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Mark Read"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="50" y="214" width="74" height="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="28" y="361.5" width="102" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="markReadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m76-sq-vQ2"/>
@@ -195,7 +198,7 @@
                             <constraint firstItem="z25-cC-dZS" firstAttribute="leading" secondItem="zvx-9e-MNm" secondAttribute="leading" id="yoj-tg-oY5"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Test" image="739-question" id="1lT-eR-BPV"/>
+                    <navigationItem key="navigationItem" id="kBh-l0-xqp"/>
                     <connections>
                         <outlet property="imgLoginResult" destination="BGA-ai-Bla" id="hCM-HC-Mde"/>
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
@@ -207,7 +210,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-26" y="-52"/>
+            <point key="canvasLocation" x="891" y="-52.5"/>
         </scene>
         <!--My Work-->
         <scene sceneID="F0i-f2-eBA">
@@ -240,7 +243,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
+                        <segue destination="y1E-FG-ITs" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
                         <segue destination="ijE-Ru-gol" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
                     </connections>
@@ -371,6 +374,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuR-S4-K5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-36" y="678"/>
+        </scene>
+        <!--Test-->
+        <scene sceneID="IfG-AD-YmQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y1E-FG-ITs" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Test" image="739-question" id="1lT-eR-BPV"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="euD-kI-WlI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="spK-Z0-fTV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5qQ-wO-zFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-27" y="-52.5"/>
         </scene>
     </scenes>
     <resources>

@@ -48,6 +48,8 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func editProcedurePressed(sender: AnyObject) {
+        let vc = ProcedureFormControllerViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
