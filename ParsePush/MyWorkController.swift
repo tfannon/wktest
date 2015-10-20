@@ -55,11 +55,16 @@ class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSour
         col.sortMode = SDataGridColumnSortModeTriState
         grid.addColumn(col)
         
+        grid.showPullToAction = true
+
+        
         self.view.addSubview(grid)
         self.grid = grid
         
         self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
         self.dataSourceHelper.delegate = self
+        
+
         
         getProcedures()
     }
@@ -88,7 +93,7 @@ class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSour
         var text: String?
         switch textCell.coordinate.column.title {
             case "Title" : text = procedure.title
-            case "Due Date": text = procedure.dueDate?.toString(format: DateFormat.DotNet)
+            //case "Due Date": text = procedure.dueDate?.toString(format: DateFormat.DotNet)
             case "Text1": text = procedure.text1
             case "Text2": text = procedure.text2
             case "Text3": text = procedure.text3

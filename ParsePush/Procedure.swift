@@ -11,14 +11,17 @@ import ObjectMapper
 
 class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
-        self.workflowState = 0
-        self.testResults = 1
+
+        self.testResults = 0
+        self.dueDate = NSDate()
+        self.resultsText1 = ""
     }
     
     // used for creating one from scratch
     override init() {
-        self.workflowState = 1
-        self.testResults = 1
+        self.testResults = 0
+        self.dueDate = NSDate()
+        self.resultsText1 = ""
     }
     
     static var terminology = [
@@ -44,16 +47,16 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var text2: String?
     var text3: String?
     var text4: String?
-    var dueDate: NSDate?
-    var testResults: Int?
-    var resultsText1: String?
+    var dueDate: NSDate
+    var testResults: Int = 0
+    var resultsText1: String
     var resultsText2: String?
     var resultsText3: String?
     var resultsText4: String?
     var reviewDueDate: String?
     var tester: String?
     var reviewer: String?
-    dynamic var workflowState: Int
+    var workflowState: Int = 0
     var readOnly  : Bool?
     
     var foo: String?
@@ -79,7 +82,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         readOnly <- map["ReadOnly"]
     }
     
-    override var debugDescription: String {
-        return "\(title!) \(text1) \(testResults) \(resultsText1) \(dueDate)"
+    override var description: String {
+        return "\(title!) \(text1!) \(testResults) \(resultsText1) \(dueDate)"
     }
 }
