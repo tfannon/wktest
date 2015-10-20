@@ -28,7 +28,6 @@
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
-		65D381241BCDFC9B00E4C74B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D381231BCDFC9B00E4C74B /* QuartzCore.framework */; };
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; settings = {ASSET_TAGS = (); }; };
 		65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812D1BCE078000E4C74B /* ShinobiForms.framework */; settings = {ASSET_TAGS = (); }; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
@@ -36,6 +35,7 @@
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; settings = {ASSET_TAGS = (); }; };
 		66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E65F641BD5B4D200B8B351 /* Procedure.storyboard */; settings = {ASSET_TAGS = (); }; };
 		66E65F6A1BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -85,6 +85,7 @@
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		66E65F651BD5B4D200B8B351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Procedure.storyboard; sourceTree = "<group>"; };
 		66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureFormControllerViewController.swift; sourceTree = "<group>"; };
+		66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -94,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65D381241BCDFC9B00E4C74B /* QuartzCore.framework in Frameworks */,
+				66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */,
 				659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */,
 				659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */,
 				659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */,
@@ -227,6 +228,7 @@
 		659D1C741BA7C4B00023AAFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */,
 				D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */,
 			);
 			name = Frameworks;
