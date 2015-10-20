@@ -7,17 +7,32 @@
 //
 
 import UIKit
+import Eureka
 
-class ProcedureFormControllerViewController: UIViewController, SFormDelegate {
+
+
+class ProcedureFormControllerViewController: FormViewController {
     
-    private var scrollView : UIScrollView!
-    private var scrollManager : SFormScrollViewManager!
     var procedure : Procedure!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.whiteColor()
         
+        self.form +++ Section()
+            <<< TextRow() {
+                $0.placeholder = "Title"
+                $0.value = self.procedure.title
+            }
+            <<< TextRow() {
+                $0.placeholder = "Code"
+                $0.value = self.procedure.code
+            }
+            <<< TextRow() {
+                $0.placeholder = "Code"
+                $0.value = self.procedure.code
+        }
     }
     
     override func didReceiveMemoryWarning() {
