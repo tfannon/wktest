@@ -30,7 +30,6 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtIPAddress: UITextField!
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var imgLoginResult: UIImageView!
-    @IBOutlet weak var lblAssessment: UILabel!
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var lblProcedures: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
@@ -47,6 +46,9 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    @IBAction func editProcedurePressed(sender: AnyObject) {
+    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -84,14 +86,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     }
 
 
-    @IBAction func assessmentPressed(sender: AnyObject) {
-        self.lblAssessment.text = ""
-        Services.GetPOCAssessmentId { id in
-            self.lblAssessment.text = String(id!)
-        }
-    }
-    
-
+   
     @IBAction func proceduresPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
         Services.getMyProcedures { result in
