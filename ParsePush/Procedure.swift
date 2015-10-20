@@ -29,7 +29,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     static var terminology = [
         "title":"Title",
         "parent":"Parent",
-        "parentType":"Parent Type",
+        "parentType":"Parent",
+        "code":"Code",
         "dueDate":"Due Date",
         "tester":"Tester",
         "reviewer":"Reviewer",
