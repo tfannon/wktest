@@ -26,6 +26,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     
     static var terminology = [
         "title":"Title",
+        "code":"Code",
         "dueDate":"Due Date",
         "tester":"Tester",
         "reviewer":"Reviewer",
@@ -39,6 +40,10 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         "resultsText2":"Conclusion",
         "resultsText3":"Notes"
     ]
+    
+    static func getTerminology(key : String) -> String{
+        return terminology[key] ?? ""
+    }
     
     var id: Int?
     var title: String?

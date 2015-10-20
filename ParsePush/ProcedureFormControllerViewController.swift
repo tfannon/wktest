@@ -15,23 +15,52 @@ class ProcedureFormControllerViewController: FormViewController {
     
     var procedure : Procedure!
     
+    private func t(key : String) -> String
+    {
+        return Procedure.getTerminology(key)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        self.form +++ Section()
+        self.form
+            +++ Section()
             <<< TextRow() {
-                $0.placeholder = "Title"
+                $0.title = self.t("title") + ":"
+                $0.placeholder = self.t("title")
                 $0.value = self.procedure.title
             }
-            <<< TextRow() {
-                $0.placeholder = "Code"
-                $0.value = self.procedure.code
+            .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
             }
             <<< TextRow() {
-                $0.placeholder = "Code"
+                $0.title = self.t("code") + ":"
+                $0.placeholder = self.t("code")
                 $0.value = self.procedure.code
+            }
+                .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
+            }
+            +++ Section()
+            <<< DateRow() {
+                $0.title = self.t("dueDate") + ":"
+                $0.value = self.procedure.dueDate
+            }
+                .cellUpdate {
+                    $0.cell.textLabel?.textAlignment = .Right
+            }
+            +++ Section()
+            <<< TextRow() {
+                $0.title = self.t("tester") + ":"
+                $0.value = self.procedure.tester
+             }
+                .cellUpdate {
+                    $0.cell.textField.textAlignment = .Left
+                    $0.cell.textLabel?.textAlignment = .Right
         }
     }
     
