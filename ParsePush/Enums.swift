@@ -19,6 +19,22 @@ enum NotificationType: Int {
     case Workflow = 1
 }
 
+enum TestResultsType: Int {
+    case NotTested = 0
+    case Pass = 1
+    case Fail = 2
+    var imageName: String {
+        get {
+            switch self {
+            case .NotTested: return "icons_notstarted"
+            case .Pass: return  "icons_inprogress"
+            case .Fail: return "icons_completed"
+            }
+        }
+    }
+    
+}
+
 enum WorkflowState: Int {
     case NotStarted = 1
     case InProgress = 2

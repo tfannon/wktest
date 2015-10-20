@@ -9,11 +9,31 @@
 import Foundation
 import ObjectMapper
 
-class Procedure : Mappable, CustomDebugStringConvertible {
-    required init(_ map: Map){}
+class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
+    required init(_ map: Map) {
+        self.workflowState = 1
+    }
     
     // used for creating one from scratch
-    init() {}
+    override init() {
+        self.workflowState = 1
+    }
+    
+    static var terminology = [
+        "title":"Title",
+        "dueDate":"Due Date",
+        "tester":"Tester",
+        "reviewer":"Reviewer",
+        "reviewDueDate":"Review Due Date",
+        "text1":"Details",
+        "text2":"Scope",
+        "text3":"Purpose",
+        "testResults":"Results",
+        "workflowState":"State",
+        "resultsText1":"Record of Work Done",
+        "resultsText2":"Conclusion",
+        "resultsText3":"Notes"
+    ]
     
     var id: Int?
     var title: String?
@@ -31,7 +51,7 @@ class Procedure : Mappable, CustomDebugStringConvertible {
     var reviewDueDate: String?
     var tester: String?
     var reviewer: String?
-    var workflowState: Int?
+    dynamic var workflowState: Int
     var readOnly  : Bool?
 
     func mapping(map: Map) {
@@ -54,7 +74,7 @@ class Procedure : Mappable, CustomDebugStringConvertible {
         readOnly <- map["ReadOnly"]
     }
     
-    var debugDescription: String {
+    override var debugDescription: String {
         return "\(title!) \(text1) \(testResults) \(resultsText1) \(dueDate)"
     }
 }
