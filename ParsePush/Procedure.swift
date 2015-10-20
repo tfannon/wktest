@@ -9,11 +9,36 @@
 import Foundation
 import ObjectMapper
 
-class Procedure : Mappable, CustomDebugStringConvertible {
-    required init(_ map: Map){}
+class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
+    required init(_ map: Map) {
+
+        self.testResults = 0
+        self.dueDate = NSDate()
+        self.resultsText1 = ""
+    }
     
     // used for creating one from scratch
-    init() {}
+    override init() {
+        self.testResults = 0
+        self.dueDate = NSDate()
+        self.resultsText1 = ""
+    }
+    
+    static var terminology = [
+        "title":"Title",
+        "dueDate":"Due Date",
+        "tester":"Tester",
+        "reviewer":"Reviewer",
+        "reviewDueDate":"Review Due Date",
+        "text1":"Details",
+        "text2":"Scope",
+        "text3":"Purpose",
+        "testResults":"Results",
+        "workflowState":"State",
+        "resultsText1":"Record of Work Done",
+        "resultsText2":"Conclusion",
+        "resultsText3":"Notes"
+    ]
     
     var id: Int?
     var title: String?
@@ -22,21 +47,24 @@ class Procedure : Mappable, CustomDebugStringConvertible {
     var text2: String?
     var text3: String?
     var text4: String?
-    var dueDate: NSDate?
-    var testResults: Int?
-    var resultsText1: String?
+    var dueDate: NSDate
+    var testResults: Int = 0
+    var resultsText1: String
     var resultsText2: String?
     var resultsText3: String?
     var resultsText4: String?
     var reviewDueDate: String?
     var tester: String?
     var reviewer: String?
-    var workflowState: Int?
+    var workflowState: Int = 0
     var readOnly  : Bool?
+    
+    var foo: String?
 
     func mapping(map: Map) {
         id <- map["Id"]
         title <- map["Title"]
+        workflowState <- map["WorkflowState"]
         code <- map["Code"]
         dueDate <- map["DueDate"]
         reviewDueDate <- map["ReviewDueDate"]
@@ -54,7 +82,7 @@ class Procedure : Mappable, CustomDebugStringConvertible {
         readOnly <- map["ReadOnly"]
     }
     
-    var debugDescription: String {
-        return "\(title!) \(text1) \(testResults) \(resultsText1) \(dueDate)"
+    override var description: String {
+        return "\(title!) \(text1!) \(testResults) \(resultsText1) \(dueDate)"
     }
 }
