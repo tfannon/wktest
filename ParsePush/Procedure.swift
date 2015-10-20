@@ -22,7 +22,7 @@ class Procedure : Mappable, CustomDebugStringConvertible {
     var text2: String?
     var text3: String?
     var text4: String?
-    var dueDate: String?
+    var dueDate: NSDate?
     var testResults: Int?
     var resultsText1: String?
     var resultsText2: String?

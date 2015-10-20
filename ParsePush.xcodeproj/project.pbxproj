@@ -36,6 +36,8 @@
 		66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E65F641BD5B4D200B8B351 /* Procedure.storyboard */; settings = {ASSET_TAGS = (); }; };
 		66E65F6A1BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */; };
+		66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F711BD5D94700B8B351 /* AFDateExtension.swift */; settings = {ASSET_TAGS = (); }; };
+		66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */; settings = {ASSET_TAGS = (); }; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,8 @@
 		66E65F651BD5B4D200B8B351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Procedure.storyboard; sourceTree = "<group>"; };
 		66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureFormControllerViewController.swift; sourceTree = "<group>"; };
 		66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		66E65F711BD5D94700B8B351 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
+		66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtensions.swift; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -145,6 +149,8 @@
 		65768ADD1BA641C500DADD43 /* ParsePush */ = {
 			isa = PBXGroup;
 			children = (
+				66E65F731BD5DABD00B8B351 /* Utility */,
+				66E65F6E1BD5D83800B8B351 /* 3rdParty */,
 				659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
 				659A64CC1BBF1C6D0047AAD3 /* MT */,
@@ -232,6 +238,22 @@
 				D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		66E65F6E1BD5D83800B8B351 /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				66E65F711BD5D94700B8B351 /* AFDateExtension.swift */,
+			);
+			name = 3rdParty;
+			sourceTree = "<group>";
+		};
+		66E65F731BD5DABD00B8B351 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */,
+			);
+			name = Utility;
 			sourceTree = "<group>";
 		};
 		6A4815727514AC2917AEEDCF /* Pods */ = {
@@ -399,6 +421,8 @@
 			files = (
 				6518EF7A1BD347C000DD558A /* PassFailCell.swift in Sources */,
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
+				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
+				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,

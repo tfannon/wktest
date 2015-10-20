@@ -8,13 +8,17 @@
 
 import UIKit
 
-class ProcedureFormControllerViewController: UIViewController  {
-
-    var scrollView : UIScrollView!
-    var scrollManager : SFormScrollViewManager!
-
+class ProcedureFormControllerViewController: UIViewController, SFormDelegate {
+    
+    private var scrollView : UIScrollView!
+    private var scrollManager : SFormScrollViewManager!
+    var procedure : Procedure!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // background color
+        self.view.backgroundColor = UIColor.whiteColor()
         
         // Do any additional setup after loading the view.
         // Create the section & field models.
@@ -22,9 +26,11 @@ class ProcedureFormControllerViewController: UIViewController  {
         // Create the form model.
         let form = ShinobiForm ()
         form.sections.append(section)
-
+        form.delegate = self
+        
         // Build the views.
         let formView = SFormFormViewBuilder().buildViewFromModel(form)
+        formView.sizeToFit()
         
         // Create a scroll view.
         let scrollView = UIScrollView(frame: self.view.bounds)
@@ -44,7 +50,6 @@ class ProcedureFormControllerViewController: UIViewController  {
         
         // Create a scroll view manager to manage your field navigation & inset management.
         self.scrollManager = SFormScrollViewManager(scrollView: self.scrollView)
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,15 +57,20 @@ class ProcedureFormControllerViewController: UIViewController  {
         // Dispose of any resources that can be recreated.
     }
     
-    func createFields() -> [SFormField]
+    private func createFields() -> [SFormField]
     {
         //Create enough fields to be scrollable.
         var fields = [SFormField]()
-        for (var fieldIndex = 0; fieldIndex < 20; fieldIndex++) {
-            let fieldTitle = "Field \(fieldIndex)"
-            let field = SFormTextField(title: fieldTitle)
-            fields.append(field)
-        }
+        
+        fields.append(SFormTextField(title: "Title"))
+        fields.append(SFormTextField(title: "Code"))
+        fields.append(SFormDateField(title: "Due Date"))
+        fields.append(SFormTextField(title: "Details"))
+        
+        fields[0].value = procedure.title
+        fields[1].value = procedure.code
+        fields[2].value = procedure.dueDate
+        fields[3].value = procedure.text1
         
         return fields
     }
