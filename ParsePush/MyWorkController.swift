@@ -54,7 +54,8 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
             let title = Procedure.terminology[key]!
             switch key {
             case "title": addColumnWithTitle(key, title: title, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
-            case "parentType": addColumnWithTitle(key, title: "_", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+
+            case "parentType": addColumnWithTitle(key, title: "_", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:WorkflowStateCell.self)
 
             case "workflowState": addColumnWithTitle(key, title: "State", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:WorkflowStateCell.self)
             
@@ -96,6 +97,13 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
             let wCell = cell as! WorkflowStateCell
             wCell.state = workflowState
             return true;
+            
+        case "parentType" :
+            let parentType = ObjectType(rawValue: procedure.parentType)!
+            let wCell = cell as! WorkflowStateCell
+            //wCell.state = workflowState
+            return true;
+            
         default: return false
         }
     }
