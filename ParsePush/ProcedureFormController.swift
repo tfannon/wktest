@@ -84,7 +84,7 @@ class ProcedureFormControllerViewController: FormViewController {
             <<< AlertRow<String>() {
                 $0.title = self.t("workflowState")
                 $0.selectorTitle = self.t("workflowState")
-                $0.options = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates)
+                $0.options = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates, current: WorkflowState(rawValue: self.procedure.workflowState))
                 $0.value = WorkflowState(rawValue: self.procedure.workflowState)?.displayName
             }
             .cellSetup { cell, row in
