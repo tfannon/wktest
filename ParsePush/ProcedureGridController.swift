@@ -55,9 +55,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             switch key {
             case "title": addColumnWithTitle(key, title: title!, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
-            case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), cellClass:WorkflowStateCell.self)
+            case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), cellClass:DataGridImageCell.self)
 
-            case "workflowState": addColumnWithTitle(key, title: title!, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:WorkflowStateCell.self)
+            case "workflowState": addColumnWithTitle(key, title: title!, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
                 
 //            case "workflowStateTitle": addColumnWithTitle(key, title: "", width: 125, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
@@ -99,7 +99,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         switch (propertyKey) {
             
         case "workflowState" :
-            let wCell = cell as! WorkflowStateCell
+            let wCell = cell as! DataGridImageCell
             wCell.state = WorkflowState(rawValue: procedure.workflowState)!
             //wCell.imageProvider = WorkflowState(rawValue: procedure.workflowState)!
             return true
@@ -110,7 +110,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
 //            return true
             
         case "parentType" :
-            let wCell = cell as! WorkflowStateCell
+            let wCell = cell as! DataGridImageCell
             wCell.parentType = ObjectType(rawValue: procedure.parentType)!
             //wCell.imageProvider = ObjectType(rawValue: procedure.parentType)!
             return true

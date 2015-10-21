@@ -9,7 +9,7 @@
 import Foundation
 
 /* this should be changed to a protocol because the only thing that matters is the displayImage */
-class WorkflowStateCell : SDataGridCell {
+class DataGridImageCell : SDataGridCell {
     private var _state: WorkflowState!
     private var _parentType: ObjectType!
     private var _imageView: UIImageView!
