@@ -84,6 +84,13 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.options = WorkflowState.displayNames
                 $0.value = WorkflowState(rawValue: self.procedure.workflowState)?.displayName
             }
+            .cellSetup { cell, row in
+                cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+            }
+            .cellUpdate { cell, row in
+                self.procedure.workflowState = WorkflowState.getFromDisplayName(row.value!).rawValue
+                cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+            }
             
             +++ Section("Details")
             <<< TextAreaRow() {

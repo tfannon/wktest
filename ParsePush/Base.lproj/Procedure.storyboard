@@ -23,7 +23,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rdm-DO-hXw" firstAttribute="top" secondItem="hFJ-8o-ltO" secondAttribute="top" id="2M4-00-bI2"/>
+                            <constraint firstItem="rdm-DO-hXw" firstAttribute="top" secondItem="hFJ-8o-ltO" secondAttribute="top" constant="60" id="2M4-00-bI2"/>
                             <constraint firstItem="rdm-DO-hXw" firstAttribute="bottom" secondItem="zXY-dq-eHW" secondAttribute="top" id="cxJ-9e-48v"/>
                             <constraint firstItem="rdm-DO-hXw" firstAttribute="leading" secondItem="hFJ-8o-ltO" secondAttribute="leading" id="gJf-ms-6us"/>
                             <constraint firstAttribute="trailing" secondItem="rdm-DO-hXw" secondAttribute="trailing" id="ptZ-0c-uaS"/>

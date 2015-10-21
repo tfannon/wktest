@@ -37,26 +37,19 @@ enum TestResultsType: Int {
  
     static let displayNames = Array(lookup
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
-        .map{ x in x.1.displayName })
+        .map{ x in x.1 })
 
-    private static let lookup : [TestResultsType : (imageName : String, displayName : String)] =
+    private static let lookup : [TestResultsType : String] =
     [
-        .NotTested:("icons_notstarted", "Not Started"),
-        .Pass:("icons_inprogress", "In Progress"),
-        .Fail:("icons_completed", "Completed"),
+        .NotTested:("Not Started"),
+        .Pass:("In Progress"),
+        .Fail:("Completed"),
     ]
-    
-    var imageName : String {
-        get
-        {
-            return TestResultsType.lookup[self]!.imageName
-        }
-    }
     
     var displayName : String {
         get
         {
-            return TestResultsType.lookup[self]!.displayName
+            return TestResultsType.lookup[self]!
         }
     }
     
@@ -87,6 +80,15 @@ enum WorkflowState: Int {
     static let displayNames = Array(lookup
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1.displayName })
+    
+    static func getFromDisplayName(displayName : String) -> WorkflowState
+    {
+        let v = lookup
+            .filter { x in x.1.displayName == displayName }
+            .map { x in x.0 }
+        
+        return v[0]
+    }
     
     var imageName : String {
         get
