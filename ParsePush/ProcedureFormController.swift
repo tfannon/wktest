@@ -84,7 +84,7 @@ class ProcedureFormControllerViewController: FormViewController {
             <<< AlertRow<String>() {
                 $0.title = self.t("workflowState")
                 $0.selectorTitle = self.t("workflowState")
-                $0.options = WorkflowState.displayNames
+                $0.options = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates)
                 $0.value = WorkflowState(rawValue: self.procedure.workflowState)?.displayName
             }
             .cellSetup { cell, row in
@@ -120,7 +120,7 @@ class ProcedureFormControllerViewController: FormViewController {
             
             <<< SegmentedRow<String>() {
                 $0.title = self.t("testResults")
-                $0.options = Array(TestResults.displayNames)
+                $0.options = TestResults.displayNames
                 $0.value = TestResults(rawValue: self.procedure.testResults)?.displayName
             }
             .cellUpdate { cell, row in

@@ -47,6 +47,17 @@ enum TestResults: Int {
         .Fail:"Fail",
     ]
 
+    static func getFilteredDisplayNames(included : [Int]?) -> [String]
+    {
+        if (included == nil)
+        {
+            return [String]()
+        }
+        
+        let includedNames = Array(included!.map { x in TestResults(rawValue: x)!.displayName })
+        return Array(displayNames.filter { x in includedNames.contains(x) })
+    }
+    
     static func getFromDisplayName(displayName : String) -> TestResults
     {
         // populate the lookup for display name if it's not already populated
@@ -95,6 +106,17 @@ enum WorkflowState: Int {
     
     private static var displayNameLookup = [String : WorkflowState]()
 
+    static func getFilteredDisplayNames(included : [Int]?) -> [String]
+    {
+        if (included == nil)
+        {
+            return [String]()
+        }
+        
+        let includedNames = Array(included!.map { x in WorkflowState(rawValue: x)!.displayName })
+        return Array(displayNames.filter { x in includedNames.contains(x) })
+    }
+    
     static let displayNames = Array(lookup
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1.displayName })

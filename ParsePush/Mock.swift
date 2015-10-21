@@ -42,6 +42,7 @@ class Mock {
         procedure.resultsText2 = text1
         procedure.resultsText3 = text1
         procedure.resultsText4 = text1
+        procedure.allowedStates = [1, 2, 3, 5]
         
         return procedure
     }
