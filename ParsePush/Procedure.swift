@@ -34,11 +34,13 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         "text1":"Details",
         "text2":"Scope",
         "text3":"Purpose",
+        "text4":"Sample Criteria",
         "testResults":"Results",
         "workflowState":"State",
         "resultsText1":"Record of Work Done",
         "resultsText2":"Conclusion",
-        "resultsText3":"Notes"
+        "resultsText3":"Notes",
+        "resultsText4":"Results 4"
     ]
     
     static func getTerminology(key : String) -> String{
@@ -58,7 +60,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var resultsText2: String?
     var resultsText3: String?
     var resultsText4: String?
-    var reviewDueDate: String?
+    var reviewDueDate: NSDate?
     var tester: String?
     var reviewer: String?
     var workflowState: Int = 0
