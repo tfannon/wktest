@@ -30,7 +30,7 @@ enum NotificationType: Int {
     case Workflow = 1
 }
 
-enum TestResultsType: Int {
+enum TestResults: Int {
     case NotTested = 0
     case Pass = 1
     case Fail = 2
@@ -43,7 +43,15 @@ enum TestResultsType: Int {
             }
         }
     }
-    
+    var displayName: String {
+        get {
+            switch self {
+            case .NotTested: return "Not Tested"
+            case .Pass: return  "Pass"
+            case .Fail: return "Fail"
+            }
+        }
+    }
 }
 
 enum WorkflowState: Int {
@@ -67,6 +75,20 @@ enum WorkflowState: Int {
             }
         }
     }
+    
+    var displayName: String {
+        get {
+            switch self {
+            case .NotStarted: return "Not Started"
+            case .InProgress: return  "In Progress"
+            case .Completed: return "Completed"
+            case .Reviewed: return "Reviewed"
+            default: return "sir not appearing in this film"
+            }
+        }
+    }
+    
+
 }
 
 enum SecurityRole {
