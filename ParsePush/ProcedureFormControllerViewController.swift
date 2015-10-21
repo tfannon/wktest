@@ -14,11 +14,28 @@ import Eureka
 class ProcedureFormControllerViewController: FormViewController {
     
     var procedure : Procedure!
+    let workflowToString = [
+        1:"Not Started",
+        2:"In Progress",
+        3:"Completed",
+        4:"Implemented",
+        5:"Reviewed",
+        6:"Closed",
+        7:"Responded",
+        8:"Issued"
+    ]
+    let resultToString = [
+        0:"Not Tested",
+        1:"Passed",
+        2:"Failed"
+    ]
     
     private func t(key : String) -> String
     {
         return Procedure.getTerminology(key)
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +74,7 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.placeholder = self.t("code")
                 $0.value = self.procedure.code
             }
-            +++ Section("Due Date")
+            +++ Section("")
             <<< DateInlineRow() {
                 $0.title = self.t("dueDate") + ":"
                 $0.value = self.procedure.dueDate
@@ -76,6 +93,15 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.title = self.t("reviewDueDate") + ":"
                 $0.value = self.procedure.reviewDueDate
             }
+            
+            +++ Section("Workflow")
+            <<< AlertRow<String>() {
+                $0.title = self.t("workflowState")
+                $0.selectorTitle = self.t("workflowState")
+                $0.options = Array(self.workflowToString.values)
+                $0.value = self.workflowToString[self.procedure.workflowState]
+            }
+            
             +++ Section("Details")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("text1")
@@ -106,6 +132,12 @@ class ProcedureFormControllerViewController: FormViewController {
                 cell.textLabel?.textColor = UIColor.whiteColor()
             }
             +++ Section()
+            
+            <<< SegmentedRow<String>() {
+                $0.title = self.t("testResults")
+                $0.options = Array(self.resultToString.values)
+                $0.value = self.resultToString[self.procedure.testResults]
+            }
             
             +++ Section("Scope")
             <<< TextAreaRow() {
