@@ -39,17 +39,17 @@ enum TestResults: Int {
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1 })
 
-    private static let lookup : [TestResultsType : String] =
+    private static let lookup : [TestResults : String] =
     [
-        .NotTested:("Not Started"),
-        .Pass:("In Progress"),
-        .Fail:("Completed"),
+        .NotTested:("Not Tested"),
+        .Pass:("Pass"),
+        .Fail:("Fail"),
     ]
     
     var displayName : String {
         get
         {
-            return TestResultsType.lookup[self]!
+            return TestResults.lookup[self]!
         }
     }
     
