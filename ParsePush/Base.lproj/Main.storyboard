@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -212,10 +212,10 @@
             </objects>
             <point key="canvasLocation" x="891" y="-52.5"/>
         </scene>
-        <!--My Work-->
+        <!--Procedures-->
         <scene sceneID="F0i-f2-eBA">
             <objects>
-                <viewController id="ijE-Ru-gol" customClass="MyWorkController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ijE-Ru-gol" customClass="ProcedureGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="W49-nF-pBv"/>
                         <viewControllerLayoutGuide type="bottom" id="pJk-Sa-gT4"/>
@@ -226,7 +226,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Work" image="740-gear" id="Rlm-2a-ick"/>
+                    <tabBarItem key="tabBarItem" title="Procedures" image="740-gear" id="Rlm-2a-ick"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBr-tS-B5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

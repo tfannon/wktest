@@ -11,6 +11,8 @@ import Foundation
 class WorkflowStateCell : SDataGridCell {
     private var _state: WorkflowState!
     private var _parentType: ObjectType!
+    private var _imageView: UIImage = UIImage()
+    var image: UIImage!
 
     var state: WorkflowState! {
         get {
@@ -41,7 +43,7 @@ class WorkflowStateCell : SDataGridCell {
     }
     
     
-    var image: UIImage!
+
     
     required init!(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
+class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate {
     
     var items: [Procedure] = []
     var grid: ShinobiDataGrid!
@@ -21,15 +21,15 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 10, 50))
+        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
         self.view.addSubview(grid)
         self.grid.showPullToAction = true
+        self.grid.pullToAction.delegate = self
         
         self.addColumns()
         self.createDataSource()
         getProcedures {
             self.dataSourceHelper.data = self.items
-            //self.grid.reload()
         }
     }
     
@@ -125,17 +125,18 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
         }
     }
     
-    
-    func donePressed() {
-        self.dismissViewControllerAnimated(false, completion: nil)
-    }
-    
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "donePressed")
         let controller = ProcedureFormControllerViewController()
         controller.procedure = items[row.rowIndex]
         presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
+        getProcedures {
+            self.dataSourceHelper.data = self.items
+            self.grid.pullToAction.actionCompleted()
+        }
     }
     
 
