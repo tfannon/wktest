@@ -29,7 +29,6 @@
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; settings = {ASSET_TAGS = (); }; };
-		65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812D1BCE078000E4C74B /* ShinobiForms.framework */; settings = {ASSET_TAGS = (); }; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; settings = {ASSET_TAGS = (); }; };
@@ -81,7 +80,6 @@
 		659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParsePush-Bridging-Header.h"; sourceTree = "<group>"; };
 		65D381231BCDFC9B00E4C74B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiGrids.framework; sourceTree = "<group>"; };
-		65D3812D1BCE078000E4C74B /* ShinobiForms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiForms.framework; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 				659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */,
 				659D1C6C1BA7C4430023AAFD /* libicucore.dylib in Frameworks */,
 				65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */,
-				65D3812E1BCE078000E4C74B /* ShinobiForms.framework in Frameworks */,
 				65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */,
 				65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */,
 				65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */,
@@ -126,7 +123,6 @@
 		65768AD21BA641C500DADD43 = {
 			isa = PBXGroup;
 			children = (
-				65D3812D1BCE078000E4C74B /* ShinobiForms.framework */,
 				65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */,
 				659D1C741BA7C4B00023AAFD /* Frameworks */,
 				659D1C731BA7C4750023AAFD /* SystemFrameworks */,

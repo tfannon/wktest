@@ -117,8 +117,8 @@ class ProcedureFormControllerViewController: FormViewController {
             
             <<< SegmentedRow<String>() {
                 $0.title = self.t("testResults")
-                $0.options = Array(TestResultsType.displayNames)
-                $0.value = TestResultsType(rawValue: self.procedure.testResults)?.displayName
+                $0.options = Array(TestResults.displayNames)
+                $0.value = TestResults(rawValue: self.procedure.testResults)?.displayName
             }
             
             +++ Section("Scope")

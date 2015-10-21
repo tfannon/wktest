@@ -30,7 +30,7 @@ enum NotificationType: Int {
     case Workflow = 1
 }
 
-enum TestResultsType: Int {
+enum TestResults: Int {
     case NotTested = 0
     case Pass = 1
     case Fail = 2
@@ -103,6 +103,8 @@ enum WorkflowState: Int {
             return WorkflowState.lookup[self]!.displayName
         }
     }
+    
+
 }
 
 enum SecurityRole {
