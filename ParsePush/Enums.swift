@@ -12,6 +12,17 @@ enum ObjectType: Int {
     case Risk = 45
     case Control = 46
     case Procedure = 48
+    
+    var imageName: String {
+        get {
+            switch self {
+            case .Risk: return "icons_risk"
+            case .Control: return  "icons_control"
+            case .Procedure: return "icons_procedure"
+            }
+        }
+    }
+    
 }
 
 enum NotificationType: Int {

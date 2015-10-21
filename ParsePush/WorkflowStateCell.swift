@@ -10,6 +10,7 @@ import Foundation
 
 class WorkflowStateCell : SDataGridCell {
     private var _state: WorkflowState!
+    private var _parentType: ObjectType!
 
     var state: WorkflowState! {
         get {
@@ -24,6 +25,21 @@ class WorkflowStateCell : SDataGridCell {
             _state = val
         }
     }
+    
+    var parentType: ObjectType! {
+        get {
+            return _parentType
+        }
+        set(val) {
+            self.image = UIImage(named: val.imageName)
+            let imageView = UIImageView(image: image)
+            imageView.sizeToFit()
+            imageView.frame = CGRectMake(10, 3, image.size.width-5, image.size.height-5)
+            self.addSubview(imageView)
+            _parentType = val
+        }
+    }
+    
     
     var image: UIImage!
     

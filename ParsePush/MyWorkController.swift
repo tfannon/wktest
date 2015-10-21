@@ -99,9 +99,8 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
             return true;
             
         case "parentType" :
-            let parentType = ObjectType(rawValue: procedure.parentType)!
             let wCell = cell as! WorkflowStateCell
-            //wCell.state = workflowState
+            wCell.parentType = ObjectType(rawValue: procedure.parentType)!
             return true;
             
         default: return false
