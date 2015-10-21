@@ -39,35 +39,27 @@ enum TestResults: Int {
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1.displayName })
 
-    private static let lookup : [TestResultsType : (imageName : String, displayName : String)] =
+    private static let lookup : [TestResults : (imageName : String, displayName : String)] =
     [
-        .NotTested:("icons_notstarted", "Not Started"),
-        .Pass:("icons_inprogress", "In Progress"),
-        .Fail:("icons_completed", "Completed"),
+        .NotTested:("icons_notstarted", "Not Tested"),
+        .Pass:("icons_inprogress", "Pass"),
+        .Fail:("icons_completed", "Fail"),
     ]
     
     var imageName : String {
         get
         {
-            return TestResultsType.lookup[self]!.imageName
+            return TestResults.lookup[self]!.imageName
         }
     }
     
     var displayName : String {
         get
         {
-            return TestResultsType.lookup[self]!.displayName
+            return TestResults.lookup[self]!.displayName
         }
     }
-    var displayName: String {
-        get {
-            switch self {
-            case .NotTested: return "Not Tested"
-            case .Pass: return  "Pass"
-            case .Fail: return "Fail"
-            }
-        }
-    }
+    
 }
 
 enum WorkflowState: Int {
@@ -107,18 +99,6 @@ enum WorkflowState: Int {
         get
         {
             return WorkflowState.lookup[self]!.displayName
-        }
-    }
-    
-    var displayName: String {
-        get {
-            switch self {
-            case .NotStarted: return "Not Started"
-            case .InProgress: return  "In Progress"
-            case .Completed: return "Completed"
-            case .Reviewed: return "Reviewed"
-            default: return "sir not appearing in this film"
-            }
         }
     }
     
