@@ -70,11 +70,11 @@ enum WorkflowState: Int {
         .NotStarted:("icons_notstarted", "Not Started"),
         .InProgress:("icons_inprogress", "In Progress"),
         .Completed:("icons_completed", "Completed"),
-        .Implemented:("icons_notstarted", "Implemented"),
+        .Implemented:("icons_implemented", "Implemented"),
         .Reviewed:("icons_reviewed", "Reviewed"),
-        .Closed:("icons_notstarted", "Closed"),
-        .Responded:("icons_notstarted", "Responded"),
-        .Issued:("icons_notstarted", "Issued"),
+        .Closed:("icons_closed", "Closed"),
+        .Responded:("icons_responded", "Responded"),
+        .Issued:("icons_issued", "Issued"),
     ]
     
     static let displayNames = Array(lookup
