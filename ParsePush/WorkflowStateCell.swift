@@ -8,22 +8,41 @@
 
 import Foundation
 
+/* this should be changed to a protocol because the only thing that matters is the displayImage */
 class WorkflowStateCell : SDataGridCell {
     private var _state: WorkflowState!
     private var _parentType: ObjectType!
-    private var _imageView: UIImage = UIImage()
-    var image: UIImage!
+    private var _imageView: UIImageView!
+
+    
+    var imageView: UIImageView {
+        get {
+            if (_imageView == nil) {
+                _imageView = UIImageView()
+                self.addSubview(_imageView)
+            }
+            return _imageView
+        }
+    }
+
+//uncommenting this line causes the cell class to bomb
+//var _imageProvider: ImageProvider
+//    var imageProvider: ImageProvider! {
+//        get {
+//            return _imageProvider
+//        }
+//        set(val) {
+//            setImage(val.imageName)
+//            _imageProvider = val
+//        }
+//    }
 
     var state: WorkflowState! {
         get {
             return _state
         }
         set(val) {
-            self.image = UIImage(named: val.imageName)
-            let imageView = UIImageView(image: image)
-            imageView.sizeToFit()
-            imageView.frame = CGRectMake(10, 3, image.size.width-5, image.size.height-5)
-            self.addSubview(imageView)
+            setImage(val.imageName)
             _state = val
         }
     }
@@ -33,17 +52,17 @@ class WorkflowStateCell : SDataGridCell {
             return _parentType
         }
         set(val) {
-            self.image = UIImage(named: val.imageName)
-            let imageView = UIImageView(image: image)
-            imageView.sizeToFit()
-            imageView.frame = CGRectMake(10, 3, image.size.width-5, image.size.height-5)
-            self.addSubview(imageView)
+            setImage(val.imageName)
             _parentType = val
         }
     }
     
-    
-
+    func setImage(imageName: String) {
+        let image = UIImage(named: imageName)!
+        self.imageView.image = image
+        self.imageView.sizeToFit()
+        self.imageView.frame = CGRectMake(10, 3, image.size.width-5, image.size.height-5)
+    }
     
     required init!(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

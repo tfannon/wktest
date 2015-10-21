@@ -47,7 +47,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer"]
+            gridColumnsOrder = ["title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
@@ -65,7 +65,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
                 
             case "dueDate": addColumnWithTitle(key, title: title!, width: 120, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            default: addColumnWithTitle(key, title: title!, width: 150, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
+            case "reviewDueDate": addColumnWithTitle(key, title: "Review Due", width: 160, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
+            default: addColumnWithTitle(key, title: title!, width: 125, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
             }
         }
     }
@@ -99,6 +101,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         case "workflowState" :
             let wCell = cell as! WorkflowStateCell
             wCell.state = WorkflowState(rawValue: procedure.workflowState)!
+            //wCell.imageProvider = WorkflowState(rawValue: procedure.workflowState)!
             return true
             
 //        case "workflowStateTitle" :
@@ -109,6 +112,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         case "parentType" :
             let wCell = cell as! WorkflowStateCell
             wCell.parentType = ObjectType(rawValue: procedure.parentType)!
+            //wCell.imageProvider = ObjectType(rawValue: procedure.parentType)!
             return true
             
         case "testResults" :
@@ -116,7 +120,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             wCell.text = TestResults(rawValue: procedure.testResults)?.displayName
             return true
             
-        case "dueDate" :
+        case "dueDate","reviewDueDate" :
             let wCell = cell as! SDataGridTextCell
             wCell.text = procedure.dueDate?.toShortString()
             return true

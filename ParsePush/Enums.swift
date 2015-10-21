@@ -8,7 +8,12 @@
 
 import Foundation
 
-enum ObjectType: Int {
+protocol ImageProvider {
+    var imageName: String { get }
+}
+
+
+enum ObjectType: Int, ImageProvider {
     case Risk = 45
     case Control = 46
     case Procedure = 48
@@ -22,7 +27,6 @@ enum ObjectType: Int {
             }
         }
     }
-    
 }
 
 enum NotificationType: Int {
@@ -82,7 +86,8 @@ enum TestResults: Int {
     
 }
 
-enum WorkflowState: Int {
+enum WorkflowState: Int, ImageProvider {
+    
     case NotStarted = 1
     case InProgress = 2
     case Completed = 3
