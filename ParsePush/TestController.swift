@@ -17,6 +17,8 @@ class TestController: UIViewController, UITextFieldDelegate {
         
         txtUserName.delegate = self
         txtUserName.text = Services.userName
+        
+        segMockMode.selectedSegmentIndex = (Services.mock) ? 1 : 0
     }
     
     //MARK - view controller
@@ -33,6 +35,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var lblProcedures: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
+    @IBOutlet weak var segMockMode: UISegmentedControl!
     
     //MARK - persistent store
     @IBAction func storeLocalPressed(sender: AnyObject) {
@@ -103,6 +106,12 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    @IBAction func segMockModeChanged(sender: UISegmentedControl) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        Services.mock = sender.selectedSegmentIndex == 1
+        defaults.setBool(Services.mock, forKey: "mock")
+        defaults.synchronize()
+    }
 
    
     @IBAction func proceduresPressed(sender: AnyObject) {

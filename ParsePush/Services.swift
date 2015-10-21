@@ -16,6 +16,7 @@
         static var assessmentId = "572301013"
         static var userName = "joe.tester"
         static var deviceToken = ""
+        static var mock = false
         
         public static func setDeviceToken(token: NSData) {
             Services.deviceToken = tokenToString(token)
@@ -120,27 +121,34 @@
         
         //MARK: procedure
         static func getMyProcedures(persistLocal: Bool = false, completed: (result: [Procedure]?)->()) {
-            Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
-                .responseJSON { request, response, result in
-                    switch result {
-                    case .Success(let data):
-                        let jsonAlamo = data as? [[String:AnyObject]]
-                        let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                        if persistLocal {
-                            let defaults = NSUserDefaults.standardUserDefaults()
-                            var procIds = [Int]()
-                            
-//                            jsonAlamo!.each { pJson in
-//                                let id = pJson["Id"]! as! Int
-//                                procIds.append(id)
-//                                defaults.setValue(pJson, forKey: String(id))
-//                            }
-                            defaults.setValue(procIds, forKey: "procIds")
+            if (mock)
+            {
+                completed(result: Mock.getProcedures())
+            }
+            else
+            {
+                Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
+                    .responseJSON { request, response, result in
+                        switch result {
+                        case .Success(let data):
+                            let jsonAlamo = data as? [[String:AnyObject]]
+                            let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                            if persistLocal {
+                                let defaults = NSUserDefaults.standardUserDefaults()
+                                var procIds = [Int]()
+                                
+                                //                            jsonAlamo!.each { pJson in
+                                //                                let id = pJson["Id"]! as! Int
+                                //                                procIds.append(id)
+                                //                                defaults.setValue(pJson, forKey: String(id))
+                                //                            }
+                                defaults.setValue(procIds, forKey: "procIds")
+                            }
+                            completed(result: result)
+                        case .Failure(_, let error):
+                            print("Request failed with error: \(error)")
                         }
-                        completed(result: result)
-                    case .Failure(_, let error):
-                        print("Request failed with error: \(error)")
-                    }
+                }
             }
         }
         
