@@ -20,7 +20,7 @@
 		65890DF81BC33A3900506192 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF71BC33A3900506192 /* Enums.swift */; settings = {ASSET_TAGS = (); }; };
 		65890DFA1BC763D700506192 /* Procedure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF91BC763D700506192 /* Procedure.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C51BBEDEE10047AAD3 /* NotificationController.swift */; settings = {ASSET_TAGS = (); }; };
-		659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* MyWorkController.swift */; settings = {ASSET_TAGS = (); }; };
+		659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CD1BBF3A340047AAD3 /* Extensions.swift */; settings = {ASSET_TAGS = (); }; };
 		659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */; settings = {ASSET_TAGS = (); }; };
@@ -70,7 +70,7 @@
 		65890DF71BC33A3900506192 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		65890DF91BC763D700506192 /* Procedure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Procedure.swift; sourceTree = "<group>"; };
 		659A64C51BBEDEE10047AAD3 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		659A64C71BBEDF050047AAD3 /* MyWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWorkController.swift; sourceTree = "<group>"; };
+		659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureGridController.swift; sourceTree = "<group>"; };
 		659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		659A64CD1BBF3A340047AAD3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
-				659A64C71BBEDF050047AAD3 /* MyWorkController.swift */,
+				659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */,
 				6518EF771BD3464400DD558A /* WorkflowStateCell.swift */,
 				6518EF791BD347C000DD558A /* PassFailCell.swift */,
 				66E65F691BD5B70E00B8B351 /* ProcedureFormController.swift */,
@@ -432,7 +432,7 @@
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
-				659A64C81BBEDF050047AAD3 /* MyWorkController.swift in Sources */,
+				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
 				6518EF781BD3464400DD558A /* WorkflowStateCell.swift in Sources */,
 				65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */,
 				66E65F6A1BD5B70E00B8B351 /* ProcedureFormController.swift in Sources */,

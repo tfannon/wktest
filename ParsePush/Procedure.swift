@@ -62,6 +62,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var reviewer: String?
     var workflowState: Int = 1
     var readOnly  : Bool?
+    var allowedStates : [Int]?
 
     func mapping(map: Map) {
         id <- map["Id"]
@@ -91,11 +92,13 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         dueDate <- (map["ReviewDueDate"], TransformOf<NSDate?, String>(
             fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0!.toIsoString() } }))
+        
+        allowedStates <- map["AllowedStates"]
     }
     
     
     override var description: String {
-        return "\(title!) \(parentTitle) \(testResults) \(dueDate)"
+        return "\(title!) \(parentTitle) \(testResults) \(dueDate) \(allowedStates)"
     }
 }
 

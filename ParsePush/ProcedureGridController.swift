@@ -125,8 +125,17 @@ class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate, SDa
         }
     }
     
+    
+    func donePressed() {
+        self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        print(row.description)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "donePressed")
+        let controller = ProcedureFormControllerViewController()
+        controller.procedure = items[row.rowIndex]
+        presentViewController(controller, animated: true, completion: nil)
     }
     
 

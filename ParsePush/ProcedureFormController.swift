@@ -20,8 +20,13 @@ class ProcedureFormControllerViewController: FormViewController {
         return Procedure.getTerminology(key)
     }
     
+    func donePressed() {
+        self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         
         self.view.backgroundColor = UIColor.whiteColor()
 //        LabelRow.defaultCellSetup = { cell, row in
@@ -40,8 +45,6 @@ class ProcedureFormControllerViewController: FormViewController {
             var newFrame = cell.textView.frame
             newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
             cell.textView.frame = newFrame;
-
-            
         }
         
         self.tableView?.estimatedRowHeight = 44.0
