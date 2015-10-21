@@ -60,7 +60,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var reviewDueDate: NSDate?
     var tester: String?
     var reviewer: String?
-    var workflowState: Int = 0
+    var workflowState: Int = 1
     var readOnly  : Bool?
 
     func mapping(map: Map) {

@@ -34,13 +34,29 @@ enum TestResults: Int {
     case NotTested = 0
     case Pass = 1
     case Fail = 2
-    var imageName: String {
-        get {
-            switch self {
-            case .NotTested: return "icons_notstarted"
-            case .Pass: return  "icons_inprogress"
-            case .Fail: return "icons_completed"
-            }
+ 
+    static let displayNames = Array(lookup
+        .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
+        .map{ x in x.1.displayName })
+
+    private static let lookup : [TestResultsType : (imageName : String, displayName : String)] =
+    [
+        .NotTested:("icons_notstarted", "Not Started"),
+        .Pass:("icons_inprogress", "In Progress"),
+        .Fail:("icons_completed", "Completed"),
+    ]
+    
+    var imageName : String {
+        get
+        {
+            return TestResultsType.lookup[self]!.imageName
+        }
+    }
+    
+    var displayName : String {
+        get
+        {
+            return TestResultsType.lookup[self]!.displayName
         }
     }
     var displayName: String {
@@ -64,15 +80,33 @@ enum WorkflowState: Int {
     case Responded = 7
     case Issued = 8
     
-    var imageName: String {
-        get {
-            switch self {
-            case .NotStarted: return "icons_notstarted"
-            case .InProgress: return  "icons_inprogress"
-            case .Completed: return "icons_completed"
-            case .Reviewed: return "icons_reviewed"
-            default: return "icons_notstarted"
-            }
+    private static let lookup : [WorkflowState : (imageName : String, displayName : String)] =
+    [
+        .NotStarted:("icons_notstarted", "Not Started"),
+        .InProgress:("icons_inprogress", "In Progress"),
+        .Completed:("icons_completed", "Completed"),
+        .Implemented:("icons_notstarted", "Implemented"),
+        .Reviewed:("icons_reviewed", "Reviewed"),
+        .Closed:("icons_notstarted", "Closed"),
+        .Responded:("icons_notstarted", "Responded"),
+        .Issued:("icons_notstarted", "Issued"),
+    ]
+    
+    static let displayNames = Array(lookup
+        .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
+        .map{ x in x.1.displayName })
+    
+    var imageName : String {
+        get
+        {
+            return WorkflowState.lookup[self]!.imageName
+        }
+    }
+    
+    var displayName : String {
+        get
+        {
+            return WorkflowState.lookup[self]!.displayName
         }
     }
     
