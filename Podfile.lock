@@ -5,7 +5,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
-  - Eureka (~> 1.0)
+  - Eureka
   - ObjectMapper (~> 0.17)
 
 SPEC CHECKSUMS:

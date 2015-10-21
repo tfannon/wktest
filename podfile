@@ -6,4 +6,3 @@ pod 'Alamofire', '~> 2.0'
 
 pod 'ObjectMapper', '~> 0.17'
 
-pod 'Eureka', '~> 1.0'

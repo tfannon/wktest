@@ -31,6 +31,18 @@ class Mock {
         procedure.title = title
         procedure.code = code
         procedure.text1 = text1
+        procedure.tester = "Bob Dylan"
+        procedure.reviewer = "Bronson Pichot"
+        procedure.reviewDueDate = NSDate(isoString: "2015-10-31")
+        procedure.dueDate = NSDate(isoString: "2015-11-30")
+        procedure.text2 = text1
+        procedure.text3 = text1
+        procedure.text4 = text1
+        procedure.resultsText1 = text1
+        procedure.resultsText2 = text1
+        procedure.resultsText3 = text1
+        procedure.resultsText4 = text1
+        
         return procedure
     }
 }
