@@ -10,120 +10,94 @@ import Foundation
 import UIKit
 
 
-class MyWorkController: UIViewController, SDataGridDataSource, SDataGridDataSourceHelperDelegate {
+class MyWorkController: UIViewController, SDataGridDataSourceHelperDelegate {
     
     var items: [Procedure] = []
     var grid: ShinobiDataGrid!
+    var gridColumnSortOrder = [String:String]()
+    var gridColumnsOrder: [String]!
     var dataSourceHelper: SDataGridDataSourceHelper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let grid = ShinobiDataGrid(frame: self.view.bounds)
-        let grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 10, 50))
-        grid.defaultCellStyleForAlternateRows = SDataGridCellStyle(backgroundColor: UIColor.lightGrayColor(), withTextColor: nil, withFont: nil)
-        grid.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-        grid.dataSource = self
-        
-        var col = SDataGridColumn(title: "Title", forProperty: "title")
-        col.width = 225
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        col = SDataGridColumn(title: "State", forProperty: "workflowState"/* cellType:WorkflowStateCell.self, headerCellType:nil*/)
-        col.width = 150
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-
-        col = SDataGridColumn(title: "Test Results", forProperty: "testResults"/*  cellType:PassFailCell.self, headerCellType:nil*/)
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        col = SDataGridColumn(title: "Tester", forProperty: "tester")
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        col = SDataGridColumn(title: "Due Date", forProperty: "dueDate")
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        col = SDataGridColumn(title: "Reviewer", forProperty: "reviewer")
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        col = SDataGridColumn(title: "Review Due Date", forProperty: "reviewDueDate")
-        col.sortMode = SDataGridColumnSortModeTriState
-        grid.addColumn(col)
-        
-        grid.showPullToAction = true
-
-        
+        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 10, 50))
         self.view.addSubview(grid)
-        self.grid = grid
+        self.grid.showPullToAction = true
         
-        self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
-        self.dataSourceHelper.delegate = self
-        
-
-        
-        getProcedures()
+        self.addColumns()
+        self.createDataSource()
+        getProcedures {
+            self.dataSourceHelper.data = self.items
+            //self.grid.reload()
+        }
     }
     
-    func getProcedures() {
+    func getProcedures(completed: ()->()) {
         self.items = []
         Services.getMyProcedures { result in
             if result?.count > 0 {
                 result?.each {
                     self.items.append($0)
                 }
-                //self.grid.reload()
-                self.dataSourceHelper.data = result
+                completed()
             }
         }
     }
     
-
-    func shinobiDataGrid(grid: ShinobiDataGrid!, numberOfRowsInSection sectionIndex: Int) -> UInt  {
-        return UInt(items.count)
-    }
-    
-    func shinobiDataGrid(grid: ShinobiDataGrid!, prepareCellForDisplay cell: SDataGridCell!) {
-        let procedure = items[cell.coordinate.row.rowIndex]
-        let textCell = cell as! SDataGridTextCell
-        var text: String?
-        switch textCell.coordinate.column.title {
-            case "Title" : text = procedure.title
-            //case "Due Date": text = procedure.dueDate?.toString(format: DateFormat.DotNet)
-            case "Text1": text = procedure.text1
-            case "Text2": text = procedure.text2
-            case "Text3": text = procedure.text3
-            case "Result": text = procedure.testResults == 1 ? "Fail" : "Pass"
-            case "Result 1": text = procedure.resultsText1
-            case "Result 2": text = procedure.resultsText2
-            case "Result 3": text = procedure.resultsText3
-            default: text = ""
+    func addColumns() {
+        if gridColumnsOrder == nil {
+            gridColumnsOrder = ["title","parentType","workflowState","testResults","dueDate","reviewer"]
         }
-        textCell.textField.text = text
-    }
-    
-    /*
-    func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, displayValueForProperty propertyKey: String!, withSourceObject object: AnyObject!) -> AnyObject! {
+        for (var i=0;i<gridColumnsOrder.count;i++) {
+            let key = gridColumnsOrder[i]
+            let title = Procedure.terminology[key]!
+            switch key {
+            case "title": addColumnWithTitle(key, title: title, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
+            default: addColumnWithTitle(key, title: title, width: 150, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
+            }
+            
+        }
         
-        let procedure = object as! Procedure
-        switch (propertyKey) {
-            
-        case "workflowState" :
-            let workflowState = WorkflowState(rawValue: procedure.workflowState)!
-            return workflowState.imageName
-            
-        case "testResults" :
-            let testResult = TestResultsType(rawValue: procedure.testResults!)
-            return testResult!.imageName
-            
-        default: return nil
-        }
     }
-    */
+    
+    func addColumnWithTitle(key: String, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets) {
+        let column = SDataGridColumn(title: title, forProperty: key)
+        column.width = width
+        column.cellStyle.textAlignment = textAlignment
+        column.cellStyle.contentInset = edgeInsets
+        column.headerCellStyle.textAlignment = textAlignment
+        column.headerCellStyle.contentInset = edgeInsets
+        self.grid.addColumn(column)
+    }
+    
+    func createDataSource() {
+        self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
+        self.dataSourceHelper.delegate = self
+    }
+    
+    func setupGrid() {
+    }
+
+
+    func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, displayValueForProperty propertyKey: String!, withSourceObject object: AnyObject!) -> AnyObject! {
+        return nil
+        
+//        let procedure = object as! Procedure
+//        switch (propertyKey) {
+//            
+//        case "workflowState" :
+//            let workflowState = WorkflowState(rawValue: procedure.workflowState)!
+//            return workflowState.imageName
+//            
+//        case "testResults" :
+//            let testResult = TestResultsType(rawValue: procedure.testResults!)
+//            return testResult!.imageName
+//            
+
+    }
+
     /*
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
         let procedure = object as! Procedure
