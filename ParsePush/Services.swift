@@ -125,12 +125,18 @@
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
-                        if persistLocal {
-                            persistLocalJson(jsonAlamo!)
-                        }
-
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                        result!.each { a in print(a) }
+                        if persistLocal {
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            var procIds = [Int]()
+                            
+//                            jsonAlamo!.each { pJson in
+//                                let id = pJson["Id"]! as! Int
+//                                procIds.append(id)
+//                                defaults.setValue(pJson, forKey: String(id))
+//                            }
+                            defaults.setValue(procIds, forKey: "procIds")
+                        }
                         completed(result: result)
                     case .Failure(_, let error):
                         print("Request failed with error: \(error)")

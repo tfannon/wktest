@@ -41,6 +41,12 @@ class TestController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func readLocalPressed(sender: AnyObject) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let procIds = defaults.valueForKey("procIds") as! [Int]
+        procIds.each {
+            let proc = defaults.valueForKey(String($0)) as! Procedure
+            print(proc)
+        }
     }
     
     //MARK - Actions
