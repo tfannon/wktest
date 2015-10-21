@@ -19,7 +19,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     
     static var terminology = [
         "title":"Title",
-        "parent":"Parent",
+        "parentTitle":"Parent",
         "parentType":"Parent",
         "code":"Code",
         "dueDate":"Due Date",
@@ -41,7 +41,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     }
     
     var id: Int?
-    var parent: String?
+    var parentTitle: String?
     var parentType: Int = 0
     var title: String?
     var code: String?
@@ -64,7 +64,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     func mapping(map: Map) {
         id <- map["Id"]
         title <- map["Title"]
-        parent <- map["Parent"]
+        parentTitle <- map["ParentTitle"]
         parentType <- map["ParentType"]
         workflowState <- map["WorkflowState"]
         code <- map["Code"]
@@ -93,7 +93,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     
     
     override var description: String {
-        return "\(title!) \(text1) \(testResults) \(resultsText1) \(dueDate)"
+        return "\(title!) \(parentTitle) \(testResults) \(dueDate)"
     }
 }
 

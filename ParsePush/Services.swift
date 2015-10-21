@@ -126,7 +126,7 @@
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                        //result!.each { a in print(a) }
+                        result!.each { a in print(a) }
                         completed(result: result)
                     case .Failure(_, let error):
                         print("Request failed with error: \(error)")
