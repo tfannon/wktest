@@ -106,7 +106,7 @@ enum WorkflowState: Int {
     
     private static var displayNameLookup = [String : WorkflowState]()
 
-    static func getFilteredDisplayNames(included : [Int]?, current : WorkflowState?) -> [String]
+    static func getFilteredDisplayNames(included : [Int]?, current : Int?) -> [String]
     {
         if (included == nil)
         {
@@ -114,7 +114,7 @@ enum WorkflowState: Int {
         }
         
         let includedNames = Array(included!
-            .filter{ x in current == nil || WorkflowState(rawValue: x) != current }
+            .filter{ x in current == nil || x != current }
             .map { x in WorkflowState(rawValue: x)!.displayName })
 
         return Array(displayNames.filter { x in includedNames.contains(x) })
