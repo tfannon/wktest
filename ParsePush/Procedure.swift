@@ -87,11 +87,11 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         //todo: make this a shared function pointer
         dueDate <- (map["DueDate"], TransformOf<NSDate?, String>(
             fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
-            toJSON: { $0.map { $0!.toIsoString() } }))
+            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
         
         dueDate <- (map["ReviewDueDate"], TransformOf<NSDate?, String>(
             fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
-            toJSON: { $0.map { $0!.toIsoString() } }))
+            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
         
         allowedStates <- map["AllowedStates"]
     }

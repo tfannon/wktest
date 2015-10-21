@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; settings = {ASSET_TAGS = (); }; };
+		65636CE51BD8092500C94D6D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65636CE41BD8092500C94D6D /* Misc.swift */; settings = {ASSET_TAGS = (); }; };
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		1E216A450469A08FEC9B7CD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6518EF771BD3464400DD558A /* DataGridImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataGridImageCell.swift; sourceTree = "<group>"; };
+		65636CE41BD8092500C94D6D /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		65768ADB1BA641C500DADD43 /* TeamMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768ADF1BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -204,7 +206,6 @@
 				66E65F621BD573F000B8B351 /* Mock.swift */,
 				65D507311BB5DC1D00EC8E1F /* Services.swift */,
 				65E85BB61BB8E99B00C5C272 /* Notification.swift */,
-				659A64CD1BBF3A340047AAD3 /* Extensions.swift */,
 				65890DF71BC33A3900506192 /* Enums.swift */,
 				65890DF91BC763D700506192 /* Procedure.swift */,
 			);
@@ -246,8 +247,10 @@
 		66E65F731BD5DABD00B8B351 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				659A64CD1BBF3A340047AAD3 /* Extensions.swift */,
 				66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */,
 				66A490211BD745D400A60334 /* DictionaryTwoWay.swift */,
+				65636CE41BD8092500C94D6D /* Misc.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
 				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
+				65636CE51BD8092500C94D6D /* Misc.swift in Sources */,
 				66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,

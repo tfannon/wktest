@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ObjectMapper
+
 
 class TestController: UIViewController, UITextFieldDelegate {
 
@@ -46,8 +48,11 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBAction func readLocalPressed(sender: AnyObject) {
         let defaults = NSUserDefaults.standardUserDefaults()
         let procIds = defaults.valueForKey("procIds") as! [Int]
+        let formattedIds = Misc.join(procIds, separator: ", ")
+        print("Procedure Ids:\(formattedIds)")
         procIds.each {
-            let proc = defaults.valueForKey(String($0)) as! Procedure
+            let procJson = defaults.valueForKey(String($0)) as! String
+            let proc = Mapper<Procedure>().map(procJson)
             print(proc)
         }
     }
