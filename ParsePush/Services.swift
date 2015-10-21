@@ -136,12 +136,12 @@
                             if persistLocal {
                                 let defaults = NSUserDefaults.standardUserDefaults()
                                 var procIds = [Int]()
-                                
-                                //                            jsonAlamo!.each { pJson in
-                                //                                let id = pJson["Id"]! as! Int
-                                //                                procIds.append(id)
-                                //                                defaults.setValue(pJson, forKey: String(id))
-                                //                            }
+                                result!.each {
+                                    procIds.append($0.id!)
+                                    let str = Mapper().toJSONString($0, prettyPrint: false)
+                                    print(str)
+                                    defaults.setValue(str, forKey: String($0.id!))
+                                }
                                 defaults.setValue(procIds, forKey: "procIds")
                             }
                             completed(result: result)
