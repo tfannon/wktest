@@ -245,7 +245,7 @@
             </objects>
             <point key="canvasLocation" x="891" y="-53"/>
         </scene>
-        <!--Procedures-->
+        <!--Procedure Grid Controller-->
         <scene sceneID="F0i-f2-eBA">
             <objects>
                 <viewController id="ijE-Ru-gol" customClass="ProcedureGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
@@ -259,11 +259,11 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Procedures" image="740-gear" id="Rlm-2a-ick"/>
+                    <navigationItem key="navigationItem" id="BmA-sD-sws"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBr-tS-B5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-21" y="1613"/>
+            <point key="canvasLocation" x="791" y="1613"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="EXh-KS-uIw">
@@ -277,7 +277,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="y1E-FG-ITs" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
-                        <segue destination="ijE-Ru-gol" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
+                        <segue destination="Gee-FM-iu3" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
                     </connections>
                 </tabBarController>
@@ -427,6 +427,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5qQ-wO-zFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-27" y="-52.5"/>
+        </scene>
+        <!--Procedures-->
+        <scene sceneID="g5M-Pl-sWl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gee-FM-iu3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Procedures" image="740-gear" id="Rlm-2a-ick"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k6q-ss-Zoz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ijE-Ru-gol" kind="relationship" relationship="rootViewController" id="7GF-vn-xQL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pxg-2u-830" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-21" y="1613"/>
         </scene>
     </scenes>
     <resources>

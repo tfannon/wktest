@@ -133,7 +133,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         
         let controller = ProcedureFormControllerViewController()
         controller.procedure = items[row.rowIndex]
-        presentViewController(controller, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
