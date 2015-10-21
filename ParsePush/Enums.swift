@@ -77,17 +77,24 @@ enum WorkflowState: Int {
         .Issued:("icons_issued", "Issued"),
     ]
     
+    private static var displayNameLookup = [String : WorkflowState]()
+
     static let displayNames = Array(lookup
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1.displayName })
     
     static func getFromDisplayName(displayName : String) -> WorkflowState
     {
-        let v = lookup
-            .filter { x in x.1.displayName == displayName }
-            .map { x in x.0 }
+        // populate the lookup for display name if it's not already populated
+        if (displayNameLookup.count == 0)
+        {
+            for i in lookup
+            {
+                displayNameLookup[i.1.displayName] = i.0
+            }
+        }
         
-        return v[0]
+        return displayNameLookup[displayName]!
     }
     
     var imageName : String {

@@ -31,6 +31,7 @@
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; settings = {ASSET_TAGS = (); }; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; settings = {ASSET_TAGS = (); }; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; settings = {ASSET_TAGS = (); }; };
+		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; settings = {ASSET_TAGS = (); }; };
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; settings = {ASSET_TAGS = (); }; };
 		66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E65F641BD5B4D200B8B351 /* Procedure.storyboard */; settings = {ASSET_TAGS = (); }; };
 		66E65F6A1BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -82,6 +83,7 @@
 		65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiGrids.framework; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		66E65F651BD5B4D200B8B351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Procedure.storyboard; sourceTree = "<group>"; };
 		66E65F691BD5B70E00B8B351 /* ProcedureFormControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureFormControllerViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */,
+				66A490211BD745D400A60334 /* DictionaryTwoWay.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
 				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
+				66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,
