@@ -107,14 +107,6 @@ class ProcedureFormControllerViewController: FormViewController {
             }
             
             +++ Section()
-            <<< LabelRow() {
-                $0.title = "Results"
-            }
-            .cellSetup { cell, row in
-                cell.backgroundColor = UIColor.lightGrayColor()
-                cell.textLabel?.textColor = UIColor.whiteColor()
-            }
-            +++ Section()
             
             <<< SegmentedRow<String>() {
                 $0.title = self.t("testResults")
