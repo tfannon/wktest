@@ -14,7 +14,6 @@ class DataGridImageCell : SDataGridCell {
     private var _parentType: ObjectType!
     private var _imageView: UIImageView!
 
-    
     var imageView: UIImageView {
         get {
             if (_imageView == nil) {

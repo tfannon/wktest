@@ -34,6 +34,15 @@ class TestController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblProcedures: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
     
+    //MARK - persistent store
+    @IBAction func storeLocalPressed(sender: AnyObject) {
+        Services.getMyProcedures(true) { result in
+        }
+    }
+    
+    @IBAction func readLocalPressed(sender: AnyObject) {
+    }
+    
     //MARK - Actions
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in

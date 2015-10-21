@@ -119,12 +119,16 @@
         }
         
         //MARK: procedure
-        static func getMyProcedures(completed: (result: [Procedure]?)->()) {
+        static func getMyProcedures(persistLocal: Bool = false, completed: (result: [Procedure]?)->()) {
             Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
                 .responseJSON { request, response, result in
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
+                        if persistLocal {
+                            persistLocalJson(jsonAlamo!)
+                        }
+
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
                         result!.each { a in print(a) }
                         completed(result: result)
@@ -132,6 +136,10 @@
                         print("Request failed with error: \(error)")
                     }
             }
+        }
+        
+        static func persistLocalJson(json: [[String:AnyObject]]) {
+            
         }
         
         
