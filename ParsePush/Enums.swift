@@ -38,13 +38,29 @@ enum TestResults: Int {
     static let displayNames = Array(lookup
         .sort{ (first, second) in first.0.rawValue < second.0.rawValue }
         .map{ x in x.1 })
+    private static var displayNameLookup = [String : TestResults]()
 
     private static let lookup : [TestResults : String] =
     [
-        .NotTested:("Not Tested"),
-        .Pass:("Pass"),
-        .Fail:("Fail"),
+        .NotTested:"Not Tested",
+        .Pass:"Pass",
+        .Fail:"Fail",
     ]
+
+    static func getFromDisplayName(displayName : String) -> TestResults
+    {
+        // populate the lookup for display name if it's not already populated
+        if (displayNameLookup.count == 0)
+        {
+            for i in lookup
+            {
+                displayNameLookup[i.1] = i.0
+            }
+        }
+        
+        return displayNameLookup[displayName]!
+    }
+    
     
     var displayName : String {
         get

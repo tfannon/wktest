@@ -120,6 +120,9 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.options = Array(TestResults.displayNames)
                 $0.value = TestResults(rawValue: self.procedure.testResults)?.displayName
             }
+            .cellUpdate { cell, row in
+                self.procedure.testResults = TestResults.getFromDisplayName(row.value!).rawValue
+            }
             
             +++ Section("Scope")
             <<< TextAreaRow() {
