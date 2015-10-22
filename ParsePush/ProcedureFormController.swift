@@ -231,7 +231,8 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
     
     func navbarSaveClicked()
     {
-        dismiss();
+        Services.save(self.procedure)
+        dismiss()
     }
 
     override func didReceiveMemoryWarning() {
