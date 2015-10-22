@@ -33,6 +33,11 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+
+    }
+    
     func getProcedures(completed: ()->()) {
         self.items = []
         Services.getMyProcedures { result in
