@@ -112,7 +112,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText3 <- map["ResultsText3"]
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
-        dirtyFields <- map["dirtyFields"]
+        dirtyFields <- map["DirtyFields"]
         
         //todo: make this a shared function pointer
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
