@@ -184,11 +184,14 @@ public class Services {
     
 
     //MARK: Store
-    static func save(obj: Procedure, persistKey: Bool = true) {
+    static func save(obj: Procedure, persistKey: Bool = false) {
         let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
         let defaults = NSUserDefaults.standardUserDefaults()
         //save it in its own slot.  will overwrite anything there
-        defaults.setValue(procJson, forKey: DataKey.getProcKey(obj.id!))
+        let key = DataKey.getProcKey(obj.id!)
+        print("Saving \(key):\(procJson)")
+        defaults.setValue(procJson, forKey: key)
+        defaults.synchronize()
         //if its coming from the load from services, all keys need to be persisted
         if persistKey {
             if let ids = loadIds()
@@ -201,7 +204,7 @@ public class Services {
                 defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
             }
         }
-        print("Saved \(obj.id): \(obj.title) to local store. key persisted:\(persistKey)")
+        print(" ")
     }
     
  
@@ -210,7 +213,7 @@ public class Services {
         case ProcedureIds = "procIds"
         case Proc = "proc:"
         static func getProcKey(id : Int) -> String {
-            return "\(Proc.rawValue)id"
+            return "\(Proc.rawValue)\(id)"
         }
     }
     
@@ -242,7 +245,9 @@ public class Services {
         //may be empty
         if let ids = loadIds() {
             return ids.map { id in
-                let jsonProc = defaults.valueForKey(DataKey.getProcKey(id)) as! String
+                let key = DataKey.getProcKey(id)
+                let jsonProc = defaults.valueForKey(key) as! String
+                print("\(key): \(jsonProc)")
                 return Mapper<Procedure>().map(jsonProc)!
             }
         }
