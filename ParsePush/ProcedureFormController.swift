@@ -29,6 +29,7 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
         TextAreaRow.defaultCellSetup = { cell, row in
             cell.textView.backgroundColor = UIColor.whiteColor()
             cell.textView.textContainerInset = UIEdgeInsetsMake(20,20,20,20);
+            cell.height = { 150 }
         }
         
         self.tableView?.estimatedRowHeight = 44.0
@@ -190,7 +191,7 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
         
         // MARK: X -
         
-        self.navigationController?.navigationBarHidden = false
+        self.title = "Procedure"
         
     }
     
