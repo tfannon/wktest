@@ -11,10 +11,16 @@ import Eureka
 
 
 
-class ProcedureFormControllerViewController: FormViewController, UITextFieldDelegate {
+class ProcedureFormControllerViewController: FormViewController {
     
     var procedure : Procedure!
     var cellHeight : CGFloat!
+    
+    func heightForRowAtIndexPath(indexPath: NSIndexPath) -> CGFloat
+    {
+        return 300
+        
+    }
     
     private func t(key : String) -> String
     {
@@ -29,7 +35,7 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
         TextAreaRow.defaultCellSetup = { cell, row in
             cell.textView.backgroundColor = UIColor.whiteColor()
             cell.textView.textContainerInset = UIEdgeInsetsMake(20,20,20,20);
-            cell.height = { 150 }
+            cell.height = { 300 }
         }
         
         self.tableView?.estimatedRowHeight = 44.0
@@ -95,6 +101,7 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
                     self.enableSave()
                     self.procedure.workflowState = WorkflowState.getFromDisplayName(field.value!).rawValue
                     field.cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+                    field.options = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates, current: self.procedure.workflowState)
                 }
             
             +++ Section("Details")
