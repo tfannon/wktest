@@ -184,21 +184,49 @@ public class Services {
     
     //MARK:
     static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
+        //single object works.
+//        let proc = procedures.first!
+//        let json = Mapper().toJSONString(proc, prettyPrint: false)!
+//        let data = json.dataUsingEncoding(NSUTF8StringEncoding)
+//        let dict = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String:AnyObject]
+//        print(dict)
+//        Alamofire.request(.POST, procedureUrl + "/SendTestProcedure", parameters: dict, headers:Services.headers, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                switch result {
+//                case .Success( _):
+//                    completed(result:nil)
+//                case .Failure(_, let error):
+//                    print("Request failed with error: \(error)")
+//                    completed(result: nil)
+//                }
+//        }
+        
 //        let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
-//        let procsStr = procs.reduce("") { $0 + $1 }
-//        print(procs)
-//        let data = procsStr.dataUsingEncoding(NSUTF8StringEncoding)
+//        let encodedProcs = procs.map {
+//            try! NSJSONSerialization.JSONObjectWithData($0.dataUsingEncoding(NSUTF8StringEncoding)!, options: .AllowFragments) as? [String:AnyObject]
+//        }
+//        //let dict = ["Procedures":encodedProcs]
+//        Alamofire.request(.POST, procedureUrl + "/SendTestProcedures", parameters: encodedProcs, encoding: .JSON)
+//            .responseJSON { request, response, result in
+//                switch result {
+//                case .Success(_):
+//                    completed(result: nil)
+//                case .Failure(_, let error):
+//                    print("Request failed with error: \(error)")
+//                }
+//        }
+//
+    
+        let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
+        let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/SendTestProcedures")!)
+        request.HTTPMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-
-//single object works.
-        let proc = procedures.first!
-        let json = Mapper().toJSONString(proc, prettyPrint: false)!
-        let data = json.dataUsingEncoding(NSUTF8StringEncoding)
+        //let values = ["06786984572365", "06644857247565", "06649998782227"]
+        let values = [procs[0],procs[1]]
         
-        let object = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String:AnyObject]
-        print(object)
-        
-        Alamofire.request(.POST, procedureUrl + "/SendTestProcedure", parameters: object, headers:Services.headers, encoding: .JSON)
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(values, options: [])
+        Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success( _):
@@ -208,7 +236,7 @@ public class Services {
                     completed(result: nil)
                 }
         }
-    }
+}
     
     
 

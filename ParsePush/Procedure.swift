@@ -84,14 +84,14 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         
-        //todo: make this a shared function pointer
+        //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
             fromJSON: {  NSDate(fromString: $0!, format:DateFormat.ISO8601(nil)) },
             toJSON: { $0.map { $0.toIsoString() } }))
         
-//        reviewDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
-//            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
-//            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
+        reviewDueDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
+            fromJSON: {  NSDate(fromString: $0!, format:DateFormat.ISO8601(nil)) },
+            toJSON: { $0.map { $0.toIsoString() } }))
         
         allowedStates <- map["AllowedStates"]
     }
