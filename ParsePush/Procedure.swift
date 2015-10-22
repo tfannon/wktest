@@ -17,7 +17,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     override init() {
     }
     
-    static var terminology = [
+    private static var terminology = [
         "title":"Title",
         "parentTitle":"Parent",
         "parentType":"Parent",
@@ -38,6 +38,11 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         "resultsText4":"Results 4"
     ]
     
+    // this holds the names of the dirtied properties
+    // we use the name of the property as specified in the Map (Capital case)
+    // because this is used to match to a property name on the server side
+    var dirtyFields = Set<String>()
+    
     static func getTerminology(key : String) -> String{
         return terminology[key] ?? ""
     }
@@ -45,24 +50,33 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var id: Int?
     var parentTitle: String?
     var parentType: Int = 0
-    var title: String?
-    var code: String?
-    var text1: String?
-    var text2: String?
-    var text3: String?
-    var text4: String?
-    var dueDate: NSDate?
-    var testResults: Int = 0
-    var resultsText1: String?
-    var resultsText2: String?
-    var resultsText3: String?
-    var resultsText4: String?
-    var reviewDueDate: NSDate?
+    var title: String? { didSet { dirtyFields.insert("Title") } }
+    var code: String? { didSet { dirtyFields.insert("Code") } }
+    var text1: String? { didSet { dirtyFields.insert("Text1") } }
+    var text2: String? { didSet { dirtyFields.insert("Text2") } }
+    var text3: String? { didSet { dirtyFields.insert("Text3") } }
+    var text4: String? { didSet { dirtyFields.insert("Text4") } }
+    var dueDate: NSDate? { didSet { dirtyFields.insert("DueDate") } }
+    var testResults: Int = 0 { didSet { dirtyFields.insert("TestResults") } }
+    var resultsText1: String? { didSet { dirtyFields.insert("ResultsText1") } }
+    var resultsText2: String? { didSet { dirtyFields.insert("ResultsText2") } }
+    var resultsText3: String? { didSet { dirtyFields.insert("ResultsText3") } }
+    var resultsText4: String? { didSet { dirtyFields.insert("ResultsText4") } }
+    var reviewDueDate: NSDate? { didSet { dirtyFields.insert("ReviewDueDate") } }
     var tester: String?
     var reviewer: String?
-    var workflowState: Int = 1
+    var workflowState: Int = 1 { didSet { dirtyFields.insert("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
+    
+    func isDirty() -> Bool{
+        return dirtyFields.count > 0
+    }
+    
+    func clean() {
+        dirtyFields = []
+    }
+
 
     func mapping(map: Map) {
         id <- map["Id"]
@@ -83,6 +97,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText3 <- map["ResultsText3"]
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
+        dirtyFields <- map["DirtyFields"]
         
         //todo: make this a shared function pointer
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(

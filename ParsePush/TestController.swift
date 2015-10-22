@@ -11,7 +11,7 @@ import ObjectMapper
 
 
 class TestController: UIViewController, UITextFieldDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         txtIPAddress.delegate = self
@@ -24,7 +24,7 @@ class TestController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK - view controller
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -95,7 +95,7 @@ class TestController: UIViewController, UITextFieldDelegate {
             self.imgLoginResult.hidden = false
             key == "userName"
             Services.userName = value
-
+            
             Services.login(Services.userName, token: "foobar") { result in
                 let imageName = result != nil ? "icons_implemented" : "icons_issue"
                 self.imgLoginResult.image = UIImage(named: imageName)
@@ -117,15 +117,23 @@ class TestController: UIViewController, UITextFieldDelegate {
             self.lblNotifications.text = "\(result!.count) received"
         }
     }
-
+    
     @IBAction func segMockModeChanged(sender: UISegmentedControl) {
         let defaults = NSUserDefaults.standardUserDefaults()
         Services.mock = sender.selectedSegmentIndex == 1
         defaults.setBool(Services.mock, forKey: "mock")
         defaults.synchronize()
     }
-
-   
+    
+    @IBAction func miscPressed(sender: UIButton) {
+        let procedures = Mock.getProcedures()
+        let proc = procedures[0]
+        proc.title = "something new"
+        let json = Mapper().toJSONString(proc, prettyPrint: true)!
+        print(json)
+        
+    }
+    
     @IBAction func proceduresPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
         Services.getMyProcedures { result in
