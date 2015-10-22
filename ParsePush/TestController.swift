@@ -126,8 +126,8 @@ class TestController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func miscPressed(sender: UIButton) {
-        let procedures = Mock.getProcedures()
-        let proc = procedures[0]
+        //let procedures = Mock.getProcedures()
+        let proc = Procedure()
         proc.title = "something new"
         let json = Mapper().toJSONString(proc, prettyPrint: true)!
         print(json)

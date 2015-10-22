@@ -38,10 +38,16 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         "resultsText4":"Results 4"
     ]
     
+    private var isMapping = false
+    
     // this holds the names of the dirtied properties
     // we use the name of the property as specified in the Map (Capital case)
     // because this is used to match to a property name on the server side
-    var dirtyFields = Set<String>()
+    private var setDirtyFields = Set<String>()
+    private var dirtyFields : [String] {
+        get { return Array(setDirtyFields) }
+        set { setDirtyFields = Set<String>(newValue) }
+    }
     
     static func getTerminology(key : String) -> String{
         return terminology[key] ?? ""
@@ -50,35 +56,44 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var id: Int?
     var parentTitle: String?
     var parentType: Int = 0
-    var title: String? { didSet { dirtyFields.insert("Title") } }
-    var code: String? { didSet { dirtyFields.insert("Code") } }
-    var text1: String? { didSet { dirtyFields.insert("Text1") } }
-    var text2: String? { didSet { dirtyFields.insert("Text2") } }
-    var text3: String? { didSet { dirtyFields.insert("Text3") } }
-    var text4: String? { didSet { dirtyFields.insert("Text4") } }
-    var dueDate: NSDate? { didSet { dirtyFields.insert("DueDate") } }
-    var testResults: Int = 0 { didSet { dirtyFields.insert("TestResults") } }
-    var resultsText1: String? { didSet { dirtyFields.insert("ResultsText1") } }
-    var resultsText2: String? { didSet { dirtyFields.insert("ResultsText2") } }
-    var resultsText3: String? { didSet { dirtyFields.insert("ResultsText3") } }
-    var resultsText4: String? { didSet { dirtyFields.insert("ResultsText4") } }
-    var reviewDueDate: NSDate? { didSet { dirtyFields.insert("ReviewDueDate") } }
+    var title: String? { didSet { setDirty("Title") } }
+    var code: String? { didSet { setDirty("Code") } }
+    var text1: String? { didSet { setDirty("Text1") } }
+    var text2: String? { didSet { setDirty("Text2") } }
+    var text3: String? { didSet { setDirty("Text3") } }
+    var text4: String? { didSet { setDirty("Text4") } }
+    var dueDate: NSDate? { didSet { setDirty("DueDate") } }
+    var testResults: Int = 0 { didSet { setDirty("TestResults") } }
+    var resultsText1: String? { didSet { setDirty("ResultsText1") } }
+    var resultsText2: String? { didSet { setDirty("ResultsText2") } }
+    var resultsText3: String? { didSet { setDirty("ResultsText3") } }
+    var resultsText4: String? { didSet { setDirty("ResultsText4") } }
+    var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
     var tester: String?
     var reviewer: String?
-    var workflowState: Int = 1 { didSet { dirtyFields.insert("WorkflowState") } }
+    var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
     
     func isDirty() -> Bool{
-        return dirtyFields.count > 0
+        return setDirtyFields.count > 0
     }
     
     func clean() {
-        dirtyFields = []
+        setDirtyFields = []
     }
 
+    private func setDirty(field : String!)
+    {
+        if (!isMapping)
+        {
+            setDirtyFields.insert(field)
+        }
+    }
 
     func mapping(map: Map) {
+        isMapping = true
+        
         id <- map["Id"]
         title <- map["Title"]
         parentTitle <- map["ParentTitle"]
@@ -97,7 +112,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText3 <- map["ResultsText3"]
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
-        dirtyFields <- map["DirtyFields"]
+        dirtyFields <- map["dirtyFields"]
         
         //todo: make this a shared function pointer
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
@@ -109,6 +124,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
 //            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
         
         allowedStates <- map["AllowedStates"]
+        
+        isMapping = false
     }
     
     
