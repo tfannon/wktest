@@ -9,6 +9,28 @@
 import Foundation
 import ObjectMapper
 
+class Change: NSObject, Mappable
+{
+    required init(_ map: Map) {
+    }
+
+    // from scratch
+    override init(){
+    }
+
+    var user : String?
+    var versionDate : NSDate?
+    var action : String?
+    var changeDescription : String?
+
+    func mapping(map: Map) {
+        user <- map["User"]
+        versionDate <- map["VersionDate"]
+        action <- map["action"]
+        changeDescription <- map["Description"]
+    }
+}
+
 class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
     }
@@ -74,6 +96,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
+    var changes : [Change]?
     
     func isDirty() -> Bool{
         return setDirtyFields.count > 0
@@ -113,6 +136,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
+        changes <- map["Changes"]
         
         //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
