@@ -145,7 +145,7 @@ public class Services {
         case LocalOnly
     }
     
-    //MARK: procedure
+    //MARK: Procedures
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
         if (mock)
         {
@@ -182,6 +182,35 @@ public class Services {
         }
     }
     
+    //MARK:
+    static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
+//        let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
+//        let procsStr = procs.reduce("") { $0 + $1 }
+//        print(procs)
+//        let data = procsStr.dataUsingEncoding(NSUTF8StringEncoding)
+        
+
+//single object works.
+        let proc = procedures.first!
+        let json = Mapper().toJSONString(proc, prettyPrint: false)!
+        let data = json.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let object = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String:AnyObject]
+        print(object)
+        
+        Alamofire.request(.POST, procedureUrl + "/SendTestProcedure", parameters: object, headers:Services.headers, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success( _):
+                    completed(result:nil)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                    completed(result: nil)
+                }
+        }
+    }
+    
+    
 
     //MARK: Store
     static func save(obj: Procedure, persistKey: Bool = false) {
@@ -204,7 +233,8 @@ public class Services {
                 defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
             }
         }
-        print(" ")
+        //print("Going to server: ")
+        //Services.saveProcedures([obj]) { print($0) }
     }
     
  

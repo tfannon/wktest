@@ -77,21 +77,21 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         text4 <- map["Text4"]
         tester <- map["Tester"]
         reviewer <- map["Reviewer"]
-        testResults <- map["Results.TestResults"]
-        resultsText1 <- map["Results.ResultsText1"]
-        resultsText2 <- map["Results.ResultsText2"]
-        resultsText3 <- map["Results.ResultsText3"]
-        resultsText4 <- map["Results.ResultsText4"]
+        testResults <- map["TestResults"]
+        resultsText1 <- map["ResultsText1"]
+        resultsText2 <- map["ResultsText2"]
+        resultsText3 <- map["ResultsText3"]
+        resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         
         //todo: make this a shared function pointer
-        dueDate <- (map["DueDate"], TransformOf<NSDate?, String>(
-            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
-            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
+        dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
+            fromJSON: {  NSDate(fromString: $0!, format:DateFormat.ISO8601(nil)) },
+            toJSON: { $0.map { $0.toIsoString() } }))
         
-        dueDate <- (map["ReviewDueDate"], TransformOf<NSDate?, String>(
-            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
-            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
+//        reviewDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
+//            fromJSON: { return $0 != nil ? NSDate(fromString: "\($0!)-05:00", format:DateFormat.ISO8601(nil)) : nil },
+//            toJSON: { $0.map { $0 != nil ? $0!.toIsoString() : "" } }))
         
         allowedStates <- map["AllowedStates"]
     }
