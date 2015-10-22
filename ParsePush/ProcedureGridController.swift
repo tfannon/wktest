@@ -126,9 +126,14 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             wCell.text = TestResults(rawValue: procedure.testResults)?.displayName
             return true
             
-        case "dueDate","reviewDueDate" :
+        case "dueDate" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text = procedure.dueDate?.toShortString()
+            wCell.text =  procedure.dueDate?.toShortString()
+            return true
+            
+        case "reviewDueDate" :
+            let wCell = cell as! SDataGridTextCell
+            wCell.text =  procedure.reviewDueDate?.toShortString()
             return true
             
         default: return false

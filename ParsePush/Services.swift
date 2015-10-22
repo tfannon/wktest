@@ -171,7 +171,9 @@ public class Services {
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
+                        print(jsonAlamo!.first)
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                        print(result!.first)
                         //save it back to local store, erasing whatever was there
                         saveAll(result!)
                         completed(result: result)

@@ -116,11 +116,11 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         
         //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
-            fromJSON: {  NSDate(fromString: $0!, format:DateFormat.ISO8601(nil)) },
+            fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
         
         reviewDueDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
-            fromJSON: {  NSDate(fromString: $0!, format:DateFormat.ISO8601(nil)) },
+            fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
         
         allowedStates <- map["AllowedStates"]
