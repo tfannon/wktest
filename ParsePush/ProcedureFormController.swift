@@ -11,7 +11,7 @@ import Eureka
 
 
 
-class ProcedureFormControllerViewController: FormViewController {
+class ProcedureFormControllerViewController: FormViewController, UITextFieldDelegate {
     
     var procedure : Procedure!
     
@@ -22,7 +22,6 @@ class ProcedureFormControllerViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.view.backgroundColor = UIColor.whiteColor()
         
@@ -48,24 +47,31 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.placeholder = self.t("title")
                 $0.value = self.procedure.title
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.title = row.value
-            }
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.title = field.value
+                }
+            
+            
             <<< TextRow() {
                 $0.placeholder = self.t("code")
                 $0.value = self.procedure.code
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.code = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.code = field.value
             }
+
             +++ Section("")
             <<< DateInlineRow() {
                 $0.title = self.t("dueDate") + ":"
                 $0.value = self.procedure.dueDate
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.dueDate = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.dueDate = field.value
             }
+
             +++ Section("")
             <<< LabelRow() {
                 $0.title = self.t("tester") + ":"
@@ -80,9 +86,6 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.title = self.t("reviewDueDate") + ":"
                 $0.value = self.procedure.reviewDueDate
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.reviewDueDate = row.value
-            }
             
             +++ Section("Workflow")
             <<< AlertRow<String>() {
@@ -94,44 +97,52 @@ class ProcedureFormControllerViewController: FormViewController {
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.workflowState = WorkflowState.getFromDisplayName(row.value!).rawValue
-                    cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
-            }
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.workflowState = WorkflowState.getFromDisplayName(field.value!).rawValue
+                    field.cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+                }
             
             +++ Section("Details")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("text1")
                 $0.value = self.procedure.text1
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.text1 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.text1 = field.value
             }
+
             +++ Section("Scope")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("text2")
                 $0.value = self.procedure.text2
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.text2 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.text2 = field.value
             }
+
             +++ Section("Purpose")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("text3")
                 $0.value = self.procedure.text3
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.text3 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.text3 = field.value
             }
+
             +++ Section("Sample Criteria")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("text4")
                 $0.value = self.procedure.text4
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.text4 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.text4 = field.value
             }
-            
+    
             +++ Section()
             
             <<< SegmentedRow<String>() {
@@ -140,7 +151,11 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.value = TestResults(rawValue: self.procedure.testResults)?.displayName
                 }
                 .cellUpdate { cell, row in
-                    self.procedure.testResults = TestResults.getFromDisplayName(row.value!).rawValue
+                    
+            }
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.testResults = TestResults.getFromDisplayName(field.value!).rawValue
             }
             
             +++ Section("Scope")
@@ -148,32 +163,36 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.placeholder = self.t("resultsText1")
                 $0.value = self.procedure.resultsText1
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.resultsText1 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.resultsText1 = field.value
             }
             +++ Section("Conclusion")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("resultsText2")
                 $0.value = self.procedure.resultsText2
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.resultsText2 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.resultsText2 = field.value
             }
             +++ Section("Notes")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("resultsText3")
                 $0.value = self.procedure.resultsText3
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.resultsText3 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.resultsText3 = field.value
             }
             +++ Section("Results 4")
             <<< TextAreaRow() {
                 $0.placeholder = self.t("resultsText4")
                 $0.value = self.procedure.resultsText4
                 }
-                .cellUpdate { cell, row in
-                    self.procedure.resultsText4 = row.value
+                .onChange{ field in
+                    self.enableSave()
+                    self.procedure.resultsText4 = field.value
         }
         
         // MARK: X -
@@ -196,9 +215,15 @@ class ProcedureFormControllerViewController: FormViewController {
             let right = UIBarButtonItem(title: "Save",
                 style: UIBarButtonItemStyle.Plain,
                 target: self, action: "navbarSaveClicked")
+
             self.navigationItem.rightBarButtonItem = right
             self.navigationItem.rightBarButtonItem?.enabled = false
         }
+    }
+    
+    private func enableSave()
+    {
+        self.navigationItem.rightBarButtonItem!.enabled = true
     }
     
     private func dismiss()
