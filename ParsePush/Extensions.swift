@@ -21,4 +21,9 @@ extension String {
     var length : Int {
         return self.characters.count
     }
+    
+    func substring(numberOfChars: Int) -> String
+    {
+        return (self as NSString).substringToIndex(numberOfChars)
+    }
 }
