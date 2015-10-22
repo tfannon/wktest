@@ -217,15 +217,20 @@ public class Services {
 //        }
 //
     
-        let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
-        let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/SendTestProcedures")!)
+        //let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
+        let procs = Array(procedures[0..<2])
+        let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        //let values = ["06786984572365", "06644857247565", "06649998782227"]
-        let values = [procs[0],procs[1]]
         
-        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(values, options: [])
+        procs[1].title = "NEW TITLE \(NSUUID().UUIDString)"
+        
+        //let values = ["06786984572365", "06644857247565", "06649998782227"]
+        let json = Mapper().toJSONArray(procs)
+        
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
+        request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {

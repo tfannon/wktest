@@ -31,6 +31,7 @@ class Mock {
     static private func getNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {
         let procedure = Procedure()
+        
         procedure.id = id
         procedure.title = title
         procedure.code = code
@@ -49,7 +50,7 @@ class Mock {
         procedure.allowedStates = [1, 2, 3, 5]
         procedure.parentTitle = "Procedure \(id)'s Parent"
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
-        
+        procedure.clean()
         return procedure
     }
 }
