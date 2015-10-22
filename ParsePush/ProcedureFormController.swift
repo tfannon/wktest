@@ -232,8 +232,11 @@ class ProcedureFormControllerViewController: FormViewController {
     
     func navbarSaveClicked()
     {
-        Services.save(self.procedure)
-        dismiss()
+//        let vc = ChangeTrackingController()
+//        vc.changes = self.procedure.changes
+//        self.navigationController?.pushViewController(vc, animated: true)
+        //Services.save(self.procedure)
+        //dismiss()
     }
 
     override func didReceiveMemoryWarning() {
@@ -252,3 +255,5 @@ class ProcedureFormControllerViewController: FormViewController {
     */
     
 }
+
+
