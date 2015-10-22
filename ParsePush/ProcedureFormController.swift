@@ -14,6 +14,7 @@ import Eureka
 class ProcedureFormControllerViewController: FormViewController, UITextFieldDelegate {
     
     var procedure : Procedure!
+    var cellHeight : CGFloat!
     
     private func t(key : String) -> String
     {
@@ -28,13 +29,6 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
         TextAreaRow.defaultCellSetup = { cell, row in
             cell.textView.backgroundColor = UIColor.whiteColor()
             cell.textView.textContainerInset = UIEdgeInsetsMake(20,20,20,20);
-            
-            let fixedWidth = cell.textView.frame.size.width
-            cell.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-            let newSize = cell.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-            var newFrame = cell.textView.frame
-            newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-            cell.textView.frame = newFrame;
         }
         
         self.tableView?.estimatedRowHeight = 44.0
@@ -51,7 +45,6 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
                     self.enableSave()
                     self.procedure.title = field.value
                 }
-            
             
             <<< TextRow() {
                 $0.placeholder = self.t("code")
@@ -238,7 +231,8 @@ class ProcedureFormControllerViewController: FormViewController, UITextFieldDele
     
     func navbarSaveClicked()
     {
-        dismiss();
+        Services.save(self.procedure)
+        dismiss()
     }
 
     override func didReceiveMemoryWarning() {
