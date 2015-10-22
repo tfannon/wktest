@@ -187,48 +187,13 @@ public class Services {
     //MARK:
     static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
         //single object works.
-//        let proc = procedures.first!
-//        let json = Mapper().toJSONString(proc, prettyPrint: false)!
-//        let data = json.dataUsingEncoding(NSUTF8StringEncoding)
-//        let dict = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String:AnyObject]
-//        print(dict)
-//        Alamofire.request(.POST, procedureUrl + "/SendTestProcedure", parameters: dict, headers:Services.headers, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                switch result {
-//                case .Success( _):
-//                    completed(result:nil)
-//                case .Failure(_, let error):
-//                    print("Request failed with error: \(error)")
-//                    completed(result: nil)
-//                }
-//        }
-        
-//        let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
-//        let encodedProcs = procs.map {
-//            try! NSJSONSerialization.JSONObjectWithData($0.dataUsingEncoding(NSUTF8StringEncoding)!, options: .AllowFragments) as? [String:AnyObject]
-//        }
-//        //let dict = ["Procedures":encodedProcs]
-//        Alamofire.request(.POST, procedureUrl + "/SendTestProcedures", parameters: encodedProcs, encoding: .JSON)
-//            .responseJSON { request, response, result in
-//                switch result {
-//                case .Success(_):
-//                    completed(result: nil)
-//                case .Failure(_, let error):
-//                    print("Request failed with error: \(error)")
-//                }
-//        }
-//
-    
-        //let procs = procedures[0..<2].map { Mapper().toJSONString($0, prettyPrint: false)! }
         let procs = Array(procedures[0..<2])
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        
         procs[1].title = "NEW TITLE \(NSUUID().UUIDString)"
         
-        //let values = ["06786984572365", "06644857247565", "06649998782227"]
         let json = Mapper().toJSONArray(procs)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
@@ -236,8 +201,16 @@ public class Services {
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
-                case .Success( _):
-                    completed(result:nil)
+                case .Success(let data):
+                    let jsonAlamo = data as? [[String:AnyObject]]
+                    let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                    //save it back to local store, erasing whatever was there
+                    if let r = result
+                    {
+                        saveAll(r)
+                    }
+                    completed(result: result)
+
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                     completed(result: nil)
