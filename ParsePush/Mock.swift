@@ -46,7 +46,7 @@ class Mock {
         procedure.resultsText2 = text1
         procedure.resultsText3 = text1
         procedure.resultsText4 = text1
-        procedure.allowedStates = [1]
+        procedure.allowedStates = [1, 2, 3, 5]
         procedure.parentTitle = "Procedure \(id)'s Parent"
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
         
