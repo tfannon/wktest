@@ -142,21 +142,30 @@ public class Services {
     enum FetchOptions {
         case Default
         case ForceRefresh
+        case LocalOnly
     }
     
     //MARK: procedure
-    static func getMyProcedures(persistLocal: Bool = false, completed: (result: [Procedure]?)->()) {
+    static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
         if (mock)
         {
             completed(result: Mock.getProcedures())
         }
         else
         {
-            //check the local store first
-            if let procedures = loadProcedures() {
-                completed(result: procedures)
+            //testing only
+            if fetchOptions == .LocalOnly {
+                completed(result: loadProcedures())
+                return
             }
-            //fetch from services ( we will need to add an online check here )
+            //default is to check the local store first
+            if fetchOptions == .Default {
+                if let procedures = loadProcedures() {
+                    completed(result: procedures)
+                    return
+                }
+            }
+            //if the store had nothing or we force a refresh fetch from services
             Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
                 .responseJSON { request, response, result in
                     switch result {
@@ -164,9 +173,7 @@ public class Services {
                         let jsonAlamo = data as? [[String:AnyObject]]
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
                         //save it back to local store, erasing whatever was there
-                        if persistLocal {
-                            saveAll(result!)
-                        }
+                        saveAll(result!)
                         completed(result: result)
                     case .Failure(_, let error):
                         print("Request failed with error: \(error)")
@@ -178,7 +185,7 @@ public class Services {
 
     //MARK: Store
     static func save(obj: Procedure, persistKey: Bool = true) {
-        let procJson = Mapper().toJSONString(obj, prettyPrint: false)!
+        let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
         let defaults = NSUserDefaults.standardUserDefaults()
         //save it in its own slot.  will overwrite anything there
         defaults.setValue(procJson, forKey: DataKey.getProcKey(obj.id!))
@@ -207,12 +214,17 @@ public class Services {
         }
     }
     
-    private static func saveAll(objects: [Procedure]) {
+    static func clearStore() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
         defaults.removeObjectForKey(DataKey.Proc.rawValue)
+        defaults.synchronize()
+    }
+    
+    private static func saveAll(objects: [Procedure]) {
+        clearStore()
         let ids = objects.map { $0.id! }
-        defaults.setObject(ids, forKey: DataKey.ProcedureIds.rawValue)
+        NSUserDefaults.standardUserDefaults().setObject(ids, forKey: DataKey.ProcedureIds.rawValue)
         //write them all in but we have already saved the keys so skip that
         objects.each { save($0, persistKey: false) }
     }
@@ -230,7 +242,7 @@ public class Services {
         //may be empty
         if let ids = loadIds() {
             return ids.map { id in
-                let jsonProc = defaults.valueForKey("\(DataKey.Proc.rawValue)id") as! String!
+                let jsonProc = defaults.valueForKey(DataKey.getProcKey(id)) as! String
                 return Mapper<Procedure>().map(jsonProc)!
             }
         }

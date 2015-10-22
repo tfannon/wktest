@@ -41,12 +41,21 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     //MARK - persistent store
     @IBAction func storeLocalPressed(sender: AnyObject) {
-        Services.getMyProcedures(true) { result in
+        self.lblProcedures.text = ""
+        Services.getMyProcedures {
+            self.lblProcedures.text = String($0!.count)
         }
     }
     
     @IBAction func readLocalPressed(sender: AnyObject) {
-        
+        self.lblProcedures.text = ""
+        Services.getMyProcedures(.LocalOnly) {
+            self.lblProcedures.text = String($0!.count)
+        }
+    }
+    
+    @IBAction func clearLocalPressed(sender: AnyObject) {
+        Services.clearStore()
     }
     
     //MARK - Actions

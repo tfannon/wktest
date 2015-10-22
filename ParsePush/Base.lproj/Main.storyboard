@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -153,7 +153,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEI-8d-ibE">
-                                <rect key="frame" x="26" y="456" width="102" height="30"/>
+                                <rect key="frame" x="26" y="440" width="102" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Store Local"/>
                                 <connections>
@@ -161,7 +161,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAc-xo-tMT">
-                                <rect key="frame" x="28" y="523" width="102" height="30"/>
+                                <rect key="frame" x="25" y="478" width="102" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Read Local"/>
                                 <connections>
@@ -170,6 +170,7 @@
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QgD-cT-tdB">
                                 <rect key="frame" x="259" y="203" width="121" height="29"/>
+                                <animations/>
                                 <segments>
                                     <segment title="Service"/>
                                     <segment title="Mock"/>
@@ -178,6 +179,14 @@
                                     <action selector="segMockModeChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KMg-ja-8Qp"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIm-Aa-P5R">
+                                <rect key="frame" x="38" y="516" width="77" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Clear Local"/>
+                                <connections>
+                                    <action selector="clearLocalPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="c6v-BA-u7f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -192,18 +201,20 @@
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="height" secondItem="5Wn-G2-Qdd" secondAttribute="height" id="9fj-BP-Al6"/>
                             <constraint firstItem="Kht-xO-4kp" firstAttribute="height" secondItem="z25-cC-dZS" secondAttribute="height" id="9ll-ax-4FJ"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="top" secondItem="5Wn-G2-Qdd" secondAttribute="bottom" constant="18" id="Aqd-EC-rVp"/>
+                            <constraint firstItem="aIm-Aa-P5R" firstAttribute="trailing" secondItem="jAc-xo-tMT" secondAttribute="trailing" constant="-12" id="DLv-jS-lOE"/>
                             <constraint firstItem="Kht-xO-4kp" firstAttribute="trailing" secondItem="z25-cC-dZS" secondAttribute="trailing" id="Fa7-cP-gzF"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="leading" secondItem="RnH-4i-QhM" secondAttribute="leading" constant="3" id="GNt-4c-yIg"/>
                             <constraint firstItem="zvx-9e-MNm" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="34" id="Gyj-xD-zeG"/>
                             <constraint firstItem="toG-cj-t0E" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="5" id="Iye-eR-mAZ" userLabel="IP Address.leading = leadingMargin + 5"/>
                             <constraint firstItem="mKb-wJ-uMH" firstAttribute="top" secondItem="AkQ-tf-u7H" secondAttribute="bottom" constant="29" id="JAd-cw-34Q"/>
                             <constraint firstItem="toG-cj-t0E" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="37" id="JLl-a1-fU2"/>
-                            <constraint firstItem="DEI-8d-ibE" firstAttribute="top" secondItem="0PL-UW-pNg" secondAttribute="bottom" constant="20" id="JOQ-kH-4HE"/>
+                            <constraint firstItem="DEI-8d-ibE" firstAttribute="top" secondItem="0PL-UW-pNg" secondAttribute="bottom" constant="4" id="JOQ-kH-4HE"/>
                             <constraint firstItem="Kht-xO-4kp" firstAttribute="leading" secondItem="z25-cC-dZS" secondAttribute="leading" id="Jte-vV-hUS"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="trailing" secondItem="5Wn-G2-Qdd" secondAttribute="trailing" id="JvV-ov-eZ3"/>
                             <constraint firstItem="00k-W1-lfG" firstAttribute="height" secondItem="mKb-wJ-uMH" secondAttribute="height" id="Jx7-fk-QqX"/>
                             <constraint firstItem="Kht-xO-4kp" firstAttribute="top" secondItem="z25-cC-dZS" secondAttribute="bottom" constant="17" id="LLL-dq-W4W"/>
                             <constraint firstItem="BGA-ai-Bla" firstAttribute="centerY" secondItem="z25-cC-dZS" secondAttribute="centerY" id="LeM-kW-6m5"/>
+                            <constraint firstItem="aIm-Aa-P5R" firstAttribute="top" secondItem="jAc-xo-tMT" secondAttribute="bottom" constant="8" id="M0V-XP-1aq"/>
                             <constraint firstItem="mKb-wJ-uMH" firstAttribute="trailing" secondItem="AkQ-tf-u7H" secondAttribute="trailing" id="MN1-vk-8kn"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="width" secondItem="5Wn-G2-Qdd" secondAttribute="width" id="OnG-54-Hpi"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="top" secondItem="RnH-4i-QhM" secondAttribute="bottom" constant="14" id="Pdi-vi-rvo"/>
@@ -213,9 +224,10 @@
                             <constraint firstItem="5Wn-G2-Qdd" firstAttribute="top" secondItem="00k-W1-lfG" secondAttribute="bottom" constant="36" id="VUo-T4-2EZ"/>
                             <constraint firstItem="5Wn-G2-Qdd" firstAttribute="height" secondItem="00k-W1-lfG" secondAttribute="height" id="XOA-WV-y14"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="leading" secondItem="5Wn-G2-Qdd" secondAttribute="leading" id="XcB-pC-9ey"/>
-                            <constraint firstItem="jAc-xo-tMT" firstAttribute="leading" secondItem="DEI-8d-ibE" secondAttribute="leading" constant="2" id="Yka-A6-pt7"/>
+                            <constraint firstItem="jAc-xo-tMT" firstAttribute="leading" secondItem="DEI-8d-ibE" secondAttribute="leading" constant="-1" id="Yka-A6-pt7"/>
                             <constraint firstItem="5Wn-G2-Qdd" firstAttribute="leading" secondItem="00k-W1-lfG" secondAttribute="leading" id="ZjU-wg-9Pu"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="height" secondItem="RnH-4i-QhM" secondAttribute="height" id="dGe-zT-AcF"/>
+                            <constraint firstItem="aIm-Aa-P5R" firstAttribute="leading" secondItem="jAc-xo-tMT" secondAttribute="leading" constant="13" id="det-Vk-A0j"/>
                             <constraint firstItem="00k-W1-lfG" firstAttribute="leading" secondItem="mKb-wJ-uMH" secondAttribute="leading" id="eHq-sm-Zqq"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="width" secondItem="RnH-4i-QhM" secondAttribute="width" constant="-3" id="hd7-T3-O7r"/>
                             <constraint firstItem="zvx-9e-MNm" firstAttribute="leading" secondItem="toG-cj-t0E" secondAttribute="trailing" constant="20" id="idL-mJ-ZNu"/>
@@ -223,11 +235,11 @@
                             <constraint firstItem="5Wn-G2-Qdd" firstAttribute="width" secondItem="00k-W1-lfG" secondAttribute="width" id="kAm-S6-GDa"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="trailing" secondItem="RnH-4i-QhM" secondAttribute="trailing" id="mmF-Lg-q82"/>
                             <constraint firstItem="00k-W1-lfG" firstAttribute="top" secondItem="mKb-wJ-uMH" secondAttribute="bottom" constant="17" id="o2n-zN-KWR"/>
-                            <constraint firstItem="jAc-xo-tMT" firstAttribute="trailing" secondItem="DEI-8d-ibE" secondAttribute="trailing" constant="2" id="qbs-uH-ujk"/>
+                            <constraint firstItem="jAc-xo-tMT" firstAttribute="trailing" secondItem="DEI-8d-ibE" secondAttribute="trailing" constant="-1" id="qbs-uH-ujk"/>
                             <constraint firstItem="z25-cC-dZS" firstAttribute="width" secondItem="zvx-9e-MNm" secondAttribute="width" id="uXJ-TS-Cya"/>
                             <constraint firstItem="Kht-xO-4kp" firstAttribute="width" secondItem="z25-cC-dZS" secondAttribute="width" id="wa2-PX-QC4"/>
                             <constraint firstItem="z25-cC-dZS" firstAttribute="leading" secondItem="zvx-9e-MNm" secondAttribute="leading" id="yoj-tg-oY5"/>
-                            <constraint firstItem="jAc-xo-tMT" firstAttribute="top" secondItem="DEI-8d-ibE" secondAttribute="bottom" constant="37" id="zdU-6h-Jb1"/>
+                            <constraint firstItem="jAc-xo-tMT" firstAttribute="top" secondItem="DEI-8d-ibE" secondAttribute="bottom" constant="8" id="zdU-6h-Jb1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kBh-l0-xqp"/>
@@ -437,6 +449,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k6q-ss-Zoz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
