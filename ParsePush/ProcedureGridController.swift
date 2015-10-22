@@ -141,18 +141,16 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        
         let controller = ProcedureFormControllerViewController()
         controller.procedure = items[row.rowIndex]
         navigationController?.pushViewController(controller, animated: true)
     }
     
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-        getProcedures {
+        Services.sync { result in
+            self.items = result!
             self.dataSourceHelper.data = self.items
             self.grid.pullToAction.actionCompleted()
         }
     }
-    
-
 }

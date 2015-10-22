@@ -74,6 +74,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
+    var lmg: String?
     
     func isDirty() -> Bool{
         return setDirtyFields.count > 0
@@ -90,6 +91,16 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
             setDirtyFields.insert(field)
         }
     }
+
+    //the load operation will populate this with a guid check
+    enum SyncState {
+        case Unchanged
+        case New
+        case Modified
+    }
+
+    var syncState: SyncState = .Unchanged
+
 
     func mapping(map: Map) {
         isMapping = true
@@ -113,6 +124,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
+        lmg <- map["LMG"]
         
         //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
@@ -127,6 +139,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         
         isMapping = false
     }
+    
     
     
     override var description: String {

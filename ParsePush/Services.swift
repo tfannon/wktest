@@ -58,7 +58,6 @@ public class Services {
     
 
     //MARK:  Login
-    
     static func login(name: String, token: NSData, completed: (result: String?)->()) {
         return login(name, token: tokenToString(token), completed: completed)
     }
@@ -122,7 +121,6 @@ public class Services {
         }
         
     }
-    
  
     static func markRead(ids: [Int], completed: (result: String)->()) {
         let dict = ["ids":ids]
@@ -139,21 +137,19 @@ public class Services {
         }
     }
     
+    //MARK: Procedures
     enum FetchOptions {
         case Default
         case ForceRefresh
         case LocalOnly
     }
     
-    //MARK: Procedures
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
-        if (mock)
-        {
+        print(__FUNCTION__)
+        if (mock) {
             completed(result: Mock.getProcedures())
         }
-        else
-        {
-            //testing only
+        else {
             if fetchOptions == .LocalOnly {
                 completed(result: loadProcedures())
                 return
@@ -171,9 +167,7 @@ public class Services {
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
-                        print(jsonAlamo!.first)
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                        print(result!.first)
                         //save it back to local store, erasing whatever was there
                         saveAll(result!)
                         completed(result: result)
@@ -184,9 +178,20 @@ public class Services {
         }
     }
     
-    //MARK:
-    static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
-        //single object works.
+    //MARK: Sync
+    //grab the dirty procedures from the local store and send them to server
+    static func sync(completed: (result: [Procedure]?)->()) {
+        print(__FUNCTION__)
+        getMyProcedures(FetchOptions.LocalOnly) { procs in
+            let dirty = procs?.filter { $0.isDirty() == true }
+            saveProcedures(dirty!) { allProcs in
+                completed(result:allProcs)
+            }
+        }
+    }
+    
+    private static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
+        print(__FUNCTION__)
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
@@ -201,32 +206,43 @@ public class Services {
                 switch result {
                 case .Success(let data):
                     let jsonAlamo = data as? [[String:AnyObject]]
-                    let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                    //save it back to local store, erasing whatever was there
-                    if let r = result
-                    {
-                        saveAll(r)
+                    let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                    let local = loadProcedures()!
+                    //compare results to local store. 
+                    server!.each { p in
+                        //if found in local store, do an lmg compare
+                        if let i = local.indexOf({$0.id == p.id}) {
+                            let l = local[i]
+                            p.syncState = (l.lmg! != p.lmg!) ? .Modified : .Unchanged
+                        }
+                        else {
+                            p.syncState = .New
+                        }
                     }
-                    completed(result: result)
+                    print ("\(server!.filter { $0.syncState != .Unchanged }.count) new or modified")
 
+                    
+                    saveAll(server!)
+                    
+                    completed(result: server!)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                     completed(result: nil)
                 }
         }
-}
+    }
     
     
 
-    //MARK: Store
+    //MARK: Save local
     static func save(obj: Procedure, persistKey: Bool = false) {
+        //print(__FUNCTION__)
         let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
         let defaults = NSUserDefaults.standardUserDefaults()
         //save it in its own slot.  will overwrite anything there
         let key = DataKey.getProcKey(obj.id!)
-        print("Saving \(key):\(procJson)")
+        //print("Saving \(key) to local store")
         defaults.setValue(procJson, forKey: key)
-        defaults.synchronize()
         //if its coming from the load from services, all keys need to be persisted
         if persistKey {
             if let ids = loadIds()
@@ -239,8 +255,6 @@ public class Services {
                 defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
             }
         }
-        //print("Going to server: ")
-        //Services.saveProcedures([obj]) { print($0) }
     }
     
  
@@ -261,6 +275,7 @@ public class Services {
     }
     
     private static func saveAll(objects: [Procedure]) {
+        print(__FUNCTION__)
         clearStore()
         let ids = objects.map { $0.id! }
         NSUserDefaults.standardUserDefaults().setObject(ids, forKey: DataKey.ProcedureIds.rawValue)
@@ -276,14 +291,13 @@ public class Services {
     
     //may be empty
     private static func loadProcedures() -> [Procedure]? {
+        print(__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
-
         //may be empty
         if let ids = loadIds() {
             return ids.map { id in
                 let key = DataKey.getProcKey(id)
                 let jsonProc = defaults.valueForKey(key) as! String
-                print("\(key): \(jsonProc)")
                 return Mapper<Procedure>().map(jsonProc)!
             }
         }
