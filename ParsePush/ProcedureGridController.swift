@@ -34,7 +34,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.tabBarController?.tabBar.frame = CGRectZero
 
     }
     
