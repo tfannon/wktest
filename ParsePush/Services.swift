@@ -187,14 +187,12 @@ public class Services {
     //MARK:
     static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
         //single object works.
-        let procs = Array(procedures[0..<2])
+
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        procs[1].title = "NEW TITLE \(NSUUID().UUIDString)"
-        
-        let json = Mapper().toJSONArray(procs)
+        let json = Mapper().toJSONArray(procedures)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
         request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
