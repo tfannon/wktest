@@ -28,14 +28,14 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         
         self.addColumns()
         self.createDataSource()
-        getProcedures {
-            self.dataSourceHelper.data = self.items
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
-
+        
+        getProcedures {
+            self.dataSourceHelper.data = self.items
+        }
     }
     
     func getProcedures(completed: ()->()) {
