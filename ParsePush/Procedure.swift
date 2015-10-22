@@ -75,6 +75,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var readOnly  : Bool?
     var allowedStates : [Int]?
     var lmg: String?
+    var wasChangedOnServer : Bool?
     
     func isDirty() -> Bool{
         return setDirtyFields.count > 0
@@ -125,6 +126,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
         lmg <- map["LMG"]
+        wasChangedOnServer <- map["WasChangedOnServer"]
         
         //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(

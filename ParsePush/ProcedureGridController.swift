@@ -103,7 +103,20 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
         let procedure = object as! Procedure
         switch (propertyKey) {
+        case "title" :
+            let wCell = cell as! SDataGridTextCell
             
+            if procedure.syncState == .Modified {
+                wCell.backgroundColor = UIColor.orangeColor()
+            }
+            else if procedure.syncState == .New {
+                wCell.backgroundColor = UIColor.lightGrayColor()
+            }
+            else {
+                wCell.backgroundColor = UIColor.clearColor()
+            }
+            
+            return false
         case "workflowState" :
             let wCell = cell as! DataGridImageCell
             wCell.state = WorkflowState(rawValue: procedure.workflowState)!
@@ -143,6 +156,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let controller = ProcedureFormControllerViewController()
         controller.procedure = items[row.rowIndex]
+        //when we navigate to detail view we clear any sync status
+        controller.procedure.syncState = .Unchanged
+        Services.save(controller.procedure)
         navigationController?.pushViewController(controller, animated: true)
     }
     

@@ -207,13 +207,13 @@ public class Services {
                 case .Success(let data):
                     let jsonAlamo = data as? [[String:AnyObject]]
                     let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+                    //print(jsonAlamo)
                     let local = loadProcedures()!
                     //compare results to local store. 
                     server!.each { p in
                         //if found in local store, do an lmg compare
-                        if let i = local.indexOf({$0.id == p.id}) {
-                            let l = local[i]
-                            p.syncState = (l.lmg! != p.lmg!) ? .Modified : .Unchanged
+                        if local.indexOf({$0.id == p.id}) != nil {
+                            p.syncState = p.wasChangedOnServer! ? .Modified : .Unchanged
                         }
                         else {
                             p.syncState = .New
