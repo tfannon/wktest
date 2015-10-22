@@ -30,6 +30,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         self.createDataSource()
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
