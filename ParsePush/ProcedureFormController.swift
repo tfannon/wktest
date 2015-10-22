@@ -14,13 +14,6 @@ import Eureka
 class ProcedureFormControllerViewController: FormViewController {
     
     var procedure : Procedure!
-    var cellHeight : CGFloat!
-    
-    func heightForRowAtIndexPath(indexPath: NSIndexPath) -> CGFloat
-    {
-        return 300
-        
-    }
     
     private func t(key : String) -> String
     {
