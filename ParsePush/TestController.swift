@@ -41,20 +41,21 @@ class TestController: UIViewController, UITextFieldDelegate {
     
     //MARK - persistent store
     @IBAction func storeLocalPressed(sender: AnyObject) {
-        Services.getMyProcedures(true) { result in
+        self.lblProcedures.text = ""
+        Services.getMyProcedures {
+            self.lblProcedures.text = String($0!.count)
         }
     }
     
     @IBAction func readLocalPressed(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let procIds = defaults.valueForKey("procIds") as! [Int]
-        let formattedIds = Misc.join(procIds, separator: ", ")
-        print("Procedure Ids:\(formattedIds)")
-        procIds.each {
-            let procJson = defaults.valueForKey(String($0)) as! String
-            let proc = Mapper<Procedure>().map(procJson)
-            print(proc)
+        self.lblProcedures.text = ""
+        Services.getMyProcedures(.LocalOnly) {
+            self.lblProcedures.text = String($0!.count)
         }
+    }
+    
+    @IBAction func clearLocalPressed(sender: AnyObject) {
+        Services.clearStore()
     }
     
     //MARK - Actions

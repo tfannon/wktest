@@ -17,3 +17,8 @@ extension Array{
     }
 }
 
+extension String {
+    var length : Int {
+        return self.characters.count
+    }
+}
