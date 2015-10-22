@@ -76,6 +76,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var allowedStates : [Int]?
     var lmg: String?
     var wasChangedOnServer : Bool?
+
     
     func isDirty() -> Bool{
         return setDirtyFields.count > 0
@@ -138,6 +139,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
             toJSON: { $0.map { $0.toIsoString() } }))
         
         allowedStates <- map["AllowedStates"]
+        
+        syncState <- map["SyncState"]
         
         isMapping = false
     }

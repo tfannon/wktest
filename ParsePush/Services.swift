@@ -190,14 +190,14 @@ public class Services {
         }
     }
     
-    private static func saveProcedures(procedures: [Procedure], completed: (result: [Procedure]?)->()) {
+    private static func saveProcedures(dirty: [Procedure], completed: (result: [Procedure]?)->()) {
         print(__FUNCTION__)
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let json = Mapper().toJSONArray(procedures)
+        let json = Mapper().toJSONArray(dirty)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
         request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
@@ -206,17 +206,39 @@ public class Services {
                 switch result {
                 case .Success(let data):
                     let jsonAlamo = data as? [[String:AnyObject]]
+
                     let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                    //print(jsonAlamo)
                     let local = loadProcedures()!
+
+                    //replace this shit with a map
+                    var localNotDirty = [Procedure]()
+                    local.each { l in
+                        if dirty.indexOf ({ $0.id == l.id })  == nil {
+                            localNotDirty.append(l)
+                        }
+                    }
+                    print ("local not dirty")
+                    localNotDirty.each {
+                        print($0.id)
+                    }
+
                     //compare results to local store. 
                     server!.each { p in
-                        //if found in local store, do an lmg compare
-                        if local.indexOf({$0.id == p.id}) != nil {
-                            p.syncState = p.wasChangedOnServer! ? .Modified : .Unchanged
+                        //if not found in local store, it is new
+                        if local.indexOf({$0.id == p.id}) == nil {
+                            p.syncState = .New
                         }
                         else {
-                            p.syncState = .New
+                            //otherwise if it is one of the ones i sent down, check the server flag
+                            if dirty.indexOf ({ $0.id == p.id }) != nil {
+                                p.syncState = p.wasChangedOnServer! ? .Modified : .Unchanged
+                            }
+                            //otherwise if my guid != match the server guid, it is dirty
+                            else {
+                                let i = localNotDirty.indexOf({$0.id == p.id})!
+                                let l = localNotDirty[i]
+                                p.syncState = l.lmg != p.lmg ? .Modified : .Unchanged
+                            }
                         }
                     }
                     print ("\(server!.filter { $0.syncState != .Unchanged }.count) new or modified")
