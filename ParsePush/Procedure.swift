@@ -99,6 +99,9 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
+    var lmg: String?
+    var wasChangedOnServer : Bool?
+
     var changes : [Change]?
     
     func isDirty() -> Bool{
@@ -149,6 +152,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
+        lmg <- map["LMG"]
+        wasChangedOnServer <- map["WasChangedOnServer"]
         changes <- map["Changes"]
         
         //todo: nil dates are taking today
