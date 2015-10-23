@@ -117,6 +117,16 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         }
     }
 
+    //the load operation will populate this with a guid check
+    enum SyncState {
+        case Unchanged
+        case New
+        case Modified
+    }
+
+    var syncState: SyncState = .Unchanged
+
+
     func mapping(map: Map) {
         isMapping = true
         
@@ -152,8 +162,11 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         
         allowedStates <- map["AllowedStates"]
         
+        syncState <- map["SyncState"]
+        
         isMapping = false
     }
+    
     
     
     override var description: String {

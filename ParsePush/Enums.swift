@@ -17,6 +17,7 @@ enum ObjectType: Int, ImageProvider {
     case Risk = 45
     case Control = 46
     case Procedure = 48
+    case Entity = 36
     
     var imageName: String {
         get {
@@ -24,6 +25,7 @@ enum ObjectType: Int, ImageProvider {
             case .Risk: return "icons_risk"
             case .Control: return  "icons_control"
             case .Procedure: return "icons_procedure"
+            case .Entity: return "icons_assessment"
             }
         }
     }

@@ -70,20 +70,20 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func sendProceduresPressed(sender: AnyObject) {
-        Services.getMyProcedures() { result in
-                var procs = [Procedure]()
-                if result?.count > 0 {
-                    result?.each {
-                        procs.append($0)
-                    }
-                }
-                Services.saveProcedures(procs) {
-                    print($0)
-                }
-            }
-        
-    }
+//    @IBAction func sendProceduresPressed(sender: AnyObject) {
+//        Services.getMyProcedures() { result in
+//                var procs = [Procedure]()
+//                if result?.count > 0 {
+//                    result?.each {
+//                        procs.append($0)
+//                    }
+//                }
+//                Services.saveProcedures(procs) {
+//                    print($0)
+//                }
+//            }
+//        
+//    }
     
     @IBAction func editProcedurePressed(sender: AnyObject) {
         let vc = ProcedureFormControllerViewController()
