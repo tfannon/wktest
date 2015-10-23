@@ -19,15 +19,18 @@ class Change: NSObject, Mappable
     }
 
     var user : String?
-    var versionDate : NSDate?
-    var action : String?
+    var date : NSDate?
+    var title : String?
     var changeDescription : String?
 
     func mapping(map: Map) {
         user <- map["User"]
-        versionDate <- map["VersionDate"]
-        action <- map["action"]
+        title <- map["Title"]
         changeDescription <- map["Description"]
+
+        date <- (map["Date"], TransformOf<NSDate, String>(
+            fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },
+            toJSON: { $0.map { $0.toIsoString() } }))
     }
 }
 
