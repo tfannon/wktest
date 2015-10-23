@@ -9,6 +9,31 @@
 import Foundation
 import ObjectMapper
 
+class Change: NSObject, Mappable
+{
+    required init(_ map: Map) {
+    }
+
+    // from scratch
+    override init(){
+    }
+
+    var user : String?
+    var date : NSDate?
+    var title : String?
+    var changeDescription : String?
+
+    func mapping(map: Map) {
+        user <- map["User"]
+        title <- map["Title"]
+        changeDescription <- map["Description"]
+
+        date <- (map["Date"], TransformOf<NSDate, String>(
+            fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },
+            toJSON: { $0.map { $0.toIsoString() } }))
+    }
+}
+
 class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
     }
@@ -74,9 +99,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
-    var lmg: String?
-    var wasChangedOnServer : Bool?
-
+    var changes : [Change]?
     
     func isDirty() -> Bool{
         return setDirtyFields.count > 0
@@ -126,8 +149,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         resultsText4 <- map["ResultsText4"]
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
-        lmg <- map["LMG"]
-        wasChangedOnServer <- map["WasChangedOnServer"]
+        changes <- map["Changes"]
         
         //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(

@@ -232,6 +232,12 @@ class ProcedureFormControllerViewController: FormViewController {
     
     func navbarSaveClicked()
     {
+//        // http://stackoverflow.com/questions/23072442/uitableviewcontroller-crash-due-to-cell-identifier
+//        let storyboard = UIStoryboard(name: "Procedure", bundle: nil)
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("ChangesViewController") as! ChangesController
+//        
+//        vc.changes = self.procedure.changes
+//        self.navigationController?.pushViewController(vc, animated: true)
         Services.save(self.procedure)
         dismiss()
     }
@@ -252,3 +258,5 @@ class ProcedureFormControllerViewController: FormViewController {
     */
     
 }
+
+
