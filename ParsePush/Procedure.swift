@@ -69,8 +69,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var resultsText3: String? { didSet { setDirty("ResultsText3") } }
     var resultsText4: String? { didSet { setDirty("ResultsText4") } }
     var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
-    var tester: String?
-    var reviewer: String?
+    var tester: String = ""
+    var reviewer: String = ""
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
@@ -101,7 +101,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         case Modified
     }
 
-    var syncState: SyncState = .Unchanged
+    var syncState: SyncState?
 
 
     func mapping(map: Map) {

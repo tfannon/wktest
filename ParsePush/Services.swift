@@ -217,12 +217,10 @@ public class Services {
                             localNotDirty.append(l)
                         }
                     }
-                    print ("local not dirty")
-                    localNotDirty.each {
-                        print($0.id)
-                    }
+                    print ("\(dirty.count) dirty")
+                    print ("\(localNotDirty.count) local not dirty")
 
-                    //compare results to local store. 
+                    //compare results to local store.
                     server!.each { p in
                         //if not found in local store, it is new
                         if local.indexOf({$0.id == p.id}) == nil {
@@ -241,8 +239,8 @@ public class Services {
                             }
                         }
                     }
-                    print ("\(server!.filter { $0.syncState != .Unchanged }.count) new or modified")
-
+                    print ("\(server!.filter({ $0.syncState == .New }).count) new")
+                    print ("\(server!.filter({ $0.syncState == .Modified }).count) modified")
                     
                     saveAll(server!)
                     
