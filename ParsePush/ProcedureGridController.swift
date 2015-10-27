@@ -52,21 +52,20 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["test","title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
+            gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             let title = Procedure.getTerminology(key)
             switch key {
-            case "test": addColumnWithTitle(nil, title: "Sync", width: 20, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+
+            case "sync": addColumnWithTitle(key, title: "Sync", width: 10, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "title": addColumnWithTitle(key, title: title, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
             case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), cellClass:DataGridImageCell.self)
 
             case "workflowState": addColumnWithTitle(key, title: title, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
-                
-//            case "workflowStateTitle": addColumnWithTitle(key, title: "", width: 125, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
             case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
@@ -111,8 +110,6 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func styleGrid() {
         let theme = SDataGridiOS7Theme()
-        //let font = UIFont.boldShinobiFontOfSize(20)
-        //print (font)
         
         let headerRowStyle = self.createDataGridCellStyleWithFont(UIFont.boldShinobiFontOfSize(18), textColor:UIColor.whiteColor(),
             backgroundColor:UIColor.shinobiPlayBlueColor().shinobiLightColor())
@@ -168,8 +165,14 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             }
             
             return false
-        case "test" :
-            return false
+
+        case "sync" :
+            let wCell = cell as! SDataGridTextCell
+            wCell.text = String(procedure.syncState)
+//            switch value {
+//                case "M"
+//            }
+            return true
             
         case "workflowState" :
             let wCell = cell as! DataGridImageCell

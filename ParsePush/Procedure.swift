@@ -102,7 +102,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var lmg: String?
     var wasChangedOnServer : Bool?
     
-    var test: String = "foo"
+
 
     var changes : [Change]?
     
@@ -130,6 +130,13 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     }
 
     var syncState: SyncState? = .Unchanged
+    //computed property that will work as a value provider for the shinobidatasource
+//    var sync: String { get {
+//        switch(syncState) {
+//            case .New : return "New"
+//            default : return ""
+//        }
+//    }
 
 
     func mapping(map: Map) {
@@ -158,7 +165,6 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         wasChangedOnServer <- map["WasChangedOnServer"]
         changes <- map["Changes"]
         
-        //todo: nil dates are taking today
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
