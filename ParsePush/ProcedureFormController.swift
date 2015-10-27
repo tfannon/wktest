@@ -23,6 +23,8 @@ class ProcedureFormControllerViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var i = 0
+        
         self.view.backgroundColor = UIColor.whiteColor()
         
         TextAreaRow.defaultCellSetup = { cell, row in
@@ -45,6 +47,20 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.enableSave()
                     self.procedure.title = field.value
                 }
+
+            +++ Section("")
+            <<< NavigationRow() {
+                $0.value = "Whatever"
+            }
+                .onCellSelection{ cell, row in
+                    i = 1 - i
+                    if (i == 0) {
+                        cell.backgroundColor = UIColor.blueColor()
+                    }
+                    else {
+                        cell.backgroundColor = UIColor.greenColor()
+                    }
+            }
             
             <<< TextRow() {
                 $0.placeholder = self.t("code")
@@ -188,6 +204,7 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.enableSave()
                     self.procedure.resultsText4 = field.value
         }
+
         
         // MARK: X -
         

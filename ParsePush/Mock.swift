@@ -50,6 +50,16 @@ class Mock {
         procedure.allowedStates = [1, 2, 3, 5]
         procedure.parentTitle = "Procedure \(id)'s Parent"
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
+        
+        procedure.changes = [Change]()
+        for i in 1...10 {
+            let change = Change()
+            change.date = NSDate().dateByAddingDays(i)
+            change.title = "I Changed This \(i)"
+            change.user = "User #\(id)"
+            procedure.changes?.append(change)
+        }
+        
         procedure.clean()
         return procedure
     }

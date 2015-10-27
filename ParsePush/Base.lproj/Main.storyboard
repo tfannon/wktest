@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -319,6 +319,7 @@
                         <segue destination="y1E-FG-ITs" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
                         <segue destination="Gee-FM-iu3" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
+                        <segue destination="j1m-mE-xI7" kind="relationship" relationship="viewControllers" id="e5W-8l-QQH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xoQ-ZQ-jm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -468,6 +469,26 @@
             </objects>
             <point key="canvasLocation" x="-27" y="-52.5"/>
         </scene>
+        <!--Collaboration-->
+        <scene sceneID="WSt-Te-bRl">
+            <objects>
+                <viewController id="j1m-mE-xI7" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ucj-Uc-khi"/>
+                        <viewControllerLayoutGuide type="bottom" id="7YL-PW-6ll"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vrh-hG-vAo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Collaboration" image="779-users" id="WOQ-sm-doF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dur-qD-Gl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1053" y="1494"/>
+        </scene>
         <!--Procedures-->
         <scene sceneID="g5M-Pl-sWl">
             <objects>
@@ -493,6 +514,7 @@
         <image name="739-question" width="28" height="28"/>
         <image name="740-gear" width="28" height="28"/>
         <image name="756-bell" width="24" height="28"/>
+        <image name="779-users" width="28" height="25"/>
         <image name="icons_completed" width="42" height="42"/>
         <image name="icons_implemented" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>

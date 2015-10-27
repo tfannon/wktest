@@ -101,7 +101,6 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
         else if (textField == self.txtUserName) {
             self.imgLoginResult.hidden = false
-            key == "userName"
             Services.userName = value
             
             Services.login(Services.userName, token: "foobar") { result in
