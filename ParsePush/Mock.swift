@@ -57,6 +57,15 @@ class Mock {
             change.date = NSDate().dateByAddingDays(i)
             change.title = "I Changed This \(i)"
             change.user = "User #\(id)"
+            
+            change.details = [ChangeDetail]()
+            for j in 1...5 {
+                let detail = ChangeDetail()
+                detail.propertyName = "Property \(j)"
+                detail.text = "Property Value \(j)"
+                change.details?.append(detail)
+            }
+            
             procedure.changes?.append(change)
         }
         

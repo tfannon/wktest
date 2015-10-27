@@ -35,10 +35,10 @@
             </objects>
             <point key="canvasLocation" x="-3650" y="-2476"/>
         </scene>
-        <!--Changes Controller-->
+        <!--Change Tracking-->
         <scene sceneID="e0y-Gu-gEP">
             <objects>
-                <tableViewController storyboardIdentifier="ChangesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="htP-SV-u3s" customClass="ChangesController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ChangesViewController" title="Change Tracking" useStoryboardIdentifierAsRestorationIdentifier="YES" id="htP-SV-u3s" customClass="ChangesController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="v54-0K-J4N">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
