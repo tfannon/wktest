@@ -192,6 +192,9 @@ class ProcedureFormControllerViewController: FormViewController {
             <<< NavigationRow() {
                 $0.title = "Change Tracking"
                 }
+                .cellSetup { cell, row in
+                    cell.imageView?.image = UIImage(named: "icons_change")
+                }
                 .onCellSelection{ cell, row in
                     let vc : ChangeController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeViewController")
                     vc.changes = self.procedure.changes
