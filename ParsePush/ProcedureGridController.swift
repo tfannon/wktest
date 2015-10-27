@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 
+
+
 class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate {
     
     var items: [Procedure] = []
@@ -20,14 +22,11 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
-        self.view.addSubview(grid)
-        self.grid.showPullToAction = true
-        self.grid.pullToAction.delegate = self
-        
+      
+        self.setupGrid()
         self.addColumns()
         self.createDataSource()
+        self.styleGrid()
     }
     
     
@@ -53,12 +52,14 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
+            gridColumnsOrder = ["test","title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             let title = Procedure.getTerminology(key)
             switch key {
+            case "test": addColumnWithTitle(nil, title: "Sync", width: 20, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
             case "title": addColumnWithTitle(key, title: title, width: 240, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
             case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), cellClass:DataGridImageCell.self)
@@ -78,8 +79,13 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         }
     }
     
-    func addColumnWithTitle(key: String, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil) {
-        let column = SDataGridColumn(title: title, forProperty: key)
+    func addColumnWithTitle(key: String?, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil) {
+        var column: SDataGridColumn!
+        if key != nil {
+            column = SDataGridColumn(title: title, forProperty: key)
+        } else {
+            column = SDataGridColumn(title: title)
+        }
         if cellClass != nil {
             column.cellType = cellClass!
         }
@@ -97,6 +103,51 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     func setupGrid() {
+        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
+        self.view.addSubview(grid)
+        self.grid.showPullToAction = true
+        self.grid.pullToAction.delegate = self
+    }
+    
+    func styleGrid() {
+        let theme = SDataGridiOS7Theme()
+        //let font = UIFont.boldShinobiFontOfSize(20)
+        //print (font)
+        
+        let headerRowStyle = self.createDataGridCellStyleWithFont(UIFont.boldShinobiFontOfSize(18), textColor:UIColor.whiteColor(),
+            backgroundColor:UIColor.shinobiPlayBlueColor().shinobiLightColor())
+        headerRowStyle.contentInset = UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10)
+        theme.headerRowStyle = headerRowStyle
+
+        let selectedCellStyle = self.createDataGridCellStyleWithFont(UIFont.shinobiFontOfSize(13), textColor: UIColor.whiteColor(), backgroundColor: UIColor.shinobiPlayBlueColor())
+        theme.selectedCellStyle = selectedCellStyle
+        
+        let rowStyle = self.createDataGridCellStyleWithFont(UIFont.shinobiFontOfSize(13), textColor: UIColor.shinobiDarkGrayColor(), backgroundColor: UIColor.whiteColor())
+        theme.rowStyle = rowStyle
+        theme.alternateRowStyle = rowStyle
+        
+        let gridLineStyle = SDataGridLineStyle(width: 0.5, withColor: UIColor.lightGrayColor())
+        theme.gridLineStyle = gridLineStyle
+        
+        let gridSectionHeaderStyle = SDataGridSectionHeaderStyle()
+        gridSectionHeaderStyle.backgroundColor = UIColor.shinobiPlayBlueColor().shinobiBackgroundColor()
+        gridSectionHeaderStyle.font = UIFont.boldShinobiFontOfSize(14)
+        gridSectionHeaderStyle.textColor = UIColor.shinobiDarkGrayColor()
+        theme.sectionHeaderStyle = gridSectionHeaderStyle
+        
+        self.grid.applyTheme(theme)
+    }
+    
+    func createDataGridCellStyleWithFont(font: UIFont,
+                                         textColor:UIColor,
+                                         backgroundColor:UIColor) -> (SDataGridCellStyle) {
+        
+        let dataGridCellStyle = SDataGridCellStyle()
+        dataGridCellStyle.textVerticalAlignment = UIControlContentVerticalAlignment.Center;
+        dataGridCellStyle.font = font;
+        dataGridCellStyle.textColor = textColor;
+        dataGridCellStyle.backgroundColor = backgroundColor;
+        return dataGridCellStyle;
     }
 
 
@@ -117,6 +168,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             }
             
             return false
+        case "test" :
+            return false
+            
         case "workflowState" :
             let wCell = cell as! DataGridImageCell
             wCell.state = WorkflowState(rawValue: procedure.workflowState)!

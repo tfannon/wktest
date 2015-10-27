@@ -101,6 +101,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var allowedStates : [Int]?
     var lmg: String?
     var wasChangedOnServer : Bool?
+    
+    var test: String = "foo"
 
     var changes : [Change]?
     
@@ -127,7 +129,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         case Modified
     }
 
-    var syncState: SyncState = .Unchanged
+    var syncState: SyncState? = .Unchanged
 
 
     func mapping(map: Map) {
