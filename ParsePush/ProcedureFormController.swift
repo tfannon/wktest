@@ -193,8 +193,7 @@ class ProcedureFormControllerViewController: FormViewController {
                 $0.title = "Change Tracking"
                 }
                 .onCellSelection{ cell, row in
-                    let storyboard = UIStoryboard(name: "Procedure", bundle: nil)
-                    let vc = storyboard.instantiateViewControllerWithIdentifier("ChangesViewController") as! ChangesController
+                    let vc : ChangeController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeViewController")
                     vc.changes = self.procedure.changes
                     self.navigationController?.pushViewController(vc, animated: true)
                     self.tableView?.deselectRowAtIndexPath(row.indexPath()!, animated: true)

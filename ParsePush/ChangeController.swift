@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChangesController: UITableViewController {
+class ChangeController: UITableViewController {
 
     var changes : [Change]!
     
@@ -56,6 +56,14 @@ class ChangesController: UITableViewController {
         cell.detailTextLabel?.text = "\(change.user!) \(dateFormatter.stringFromDate(change.date!))"
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let change = changes[indexPath.row]
+        let vc : ChangeDetailController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeDetailViewController")
+        vc.changeDetails = change.details
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     /*
