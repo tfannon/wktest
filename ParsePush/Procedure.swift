@@ -144,6 +144,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         
         syncState <- map["SyncState"]
         
+        //changes?.sortInPlace{ left, right in left.date!.isEarlierThanDate(right.date!) }
+        
         isMapping = false
     }
     
@@ -163,6 +165,7 @@ class Change: NSObject, Mappable
     override init(){
     }
     
+    var id : Int?
     var user : String?
     var date : NSDate?
     var title : String?
@@ -170,6 +173,7 @@ class Change: NSObject, Mappable
     var details : [ChangeDetail]?
     
     func mapping(map: Map) {
+        id <- map["Id"]
         user <- map["User"]
         title <- map["Title"]
         changeDescription <- map["Description"]
@@ -177,7 +181,6 @@ class Change: NSObject, Mappable
             fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
         details <- map["Details"]
-        
     }
 }
 
@@ -190,12 +193,16 @@ class ChangeDetail: NSObject, Mappable
     override init(){
     }
     
-    var propertyName : String?
-    var text : String?
+    var label : String?
+    var isHtml : Bool?
+    var priorValue : String?
+    var currentValue : String?
     
     func mapping(map: Map) {
-        propertyName <- map["PropertyName"]
-        text <- map["Detail"]
+        label <- map["Label"]
+        isHtml <- map["IsHtml"]
+        priorValue <- map["PriorValue"]
+        currentValue <- map["CurrentValue"]
     }
 }
 

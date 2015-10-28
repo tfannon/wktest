@@ -15,6 +15,7 @@ class ChangeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.rowHeight = 44;
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,7 +56,21 @@ class ChangeController: UITableViewController {
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a";
         cell.detailTextLabel?.text = "\(change.user!) \(dateFormatter.stringFromDate(change.date!))"
 
+        if change.details?.count == 0 {
+            cell.accessoryType = .None
+            cell.selectionStyle = .None
+        }
+        
         return cell
+    }
+
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
+    {
+        let change = changes[indexPath.row]
+        if change.details?.count > 0 {
+            return indexPath
+        }
+        return nil
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
