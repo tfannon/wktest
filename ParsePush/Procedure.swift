@@ -9,31 +9,6 @@
 import Foundation
 import ObjectMapper
 
-class Change: NSObject, Mappable
-{
-    required init(_ map: Map) {
-    }
-
-    // from scratch
-    override init(){
-    }
-
-    var user : String?
-    var date : NSDate?
-    var title : String?
-    var changeDescription : String?
-
-    func mapping(map: Map) {
-        user <- map["User"]
-        title <- map["Title"]
-        changeDescription <- map["Description"]
-
-        date <- (map["Date"], TransformOf<NSDate, String>(
-            fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },
-            toJSON: { $0.map { $0.toIsoString() } }))
-    }
-}
-
 class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
     }
@@ -177,6 +152,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         
         syncState <- map["SyncState"]
         
+        //changes?.sortInPlace{ left, right in left.date!.isEarlierThanDate(right.date!) }
+        
         isMapping = false
     }
     
@@ -184,6 +161,56 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     
     override var description: String {
         return "\(title!) \(parentTitle) \(testResults) \(dueDate) \(allowedStates)"
+    }
+}
+
+class Change: NSObject, Mappable
+{
+    required init(_ map: Map) {
+    }
+    
+    // from scratch
+    override init(){
+    }
+    
+    var id : Int?
+    var user : String?
+    var date : NSDate?
+    var title : String?
+    var changeDescription : String?
+    var details : [ChangeDetail]?
+    
+    func mapping(map: Map) {
+        id <- map["Id"]
+        user <- map["User"]
+        title <- map["Title"]
+        changeDescription <- map["Description"]
+        date <- (map["Date"], TransformOf<NSDate, String>(
+            fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },
+            toJSON: { $0.map { $0.toIsoString() } }))
+        details <- map["Details"]
+    }
+}
+
+class ChangeDetail: NSObject, Mappable
+{
+    required init(_ map: Map) {
+    }
+    
+    // from scratch
+    override init(){
+    }
+    
+    var label : String?
+    var isHtml : Bool?
+    var priorValue : String?
+    var currentValue : String?
+    
+    func mapping(map: Map) {
+        label <- map["Label"]
+        isHtml <- map["IsHtml"]
+        priorValue <- map["PriorValue"]
+        currentValue <- map["CurrentValue"]
     }
 }
 

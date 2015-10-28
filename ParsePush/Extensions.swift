@@ -56,3 +56,14 @@ extension String {
         return (self as NSString).substringToIndex(numberOfChars)
     }
 }
+
+extension UITableViewCell {
+    func enable(on: Bool) {
+        self.userInteractionEnabled = on
+        self.selectionStyle = .None
+        for view in contentView.subviews {
+            view.userInteractionEnabled = on
+            view.alpha = on ? 1 : 0.5
+        }
+    }
+}

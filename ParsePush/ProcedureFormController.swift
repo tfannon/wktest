@@ -45,7 +45,7 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.enableSave()
                     self.procedure.title = field.value
                 }
-            
+
             <<< TextRow() {
                 $0.placeholder = self.t("code")
                 $0.value = self.procedure.code
@@ -188,6 +188,26 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.enableSave()
                     self.procedure.resultsText4 = field.value
         }
+            +++ Section("")
+            <<< NavigationRow() {
+                $0.title = "Change Tracking"
+                }
+                .cellSetup { cell, row in
+                    cell.imageView?.image = UIImage(named: "icons_change")
+                    if self.procedure.changes?.count == 0 {
+                        cell.accessoryType = .None
+                        cell.enable(false)
+                    }
+                }
+                .onCellSelection{ cell, row in
+                    let vc : ChangeController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeViewController")
+                    vc.changes = self.procedure.changes
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.tableView?.deselectRowAtIndexPath(row.indexPath()!, animated: true)
+        }
+        
+
+
         
         // MARK: X -
         
