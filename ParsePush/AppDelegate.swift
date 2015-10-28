@@ -10,7 +10,7 @@ import UIKit
 
 import Alamofire
 
-//let ipStAug = "10.0.0.2"
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

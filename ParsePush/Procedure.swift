@@ -69,8 +69,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var resultsText3: String? { didSet { setDirty("ResultsText3") } }
     var resultsText4: String? { didSet { setDirty("ResultsText4") } }
     var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
-    var tester: String?
-    var reviewer: String?
+    var tester: String = ""
+    var reviewer: String = ""
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
@@ -94,24 +94,23 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         if (!isMapping)
         {
             setDirtyFields.insert(field)
+            self.syncState = .Dirty
         }
     }
 
-    //the load operation will populate this with a guid check
-    enum SyncState {
-        case Unchanged
-        case New
-        case Modified
-    }
-
-    var syncState: SyncState? = .Unchanged
+   
+    var syncState: SyncState = .Unchanged
     //computed property that will work as a value provider for the shinobidatasource
-//    var sync: String { get {
-//        switch(syncState) {
-//            case .New : return "New"
-//            default : return ""
-//        }
-//    }
+    var sync: String {
+        get {
+            switch(syncState) {
+            case .New : return "New"
+            case .Modified : return "Modified"
+            case .Dirty: return "Dirty"
+            default : return ""
+            }
+        }
+    }
 
 
     func mapping(map: Map) {

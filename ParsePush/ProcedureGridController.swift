@@ -59,11 +59,14 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             let title = Procedure.getTerminology(key)
             switch key {
 
-            case "sync": addColumnWithTitle(key, title: "Sync", width: 10, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "sync": addColumnWithTitle(key, title: "Sync", width: 70, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5))
                 
             case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
-            case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), cellClass:DataGridImageCell.self)
+            case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
+                
+            case "parentTitle": addColumnWithTitle(key, title: "Parent", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+                
 
             case "workflowState": addColumnWithTitle(key, title: title, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
                 
@@ -150,72 +153,55 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
 
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
         let procedure = object as! Procedure
-        switch (propertyKey) {
-        case "title" :
-            let wCell = cell as! SDataGridTextCell
-            
-            if procedure.syncState == .Modified {
-                wCell.backgroundColor = UIColor.orangeColor()
-            }
-            else if procedure.syncState == .New {
-                wCell.backgroundColor = UIColor.lightGrayColor()
-            }
-            else {
-                wCell.backgroundColor = UIColor.clearColor()
-            }
-            
-            return false
 
-        case "sync" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text = String(procedure.syncState)
-//            switch value {
-//                case "M"
-//            }
-            return true
+        switch (propertyKey) {
+            case "sync" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.textField.text = procedure.syncState.displayName
+                switch procedure.syncState {
+                case .New :
+                    wCell.backgroundColor = UIColor.lightGrayColor()
+                case .Modified :
+                    wCell.backgroundColor = UIColor.lightGrayColor()
+                case .Dirty:""
+                case .Unchanged:
+                    wCell.textField.text = ""
+                }
+                return true
             
-        case "workflowState" :
-            let wCell = cell as! DataGridImageCell
-            wCell.state = WorkflowState(rawValue: procedure.workflowState)!
-            //wCell.imageProvider = WorkflowState(rawValue: procedure.workflowState)!
-            return true
+            case "workflowState" :
+                let wCell = cell as! DataGridImageCell
+                wCell.state = WorkflowState(rawValue: procedure.workflowState)!
+                return true
+                
+            case "parentType" :
+                let wCell = cell as! DataGridImageCell
+                wCell.parentType = ObjectType(rawValue: procedure.parentType)!
+                //wCell.imageProvider = ObjectType(rawValue: procedure.parentType)!
+                return true
+                
+            case "testResults" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.text = TestResults(rawValue: procedure.testResults)?.displayName
+                return true
+                
+            case "dueDate" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.text =  procedure.dueDate?.toShortString()
+                return true
+                
+            case "reviewDueDate" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.text =  procedure.reviewDueDate?.toShortString()
+                return true
             
-//        case "workflowStateTitle" :
-//            let wCell = cell as! SDataGridTextCell
-//            wCell.text = WorkflowState(rawValue: procedure.workflowState)!.displayName
-//            return true
-            
-        case "parentType" :
-            let wCell = cell as! DataGridImageCell
-            wCell.parentType = ObjectType(rawValue: procedure.parentType)!
-            //wCell.imageProvider = ObjectType(rawValue: procedure.parentType)!
-            return true
-            
-        case "testResults" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text = TestResults(rawValue: procedure.testResults)?.displayName
-            return true
-            
-        case "dueDate" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text =  procedure.dueDate?.toShortString()
-            return true
-            
-        case "reviewDueDate" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text =  procedure.reviewDueDate?.toShortString()
-            return true
-            
-        default: return false
+            default: return false
         }
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let controller = ProcedureFormControllerViewController()
         controller.procedure = items[row.rowIndex]
-        //when we navigate to detail view we clear any sync status
-        controller.procedure.syncState = .Unchanged
-        Services.save(controller.procedure)
         navigationController?.pushViewController(controller, animated: true)
     }
     
