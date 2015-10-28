@@ -194,6 +194,10 @@ class ProcedureFormControllerViewController: FormViewController {
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "icons_change")
+                    if self.procedure.changes?.count == 0 {
+                        cell.accessoryType = .None
+                        cell.enable(false)
+                    }
                 }
                 .onCellSelection{ cell, row in
                     let vc : ChangeController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeViewController")
