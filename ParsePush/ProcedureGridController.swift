@@ -11,10 +11,10 @@ import UIKit
 
 
 
-
 class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate {
     
     var items: [Procedure] = []
+    var sortedItems: [Procedure] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
     var gridColumnsOrder: [String]!
@@ -35,16 +35,19 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         
         getProcedures {
             self.dataSourceHelper.data = self.items
+            //self.setupSort()
         }
     }
     
     func getProcedures(completed: ()->()) {
         self.items = []
+        self.sortedItems = []
         Services.getMyProcedures { result in
             if result?.count > 0 {
                 result?.each {
                     self.items.append($0)
                 }
+                self.sortedItems = self.items
                 completed()
             }
         }
@@ -70,9 +73,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
 
             case "workflowState": addColumnWithTitle(key, title: title, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
                 
-            case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Right, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "dueDate": addColumnWithTitle(key, title: title, width: 120, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "dueDate": addColumnWithTitle(key, title: "Due", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), sortMode: SDataGridColumnSortModeTriState)
                 
             case "reviewDueDate": addColumnWithTitle(key, title: "Review Due", width: 160, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
@@ -81,7 +84,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         }
     }
     
-    func addColumnWithTitle(key: String?, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil) {
+    func addColumnWithTitle(key: String?, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
         var column: SDataGridColumn!
         if key != nil {
             column = SDataGridColumn(title: title, forProperty: key)
@@ -96,7 +99,16 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
         column.cellStyle.contentInset = edgeInsets
         column.headerCellStyle.textAlignment = textAlignment
         column.headerCellStyle.contentInset = edgeInsets
+        if sortMode != nil {
+            column.sortMode = sortMode!
+        }
         self.grid.addColumn(column)
+    }
+    
+    //this needs to happen after data has loaded
+    func setupSort() {
+        let column = self.grid.columns.filter { $0.propertyKey == "dueDate" }.first! as! SDataGridColumn
+        column.sortMode = SDataGridColumnSortModeBiState
     }
     
     func createDataSource() {
@@ -211,5 +223,22 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             self.dataSourceHelper.data = self.items
             self.grid.pullToAction.actionCompleted()
         }
+    }
+    
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didChangeSortOrderForColumn column: SDataGridColumn!, to newSortOrder: SDataGridColumnSortOrder) {
+        if newSortOrder == SDataGridColumnSortOrderNone {
+            self.sortedItems = items
+        }
+        else {
+            switch (column.title) {
+            case "dueDate" :
+                self.sortedItems = items.sort {
+                    $0.0.dueDate?.timeIntervalSinceNow > $0.1.dueDate?.timeIntervalSinceNow
+                }
+                self.grid.reload()
+            default:""
+            }
+        }
+
     }
 }
