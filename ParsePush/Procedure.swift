@@ -76,8 +76,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var allowedStates : [Int]?
     var lmg: String?
     var wasChangedOnServer : Bool?
+    var syncState: SyncState = .Unchanged
     
-
 
     var changes : [Change]?
     
@@ -97,15 +97,6 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
             self.syncState = .Dirty
         }
     }
-
-    //the load operation will populate this with a guid check
-    enum SyncState {
-        case Unchanged
-        case New
-        case Modified
-    }
-
-    var syncState: SyncState?
 
 
     func mapping(map: Map) {
