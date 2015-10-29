@@ -101,6 +101,7 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
    
     var syncState: SyncState = .Unchanged
     //computed property that will work as a value provider for the shinobidatasource
+    
     var sync: String {
         get {
             switch(syncState) {
