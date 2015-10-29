@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ChangesController: UITableViewController {
+class ChangeController: UITableViewController {
 
     var changes : [Change]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.rowHeight = 44;
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,7 +56,29 @@ class ChangesController: UITableViewController {
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a";
         cell.detailTextLabel?.text = "\(change.user!) \(dateFormatter.stringFromDate(change.date!))"
 
+        if change.details?.count == 0 {
+            cell.accessoryType = .None
+            cell.selectionStyle = .None
+        }
+        
         return cell
+    }
+
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
+    {
+        let change = changes[indexPath.row]
+        if change.details?.count > 0 {
+            return indexPath
+        }
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let change = changes[indexPath.row]
+        let vc : ChangeDetailController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeDetailViewController")
+        vc.changeDetails = change.details
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     /*

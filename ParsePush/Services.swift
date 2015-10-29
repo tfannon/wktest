@@ -184,8 +184,8 @@ public class Services {
         print(__FUNCTION__)
         getMyProcedures(FetchOptions.LocalOnly) { procs in
             let dirty = procs?.filter { $0.isDirty() == true }
-            saveProcedures(dirty!) { allProcs in
-                completed(result:allProcs)
+            saveProcedures(dirty!) {
+                completed(result:$0)
             }
         }
     }

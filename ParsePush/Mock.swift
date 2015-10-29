@@ -52,12 +52,26 @@ class Mock {
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
         
         procedure.changes = [Change]()
-        for i in 1...10 {
-            let change = Change()
-            change.date = NSDate().dateByAddingDays(i)
-            change.title = "I Changed This \(i)"
-            change.user = "User #\(id)"
-            procedure.changes?.append(change)
+        if id % 10 != 0 {
+            for i in 1...10 {
+                let change = Change()
+                change.date = NSDate().dateByAddingDays(i)
+                change.title = "I Changed This \(i)"
+                change.user = "User #\(id)"
+                procedure.changes?.append(change)
+                
+                change.details = [ChangeDetail]()
+                if i % 3 != 0 {
+                    for j in 1...5 {
+                        let detail = ChangeDetail()
+                        detail.label = "Property \(j)"
+                        detail.isHtml = false
+                        detail.priorValue = "Prior Value"
+                        detail.currentValue = "Current Value"
+                        change.details?.append(detail)
+                    }
+                }
+            }
         }
         
         procedure.clean()

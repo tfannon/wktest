@@ -31,6 +31,26 @@ enum ObjectType: Int, ImageProvider {
     }
 }
 
+
+enum SyncState: Int {
+    case Unchanged = 0
+    case Dirty = 1
+    case New = 2
+    case Modified = 3
+
+    var displayName: String {
+        get {
+            switch(self) {
+            case Unchanged: return "Unchanged"
+            case Dirty: return "Dirty"
+            case New: return "New"
+            case Modified: return "Changed"
+            }
+        }
+    }
+}
+
+
 enum NotificationType: Int {
     case Assignment = 2
     case Workflow = 1

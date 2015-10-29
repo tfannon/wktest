@@ -16,4 +16,15 @@ class Misc {
             return "\(sum)\(obj)\(maybeSeparator)"
         }
     }
+    
+    // Works around a bug in Swift where pushing the ViewController the normal way
+    //  doesn't initialize the cell templates in a UITableView
+    static func getTableViewController<T : UITableViewController>(
+        storyboardName : String,
+        viewIdentifier: String) -> T
+    {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier(viewIdentifier) as! T
+        return vc
+    }
 }
