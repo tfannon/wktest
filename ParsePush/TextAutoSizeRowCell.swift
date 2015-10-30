@@ -12,20 +12,21 @@ import Eureka
 
 public class TextAutoSizeCell : Cell<String>, CellType {
     
+    //@IBOutlet weak var textView: UITextView!
+    
     public override func setup() {
-        height = { 60 }
+        height = { 120 }
         super.setup()
-        selectionStyle = .Default
-        accessoryType = .DisclosureIndicator
-        formViewController()?.tableView?.style
+        selectionStyle = .None
     }
 }
 
-public final class TextAutoSizeRow: Row<String, NavigationCell>, RowType {
+public final class TextAutoSizeRow: Row<String, TextAutoSizeCell>, RowType {
     
     required public init(tag: String?) {
         super.init(tag: tag)
         displayValueFor = nil
-        cellProvider = CellProvider<NavigationCell>(nibName: "NavigationCell")
+        cellProvider = CellProvider<TextAutoSizeCell>(nibName: "TextAutoSizeCell")
+        //self.cell.textView.text = self.value
     }
 }

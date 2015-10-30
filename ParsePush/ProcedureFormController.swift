@@ -98,8 +98,8 @@ class ProcedureFormControllerViewController: FormViewController {
                 }
             
             +++ Section("Details")
-            <<< TextAreaRow() {
-                $0.placeholder = self.t("text1")
+            <<< TextAutoSizeRow() {
+                //$0.placeholder = self.t("text1")
                 $0.value = self.procedure.text1
                 }
                 .onChange{ field in
