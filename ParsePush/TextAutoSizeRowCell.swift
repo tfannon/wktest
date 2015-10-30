@@ -12,7 +12,7 @@ import Eureka
 
 public class TextAutoSizeCell : Cell<String>, CellType {
     
-    //@IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     
     public override func setup() {
         height = { 120 }
@@ -27,6 +27,7 @@ public final class TextAutoSizeRow: Row<String, TextAutoSizeCell>, RowType {
         super.init(tag: tag)
         displayValueFor = nil
         cellProvider = CellProvider<TextAutoSizeCell>(nibName: "TextAutoSizeCell")
-        //self.cell.textView.text = self.value
+        self.cell.textView.becomeFirstResponder()
+        self.cell.textView.backgroundColor = UIColor.redColor()
     }
 }
