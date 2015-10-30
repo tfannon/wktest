@@ -76,8 +76,8 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var allowedStates : [Int]?
     var lmg: String?
     var wasChangedOnServer : Bool?
+    var syncState: SyncState = .Unchanged
     
-
 
     var changes : [Change]?
     
@@ -95,20 +95,6 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
         {
             setDirtyFields.insert(field)
             self.syncState = .Dirty
-        }
-    }
-
-   
-    var syncState: SyncState = .Unchanged
-    //computed property that will work as a value provider for the shinobidatasource
-    var sync: String {
-        get {
-            switch(syncState) {
-            case .New : return "New"
-            case .Modified : return "Modified"
-            case .Dirty: return "Dirty"
-            default : return ""
-            }
         }
     }
 
