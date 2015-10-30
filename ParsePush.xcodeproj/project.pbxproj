@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; settings = {ASSET_TAGS = (); }; };
-		65636CE51BD8092500C94D6D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65636CE41BD8092500C94D6D /* Misc.swift */; settings = {ASSET_TAGS = (); }; };
-		6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE41BDF91530014FE08 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE51BDF91530014FE08 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCE1BDF91530014FE08 /* Roboto-Bold.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCF1BDF91530014FE08 /* Roboto-BoldItalic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE71BDF91530014FE08 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD01BDF91530014FE08 /* Roboto-Italic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE81BDF91530014FE08 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD11BDF91530014FE08 /* Roboto-Light.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFE91BDF91530014FE08 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD21BDF91530014FE08 /* Roboto-LightItalic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFEA1BDF91530014FE08 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD31BDF91530014FE08 /* Roboto-Medium.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFEB1BDF91530014FE08 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD41BDF91530014FE08 /* Roboto-MediumItalic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFEC1BDF91530014FE08 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD51BDF91530014FE08 /* Roboto-Regular.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFED1BDF91530014FE08 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD61BDF91530014FE08 /* Roboto-Thin.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFEE1BDF91530014FE08 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD71BDF91530014FE08 /* Roboto-ThinItalic.ttf */; settings = {ASSET_TAGS = (); }; };
-		6564FFEF1BDF91530014FE08 /* SPUGalleryManagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDA1BDF91530014FE08 /* SPUGalleryManagedViewController.m */; settings = {ASSET_TAGS = (); }; };
-		6564FFF01BDF91530014FE08 /* SPUOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDC1BDF91530014FE08 /* SPUOrderedDictionary.m */; settings = {ASSET_TAGS = (); }; };
-		6564FFF11BDF91530014FE08 /* UIColor+SPUColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDE1BDF91530014FE08 /* UIColor+SPUColor.m */; settings = {ASSET_TAGS = (); }; };
-		6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFE01BDF91530014FE08 /* UIFont+SPUFont.m */; settings = {ASSET_TAGS = (); }; };
-		6564FFF31BDF91530014FE08 /* UITextView+SPUImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFE21BDF91530014FE08 /* UITextView+SPUImage.m */; settings = {ASSET_TAGS = (); }; };
-		6564FFF51BE169350014FE08 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFF41BE169350014FE08 /* NavigationCell.xib */; settings = {ASSET_TAGS = (); }; };
+		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; };
+		65636CE51BD8092500C94D6D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65636CE41BD8092500C94D6D /* Misc.swift */; };
+		6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */; };
+		6564FFE41BDF91530014FE08 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */; };
+		6564FFE51BDF91530014FE08 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCE1BDF91530014FE08 /* Roboto-Bold.ttf */; };
+		6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCF1BDF91530014FE08 /* Roboto-BoldItalic.ttf */; };
+		6564FFE71BDF91530014FE08 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD01BDF91530014FE08 /* Roboto-Italic.ttf */; };
+		6564FFE81BDF91530014FE08 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD11BDF91530014FE08 /* Roboto-Light.ttf */; };
+		6564FFE91BDF91530014FE08 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD21BDF91530014FE08 /* Roboto-LightItalic.ttf */; };
+		6564FFEA1BDF91530014FE08 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD31BDF91530014FE08 /* Roboto-Medium.ttf */; };
+		6564FFEB1BDF91530014FE08 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD41BDF91530014FE08 /* Roboto-MediumItalic.ttf */; };
+		6564FFEC1BDF91530014FE08 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD51BDF91530014FE08 /* Roboto-Regular.ttf */; };
+		6564FFED1BDF91530014FE08 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD61BDF91530014FE08 /* Roboto-Thin.ttf */; };
+		6564FFEE1BDF91530014FE08 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFD71BDF91530014FE08 /* Roboto-ThinItalic.ttf */; };
+		6564FFEF1BDF91530014FE08 /* SPUGalleryManagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDA1BDF91530014FE08 /* SPUGalleryManagedViewController.m */; };
+		6564FFF01BDF91530014FE08 /* SPUOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDC1BDF91530014FE08 /* SPUOrderedDictionary.m */; };
+		6564FFF11BDF91530014FE08 /* UIColor+SPUColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFDE1BDF91530014FE08 /* UIColor+SPUColor.m */; };
+		6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFE01BDF91530014FE08 /* UIFont+SPUFont.m */; };
+		6564FFF31BDF91530014FE08 /* UITextView+SPUImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6564FFE21BDF91530014FE08 /* UITextView+SPUImage.m */; };
+		6564FFF51BE169350014FE08 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFF41BE169350014FE08 /* NavigationCell.xib */; };
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
@@ -50,6 +50,7 @@
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; };
+		6611F48F1BE2F684008204A5 /* TextAutoSizeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F48E1BE2F684008204A5 /* TextAutoSizeRow.swift */; };
 		6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */; };
 		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; };
 		66C6DFB21BD9A79F00A30597 /* ChangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C6DFB11BD9A79F00A30597 /* ChangeController.swift */; };
@@ -130,6 +131,7 @@
 		65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiGrids.framework; sourceTree = "<group>"; };
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		6611F48E1BE2F684008204A5 /* TextAutoSizeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAutoSizeRow.swift; sourceTree = "<group>"; };
 		6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDetailController.swift; sourceTree = "<group>"; };
 		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
 		66C6DFB11BD9A79F00A30597 /* ChangeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeController.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				66C6DFB11BD9A79F00A30597 /* ChangeController.swift */,
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				66D1C09E1BDEBC9E00F5F257 /* NavigationRow.swift */,
+				6611F48E1BE2F684008204A5 /* TextAutoSizeRow.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
 				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
+				6611F48F1BE2F684008204A5 /* TextAutoSizeRow.swift in Sources */,
 				65636CE51BD8092500C94D6D /* Misc.swift in Sources */,
 				66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */,
 				6564FFF11BDF91530014FE08 /* UIColor+SPUColor.m in Sources */,
