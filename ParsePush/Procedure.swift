@@ -77,6 +77,9 @@ class Procedure : NSObject, Mappable, CustomDebugStringConvertible {
     var lmg: String?
     var wasChangedOnServer : Bool?
     var syncState: SyncState = .Unchanged
+
+    //grid cannot read enums
+    var sync: String { get { return syncState.displayName } }
     
 
     var changes : [Change]?
