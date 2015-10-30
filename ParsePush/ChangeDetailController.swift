@@ -44,8 +44,7 @@ class ChangeDetailController: UITableViewController {
         
         let changeDetail = changeDetails[indexPath.row]
         // Configure the cell...
-        cell.textLabel?.text = "foo"
-//            "\(changeDetail.label ?? \"\") - \(changeDetail.priorValue ?? \"\") - \(changeDetail.currentValue ?? \"")"
+        cell.textLabel?.text = "\(changeDetail.label ?? "") - \(changeDetail.priorValue ?? "") - \(changeDetail.currentValue ?? "")"
         
         return cell
     }
