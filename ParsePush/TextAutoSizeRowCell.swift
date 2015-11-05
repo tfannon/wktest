@@ -18,6 +18,9 @@ public class TextAutoSizeCell: Cell<String>, CellType, UITextViewDelegate {
         super.setup()
         selectionStyle = .None
         textView.font = .preferredFontForTextStyle(UIFontTextStyleBody)
+
+        let views : [String: AnyObject] =  ["textView": textView]//, "label": placeholderLabel]
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[textView(>=50)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
     }
     
     public override func update() {
@@ -60,6 +63,8 @@ public class TextAutoSizeCell: Cell<String>, CellType, UITextViewDelegate {
         
         let size = textView.bounds.size
         let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.max))
+        let newValue = (textView.text == nil || textView.text.isEmpty) ? "" : textView.text
+        row.value = newValue
         
         // Resize the cell only when cell's size is changed
         if size.height != newSize.height {

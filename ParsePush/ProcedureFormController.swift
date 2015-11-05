@@ -228,7 +228,6 @@ class ProcedureFormControllerViewController: FormViewController {
     private func enableSave()
     {
         self.navigationItem.rightBarButtonItem!.enabled = true
-        self.tableView?.reloadData()
     }
     
     private func dismiss()
