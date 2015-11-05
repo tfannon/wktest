@@ -66,4 +66,17 @@ extension UITableViewCell {
             view.alpha = on ? 1 : 0.5
         }
     }
+
+    /// Search up the view hierarchy of the table view cell to find the containing table view
+    var tableView: UITableView? {
+        get {
+            var table: UIView? = superview
+            while !(table is UITableView) && table != nil {
+                table = table?.superview
+            }
+            
+            return table as? UITableView
+        }
+    }
 }
+

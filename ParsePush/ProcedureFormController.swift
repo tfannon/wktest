@@ -25,15 +25,6 @@ class ProcedureFormControllerViewController: FormViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        TextAreaRow.defaultCellSetup = { cell, row in
-            cell.textView.backgroundColor = UIColor.whiteColor()
-            cell.textView.textContainerInset = UIEdgeInsetsMake(20,20,20,20);
-            cell.height = { 300 }
-        }
-        
-        self.tableView?.estimatedRowHeight = 44.0
-        self.tableView?.rowHeight = UITableViewAutomaticDimension
-        
         // MARK: - Form Setup
         self.form
             +++ Section()
@@ -99,7 +90,7 @@ class ProcedureFormControllerViewController: FormViewController {
             
             +++ Section("Details")
             <<< TextAutoSizeRow() {
-                //$0.placeholder = self.t("text1")
+                $0.placeholder = self.t("text1")
                 $0.value = self.procedure.text1
                 }
                 .onChange{ field in
@@ -108,7 +99,7 @@ class ProcedureFormControllerViewController: FormViewController {
             }
 
             +++ Section("Scope")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("text2")
                 $0.value = self.procedure.text2
                 }
@@ -118,7 +109,7 @@ class ProcedureFormControllerViewController: FormViewController {
             }
 
             +++ Section("Purpose")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("text3")
                 $0.value = self.procedure.text3
                 }
@@ -128,7 +119,7 @@ class ProcedureFormControllerViewController: FormViewController {
             }
 
             +++ Section("Sample Criteria")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("text4")
                 $0.value = self.procedure.text4
                 }
@@ -153,7 +144,7 @@ class ProcedureFormControllerViewController: FormViewController {
             }
             
             +++ Section("Scope")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("resultsText1")
                 $0.value = self.procedure.resultsText1
                 }
@@ -162,7 +153,7 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.resultsText1 = field.value
             }
             +++ Section("Conclusion")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("resultsText2")
                 $0.value = self.procedure.resultsText2
                 }
@@ -171,7 +162,7 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.resultsText2 = field.value
             }
             +++ Section("Notes")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("resultsText3")
                 $0.value = self.procedure.resultsText3
                 }
@@ -180,7 +171,7 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.resultsText3 = field.value
             }
             +++ Section("Results 4")
-            <<< TextAreaRow() {
+            <<< TextAutoSizeRow() {
                 $0.placeholder = self.t("resultsText4")
                 $0.value = self.procedure.resultsText4
                 }
@@ -206,12 +197,11 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.tableView?.deselectRowAtIndexPath(row.indexPath()!, animated: true)
         }
         
-
-
-        
         // MARK: X -
         
         self.title = "Procedure"
+        
+        self.tableView?.reloadData()
         
     }
     
@@ -238,6 +228,7 @@ class ProcedureFormControllerViewController: FormViewController {
     private func enableSave()
     {
         self.navigationItem.rightBarButtonItem!.enabled = true
+        self.tableView?.reloadData()
     }
     
     private func dismiss()
@@ -252,12 +243,6 @@ class ProcedureFormControllerViewController: FormViewController {
     
     func navbarSaveClicked()
     {
-//        // http://stackoverflow.com/questions/23072442/uitableviewcontroller-crash-due-to-cell-identifier
-//        let storyboard = UIStoryboard(name: "Procedure", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("ChangesViewController") as! ChangesController
-//        
-//        vc.changes = self.procedure.changes
-//        self.navigationController?.pushViewController(vc, animated: true)
         Services.save(self.procedure)
         dismiss()
     }

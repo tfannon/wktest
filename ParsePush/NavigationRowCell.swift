@@ -13,11 +13,10 @@ import Eureka
 public class NavigationCell : Cell<String>, CellType {
     
     public override func setup() {
-        height = { 60 }
         super.setup()
+        height = { 60 }
         selectionStyle = .Default
         accessoryType = .DisclosureIndicator
-        formViewController()?.tableView?.style
     }
 }
 

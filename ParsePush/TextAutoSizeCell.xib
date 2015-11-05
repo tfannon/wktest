@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="385" height="178.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qd2-JJ-ahx">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qd2-JJ-ahx">
                         <rect key="frame" x="8" y="8" width="369" height="163"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -25,10 +25,10 @@
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="bottom" secondItem="fMj-S2-VxC" secondAttribute="bottomMargin" id="0oP-ep-E0E"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="leading" secondItem="fMj-S2-VxC" secondAttribute="leadingMargin" id="RE3-rj-7kS"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="trailing" secondItem="fMj-S2-VxC" secondAttribute="trailingMargin" id="mJ2-MQ-VkV"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="top" secondItem="fMj-S2-VxC" secondAttribute="topMargin" id="o7D-kJ-FRZ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="qd2-JJ-ahx" secondAttribute="bottom" id="985-LJ-waN"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="trailing" secondItem="fMj-S2-VxC" secondAttribute="trailingMargin" id="L2y-qo-U7B"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="leading" secondItem="fMj-S2-VxC" secondAttribute="leadingMargin" id="a4h-Ty-Tcq"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="top" secondItem="fMj-S2-VxC" secondAttribute="topMargin" id="ndL-qS-bML"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
