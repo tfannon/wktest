@@ -19,8 +19,10 @@ public class TextAutoSizeCell: Cell<String>, CellType, UITextViewDelegate {
         selectionStyle = .None
         textView.font = .preferredFontForTextStyle(UIFontTextStyleBody)
 
-        let views : [String: AnyObject] =  ["textView": textView]//, "label": placeholderLabel]
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[textView(>=50)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        // makw sure the height of the content view never shrinks < 50
+        let heightConstraint = NSLayoutConstraint(item: contentView, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 50)
+        heightConstraint.priority = 400
+        contentView.addConstraint(heightConstraint)
     }
     
     public override func update() {
@@ -73,11 +75,13 @@ public class TextAutoSizeCell: Cell<String>, CellType, UITextViewDelegate {
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
             
-            if let thisIndexPath = tableView?.indexPathForCell(self) {
-                tableView?.scrollToRowAtIndexPath(thisIndexPath, atScrollPosition: .Bottom, animated: false)
-            }
+//            if let thisIndexPath = tableView?.indexPathForCell(self) {
+//                tableView?.scrollToRowAtIndexPath(thisIndexPath, atScrollPosition: .Bottom, animated: false)
+//            }
         }
     }
+    
+
 }
 
 

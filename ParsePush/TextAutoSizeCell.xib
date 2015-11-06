@@ -25,17 +25,17 @@
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="qd2-JJ-ahx" secondAttribute="bottom" id="985-LJ-waN"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="trailing" secondItem="fMj-S2-VxC" secondAttribute="trailingMargin" id="L2y-qo-U7B"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="leading" secondItem="fMj-S2-VxC" secondAttribute="leadingMargin" id="a4h-Ty-Tcq"/>
-                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="top" secondItem="fMj-S2-VxC" secondAttribute="topMargin" id="ndL-qS-bML"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="leading" secondItem="fMj-S2-VxC" secondAttribute="leadingMargin" id="Asg-O4-Omy"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="bottom" secondItem="fMj-S2-VxC" secondAttribute="bottomMargin" id="Hj8-S7-KLx"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="trailing" secondItem="fMj-S2-VxC" secondAttribute="trailingMargin" id="sSX-tQ-a0Q"/>
+                    <constraint firstItem="qd2-JJ-ahx" firstAttribute="top" secondItem="fMj-S2-VxC" secondAttribute="topMargin" id="wLi-gK-54E"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="textView" destination="qd2-JJ-ahx" id="vau-eE-Fyv"/>
             </connections>
-            <point key="canvasLocation" x="229.5" y="3.5"/>
+            <point key="canvasLocation" x="250.5" y="33.5"/>
         </tableViewCell>
     </objects>
 </document>

@@ -88,9 +88,10 @@ class ProcedureFormControllerViewController: FormViewController {
                     field.options = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates, current: self.procedure.workflowState)
                 }
             
-            +++ Section("Details")
+            +++ Section("") {
+                $0.header?.title = self.t("text1")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("text1")
                 $0.value = self.procedure.text1
                 }
                 .onChange{ field in
@@ -98,9 +99,10 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.text1 = field.value
             }
 
-            +++ Section("Scope")
+            +++ Section(""){
+                $0.header?.title = self.t("text2")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("text2")
                 $0.value = self.procedure.text2
                 }
                 .onChange{ field in
@@ -108,9 +110,10 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.text2 = field.value
             }
 
-            +++ Section("Purpose")
+            +++ Section(""){
+                $0.header?.title = self.t("text3")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("text3")
                 $0.value = self.procedure.text3
                 }
                 .onChange{ field in
@@ -118,9 +121,10 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.text3 = field.value
             }
 
-            +++ Section("Sample Criteria")
+            +++ Section(""){
+                $0.header?.title = self.t("text4")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("text4")
                 $0.value = self.procedure.text4
                 }
                 .onChange{ field in
@@ -143,36 +147,40 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.testResults = TestResults.getFromDisplayName(field.value!).rawValue
             }
             
-            +++ Section("Scope")
+            +++ Section(""){
+                $0.header?.title = self.t("resultsText1")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("resultsText1")
                 $0.value = self.procedure.resultsText1
                 }
                 .onChange{ field in
                     self.enableSave()
                     self.procedure.resultsText1 = field.value
             }
-            +++ Section("Conclusion")
+            +++ Section(""){
+                $0.header?.title = self.t("resultsText2")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("resultsText2")
                 $0.value = self.procedure.resultsText2
                 }
                 .onChange{ field in
                     self.enableSave()
                     self.procedure.resultsText2 = field.value
             }
-            +++ Section("Notes")
+            +++ Section(""){
+                $0.header?.title = self.t("resultsText3")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("resultsText3")
                 $0.value = self.procedure.resultsText3
                 }
                 .onChange{ field in
                     self.enableSave()
                     self.procedure.resultsText3 = field.value
             }
-            +++ Section("Results 4")
+            +++ Section(""){
+                $0.header?.title = self.t("resultsText4")
+            }
             <<< TextAutoSizeRow() {
-                $0.placeholder = self.t("resultsText4")
                 $0.value = self.procedure.resultsText4
                 }
                 .onChange{ field in
