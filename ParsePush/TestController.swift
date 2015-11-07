@@ -70,21 +70,6 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    @IBAction func sendProceduresPressed(sender: AnyObject) {
-//        Services.getMyProcedures() { result in
-//                var procs = [Procedure]()
-//                if result?.count > 0 {
-//                    result?.each {
-//                        procs.append($0)
-//                    }
-//                }
-//                Services.saveProcedures(procs) {
-//                    print($0)
-//                }
-//            }
-//        
-//    }
-    
     @IBAction func editProcedurePressed(sender: AnyObject) {
         let vc = ProcedureFormControllerViewController()
         vc.procedure = Mock.getProcedures()[0]
@@ -114,6 +99,11 @@ class TestController: UIViewController, UITextFieldDelegate {
         return true;
     }
     
+    @IBAction func getAttachmentPressed(sender: AnyObject) {
+        Services.getAttachment { result in
+            print(result)
+        }
+    }
     
     @IBAction func getNotificationsPressed(sender: AnyObject) {
         self.lblNotifications.text = ""

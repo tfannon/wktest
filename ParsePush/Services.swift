@@ -178,6 +178,42 @@ public class Services {
         }
     }
     
+    //todo: refactor to reuse MyProcedures
+    static func getMyWorkpapers(fetchOptions: FetchOptions = .Default, completed: (result: [Workpaper]?)->()) {
+        print(__FUNCTION__)
+        if (mock) {
+            completed(result: Mock.getWorkpapers())
+        }
+        else {
+            if fetchOptions == .LocalOnly {
+                completed(result: loadWorkpapers())
+                return
+            }
+            //default is to check the local store first
+            if fetchOptions == .Default {
+                if let workpapers = loadWorkpapers() {
+                    completed(result: workpapers)
+                    return
+                }
+            }
+            //if the store had nothing or we force a refresh fetch from services
+            Alamofire.request(.GET, procedureUrl + "/GetMyWorkpapers", headers:Services.headers, parameters: nil, encoding: .JSON)
+                .responseJSON { request, response, result in
+                    switch result {
+                    case .Success(let data):
+                        let jsonAlamo = data as? [[String:AnyObject]]
+                        let result = jsonAlamo?.map { Mapper<Workpaper>().map($0)! }
+                        //save it back to local store, erasing whatever was there
+                        //saveAll(result!)
+                        completed(result: result)
+                    case .Failure(_, let error):
+                        print("Request failed with error: \(error)")
+                    }
+            }
+        }
+    }
+    
+    
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
     static func sync(completed: (result: [Procedure]?)->()) {
@@ -265,7 +301,7 @@ public class Services {
         defaults.setValue(procJson, forKey: key)
         //if its coming from the load from services, all keys need to be persisted
         if persistKey {
-            if let ids = loadIds()
+            if let ids = loadProcedureIds()
                 where ids.indexOf(obj.id!) == nil {
                     var newIds = ids
                     newIds.append(obj.id!)
@@ -281,9 +317,15 @@ public class Services {
     //MARK: Store - private
     enum DataKey : String {
         case ProcedureIds = "procIds"
+        case WorkpaperIds = "workpaperIds"
         case Proc = "proc:"
+        case Workpaper = "workpaper:"
+
         static func getProcKey(id : Int) -> String {
             return "\(Proc.rawValue)\(id)"
+        }
+        static func getWorkpaperKey(id : Int) -> String {
+            return "\(Workpaper.rawValue)\(id)"
         }
     }
     
@@ -305,16 +347,21 @@ public class Services {
     
     
     //may be empty
-    private static func loadIds() -> [Int]? {
+    private static func loadProcedureIds() -> [Int]? {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.ProcedureIds.rawValue) as? [Int]
     }
+    
+    private static func loadWorkpaperIds() -> [Int]? {
+        return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int]
+    }
+    
     
     //may be empty
     private static func loadProcedures() -> [Procedure]? {
         print(__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
-        if let ids = loadIds() {
+        if let ids = loadProcedureIds() {
             return ids.map { id in
                 let key = DataKey.getProcKey(id)
                 let jsonProc = defaults.valueForKey(key) as! String
@@ -323,4 +370,32 @@ public class Services {
         }
         return nil
     }
+    
+    //MARK: Workpapers
+    private static func loadWorkpapers() -> [Workpaper]? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        //may be empty
+        if let ids = loadWorkpaperIds() {
+            return ids.map { id in
+                let key = DataKey.getWorkpaperKey(id)
+                let jsonProc = defaults.valueForKey(key) as! String
+                return Mapper<Workpaper>().map(jsonProc)!
+            }
+        }
+        return nil
+    }
+    
+    static func getAttachment(completed: (Bool->())) {
+        Alamofire.download(.GET, procedureUrl + "/GetFile") { temporaryURL, response in
+            let fileManager = NSFileManager.defaultManager()
+            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let pathComponent = response.suggestedFilename
+            
+            let resp = directoryURL.URLByAppendingPathComponent(pathComponent!)
+            print(resp)
+            completed(true)
+            return resp
+        }
+    }
+    
 }
