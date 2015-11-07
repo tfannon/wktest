@@ -202,6 +202,7 @@ public class Services {
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
+                        print(jsonAlamo)
                         let result = jsonAlamo?.map { Mapper<Workpaper>().map($0)! }
                         //save it back to local store, erasing whatever was there
                         //saveAll(result!)

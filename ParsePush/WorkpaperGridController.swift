@@ -53,7 +53,7 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "dueDate","reviewer","reviewDueDate"]
+            gridColumnsOrder = ["sync","title","attachmentExtension","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "dueDate","reviewer","reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
@@ -63,6 +63,8 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
             case "sync": addColumnWithTitle(key, title: "Sync", width: 70, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5))
                 
             case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
+            case "attachmentExtension": addColumnWithTitle(key, title: "Type", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
                 
             case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
                 
@@ -175,6 +177,12 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
                 wCell.textField.text = ""
             }
             return true
+            
+        case "attachmentExtension" :
+            let wCell = cell as! DataGridImageCell
+            wCell.documentType = DocumentType(rawValue: procedure.attachmentExtension!)!
+            return true
+            
             
         case "workflowState" :
             let wCell = cell as! DataGridImageCell

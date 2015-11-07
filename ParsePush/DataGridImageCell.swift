@@ -12,6 +12,7 @@ import Foundation
 class DataGridImageCell : SDataGridCell {
     private var _state: WorkflowState!
     private var _parentType: ObjectType!
+    private var _documentType: DocumentType!
     private var _imageView: UIImageView!
 
     var imageView: UIImageView {
@@ -55,6 +56,17 @@ class DataGridImageCell : SDataGridCell {
             _parentType = val
         }
     }
+    
+    var documentType: DocumentType! {
+        get {
+            return _documentType
+        }
+        set(val) {
+            setImage(val.imageName)
+            _documentType = val
+        }
+    }
+    
     
     func setImage(imageName: String) {
         let image = UIImage(named: imageName)!

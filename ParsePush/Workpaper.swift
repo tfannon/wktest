@@ -26,7 +26,7 @@ class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
         "manager":"Manager",
         "dueDate":"Due Date",
         "reviewDueDate":"Review Due Date",
-        "workflowState":"State",
+        "workflowState":"State"
     ]
     
     private var isMapping = false
@@ -54,8 +54,11 @@ class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var manager: String = ""
     var reviewer: String = ""
+    var attachmentId: Int = 0
+    var attachmentTitle: String?
+    var attachmentExtension: String?
+    var attachmentSize: Int64 = 0
     
-
     var readOnly  : Bool?
     var allowedStates : [Int]?
     var lmg: String?
@@ -97,6 +100,10 @@ class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
         oDescription <- map["Description"]
         manager <- map["Manager"]
         reviewer <- map["Reviewer"]
+        attachmentId <- map["AttachmentId"]
+        attachmentTitle <- map["AttachmentTitle"]
+        attachmentExtension <- map["AttachmentExtension"]
+        attachmentSize <- map["AttachmentSize"]
         
         readOnly <- map["ReadOnly"]
         dirtyFields <- map["DirtyFields"]
