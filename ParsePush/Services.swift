@@ -214,7 +214,6 @@ public class Services {
         }
     }
     
-    
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
     static func sync(completed: (result: [Procedure]?)->()) {
@@ -386,6 +385,20 @@ public class Services {
         return nil
     }
     
+    static func getAttachment(id: Int, completed: (String->())) {
+        Alamofire.download(.GET, procedureUrl + "/GetAttachment/\(id)", headers:Services.headers) { temporaryURL, response in
+            let fileManager = NSFileManager.defaultManager()
+            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let pathComponent = response.suggestedFilename
+            
+            let resp = directoryURL.URLByAppendingPathComponent(pathComponent!)
+            print(resp)
+            completed(resp.absoluteString)
+            return resp
+        }
+        
+    }
+    
     static func getAttachment(completed: (Bool->())) {
         Alamofire.download(.GET, procedureUrl + "/GetFile") { temporaryURL, response in
             let fileManager = NSFileManager.defaultManager()
@@ -398,5 +411,8 @@ public class Services {
             return resp
         }
     }
+    
+
+    
     
 }

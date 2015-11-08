@@ -210,7 +210,10 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        //open up the workpaper for editing....
+        let id = items[row.rowIndex].attachmentId
+        Services.getAttachment(id) { result in
+            print(result)
+        }
     }
     
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
