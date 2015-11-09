@@ -118,7 +118,7 @@
 		651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperGridController.swift; sourceTree = "<group>"; };
 		651A4C3B1BEE8319008737A2 /* Workpaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workpaper.swift; sourceTree = "<group>"; };
 		651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeTracking.swift; sourceTree = "<group>"; };
-		655DEF841BF059F200120892 /* TeamMate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TeamMate.entitlements; sourceTree = "<group>"; };
+		655DEF841BF059F200120892 /* TeamMate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TeamMate.entitlements; path = ../TeamMate.entitlements; sourceTree = "<group>"; };
 		65636CE41BD8092500C94D6D /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -281,12 +281,11 @@
 		65768AD21BA641C500DADD43 = {
 			isa = PBXGroup;
 			children = (
-				655DEF841BF059F200120892 /* TeamMate.entitlements */,
+				65768ADD1BA641C500DADD43 /* TeamMate */,
 				65B1FE081BF0251C0096EA07 /* TeamMateDoc */,
 				65B1FE161BF0251C0096EA07 /* TeamMateDocFileProvider */,
 				659D1C741BA7C4B00023AAFD /* Frameworks */,
 				659D1C731BA7C4750023AAFD /* SystemFrameworks */,
-				65768ADD1BA641C500DADD43 /* ParsePush */,
 				65768AF31BA641C500DADD43 /* ParsePushTests */,
 				65768ADC1BA641C500DADD43 /* Products */,
 				6A4815727514AC2917AEEDCF /* Pods */,
@@ -304,7 +303,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65768ADD1BA641C500DADD43 /* ParsePush */ = {
+		65768ADD1BA641C500DADD43 /* TeamMate */ = {
 			isa = PBXGroup;
 			children = (
 				6564FFCA1BDF91530014FE08 /* ShinobiPlayUtils */,
@@ -316,12 +315,14 @@
 				66E65F731BD5DABD00B8B351 /* Utility */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
 			);
+			name = TeamMate;
 			path = ParsePush;
 			sourceTree = "<group>";
 		};
 		65768ADE1BA641C500DADD43 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				655DEF841BF059F200120892 /* TeamMate.entitlements */,
 				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
 				65768ADF1BA641C500DADD43 /* Info.plist */,
 			);
