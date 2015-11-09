@@ -33,7 +33,7 @@
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
-		65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* ParsePushTests.swift */; };
+		65768AF71BA641C500DADD43 /* TeamMateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* TeamMateTests.swift */; };
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
 		65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B081BA6455B00DADD43 /* libsqlite3.dylib */; };
@@ -151,7 +151,7 @@
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65768AF61BA641C500DADD43 /* ParsePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsePushTests.swift; sourceTree = "<group>"; };
+		65768AF61BA641C500DADD43 /* TeamMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMateTests.swift; sourceTree = "<group>"; };
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		65768B061BA644AE00DADD43 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		65768B081BA6455B00DADD43 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -284,9 +284,9 @@
 				65768ADD1BA641C500DADD43 /* TeamMate */,
 				65B1FE081BF0251C0096EA07 /* TeamMateDoc */,
 				65B1FE161BF0251C0096EA07 /* TeamMateDocFileProvider */,
+				65768AF31BA641C500DADD43 /* TeamMateTests */,
 				659D1C741BA7C4B00023AAFD /* Frameworks */,
 				659D1C731BA7C4750023AAFD /* SystemFrameworks */,
-				65768AF31BA641C500DADD43 /* ParsePushTests */,
 				65768ADC1BA641C500DADD43 /* Products */,
 				6A4815727514AC2917AEEDCF /* Pods */,
 			);
@@ -329,12 +329,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		65768AF31BA641C500DADD43 /* ParsePushTests */ = {
+		65768AF31BA641C500DADD43 /* TeamMateTests */ = {
 			isa = PBXGroup;
 			children = (
-				65768AF61BA641C500DADD43 /* ParsePushTests.swift */,
+				65768AF61BA641C500DADD43 /* TeamMateTests.swift */,
 				65768AF41BA641C500DADD43 /* Supporting Files */,
 			);
+			name = TeamMateTests;
 			path = ParsePushTests;
 			sourceTree = "<group>";
 		};
@@ -747,7 +748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */,
+				65768AF71BA641C500DADD43 /* TeamMateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

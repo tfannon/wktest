@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class ParsePushTests: XCTestCase {
+class TeamMateTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
