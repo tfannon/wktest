@@ -10,7 +10,7 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="179" id="gcb-fE-hJA" customClass="TextAutoSizeCell" customModule="TeamMate" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="385" height="179"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gcb-fE-hJA" id="fMj-S2-VxC">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="gcb-fE-hJA" id="fMj-S2-VxC">
                 <rect key="frame" x="0.0" y="0.0" width="385" height="178.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
