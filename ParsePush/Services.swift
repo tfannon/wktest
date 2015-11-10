@@ -156,7 +156,6 @@ public class Services {
     }
     
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
-        print(__FUNCTION__)
         if (mock) {
             completed(result: Mock.getProcedures())
         }
@@ -191,7 +190,6 @@ public class Services {
     
     //todo: refactor to reuse MyProcedures
     static func getMyWorkpapers(fetchOptions: FetchOptions = .Default, completed: (result: [Workpaper]?)->()) {
-        print(__FUNCTION__)
         if (mock) {
             completed(result: Mock.getWorkpapers())
         }
@@ -213,7 +211,7 @@ public class Services {
                     switch result {
                     case .Success(let data):
                         let jsonAlamo = data as? [[String:AnyObject]]
-                        print(jsonAlamo)
+                        //print(jsonAlamo)
                         let result = jsonAlamo?.map { Mapper<Workpaper>().map($0)! }
                         //save it back to local store, erasing whatever was there
                         //saveAll(result!)
@@ -348,15 +346,17 @@ public class Services {
     
     static func clearStore() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        //defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
-        //defaults.removeObjectForKey(DataKey.Proc.rawValue)
-        
+
         let appDomain = NSBundle.mainBundle().bundleIdentifier!
         defaults.removePersistentDomainForName(appDomain)
         
-        let appDefaults = Services.appGroupDefaults
-        appDefaults.removeSuiteNamed(appGroupName)
-        
+        //this removes some apple keys along with everything we put in there.  wonder if there is a better way?
+        let appGroupDefaults = Services.appGroupDefaults
+        appGroupDefaults.dictionaryRepresentation().keys.forEach {
+            print("removing \($0)")
+            appGroupDefaults.removeObjectForKey($0)
+        }
+        //delete all the files in the storage directory as well
         FileHelper.deleteDirectory(storageProviderLocation)
     }
     
@@ -412,6 +412,7 @@ public class Services {
     static func getAttachment(id: Int, completed: (String->())) {
         let key = DataKey.getAttachmentKey(id)
         if let destination = appGroupDefaults.valueForKey(key) as? String {
+            print("Using cached file at:\(destination)")
             completed(destination)
             return
         }

@@ -213,7 +213,6 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let id = items[row.rowIndex].attachmentId
         Services.getAttachment(id) { result in
-            print(result)
             if self.documentInteractionController == nil {
                 self.documentInteractionController = UIDocumentInteractionController()
                 self.documentInteractionController.delegate = self

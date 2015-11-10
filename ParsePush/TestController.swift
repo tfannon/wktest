@@ -101,12 +101,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     @IBAction func getAttachmentPressed(sender: AnyObject) {
         Services.getAttachment { result in
-            //print(result)
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                let dc = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: result))
-                dc.delegate = self
-                dc.presentOpenInMenuFromRect((sender as! UIView).frame, inView: self.view, animated: true)
-            }
+            let dc = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: result))
+            dc.delegate = self
+            dc.presentPreviewAnimated(true)
         }
     }
     
