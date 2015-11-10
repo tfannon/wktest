@@ -213,7 +213,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         ])
         
         data.append([
-            CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1),
+            CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1, setup: { cell, _ in cell.selectionStyle = .None }),
             
             CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(), label: self.t("dueDate"),
                 style: UITableViewCellStyle.Value1,
@@ -236,8 +236,10 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     displayCell.detailTextLabel!.text = self.procedure.dueDate?.ToLongDateStyle()
                     self.enableSave()
                 }),
-            
-            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1),
+        ])
+        
+        data.append([
+            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1, setup: { cell, _ in cell.selectionStyle = .None }),
             
             CellData(identifier: "_BasicCell", value: procedure.reviewDueDate?.ToLongDateStyle(), label: self.t("reviewDueDate"),
                 style: UITableViewCellStyle.Value1,
@@ -332,6 +334,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         sections = [
             " ",
             " ",
+            "Review",
             self.t("text1"),
             self.t("text2"),
             self.t("text3"),
