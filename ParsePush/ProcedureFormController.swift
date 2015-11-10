@@ -19,6 +19,14 @@ class ProcedureFormControllerViewController: FormViewController {
     {
         return Procedure.getTerminology(key)
     }
+ 
+    func x(r : TextAreaRow) -> CGFloat
+    {
+        let textView = r.cell.textView
+        let size = textView.bounds.size
+        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.max))
+        return newSize.height
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,18 +99,21 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section("") {
                 $0.header?.title = self.t("text1")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.text1
+                }
+                .cellSetup { cell, row in
+                    cell.textView.autoresizingMask = .FlexibleHeight
                 }
                 .onChange{ field in
                     self.enableSave()
                     self.procedure.text1 = field.value
-            }
+                }
 
             +++ Section(""){
                 $0.header?.title = self.t("text2")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.text2
                 }
                 .onChange{ field in
@@ -113,7 +124,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("text3")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.text3
                 }
                 .onChange{ field in
@@ -124,7 +135,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("text4")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.text4
                 }
                 .onChange{ field in
@@ -150,7 +161,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("resultsText1")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.resultsText1
                 }
                 .onChange{ field in
@@ -160,7 +171,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("resultsText2")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.resultsText2
                 }
                 .onChange{ field in
@@ -170,7 +181,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("resultsText3")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.resultsText3
                 }
                 .onChange{ field in
@@ -180,7 +191,7 @@ class ProcedureFormControllerViewController: FormViewController {
             +++ Section(""){
                 $0.header?.title = self.t("resultsText4")
             }
-            <<< TextAutoSizeRow() {
+            <<< TextAreaRow() {
                 $0.value = self.procedure.resultsText4
                 }
                 .onChange{ field in
@@ -188,11 +199,12 @@ class ProcedureFormControllerViewController: FormViewController {
                     self.procedure.resultsText4 = field.value
         }
             +++ Section("")
-            <<< NavigationRow() {
+            <<< LabelRow() {
                 $0.title = "Change Tracking"
                 }
                 .cellSetup { cell, row in
                     cell.imageView?.image = UIImage(named: "icons_change")
+                    cell.accessoryType = .DisclosureIndicator
                     if self.procedure.changes?.count == 0 {
                         cell.accessoryType = .None
                         cell.enable(false)

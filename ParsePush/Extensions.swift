@@ -55,6 +55,10 @@ extension String {
     {
         return (self as NSString).substringToIndex(numberOfChars)
     }
+    func substringFrom(startingIndex: Int) -> String
+    {
+        return (self as NSString).substringFromIndex(startingIndex)
+    }
 }
 
 extension UITableViewCell {
@@ -80,3 +84,13 @@ extension UITableViewCell {
     }
 }
 
+extension UITableView {
+    func dequeueReusableCellWithNibName(nibName : String!) -> UITableViewCell? {
+        var cell = self.dequeueReusableCellWithIdentifier(nibName)
+        if (cell == nil) {
+            self.registerNib(UINib(nibName: nibName, bundle: nil), forCellReuseIdentifier: nibName)
+            cell = self.dequeueReusableCellWithIdentifier(nibName)
+        }
+        return cell
+    }
+}

@@ -7,7 +7,7 @@
         <!--ProcedureForm-->
         <scene sceneID="dDD-9b-XsI">
             <objects>
-                <viewController id="SZk-h8-pL2" userLabel="ProcedureForm" customClass="ProcedureFormControllerViewController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SZk-h8-pL2" userLabel="ProcedureForm" customClass="ProcedureFormController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PQT-Hg-cnZ"/>
                         <viewControllerLayoutGuide type="bottom" id="zXY-dq-eHW"/>

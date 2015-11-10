@@ -44,7 +44,7 @@ class Mock {
         procedure.reviewer = "Bronson Pichot"
         procedure.reviewDueDate = NSDate(isoString: "2015-10-31")
         procedure.dueDate = NSDate(isoString: "2015-11-30")
-        procedure.text2 = text1
+        procedure.text2 = text1 + text1 + text1 + text1
         procedure.text3 = text1
         procedure.text4 = text1
         procedure.resultsText1 = text1
