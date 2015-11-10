@@ -64,6 +64,8 @@
 		663259BA1BF1959E00D3C76E /* ProcedureFormController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259B91BF1959E00D3C76E /* ProcedureFormController2.swift */; };
 		663259BC1BF1972D00D3C76E /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 663259BB1BF1972D00D3C76E /* TextCell.xib */; };
 		663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259BD1BF1975000D3C76E /* CustomCells.swift */; };
+		663259C01BF2405F00D3C76E /* DatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 663259BF1BF2405F00D3C76E /* DatePickerCell.xib */; };
+		663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259C11BF24AD000D3C76E /* TableViewHelper.swift */; };
 		6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */; };
 		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; };
 		66C6DFB21BD9A79F00A30597 /* ChangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C6DFB11BD9A79F00A30597 /* ChangeController.swift */; };
@@ -190,6 +192,8 @@
 		663259B91BF1959E00D3C76E /* ProcedureFormController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureFormController2.swift; sourceTree = "<group>"; };
 		663259BB1BF1972D00D3C76E /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
 		663259BD1BF1975000D3C76E /* CustomCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCells.swift; sourceTree = "<group>"; };
+		663259BF1BF2405F00D3C76E /* DatePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerCell.xib; sourceTree = "<group>"; };
+		663259C11BF24AD000D3C76E /* TableViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHelper.swift; sourceTree = "<group>"; };
 		6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDetailController.swift; sourceTree = "<group>"; };
 		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
 		66C6DFB11BD9A79F00A30597 /* ChangeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeController.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
 				6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */,
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
+				663259BF1BF2405F00D3C76E /* DatePickerCell.xib */,
 				663259BD1BF1975000D3C76E /* CustomCells.swift */,
 				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
@@ -458,6 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				66E65F711BD5D94700B8B351 /* AFDateExtension.swift */,
+				663259C11BF24AD000D3C76E /* TableViewHelper.swift */,
 			);
 			name = 3rdParty;
 			sourceTree = "<group>";
@@ -629,6 +635,7 @@
 				663259BC1BF1972D00D3C76E /* TextCell.xib in Resources */,
 				6564FFEB1BDF91530014FE08 /* Roboto-MediumItalic.ttf in Resources */,
 				6564FFE41BDF91530014FE08 /* Roboto-BlackItalic.ttf in Resources */,
+				663259C01BF2405F00D3C76E /* DatePickerCell.xib in Resources */,
 				659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */,
 				6564FFE71BDF91530014FE08 /* Roboto-Italic.ttf in Resources */,
 				6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */,
@@ -744,6 +751,7 @@
 				655DEF881BF1836600120892 /* Shared.swift in Sources */,
 				651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */,
 				65C194F21BDC3332004C4FB8 /* Store.swift in Sources */,
+				663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */,
 				6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */,
 				66C6DFB21BD9A79F00A30597 /* ChangeController.swift in Sources */,
 				6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */,

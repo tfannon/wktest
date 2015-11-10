@@ -10,6 +10,8 @@ import UIKit
 import Eureka
 
 class CellData {
+    static var tagCount = 0
+    
     var label : String?
     var value : Any?
     var nibIdentifier : String?
@@ -17,10 +19,12 @@ class CellData {
     var placeHolder : String?
     var identifier : String?
     var style : UITableViewCellStyle?
+    var visible : Bool = true
     private var initFunction : (() -> UITableViewCell)?
     private var setupFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
     private var changedFunction : ((UITableViewCell, CellData) -> Void)?
+    let tag = tagCount++
     
     init (
         identifier : String,
@@ -50,6 +54,7 @@ class CellData {
         self.setupFunction = setup
         self.selectedFunction = selected
         self.changedFunction = changed
+        self.visible = identifier != "DatePickerCell"
     }
     func initialize() -> UITableViewCell {
         if let f = initFunction {
@@ -74,12 +79,15 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     private var data : [[CellData]] = []
     private var sections : [String] = []
     private var watchForChanges = false
+    private var tableViewHelper : TableViewHelper!
+    private var dataLookup = [Int : CellData]()
     
     init(procedure : Procedure)
     {
-        self.procedure = procedure
-        
         super.init(style: .Grouped)
+
+        self.procedure = procedure
+        tableViewHelper = TableViewHelper(tableView: tableView)
     }
     
     required init(coder: NSCoder)
@@ -130,7 +138,12 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         }
     }
     
+    private func toggleCell(indexPath : NSIndexPath) {
+        
+    }
+    
     private func setupForm() {
+        
         let textCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             let textCell = cell as! TextCell
             textCell.textField.text = data.value as! String?
@@ -142,23 +155,166 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             textCell.textView.text = data.value as? String ?? ""
             textCell.delegate = self
         }
+        let dateCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
+            cell.selectionStyle = .None
+        }
+        let dateCellSelected : ((UITableViewCell, CellData, NSIndexPath) -> Void) =
+            { cell, data, indexPath in
+                let indexPath = self.tableView.indexPathForCell(cell)!
+                let dpIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+                let dpTag = data.tag + 1
+                let dpData = self.dataLookup[dpTag]!
+                let currentlyVisible = dpData.visible
+                dpData.visible = !dpData.visible
+                self.tableView.beginUpdates()
+                if currentlyVisible {
+                    self.tableView.deleteRowsAtIndexPaths([dpIndexPath], withRowAnimation: .Top)
+                }
+                else {
+                    self.tableView.insertRowsAtIndexPaths([dpIndexPath], withRowAnimation: .Top)
+                }
+                self.tableView.endUpdates()
+                
+                if dpData.visible {
+                    // remove any visible datetimepicker cells that don't belong to this one
+                    for otherCell in self.tableView.visibleCells {
+                        if let _ = otherCell as? DatePickerCell {
+                            let otherIndexPath = self.tableView.indexPathForCell(otherCell)!
+                            if (otherIndexPath != dpIndexPath) {
+                                let otherData = self.getCellData(otherIndexPath)
+                                otherData.visible = false
+                                self.tableView.beginUpdates()
+                                self.tableView.deleteRowsAtIndexPaths([otherIndexPath], withRowAnimation: .Top)
+                                self.tableView.endUpdates()
+                                break
+                            }
+                        }
+                    }
+                }
+            }
         
         data.append([
-            CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"), setup: textCellSetup),
-            CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"), setup: textCellSetup),
+            CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"), setup: textCellSetup,
+                changed: { cell, _ in
+                    let textCell = cell as! TextCell
+                    self.procedure.title = textCell.textField.text
+                    self.enableSave()
+                }),
+            CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"), setup: textCellSetup,
+                changed: { cell, _ in
+                    let textCell = cell as! TextCell
+                    self.procedure.code = textCell.textField.text
+                    self.enableSave()
+                })
             ])
+        
         data.append([
             CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1),
-            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1)
+            
+            CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(), label: self.t("dueDate"),
+                style: UITableViewCellStyle.Value1,
+                setup: dateCellSetup,
+                selected: dateCellSelected),
+            CellData(identifier: "DatePickerCell",
+                setup: { cell, data in
+                    let dateCell = cell as! DatePickerCell
+                    if let date = self.procedure.dueDate {
+                        dateCell.datePicker.date = date
+                    }
+                    dateCell.delegate = self
+                },
+                changed: { cell, data in
+                    let dateCell = cell as! DatePickerCell
+                    self.procedure.dueDate = dateCell.value
+                    let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
+                    let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
+                    let displayCell = self.tableView.cellForRowAtIndexPath(displayIndexPath)!
+                    displayCell.detailTextLabel!.text = self.procedure.dueDate?.ToLongDateStyle()
+                    self.enableSave()
+                }),
+            
+            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1),
+            
+            CellData(identifier: "_BasicCell", value: procedure.reviewDueDate?.ToLongDateStyle(), label: self.t("reviewDueDate"),
+                style: UITableViewCellStyle.Value1,
+                setup: dateCellSetup,
+                selected: dateCellSelected),
+            CellData(identifier: "DatePickerCell",
+                setup: { cell, data in
+                    let dateCell = cell as! DatePickerCell
+                    if let date = self.procedure.reviewDueDate {
+                        dateCell.datePicker.date = date
+                    }
+                    dateCell.delegate = self
+                },
+                changed: { cell, data in
+                    let dateCell = cell as! DatePickerCell
+                    self.procedure.reviewDueDate = dateCell.value
+                    let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
+                    let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
+                    let displayCell = self.tableView.cellForRowAtIndexPath(displayIndexPath)!
+                    displayCell.detailTextLabel!.text = self.procedure.reviewDueDate?.ToLongDateStyle()
+                    self.enableSave()
+                })
             ])
-        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text1, setup: textViewSetup, changed: { cell, _ in
-            let textCell = cell as! TextAutoSizeCell
-            self.procedure.text1 = textCell.textView.text
-            self.enableSave()
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text1,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.text1 = textCell.textView.text
+                self.enableSave()
             })])
-        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text2, setup: textViewSetup)])
-        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text3, setup: textViewSetup)])
-        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text4, setup: textViewSetup)])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text2,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.text2 = textCell.textView.text
+                self.enableSave()
+        })])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text3,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.text3 = textCell.textView.text
+                self.enableSave()
+        })])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text4,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.text4 = textCell.textView.text
+                self.enableSave()
+        })])
+ 
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText1,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.resultsText1 = textCell.textView.text
+                self.enableSave()
+        })])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText2,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.resultsText2 = textCell.textView.text
+                self.enableSave()
+        })])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText3,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.resultsText3 = textCell.textView.text
+                self.enableSave()
+        })])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText4,
+            setup: textViewSetup,
+            changed: { cell, _ in
+                let textCell = cell as! TextAutoSizeCell
+                self.procedure.resultsText4 = textCell.textView.text
+                self.enableSave()
+        })])
+        
         data.append([CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
             setup: { cell, data in
                 cell.accessoryType = .DisclosureIndicator },
@@ -176,11 +332,22 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             self.t("text2"),
             self.t("text3"),
             self.t("text4"),
+            self.t("resultsText1"),
+            self.t("resultsText2"),
+            self.t("resultsText3"),
+            self.t("resultsText4"),
             " "
         ]
         
         if (data.count != sections.count) {
             fatalError("sections != headers")
+        }
+
+        for i in 0..<data.count {
+            for j in 0..<data[i].count {
+                let d = data[i][j]
+                dataLookup[d.tag] = d
+            }
         }
     }
     
@@ -197,13 +364,14 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].count
+        return data[section].filter { data in return data.visible }.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : UITableViewCell
         let cellData = getCellData(indexPath)
+        
         if let nibName = cellData.nibIdentifier {
             cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
         }
@@ -250,9 +418,10 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     }
     
-    private func getCellData(indexPath: NSIndexPath) -> CellData
+    private func getCellData(indexPath: NSIndexPath, filtered : Bool = true) -> CellData
     {
-        return data[indexPath.section][indexPath.row]
+        let filtered = (filtered) ? data[indexPath.section].filter { d in return d.visible } : data[indexPath.section]
+        return filtered[indexPath.row]
     }
     
     func changed(cell: UITableViewCell) {
@@ -261,9 +430,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         cellData.changed(cell)
     }
     
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//    }
-//    
     private func enableSave()
     {
         if watchForChanges {

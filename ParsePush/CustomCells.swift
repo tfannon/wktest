@@ -13,11 +13,40 @@ protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
 }
 
-public class TextCell : UITableViewCell, UITextFieldDelegate
+public class CustomCell : UITableViewCell {
+    var delegate : CustomCellDelegate? = nil
+    func changed() {
+        delegate?.changed(self)
+    }
+}
+
+
+public class DatePickerCell : CustomCell
+{
+    @IBOutlet var datePicker : UIDatePicker!
+    
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        
+        selectionStyle = .None
+        datePicker.datePickerMode = .Date
+        datePicker.addTarget(self, action: Selector("datePickerDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    var value : NSDate {
+        get { return datePicker.date }
+        set { datePicker.date = newValue }
+    }
+    
+    func datePickerDidChange(sender: UIDatePicker) {
+        changed()
+    }
+}
+
+public class TextCell : CustomCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!
-    
-    var delegate : CustomCellDelegate? = nil
 
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -26,13 +55,18 @@ public class TextCell : UITableViewCell, UITextFieldDelegate
         textField.font = .preferredFontForTextStyle(UIFontTextStyleBody)
         textField.delegate = self
         textField.borderStyle = .None
+        
+        textField.delegate = self
+        textField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+    }
+
+    func textFieldDidChange(textField: UITextField) {
+        changed()
     }
 }
 
-public class TextAutoSizeCell: UITableViewCell, UITextViewDelegate {
+public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     @IBOutlet var textView: UITextView!
-    
-    var delegate : CustomCellDelegate? = nil
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -83,6 +117,6 @@ public class TextAutoSizeCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        delegate?.changed(self)
+        changed()
     }
 }

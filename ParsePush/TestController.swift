@@ -126,11 +126,15 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     @IBAction func miscPressed(sender: UIButton) {
         //let procedures = Mock.getProcedures()
-        let proc = Procedure()
-        proc.title = "something new"
-        let json = Mapper().toJSONString(proc, prettyPrint: true)!
-        print(json)
-        
+//        let proc = Procedure()
+//        proc.title = "something new"
+//        let json = Mapper().toJSONString(proc, prettyPrint: true)!
+//        print(json)
+        let procedure = Mock.getProcedures()[0]
+        let controller = ProcedureFormController(procedure: procedure)
+        //let controller = ProcedureFormControllerViewController()
+        //controller.procedure = items[row.rowIndex]
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @IBAction func proceduresPressed(sender: AnyObject) {

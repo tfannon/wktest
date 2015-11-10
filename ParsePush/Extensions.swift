@@ -46,6 +46,12 @@ extension Array{
     }
 }
 
+extension NSDate {
+    func ToLongDateStyle() -> String {
+        return self.toString(dateStyle: NSDateFormatterStyle.LongStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+    }
+}
+
 extension String {
     var length : Int {
         return self.characters.count
