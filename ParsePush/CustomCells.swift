@@ -9,9 +9,15 @@
 import Foundation
 import UIKit
 
+protocol CustomCellDelegate {
+    func changed(cell : UITableViewCell)
+}
+
 public class TextCell : UITableViewCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!
+    
+    var delegate : CustomCellDelegate? = nil
 
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -25,6 +31,8 @@ public class TextCell : UITableViewCell, UITextFieldDelegate
 
 public class TextAutoSizeCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet var textView: UITextView!
+    
+    var delegate : CustomCellDelegate? = nil
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -74,5 +82,7 @@ public class TextAutoSizeCell: UITableViewCell, UITextViewDelegate {
                 tableView?.scrollToRowAtIndexPath(thisIndexPath, atScrollPosition: .Bottom, animated: false)
             }
         }
+        
+        delegate?.changed(self)
     }
 }

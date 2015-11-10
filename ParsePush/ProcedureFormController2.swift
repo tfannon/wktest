@@ -19,7 +19,8 @@ class CellData {
     var style : UITableViewCellStyle?
     private var initFunction : (() -> UITableViewCell)?
     private var setupFunction : ((UITableViewCell, CellData) -> Void)?
-    private var onSelectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
+    private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
+    private var changedFunction : ((UITableViewCell, CellData) -> Void)?
     
     init (
         identifier : String,
@@ -30,7 +31,9 @@ class CellData {
         style : UITableViewCellStyle? = nil,
         initialize : (() -> UITableViewCell)? = nil,
         setup : ((UITableViewCell, CellData) -> Void)? = nil,
-        selected: ((UITableViewCell, CellData, NSIndexPath) -> Void)? = nil)
+        selected: ((UITableViewCell, CellData, NSIndexPath) -> Void)? = nil,
+        changed: ((UITableViewCell, CellData) -> Void)? = nil
+    )
     {
         if identifier.substring(1) == "_" {
             self.identifier = identifier.substringFrom(1)
@@ -45,7 +48,8 @@ class CellData {
         self.placeHolder = placeHolder
         self.initFunction = initialize
         self.setupFunction = setup
-        self.onSelectedFunction = selected
+        self.selectedFunction = selected
+        self.changedFunction = changed
     }
     func initialize() -> UITableViewCell {
         if let f = initFunction {
@@ -57,21 +61,25 @@ class CellData {
         setupFunction?(cell, self)
     }
     func selected(cell : UITableViewCell, indexPath: NSIndexPath) {
-        onSelectedFunction?(cell, self, indexPath)
+        selectedFunction?(cell, self, indexPath)
+    }
+    func changed(cell : UITableViewCell) {
+        changedFunction?(cell, self)
     }
 }
 
-class ProcedureFormController: UITableViewController {
+class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     private var procedure : Procedure!
     private var data : [[CellData]] = []
     private var sections : [String] = []
+    private var watchForChanges = false
     
     init(procedure : Procedure)
     {
         self.procedure = procedure
         
-        super.init(style: .Plain)
+        super.init(style: .Grouped)
     }
     
     required init(coder: NSCoder)
@@ -98,6 +106,8 @@ class ProcedureFormController: UITableViewController {
         setupForm()
         
         self.tableView.reloadData()
+        
+        watchForChanges = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -121,18 +131,16 @@ class ProcedureFormController: UITableViewController {
     }
     
     private func setupForm() {
-        let basicCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
-            cell.textLabel?.text = data.label
-            cell.detailTextLabel?.text = data.value as! String?
-        }
         let textCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             let textCell = cell as! TextCell
             textCell.textField.text = data.value as! String?
             textCell.textField.placeholder = data.placeHolder
+            textCell.delegate = self
         }
         let textViewSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             let textCell = cell as! TextAutoSizeCell
             textCell.textView.text = data.value as? String ?? ""
+            textCell.delegate = self
         }
         
         data.append([
@@ -140,10 +148,14 @@ class ProcedureFormController: UITableViewController {
             CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"), setup: textCellSetup),
             ])
         data.append([
-            CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1, setup: basicCellSetup),
-            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1, setup: basicCellSetup)
+            CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1),
+            CellData(identifier: "_BasicCell", value: procedure.reviewer, label: self.t("reviewer"), style: UITableViewCellStyle.Value1)
             ])
-        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text1, setup: textViewSetup)])
+        data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text1, setup: textViewSetup, changed: { cell, _ in
+            let textCell = cell as! TextAutoSizeCell
+            self.procedure.text1 = textCell.textView.text
+            self.enableSave()
+            })])
         data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text2, setup: textViewSetup)])
         data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text3, setup: textViewSetup)])
         data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text4, setup: textViewSetup)])
@@ -243,12 +255,20 @@ class ProcedureFormController: UITableViewController {
         return data[indexPath.section][indexPath.row]
     }
     
+    func changed(cell: UITableViewCell) {
+        let indexPath = tableView.indexPathForCell(cell)
+        let cellData = getCellData(indexPath!)
+        cellData.changed(cell)
+    }
+    
 //    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 //    }
 //    
     private func enableSave()
     {
-        self.navigationItem.rightBarButtonItem!.enabled = true
+        if watchForChanges {
+            self.navigationItem.rightBarButtonItem!.enabled = true
+        }
     }
     
     private func dismiss()

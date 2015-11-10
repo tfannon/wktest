@@ -212,7 +212,8 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let procedure = items[row.rowIndex]
-        let controller = ProcedureFormController(procedure: procedure)//ViewController()
+        let controller = ProcedureFormController(procedure: procedure)
+        //let controller = ProcedureFormControllerViewController()
         //controller.procedure = items[row.rowIndex]
         navigationController?.pushViewController(controller, animated: true)
     }
