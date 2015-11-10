@@ -12,6 +12,8 @@
 		651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3B1BEE8319008737A2 /* Workpaper.swift */; };
 		651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */; };
 		655DEF861BF16D5100120892 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF851BF16D5100120892 /* FileHelper.swift */; };
+		655DEF881BF1836600120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
+		655DEF891BF1836B00120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
 		65636CE51BD8092500C94D6D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65636CE41BD8092500C94D6D /* Misc.swift */; };
 		6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */; };
 		6564FFE41BDF91530014FE08 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */; };
@@ -121,6 +123,7 @@
 		651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeTracking.swift; sourceTree = "<group>"; };
 		655DEF841BF059F200120892 /* TeamMate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TeamMate.entitlements; path = ../TeamMate.entitlements; sourceTree = "<group>"; };
 		655DEF851BF16D5100120892 /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
+		655DEF871BF1836600120892 /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		65636CE41BD8092500C94D6D /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 				659A64C91BBEE8B40047AAD3 /* UI */,
 				66E65F731BD5DABD00B8B351 /* Utility */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
+				655DEF871BF1836600120892 /* Shared.swift */,
 			);
 			name = TeamMate;
 			path = ParsePush;
@@ -736,6 +740,7 @@
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
+				655DEF881BF1836600120892 /* Shared.swift in Sources */,
 				651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */,
 				66D1C09F1BDEBC9E00F5F257 /* NavigationRowCell.swift in Sources */,
 				65C194F21BDC3332004C4FB8 /* Store.swift in Sources */,
@@ -769,6 +774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B1FE1A1BF0251C0096EA07 /* FileProvider.swift in Sources */,
+				655DEF891BF1836B00120892 /* Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

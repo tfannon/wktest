@@ -20,7 +20,7 @@ public class Services {
     static var userName = "joe.tester"
     static var deviceToken = ""
     static var mock = false
-    static var appGroupName = "group.com.crazy8dev.ParsePush"
+
     static var appGroupStorageDirectory = "File Provider Storage"
     
     public static func setDeviceToken(token: NSData) {
@@ -45,12 +45,12 @@ public class Services {
     }
     
     static var storageProviderLocation: NSURL {
-        let appGroupUrl = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(appGroupName)!
+        let appGroupUrl = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(Shared.appGroupName)!
         return appGroupUrl.URLByAppendingPathComponent(appGroupStorageDirectory)
     }
     
     static var appGroupDefaults: NSUserDefaults {
-        return NSUserDefaults.init(suiteName: appGroupName)!
+        return NSUserDefaults.init(suiteName: Shared.appGroupName)!
     }
     
     //MARK:  Assessments

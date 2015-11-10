@@ -10,6 +10,7 @@ import UIKit
 
 class FileProvider: NSFileProviderExtension {
 
+
     var fileCoordinator: NSFileCoordinator {
         let fileCoordinator = NSFileCoordinator()
         fileCoordinator.purposeIdentifier = self.providerIdentifier()
@@ -65,7 +66,8 @@ class FileProvider: NSFileProviderExtension {
 
     override func itemChangedAtURL(url: NSURL) {
         // Called at some point after the file has changed; the provider may then trigger an upload
-
+        Shared.addDirtyDocument(url)
+        
         // TODO: mark file at <url> as needing an update in the model; kick off update process
         NSLog("Item changed at URL %@", url)
     }
