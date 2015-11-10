@@ -150,11 +150,13 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             textCell.textField.placeholder = data.placeHolder
             textCell.delegate = self
         }
+
         let textViewSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             let textCell = cell as! TextAutoSizeCell
             textCell.textView.text = data.value as? String ?? ""
             textCell.delegate = self
         }
+        
         let dateCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             cell.selectionStyle = .None
         }
@@ -175,8 +177,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 }
                 self.tableView.endUpdates()
                 
+                // if we're making a picker visible
+                // remove any visible datetimepicker cells that aren't this one
                 if dpData.visible {
-                    // remove any visible datetimepicker cells that don't belong to this one
                     for otherCell in self.tableView.visibleCells {
                         if let _ = otherCell as? DatePickerCell {
                             let otherIndexPath = self.tableView.indexPathForCell(otherCell)!
@@ -186,6 +189,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                                 self.tableView.beginUpdates()
                                 self.tableView.deleteRowsAtIndexPaths([otherIndexPath], withRowAnimation: .Top)
                                 self.tableView.endUpdates()
+                                // there can be only one - so we're done
                                 break
                             }
                         }
@@ -199,14 +203,14 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     let textCell = cell as! TextCell
                     self.procedure.title = textCell.textField.text
                     self.enableSave()
-                }),
+            }),
             CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"), setup: textCellSetup,
                 changed: { cell, _ in
                     let textCell = cell as! TextCell
                     self.procedure.code = textCell.textField.text
                     self.enableSave()
-                })
-            ])
+            })
+        ])
         
         data.append([
             CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1),
