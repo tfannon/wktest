@@ -20,6 +20,8 @@ public class Services {
     static var userName = "joe.tester"
     static var deviceToken = ""
     static var mock = false
+
+    static var appGroupStorageDirectory = "File Provider Storage"
     
     public static func setDeviceToken(token: NSData) {
         Services.deviceToken = tokenToString(token)
@@ -40,6 +42,15 @@ public class Services {
     static var headers: [String:String] {
         let headers = ["UserName":Services.userName]
         return headers
+    }
+    
+    static var storageProviderLocation: NSURL {
+        let appGroupUrl = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(Shared.appGroupName)!
+        return appGroupUrl.URLByAppendingPathComponent(appGroupStorageDirectory)
+    }
+    
+    static var appGroupDefaults: NSUserDefaults {
+        return NSUserDefaults.init(suiteName: Shared.appGroupName)!
     }
     
     //MARK:  Assessments
@@ -145,7 +156,6 @@ public class Services {
     }
     
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
-        print(__FUNCTION__)
         if (mock) {
             completed(result: Mock.getProcedures())
         }
@@ -170,6 +180,41 @@ public class Services {
                         let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
                         //save it back to local store, erasing whatever was there
                         saveAll(result!)
+                        completed(result: result)
+                    case .Failure(_, let error):
+                        print("Request failed with error: \(error)")
+                    }
+            }
+        }
+    }
+    
+    //todo: refactor to reuse MyProcedures
+    static func getMyWorkpapers(fetchOptions: FetchOptions = .Default, completed: (result: [Workpaper]?)->()) {
+        if (mock) {
+            completed(result: Mock.getWorkpapers())
+        }
+        else {
+            if fetchOptions == .LocalOnly {
+                completed(result: loadWorkpapers())
+                return
+            }
+            //default is to check the local store first
+            if fetchOptions == .Default {
+                if let workpapers = loadWorkpapers() {
+                    completed(result: workpapers)
+                    return
+                }
+            }
+            //if the store had nothing or we force a refresh fetch from services
+            Alamofire.request(.GET, procedureUrl + "/GetMyWorkpapers", headers:Services.headers, parameters: nil, encoding: .JSON)
+                .responseJSON { request, response, result in
+                    switch result {
+                    case .Success(let data):
+                        let jsonAlamo = data as? [[String:AnyObject]]
+                        //print(jsonAlamo)
+                        let result = jsonAlamo?.map { Mapper<Workpaper>().map($0)! }
+                        //save it back to local store, erasing whatever was there
+                        //saveAll(result!)
                         completed(result: result)
                     case .Failure(_, let error):
                         print("Request failed with error: \(error)")
@@ -265,7 +310,7 @@ public class Services {
         defaults.setValue(procJson, forKey: key)
         //if its coming from the load from services, all keys need to be persisted
         if persistKey {
-            if let ids = loadIds()
+            if let ids = loadProcedureIds()
                 where ids.indexOf(obj.id!) == nil {
                     var newIds = ids
                     newIds.append(obj.id!)
@@ -281,17 +326,38 @@ public class Services {
     //MARK: Store - private
     enum DataKey : String {
         case ProcedureIds = "procIds"
+        case WorkpaperIds = "workpaperIds"
+        case AttachmentIds = "atttachmentIds"
         case Proc = "proc:"
+        case Workpaper = "workpaper:"
+        case Attachment = "attachment:"
+
         static func getProcKey(id : Int) -> String {
             return "\(Proc.rawValue)\(id)"
         }
+        static func getWorkpaperKey(id : Int) -> String {
+            return "\(Workpaper.rawValue)\(id)"
+        }
+        static func getAttachmentKey(id : Int) -> String {
+            return "\(Attachment.rawValue)\(id)"
+        }
+        
     }
     
     static func clearStore() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
-        defaults.removeObjectForKey(DataKey.Proc.rawValue)
-        defaults.synchronize()
+
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        defaults.removePersistentDomainForName(appDomain)
+        
+        //this removes some apple keys along with everything we put in there.  wonder if there is a better way?
+        let appGroupDefaults = Services.appGroupDefaults
+        appGroupDefaults.dictionaryRepresentation().keys.forEach {
+            print("removing \($0)")
+            appGroupDefaults.removeObjectForKey($0)
+        }
+        //delete all the files in the storage directory as well
+        FileHelper.deleteDirectory(storageProviderLocation)
     }
     
     private static func saveAll(objects: [Procedure]) {
@@ -305,16 +371,21 @@ public class Services {
     
     
     //may be empty
-    private static func loadIds() -> [Int]? {
+    private static func loadProcedureIds() -> [Int]? {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.ProcedureIds.rawValue) as? [Int]
     }
+    
+    private static func loadWorkpaperIds() -> [Int]? {
+        return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int]
+    }
+    
     
     //may be empty
     private static func loadProcedures() -> [Procedure]? {
         print(__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
-        if let ids = loadIds() {
+        if let ids = loadProcedureIds() {
             return ids.map { id in
                 let key = DataKey.getProcKey(id)
                 let jsonProc = defaults.valueForKey(key) as! String
@@ -322,5 +393,46 @@ public class Services {
             }
         }
         return nil
+    }
+    
+    //MARK: Workpapers
+    private static func loadWorkpapers() -> [Workpaper]? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        //may be empty
+        if let ids = loadWorkpaperIds() {
+            return ids.map { id in
+                let key = DataKey.getWorkpaperKey(id)
+                let jsonProc = defaults.valueForKey(key) as! String
+                return Mapper<Workpaper>().map(jsonProc)!
+            }
+        }
+        return nil
+    }
+    
+    static func getAttachment(id: Int, completed: (String->())) {
+        let key = DataKey.getAttachmentKey(id)
+        if let destination = appGroupDefaults.valueForKey(key) as? String {
+            print("Using cached file at:\(destination)")
+            completed(destination)
+            return
+        }
+        Alamofire.download(.GET, procedureUrl + "/GetAttachment/\(id)", headers:Services.headers) { temporaryURL, response in
+            let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl:self.storageProviderLocation, fileName: response.suggestedFilename!)
+            print("Downloaded file was stored at: \(destination.path!)")
+            //write this location into the app group defaults.
+            appGroupDefaults.setValue(destination.path!, forKey: key)
+            completed(destination.path!)
+            return destination
+        }
+    }
+    
+    //test only
+    static func getAttachment(completed: (String->())) {
+        Alamofire.download(.GET, procedureUrl + "/GetFile") { temporaryURL, response in
+            let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl: self.storageProviderLocation, fileName: response.suggestedFilename!, overwrite: true)
+            print("Downloaded file was stored at: \(destination.path!)")
+            completed(destination.path!)
+            return destination
+        }
     }
 }

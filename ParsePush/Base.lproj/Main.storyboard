@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -192,9 +192,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZc-6T-KmO">
                                 <rect key="frame" x="18" y="508" width="118" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Send Procedures"/>
+                                <state key="normal" title="Get Attachment"/>
                                 <connections>
-                                    <action selector="sendProceduresPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="i9G-FO-RpC"/>
+                                    <action selector="getAttachmentPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="f1M-at-k1L"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZ9-mI-7WB">
@@ -283,7 +283,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="891" y="-53"/>
+            <point key="canvasLocation" x="885" y="-53"/>
+        </scene>
+        <!--Workpaper Grid Controller-->
+        <scene sceneID="33b-T8-3v7">
+            <objects>
+                <viewController id="Z74-wM-mTX" customClass="WorkpaperGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="f6A-H9-Jyp"/>
+                        <viewControllerLayoutGuide type="bottom" id="3JB-n5-9fs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lHo-d5-OMY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="RrD-gs-4E6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ECo-Q0-F2a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-36" y="2132"/>
         </scene>
         <!--Procedure Grid Controller-->
         <scene sceneID="F0i-f2-eBA">
@@ -303,7 +323,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBr-tS-B5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="1613"/>
+            <point key="canvasLocation" x="-45" y="1431"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="EXh-KS-uIw">
@@ -316,8 +336,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Gee-FM-iu3" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="y1E-FG-ITs" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
+                        <segue destination="Gee-FM-iu3" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
+                        <segue destination="WkL-bK-6Vb" kind="relationship" relationship="viewControllers" id="60r-0I-UqT"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
                         <segue destination="j1m-mE-xI7" kind="relationship" relationship="viewControllers" id="e5W-8l-QQH"/>
                     </connections>
@@ -487,7 +508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dur-qD-Gl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1053" y="1494"/>
+            <point key="canvasLocation" x="-1795" y="1470"/>
         </scene>
         <!--Procedures-->
         <scene sceneID="g5M-Pl-sWl">
@@ -507,7 +528,27 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxg-2u-830" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-21" y="1613"/>
+            <point key="canvasLocation" x="-799" y="1181"/>
+        </scene>
+        <!--Workpapers-->
+        <scene sceneID="Tnc-6Y-AjR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WkL-bK-6Vb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Workpapers" image="832-stack-1" id="A9Y-Vr-2n8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vev-Ba-04x">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Z74-wM-mTX" kind="relationship" relationship="rootViewController" id="J86-NG-ssE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W5S-89-ouz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1084" y="2140"/>
         </scene>
     </scenes>
     <resources>
@@ -515,6 +556,7 @@
         <image name="740-gear" width="28" height="28"/>
         <image name="756-bell" width="24" height="28"/>
         <image name="779-users" width="28" height="25"/>
+        <image name="832-stack-1" width="28" height="22"/>
         <image name="icons_completed" width="42" height="42"/>
         <image name="icons_implemented" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>

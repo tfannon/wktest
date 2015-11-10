@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; };
+		651A4C3A1BEE80E3008737A2 /* WorkpaperGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */; };
+		651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3B1BEE8319008737A2 /* Workpaper.swift */; };
+		651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */; };
+		655DEF861BF16D5100120892 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF851BF16D5100120892 /* FileHelper.swift */; };
+		655DEF881BF1836600120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
+		655DEF891BF1836B00120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
 		65636CE51BD8092500C94D6D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65636CE41BD8092500C94D6D /* Misc.swift */; };
 		6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */; };
 		6564FFE41BDF91530014FE08 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */; };
@@ -30,7 +36,7 @@
 		65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE01BA641C500DADD43 /* AppDelegate.swift */; };
 		65768AE31BA641C500DADD43 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AE21BA641C500DADD43 /* TestController.swift */; };
 		65768AE61BA641C500DADD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65768AE41BA641C500DADD43 /* Main.storyboard */; };
-		65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* ParsePushTests.swift */; };
+		65768AF71BA641C500DADD43 /* TeamMateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65768AF61BA641C500DADD43 /* TeamMateTests.swift */; };
 		65768B051BA6448700DADD43 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B041BA6448700DADD43 /* SystemConfiguration.framework */; };
 		65768B071BA644AE00DADD43 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B061BA644AE00DADD43 /* libstdc++.6.dylib */; };
 		65768B091BA6455B00DADD43 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65768B081BA6455B00DADD43 /* libsqlite3.dylib */; };
@@ -46,6 +52,11 @@
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
+		65B1FE0C1BF0251C0096EA07 /* DocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B1FE0B1BF0251C0096EA07 /* DocumentPickerViewController.swift */; };
+		65B1FE0F1BF0251C0096EA07 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B1FE0D1BF0251C0096EA07 /* MainInterface.storyboard */; };
+		65B1FE1A1BF0251C0096EA07 /* FileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B1FE191BF0251C0096EA07 /* FileProvider.swift */; };
+		65B1FE1E1BF0251C0096EA07 /* TeamMateDocFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 65B1FE151BF0251C0096EA07 /* TeamMateDocFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		65B1FE211BF0251C0096EA07 /* TeamMateDoc.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		65C194F21BDC3332004C4FB8 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C194F11BDC3332004C4FB8 /* Store.swift */; };
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; };
@@ -73,11 +84,46 @@
 			remoteGlobalIDString = 65768ADA1BA641C500DADD43;
 			remoteInfo = ParsePush;
 		};
+		65B1FE1C1BF0251C0096EA07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65768AD31BA641C500DADD43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65B1FE141BF0251C0096EA07;
+			remoteInfo = TeamMateDocFileProvider;
+		};
+		65B1FE1F1BF0251C0096EA07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65768AD31BA641C500DADD43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65B1FE061BF0251C0096EA07;
+			remoteInfo = TeamMateDoc;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		65B1FE281BF0251C0096EA07 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				65B1FE1E1BF0251C0096EA07 /* TeamMateDocFileProvider.appex in Embed App Extensions */,
+				65B1FE211BF0251C0096EA07 /* TeamMateDoc.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1E216A450469A08FEC9B7CD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6518EF771BD3464400DD558A /* DataGridImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataGridImageCell.swift; sourceTree = "<group>"; };
+		651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperGridController.swift; sourceTree = "<group>"; };
+		651A4C3B1BEE8319008737A2 /* Workpaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workpaper.swift; sourceTree = "<group>"; };
+		651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeTracking.swift; sourceTree = "<group>"; };
+		655DEF841BF059F200120892 /* TeamMate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TeamMate.entitlements; path = ../TeamMate.entitlements; sourceTree = "<group>"; };
+		655DEF851BF16D5100120892 /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
+		655DEF871BF1836600120892 /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		65636CE41BD8092500C94D6D /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		6564FFCC1BDF91530014FE08 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		6564FFCD1BDF91530014FE08 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -110,7 +156,7 @@
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65768AF61BA641C500DADD43 /* ParsePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsePushTests.swift; sourceTree = "<group>"; };
+		65768AF61BA641C500DADD43 /* TeamMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMateTests.swift; sourceTree = "<group>"; };
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		65768B061BA644AE00DADD43 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		65768B081BA6455B00DADD43 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -127,6 +173,15 @@
 		659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		659D1C711BA7C45C0023AAFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParsePush-Bridging-Header.h"; sourceTree = "<group>"; };
+		65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeamMateDoc.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B1FE0A1BF0251C0096EA07 /* TeamMateDoc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TeamMateDoc.entitlements; sourceTree = "<group>"; };
+		65B1FE0B1BF0251C0096EA07 /* DocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewController.swift; sourceTree = "<group>"; };
+		65B1FE0E1BF0251C0096EA07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		65B1FE101BF0251C0096EA07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65B1FE151BF0251C0096EA07 /* TeamMateDocFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeamMateDocFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B1FE181BF0251C0096EA07 /* TeamMateDocFileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TeamMateDocFileProvider.entitlements; sourceTree = "<group>"; };
+		65B1FE191BF0251C0096EA07 /* FileProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProvider.swift; sourceTree = "<group>"; };
+		65B1FE1B1BF0251C0096EA07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65C194F11BDC3332004C4FB8 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		65D381231BCDFC9B00E4C74B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiGrids.framework; sourceTree = "<group>"; };
@@ -167,6 +222,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		65768AED1BA641C500DADD43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE041BF0251C0096EA07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE121BF0251C0096EA07 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -217,10 +286,12 @@
 		65768AD21BA641C500DADD43 = {
 			isa = PBXGroup;
 			children = (
+				65768ADD1BA641C500DADD43 /* TeamMate */,
+				65B1FE081BF0251C0096EA07 /* TeamMateDoc */,
+				65B1FE161BF0251C0096EA07 /* TeamMateDocFileProvider */,
+				65768AF31BA641C500DADD43 /* TeamMateTests */,
 				659D1C741BA7C4B00023AAFD /* Frameworks */,
 				659D1C731BA7C4750023AAFD /* SystemFrameworks */,
-				65768ADD1BA641C500DADD43 /* ParsePush */,
-				65768AF31BA641C500DADD43 /* ParsePushTests */,
 				65768ADC1BA641C500DADD43 /* Products */,
 				6A4815727514AC2917AEEDCF /* Pods */,
 			);
@@ -231,11 +302,13 @@
 			children = (
 				65768ADB1BA641C500DADD43 /* TeamMate.app */,
 				65768AF01BA641C500DADD43 /* ParsePushTests.xctest */,
+				65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */,
+				65B1FE151BF0251C0096EA07 /* TeamMateDocFileProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65768ADD1BA641C500DADD43 /* ParsePush */ = {
+		65768ADD1BA641C500DADD43 /* TeamMate */ = {
 			isa = PBXGroup;
 			children = (
 				6564FFCA1BDF91530014FE08 /* ShinobiPlayUtils */,
@@ -246,25 +319,29 @@
 				659A64C91BBEE8B40047AAD3 /* UI */,
 				66E65F731BD5DABD00B8B351 /* Utility */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
+				655DEF871BF1836600120892 /* Shared.swift */,
 			);
+			name = TeamMate;
 			path = ParsePush;
 			sourceTree = "<group>";
 		};
 		65768ADE1BA641C500DADD43 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				655DEF841BF059F200120892 /* TeamMate.entitlements */,
 				659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */,
 				65768ADF1BA641C500DADD43 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		65768AF31BA641C500DADD43 /* ParsePushTests */ = {
+		65768AF31BA641C500DADD43 /* TeamMateTests */ = {
 			isa = PBXGroup;
 			children = (
-				65768AF61BA641C500DADD43 /* ParsePushTests.swift */,
+				65768AF61BA641C500DADD43 /* TeamMateTests.swift */,
 				65768AF41BA641C500DADD43 /* Supporting Files */,
 			);
+			name = TeamMateTests;
 			path = ParsePushTests;
 			sourceTree = "<group>";
 		};
@@ -294,6 +371,7 @@
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				66D1C09E1BDEBC9E00F5F257 /* NavigationRowCell.swift */,
 				6611F48E1BE2F684008204A5 /* TextAutoSizeRowCell.swift */,
+				651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -307,6 +385,9 @@
 				65890DF71BC33A3900506192 /* Enums.swift */,
 				65890DF91BC763D700506192 /* Procedure.swift */,
 				65C194F11BDC3332004C4FB8 /* Store.swift */,
+				651A4C3B1BEE8319008737A2 /* Workpaper.swift */,
+				651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */,
+				655DEF851BF16D5100120892 /* FileHelper.swift */,
 			);
 			name = MT;
 			sourceTree = "<group>";
@@ -334,6 +415,43 @@
 				D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65B1FE081BF0251C0096EA07 /* TeamMateDoc */ = {
+			isa = PBXGroup;
+			children = (
+				65B1FE0B1BF0251C0096EA07 /* DocumentPickerViewController.swift */,
+				65B1FE0D1BF0251C0096EA07 /* MainInterface.storyboard */,
+				65B1FE101BF0251C0096EA07 /* Info.plist */,
+				65B1FE091BF0251C0096EA07 /* Supporting Files */,
+			);
+			path = TeamMateDoc;
+			sourceTree = "<group>";
+		};
+		65B1FE091BF0251C0096EA07 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65B1FE0A1BF0251C0096EA07 /* TeamMateDoc.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65B1FE161BF0251C0096EA07 /* TeamMateDocFileProvider */ = {
+			isa = PBXGroup;
+			children = (
+				65B1FE191BF0251C0096EA07 /* FileProvider.swift */,
+				65B1FE1B1BF0251C0096EA07 /* Info.plist */,
+				65B1FE171BF0251C0096EA07 /* Supporting Files */,
+			);
+			path = TeamMateDocFileProvider;
+			sourceTree = "<group>";
+		};
+		65B1FE171BF0251C0096EA07 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65B1FE181BF0251C0096EA07 /* TeamMateDocFileProvider.entitlements */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		66E65F6E1BD5D83800B8B351 /* 3rdParty */ = {
@@ -377,10 +495,13 @@
 				65768AD91BA641C500DADD43 /* Resources */,
 				B66AAA481DE7C814F20D789B /* Embed Pods Frameworks */,
 				24F2B795248F1493726F996F /* Copy Pods Resources */,
+				65B1FE281BF0251C0096EA07 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				65B1FE1D1BF0251C0096EA07 /* PBXTargetDependency */,
+				65B1FE201BF0251C0096EA07 /* PBXTargetDependency */,
 			);
 			name = TeamMate;
 			productName = ParsePush;
@@ -405,6 +526,40 @@
 			productReference = 65768AF01BA641C500DADD43 /* ParsePushTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		65B1FE061BF0251C0096EA07 /* TeamMateDoc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B1FE271BF0251C0096EA07 /* Build configuration list for PBXNativeTarget "TeamMateDoc" */;
+			buildPhases = (
+				65B1FE031BF0251C0096EA07 /* Sources */,
+				65B1FE041BF0251C0096EA07 /* Frameworks */,
+				65B1FE051BF0251C0096EA07 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeamMateDoc;
+			productName = TeamMateDoc;
+			productReference = 65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		65B1FE141BF0251C0096EA07 /* TeamMateDocFileProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B1FE261BF0251C0096EA07 /* Build configuration list for PBXNativeTarget "TeamMateDocFileProvider" */;
+			buildPhases = (
+				65B1FE111BF0251C0096EA07 /* Sources */,
+				65B1FE121BF0251C0096EA07 /* Frameworks */,
+				65B1FE131BF0251C0096EA07 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeamMateDocFileProvider;
+			productName = TeamMateDocFileProvider;
+			productReference = 65B1FE151BF0251C0096EA07 /* TeamMateDocFileProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -412,17 +567,30 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Crazy8Dev;
 				TargetAttributes = {
 					65768ADA1BA641C500DADD43 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = K9HP5J9XB3;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					65768AEF1BA641C500DADD43 = {
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = 65768ADA1BA641C500DADD43;
+					};
+					65B1FE061BF0251C0096EA07 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = K9HP5J9XB3;
+					};
+					65B1FE141BF0251C0096EA07 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = K9HP5J9XB3;
 					};
 				};
 			};
@@ -441,6 +609,8 @@
 			targets = (
 				65768ADA1BA641C500DADD43 /* TeamMate */,
 				65768AEF1BA641C500DADD43 /* ParsePushTests */,
+				65B1FE061BF0251C0096EA07 /* TeamMateDoc */,
+				65B1FE141BF0251C0096EA07 /* TeamMateDocFileProvider */,
 			);
 		};
 /* End PBXProject section */
@@ -471,6 +641,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		65768AEE1BA641C500DADD43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE051BF0251C0096EA07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65B1FE0F1BF0251C0096EA07 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE131BF0251C0096EA07 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -543,7 +728,10 @@
 				6564FFF11BDF91530014FE08 /* UIColor+SPUColor.m in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
 				6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */,
+				655DEF861BF16D5100120892 /* FileHelper.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,
+				651A4C3A1BEE80E3008737A2 /* WorkpaperGridController.swift in Sources */,
+				651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */,
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,
 				65768AE31BA641C500DADD43 /* TestController.swift in Sources */,
 				65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */,
@@ -552,6 +740,8 @@
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
+				655DEF881BF1836600120892 /* Shared.swift in Sources */,
+				651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */,
 				66D1C09F1BDEBC9E00F5F257 /* NavigationRowCell.swift in Sources */,
 				65C194F21BDC3332004C4FB8 /* Store.swift in Sources */,
 				6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */,
@@ -567,7 +757,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65768AF71BA641C500DADD43 /* ParsePushTests.swift in Sources */,
+				65768AF71BA641C500DADD43 /* TeamMateTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE031BF0251C0096EA07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65B1FE0C1BF0251C0096EA07 /* DocumentPickerViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B1FE111BF0251C0096EA07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65B1FE1A1BF0251C0096EA07 /* FileProvider.swift in Sources */,
+				655DEF891BF1836B00120892 /* Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +786,16 @@
 			target = 65768ADA1BA641C500DADD43 /* TeamMate */;
 			targetProxy = 65768AF11BA641C500DADD43 /* PBXContainerItemProxy */;
 		};
+		65B1FE1D1BF0251C0096EA07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65B1FE141BF0251C0096EA07 /* TeamMateDocFileProvider */;
+			targetProxy = 65B1FE1C1BF0251C0096EA07 /* PBXContainerItemProxy */;
+		};
+		65B1FE201BF0251C0096EA07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65B1FE061BF0251C0096EA07 /* TeamMateDoc */;
+			targetProxy = 65B1FE1F1BF0251C0096EA07 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -588,6 +805,14 @@
 				65768AE51BA641C500DADD43 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		65B1FE0D1BF0251C0096EA07 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65B1FE0E1BF0251C0096EA07 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		66E65F641BD5B4D200B8B351 /* Procedure.storyboard */ = {
@@ -692,8 +917,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TeamMate.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -718,8 +945,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TeamMate.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -766,6 +995,68 @@
 			};
 			name = Release;
 		};
+		65B1FE221BF0251C0096EA07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TeamMateDoc/TeamMateDoc.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = TeamMateDoc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush.TeamMateDoc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		65B1FE231BF0251C0096EA07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TeamMateDoc/TeamMateDoc.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = TeamMateDoc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush.TeamMateDoc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		65B1FE241BF0251C0096EA07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TeamMateDocFileProvider/TeamMateDocFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = TeamMateDocFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush.TeamMateDocFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		65B1FE251BF0251C0096EA07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TeamMateDocFileProvider/TeamMateDocFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = TeamMateDocFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crazy8dev.ParsePush.TeamMateDocFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -792,6 +1083,24 @@
 			buildConfigurations = (
 				65768AFE1BA641C500DADD43 /* Debug */,
 				65768AFF1BA641C500DADD43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B1FE261BF0251C0096EA07 /* Build configuration list for PBXNativeTarget "TeamMateDocFileProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B1FE241BF0251C0096EA07 /* Debug */,
+				65B1FE251BF0251C0096EA07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B1FE271BF0251C0096EA07 /* Build configuration list for PBXNativeTarget "TeamMateDoc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B1FE221BF0251C0096EA07 /* Debug */,
+				65B1FE231BF0251C0096EA07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

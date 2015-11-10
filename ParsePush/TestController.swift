@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 
 
-class TestController: UIViewController, UITextFieldDelegate {
+class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,21 +70,6 @@ class TestController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    @IBAction func sendProceduresPressed(sender: AnyObject) {
-//        Services.getMyProcedures() { result in
-//                var procs = [Procedure]()
-//                if result?.count > 0 {
-//                    result?.each {
-//                        procs.append($0)
-//                    }
-//                }
-//                Services.saveProcedures(procs) {
-//                    print($0)
-//                }
-//            }
-//        
-//    }
-    
     @IBAction func editProcedurePressed(sender: AnyObject) {
         let vc = ProcedureFormControllerViewController()
         vc.procedure = Mock.getProcedures()[0]
@@ -114,6 +99,13 @@ class TestController: UIViewController, UITextFieldDelegate {
         return true;
     }
     
+    @IBAction func getAttachmentPressed(sender: AnyObject) {
+        Services.getAttachment { result in
+            let dc = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: result))
+            dc.delegate = self
+            dc.presentPreviewAnimated(true)
+        }
+    }
     
     @IBAction func getNotificationsPressed(sender: AnyObject) {
         self.lblNotifications.text = ""
@@ -147,5 +139,25 @@ class TestController: UIViewController, UITextFieldDelegate {
             self.lblProcedures.text = String(result!.count)
         }
     }
+    
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    
+    func documentInteractionControllerWillBeginPreview(controller: UIDocumentInteractionController) {
+        
+    }
+    
+    func documentInteractionControllerDidEndPreview(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerWillPresentOpenInMenu(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerDidDismissOpenInMenu(controller: UIDocumentInteractionController) {
+        print("here")
+    }
+    
+    
 }
 

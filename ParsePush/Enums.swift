@@ -32,6 +32,22 @@ enum ObjectType: Int, ImageProvider {
 }
 
 
+enum DocumentType: String, ImageProvider {
+    case Word = "docx"
+    case Excel = "xlsx"
+    
+    var imageName: String {
+        get {
+            switch self {
+            case .Word: return "icons_word"
+            case .Excel: return  "icons_excel"
+            }
+        }
+    }
+}
+
+
+
 enum SyncState: Int {
     case Unchanged = 0
     case Dirty = 1

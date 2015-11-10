@@ -28,6 +28,10 @@ class Mock {
         return procedures
     }
     
+    static func getWorkpapers() -> [Workpaper] {
+        return []
+    }
+    
     static private func getNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {
         let procedure = Procedure()
