@@ -39,7 +39,7 @@ class FileProvider: NSFileProviderExtension {
         let fileSize = 0
         let metadata = [NSURLFileSizeKey: fileSize]
         do {
-            try NSFileProviderExtension.writePlaceholderAtURL(placeholderURL, withMetadata: metadata)
+//            try NSFileProviderExtension.writePlaceholderAtURL(placeholderURL, withMetadata: metadata)
         } catch {
             // Handle error
         }
@@ -54,7 +54,7 @@ class FileProvider: NSFileProviderExtension {
         let fileData = NSData()
 
         do {
-            _ = try fileData.writeToURL(url, options: NSDataWritingOptions())
+     //       _ = try fileData.writeToURL(url, options: NSDataWritingOptions())
         } catch {
             // Handle error
         }
@@ -75,7 +75,7 @@ class FileProvider: NSFileProviderExtension {
         // Care should be taken that the corresponding placeholder file stays behind after the content file has been deleted.
 
         do {
-            _ = try NSFileManager.defaultManager().removeItemAtURL(url)
+ //           _ = try NSFileManager.defaultManager().removeItemAtURL(url)
         } catch {
             // Handle error
         }

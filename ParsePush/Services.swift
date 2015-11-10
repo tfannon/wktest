@@ -20,6 +20,8 @@ public class Services {
     static var userName = "joe.tester"
     static var deviceToken = ""
     static var mock = false
+    static var appGroupName = "group.com.crazy8dev.ParsePush"
+    static var appGroupStorageDirectory = "File Provider Storage"
     
     public static func setDeviceToken(token: NSData) {
         Services.deviceToken = tokenToString(token)
@@ -40,6 +42,15 @@ public class Services {
     static var headers: [String:String] {
         let headers = ["UserName":Services.userName]
         return headers
+    }
+    
+    static var storageProviderLocation: NSURL {
+        let appGroupUrl = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(appGroupName)!
+        return appGroupUrl.URLByAppendingPathComponent(appGroupStorageDirectory)
+    }
+    
+    static var appGroupDefaults: NSUserDefaults {
+        return NSUserDefaults.init(suiteName: appGroupName)!
     }
     
     //MARK:  Assessments
@@ -318,8 +329,10 @@ public class Services {
     enum DataKey : String {
         case ProcedureIds = "procIds"
         case WorkpaperIds = "workpaperIds"
+        case AttachmentIds = "atttachmentIds"
         case Proc = "proc:"
         case Workpaper = "workpaper:"
+        case Attachment = "attachment:"
 
         static func getProcKey(id : Int) -> String {
             return "\(Proc.rawValue)\(id)"
@@ -327,13 +340,24 @@ public class Services {
         static func getWorkpaperKey(id : Int) -> String {
             return "\(Workpaper.rawValue)\(id)"
         }
+        static func getAttachmentKey(id : Int) -> String {
+            return "\(Attachment.rawValue)\(id)"
+        }
+        
     }
     
     static func clearStore() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
-        defaults.removeObjectForKey(DataKey.Proc.rawValue)
-        defaults.synchronize()
+        //defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
+        //defaults.removeObjectForKey(DataKey.Proc.rawValue)
+        
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        defaults.removePersistentDomainForName(appDomain)
+        
+        let appDefaults = Services.appGroupDefaults
+        appDefaults.removeSuiteNamed(appGroupName)
+        
+        FileHelper.deleteDirectory(storageProviderLocation)
     }
     
     private static func saveAll(objects: [Procedure]) {
@@ -386,33 +410,28 @@ public class Services {
     }
     
     static func getAttachment(id: Int, completed: (String->())) {
+        let key = DataKey.getAttachmentKey(id)
+        if let destination = appGroupDefaults.valueForKey(key) as? String {
+            completed(destination)
+            return
+        }
         Alamofire.download(.GET, procedureUrl + "/GetAttachment/\(id)", headers:Services.headers) { temporaryURL, response in
-            let fileManager = NSFileManager.defaultManager()
-            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-            let pathComponent = response.suggestedFilename
-            
-            let resp = directoryURL.URLByAppendingPathComponent(pathComponent!)
-            print(resp)
-            completed(resp.absoluteString)
-            return resp
+            let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl:self.storageProviderLocation, fileName: response.suggestedFilename!)
+            print("Downloaded file was stored at: \(destination.path!)")
+            //write this location into the app group defaults.
+            appGroupDefaults.setValue(destination.path!, forKey: key)
+            completed(destination.path!)
+            return destination
         }
-        
     }
     
-    static func getAttachment(completed: (Bool->())) {
+    //test only
+    static func getAttachment(completed: (String->())) {
         Alamofire.download(.GET, procedureUrl + "/GetFile") { temporaryURL, response in
-            let fileManager = NSFileManager.defaultManager()
-            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-            let pathComponent = response.suggestedFilename
-            
-            let resp = directoryURL.URLByAppendingPathComponent(pathComponent!)
-            print(resp)
-            completed(true)
-            return resp
+            let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl: self.storageProviderLocation, fileName: response.suggestedFilename!, overwrite: true)
+            print("Downloaded file was stored at: \(destination.path!)")
+            completed(destination.path!)
+            return destination
         }
     }
-    
-
-    
-    
 }

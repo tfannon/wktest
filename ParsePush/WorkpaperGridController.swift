@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate {
+class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate, UIDocumentInteractionControllerDelegate {
     
     var items: [Workpaper] = []
     var sortedItems: [Workpaper] = []
@@ -18,6 +18,7 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     var gridColumnSortOrder = [String:String]()
     var gridColumnsOrder: [String]!
     var dataSourceHelper: SDataGridDataSourceHelper!
+    var documentInteractionController: UIDocumentInteractionController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -213,8 +214,32 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
         let id = items[row.rowIndex].attachmentId
         Services.getAttachment(id) { result in
             print(result)
+            if self.documentInteractionController == nil {
+                self.documentInteractionController = UIDocumentInteractionController()
+                self.documentInteractionController.delegate = self
+            }
+            self.documentInteractionController.URL = NSURL(fileURLWithPath: result)
+            self.documentInteractionController.presentPreviewAnimated(true)
         }
     }
+    
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    
+    func documentInteractionControllerWillBeginPreview(controller: UIDocumentInteractionController) {
+        
+    }
+    
+    func documentInteractionControllerDidEndPreview(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerWillPresentOpenInMenu(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerDidDismissOpenInMenu(controller: UIDocumentInteractionController) {
+    }
+
     
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
     }
