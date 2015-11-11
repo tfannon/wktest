@@ -263,6 +263,19 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     self.enableSave()
                 })
             ])
+        data.append([CellData(identifier: "SegmentedCell",
+            setup: { cell, data in
+                let segmentedCell = cell as! SegmentedCell
+                segmentedCell.delegate = self
+                segmentedCell.setOptions(TestResults.displayNames)
+                segmentedCell.label.text = self.t("testResults")
+                segmentedCell.segmented.selectedSegmentIndex = self.procedure.testResults
+            },
+            changed: { cell, _ in
+                let segmentedCell = cell as! SegmentedCell
+                self.procedure.testResults = segmentedCell.segmented.selectedSegmentIndex
+                self.enableSave()
+        })])
         data.append([CellData(identifier: "TextAutoSizeCell", value: procedure.text1,
             setup: textViewSetup,
             changed: { cell, _ in
@@ -335,6 +348,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             " ",
             " ",
             "Review",
+            " ",
             self.t("text1"),
             self.t("text2"),
             self.t("text3"),

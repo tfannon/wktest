@@ -21,6 +21,45 @@ public class CustomCell : UITableViewCell {
 }
 
 
+public class SegmentedCell : CustomCell {
+    @IBOutlet var segmented : UISegmentedControl!
+    @IBOutlet public var label : UILabel!
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+
+        let font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        let attr : [NSObject : AnyObject] = [font : NSFontAttributeName]
+        segmented.setTitleTextAttributes(attr, forState: .Normal)
+        segmented.apportionsSegmentWidthsByContent = true
+        segmented.addTarget(self, action: "valueChanged", forControlEvents: .ValueChanged)
+        selectionStyle = .None
+        self.detailTextLabel?.hidden = true
+        self.textLabel?.hidden
+    }
+    
+    public func setOptions(options : [String]) {
+        var maxWidth : CGFloat = 0
+        segmented.removeAllSegments()
+        for option in options.enumerate() {
+            segmented.insertSegmentWithTitle(option.element, atIndex: option.index, animated: false)
+            let s = option.element as NSString
+            let attr : [String : AnyObject] = [NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody)]
+            let width = s.sizeWithAttributes(attr).width
+            if (width > maxWidth) {
+                maxWidth = width
+            }
+        }
+        for option in options.enumerate() {
+            segmented.setWidth(maxWidth + 10, forSegmentAtIndex: option.index)
+        }
+    }
+    
+    func valueChanged() {
+        changed()
+    }
+}
+
 public class DatePickerCell : CustomCell
 {
     @IBOutlet var datePicker : UIDatePicker!

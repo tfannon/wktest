@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SegmentedCell" id="NHR-Q5-itV" customClass="SegmentedCell" customModule="TeamMate" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="NHR-Q5-itV" id="wxb-Fo-xCH">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gCA-v2-uDF">
+                        <rect key="frame" x="191" y="7" width="121" height="29"/>
+                        <animations/>
+                        <segments>
+                            <segment title="First"/>
+                            <segment title="Second"/>
+                        </segments>
+                    </segmentedControl>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hv-2l-Biy">
+                        <rect key="frame" x="8" y="11" width="42" height="21"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="gCA-v2-uDF" firstAttribute="trailing" secondItem="wxb-Fo-xCH" secondAttribute="trailingMargin" id="86u-9d-lQt"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="gCA-v2-uDF" secondAttribute="bottom" constant="0.5" id="LLT-SW-dar"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="1hv-2l-Biy" secondAttribute="bottom" id="S7V-2f-hiT"/>
+                    <constraint firstItem="1hv-2l-Biy" firstAttribute="leading" secondItem="wxb-Fo-xCH" secondAttribute="leadingMargin" id="UAg-Oj-Hbu"/>
+                    <constraint firstItem="1hv-2l-Biy" firstAttribute="top" secondItem="wxb-Fo-xCH" secondAttribute="topMargin" id="XaN-7I-qb5"/>
+                    <constraint firstItem="gCA-v2-uDF" firstAttribute="top" secondItem="wxb-Fo-xCH" secondAttribute="topMargin" id="jOY-7S-t4W"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="label" destination="1hv-2l-Biy" id="1UX-aR-l2B"/>
+                <outlet property="segmented" destination="gCA-v2-uDF" id="BVX-8T-yP3"/>
+            </connections>
+            <point key="canvasLocation" x="240" y="265"/>
+        </tableViewCell>
+    </objects>
+</document>
