@@ -71,8 +71,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormControllerViewController()
-        vc.procedure = Mock.getProcedures()[0]
+        let vc = ProcedureFormController(procedure: Mock.getProcedures()[0])
         navigationController?.pushViewController(vc, animated: true)
     }
     
