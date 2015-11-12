@@ -159,6 +159,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         let dateCellSetup : ((UITableViewCell, CellData) -> Void) = { cell, data in
             cell.selectionStyle = .None
+            cell.detailTextLabel?.textColor = cell.textLabel?.textColor
         }
         let dateCellSelected : ((UITableViewCell, CellData, NSIndexPath) -> Void) =
             { cell, data, indexPath in
@@ -218,6 +219,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 style: UITableViewCellStyle.Value1,
                 setup: { cell, _ in
                     cell.selectionStyle = .None
+                    cell.detailTextLabel?.textColor = cell.textLabel?.textColor
                     cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
                 },
                 selected: { cell, data, indexPath in
