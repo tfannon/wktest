@@ -20,6 +20,15 @@ public class CustomCell : UITableViewCell {
     }
 }
 
+public class AlertCell : CustomCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    public required init(coder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 public class SegmentedCell : CustomCell {
     @IBOutlet var segmented : UISegmentedControl!
@@ -63,7 +72,6 @@ public class SegmentedCell : CustomCell {
 public class DatePickerCell : CustomCell
 {
     @IBOutlet var datePicker : UIDatePicker!
-    
     
     override public func awakeFromNib() {
         super.awakeFromNib()

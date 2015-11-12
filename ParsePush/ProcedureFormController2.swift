@@ -211,7 +211,40 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     self.enableSave()
             })
         ])
-        
+
+        data.append([
+            CellData(identifier: "_BasicCell",
+                value: WorkflowState(rawValue: self.procedure.workflowState)?.displayName,
+                style: UITableViewCellStyle.Value1,
+                setup: { cell, _ in
+                    cell.selectionStyle = .None
+                    cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+                },
+                selected: { cell, data, indexPath in
+                    let alertController = UIAlertController(title: "Workflow State", message: "Choose the new workflow state", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    let choices = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates, current: self.procedure.workflowState)
+                    for choice in choices {
+                        let action = UIAlertAction(title: choice, style: UIAlertActionStyle.Default, handler: { alertAction in
+                                self.enableSave()
+                                self.procedure.workflowState = WorkflowState.getFromDisplayName(alertAction.title!).rawValue
+                                cell.detailTextLabel?.text = alertAction.title
+                                cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
+                            })
+                        alertController.addAction(action)
+                    }
+                    alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                    
+                    if let popover = alertController.popoverPresentationController
+                    {
+                        popover.sourceView = cell;
+                        popover.sourceRect = cell.bounds;
+                        popover.permittedArrowDirections = UIPopoverArrowDirection.Any;
+                    }
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                })
+        ])
+
         data.append([
             CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"), style: UITableViewCellStyle.Value1, setup: { cell, _ in cell.selectionStyle = .None }),
             
@@ -346,6 +379,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         sections = [
             " ",
+            "Workflow",
             " ",
             "Review",
             " ",
