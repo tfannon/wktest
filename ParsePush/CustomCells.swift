@@ -30,27 +30,40 @@ public class SegmentedCell : CustomCell {
         let font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         let attr : [NSObject : AnyObject] = [font : NSFontAttributeName]
         segmented.setTitleTextAttributes(attr, forState: .Normal)
-        segmented.apportionsSegmentWidthsByContent = true
         segmented.addTarget(self, action: "valueChanged", forControlEvents: .ValueChanged)
         selectionStyle = .None
         self.detailTextLabel?.hidden = true
         self.textLabel?.hidden
+        self.label.text = ""
     }
     
     public func setOptions(options : [String]) {
-        var maxWidth : CGFloat = 0
+        var segmentWidth : CGFloat = 0
+        let entireCell = (self.label.text ?? "").isEmpty
+        
+        self.segmented.apportionsSegmentWidthsByContent = !entireCell
+        
         segmented.removeAllSegments()
         for option in options.enumerate() {
             segmented.insertSegmentWithTitle(option.element, atIndex: option.index, animated: false)
             let s = option.element as NSString
             let attr : [String : AnyObject] = [NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody)]
             let width = s.sizeWithAttributes(attr).width
-            if (width > maxWidth) {
-                maxWidth = width
+            if (width > segmentWidth) {
+                segmentWidth = width
             }
         }
-        for option in options.enumerate() {
-            segmented.setWidth(maxWidth + 10, forSegmentAtIndex: option.index)
+
+        if (entireCell) {
+            let constraint = NSLayoutConstraint(item: segmented, attribute: .Left, relatedBy: .Equal, toItem: contentView, attribute: .LeftMargin, multiplier: 1, constant: 0)
+            contentView.addConstraint(constraint)
+        }
+        else
+        {
+            segmentWidth += 10
+            for option in options.enumerate() {
+                segmented.setWidth(segmentWidth, forSegmentAtIndex: option.index)
+            }
         }
     }
     

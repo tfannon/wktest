@@ -329,7 +329,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 let segmentedCell = cell as! SegmentedCell
                 segmentedCell.delegate = self
                 segmentedCell.setOptions(TestResults.displayNames)
-                segmentedCell.label.text = self.t("testResults")
+                //segmentedCell.label.text = self.t("testResults")
                 segmentedCell.segmented.selectedSegmentIndex = self.procedure.testResults
             },
             changed: { cell, _ in
@@ -385,7 +385,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             self.t("text2"),
             self.t("text3"),
             self.t("text4"),
-            " ",
+            "Results",
             self.t("resultsText1"),
             self.t("resultsText2"),
             self.t("resultsText3"),
