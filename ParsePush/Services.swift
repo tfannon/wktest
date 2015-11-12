@@ -155,6 +155,43 @@ public class Services {
         case LocalOnly
     }
     
+    static func getMyData(fetchOptions: FetchOptions = .Default, completed: ((procedures:[Procedure]?, workpapers:[Workpaper]?)->())) {
+        if (mock) {
+            completed(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers())
+        }
+        else {
+            if fetchOptions == .LocalOnly {
+                let procs = loadProcedures()
+                let workpapers = loadWorkpapers()
+                completed(procedures: procs, workpapers: workpapers)
+                return
+            }
+            //default is to check the local store first
+            if fetchOptions == .Default {
+                if let procedures = loadProcedures(),
+                       workpapers = loadWorkpapers() {
+                    completed(procedures: procedures, workpapers: workpapers)
+                    return
+                }
+            }
+//            //if the store had nothing or we force a refresh fetch from services
+//            Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
+//                .responseJSON { request, response, result in
+//                    switch result {
+//                    case .Success(let data):
+//                        let jsonAlamo = data as? [[String:AnyObject]]
+//                        let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
+//                        //save it back to local store, erasing whatever was there
+//                        saveAll(result!)
+//                        completed(result: result)
+//                    case .Failure(_, let error):
+//                        print("Request failed with error: \(error)")
+//                    }
+//            }
+        }
+    }
+    
+    
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
         if (mock) {
             completed(result: Mock.getProcedures())

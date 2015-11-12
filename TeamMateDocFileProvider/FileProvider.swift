@@ -33,7 +33,7 @@ class FileProvider: NSFileProviderExtension {
     override func providePlaceholderAtURL(url: NSURL, completionHandler: ((error: NSError?) -> Void)?) {
         // Should call writePlaceholderAtURL(_:withMetadata:error:) with the placeholder URL, then call the completion handler with the error if applicable.
         let fileName = url.lastPathComponent!
-    
+        print ("provide placeholder called")
         let placeholderURL = NSFileProviderExtension.placeholderURLForURL(self.documentStorageURL().URLByAppendingPathComponent(fileName))
     
         // TODO: get file size for file at <url> from model
@@ -66,7 +66,7 @@ class FileProvider: NSFileProviderExtension {
 
     override func itemChangedAtURL(url: NSURL) {
         // Called at some point after the file has changed; the provider may then trigger an upload
-        Shared.addDirtyDocument(url)
+        Shared.markDocumentDirty(url)
         
         // TODO: mark file at <url> as needing an update in the model; kick off update process
         NSLog("Item changed at URL %@", url)

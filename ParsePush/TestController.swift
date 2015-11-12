@@ -147,21 +147,5 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self
     }
-    
-    func documentInteractionControllerWillBeginPreview(controller: UIDocumentInteractionController) {
-        
-    }
-    
-    func documentInteractionControllerDidEndPreview(controller: UIDocumentInteractionController) {
-    }
-    
-    func documentInteractionControllerWillPresentOpenInMenu(controller: UIDocumentInteractionController) {
-    }
-    
-    func documentInteractionControllerDidDismissOpenInMenu(controller: UIDocumentInteractionController) {
-        print("here")
-    }
-    
-    
 }
 

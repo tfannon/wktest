@@ -19,7 +19,7 @@ public class Shared {
         return NSUserDefaults.init(suiteName: appGroupName)!
     }
     
-    static func addDirtyDocument(documentUrl: NSURL) {
+    static func markDocumentDirty(documentUrl: NSURL) {
         if appGroupDefaults.objectForKey(dirtyDocumentUrlKey) == nil {
             print("creating \(dirtyDocumentUrlKey) entry")
             appGroupDefaults.setObject([String:String](), forKey: dirtyDocumentUrlKey)

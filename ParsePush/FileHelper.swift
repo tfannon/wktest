@@ -13,6 +13,7 @@ class FileHelper {
     static func moveFile(sourceUrl: NSURL, targetDirectoryUrl: NSURL, fileName : String, overwrite: Bool = false) -> NSURL {
         let fileManager = NSFileManager.defaultManager()
         var tmpName = targetDirectoryUrl.URLByAppendingPathComponent(fileName).path!
+        try! NSFileManager.defaultManager().createDirectoryAtURL(targetDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
         let fileExists = fileManager.fileExistsAtPath(tmpName)
         if overwrite {
             if fileExists {
@@ -24,7 +25,7 @@ class FileHelper {
                 repeat {
                     tmpName = targetDirectoryUrl.URLByAppendingPathComponent("\(i++)_\(fileName)").path!
                 }
-                    while fileManager.fileExistsAtPath(tmpName)
+                while fileManager.fileExistsAtPath(tmpName)
             }
         }
         try! fileManager.moveItemAtPath(sourceUrl.path!, toPath: tmpName)
