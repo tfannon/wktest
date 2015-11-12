@@ -61,6 +61,7 @@
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; };
 		6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */; };
+		6616C38D1BF4DAA4004D763E /* FormHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C38C1BF4DAA4004D763E /* FormHelper.swift */; };
 		663259BA1BF1959E00D3C76E /* ProcedureFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259B91BF1959E00D3C76E /* ProcedureFormController.swift */; };
 		663259BC1BF1972D00D3C76E /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 663259BB1BF1972D00D3C76E /* TextCell.xib */; };
 		663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259BD1BF1975000D3C76E /* CustomCells.swift */; };
@@ -189,6 +190,7 @@
 		65D507311BB5DC1D00EC8E1F /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		65E85BB61BB8E99B00C5C272 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextAutoSizeCell.xib; sourceTree = "<group>"; };
+		6616C38C1BF4DAA4004D763E /* FormHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormHelper.swift; sourceTree = "<group>"; };
 		663259B91BF1959E00D3C76E /* ProcedureFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureFormController.swift; sourceTree = "<group>"; };
 		663259BB1BF1972D00D3C76E /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
 		663259BD1BF1975000D3C76E /* CustomCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCells.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
 				663259BF1BF2405F00D3C76E /* DatePickerCell.xib */,
 				6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */,
+				6616C38C1BF4DAA4004D763E /* FormHelper.swift */,
 				663259BD1BF1975000D3C76E /* CustomCells.swift */,
 				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
@@ -750,6 +753,7 @@
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
 				655DEF881BF1836600120892 /* Shared.swift in Sources */,
+				6616C38D1BF4DAA4004D763E /* FormHelper.swift in Sources */,
 				651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */,
 				65C194F21BDC3332004C4FB8 /* Store.swift in Sources */,
 				663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */,
