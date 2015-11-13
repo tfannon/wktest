@@ -288,6 +288,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         return formHelper.data[section].filter { data in return data.visible }.count
     }
     
+    var cellLookup = [Int : UITableViewCell]()
+    var cellSetup = [Int : Bool]()
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : UITableViewCell
@@ -295,8 +298,14 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         if let nibName = cellData.nibIdentifier {
             if (nibName == "HtmlCell") {
-                let c = NSBundle.mainBundle().loadNibNamed("HtmlCell", owner: self, options: nil)[0]
-                cell = c as! UITableViewCell
+                if let c = cellLookup[cellData.tag] {
+                    cell = c
+                }
+                else {
+                    let d = NSBundle.mainBundle().loadNibNamed("HtmlCell", owner: self, options: nil)[0]
+                    cell = d as! UITableViewCell
+                    cellLookup[cellData.tag] = cell
+                }
             }
             else {
                 cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
@@ -343,6 +352,12 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         if let imageName = cellData.imageName {
             cell.imageView?.image = UIImage(named: imageName)
         }
+        
+        if let _ = cell as? HtmlCell, let _ = cellSetup[cellData.tag] {
+            return
+        }
+        
+        cellSetup[cellData.tag] = true
         
         cellData.setup(cell)
     }
