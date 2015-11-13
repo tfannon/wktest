@@ -116,7 +116,14 @@ class FormHelper {
     lazy var textViewSetup : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
             let textCell = cell as! TextAutoSizeCell
-            textCell.textView.text = data.value as? String ?? ""
+            textCell.textString = data.value as? String ?? ""
+            textCell.delegate = self.controllerAsDelegate
+        }
+
+    lazy var htmlCellSetup : ((UITableViewCell, CellData) -> Void) =
+        { cell, data in
+            let textCell = cell as! HtmlCell
+            textCell.textString = data.value as? String ?? ""
             textCell.delegate = self.controllerAsDelegate
         }
 

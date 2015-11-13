@@ -170,3 +170,52 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
         changed()
     }
 }
+
+public class HtmlCell: CustomCell, UIWebViewDelegate {
+    @IBOutlet var webView: UIWebView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        
+        selectionStyle = .None
+        
+        webView.delegate = self
+        webView.scrollView.scrollEnabled = false
+        webView.scrollView.bounces = false
+     }
+    
+    /// Custom setter so we can initialise the height of the text view
+    var textString: String {
+        get {
+            return webView.stringByEvaluatingJavaScriptFromString("document.documentElement.innerText;")
+                ?? ""
+        }
+        set {
+            webView.loadHTMLString(newValue, baseURL: nil)
+        }
+    }
+    
+    override public func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if webView == nil {
+            return
+        }
+        if selected {
+            webView.becomeFirstResponder()
+        } else {
+            webView.resignFirstResponder()
+        }
+    }
+    
+    public func webViewDidFinishLoad(_: UIWebView)
+    {
+        let content_height =  CGFloat(Int(webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight") ?? "0")!)
+        heightConstraint.constant = content_height
+        UIView.setAnimationsEnabled(false)
+        tableView?.beginUpdates()
+        tableView?.endUpdates()
+        UIView.setAnimationsEnabled(true)
+    }
+    
+}

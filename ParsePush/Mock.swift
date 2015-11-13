@@ -20,7 +20,7 @@ class Mock {
             {
                 let code = "CODE\(i)"
                 let title = "Test\(i)"
-                let text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. \(i)"
+                let text1 = "<html><head></head><body style='font-family:Helvetica;font-size:14pt'><h1>Important</h1>Lorem Ipsum is simply dummy text of the <span style='font-family:Brush Script MT, cursive;font-size:150%'>printing and typesetting</span> industry. <span style='color:red'>Lorem Ipsum</span> has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type <u>specimen book</u>. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. \(i)</body></html>"
                 let p = getNewProcedure(i, code: code, title: title, text1: text1)
                 procedures.append(p)
             }

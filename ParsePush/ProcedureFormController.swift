@@ -38,11 +38,10 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Procedure"
         
-        tableView.estimatedRowHeight = 44.0 // Replace with your actual estimation
+        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
         // Automatic dimensions to tell the table view to use dynamic height
         tableView.rowHeight = UITableViewAutomaticDimension
-        //tableView.cellLayoutMarginsFollowReadableWidth = false
-        
+         
         setupForm()
         
         self.tableView.reloadData()
@@ -182,32 +181,36 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     self.enableSave()
                 })
             ])
-        formHelper.addSection(self.t("text1"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.text1,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.text1,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.text1 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.text1 = htmlCell.textString
                 self.enableSave()
             })])
-        formHelper.addSection(self.t("text2"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.text2,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("text2"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.text2,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.text2 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.text2 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("text3"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.text3,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("text3"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.text3,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.text3 = textCell.textView.text
+                let textCell = cell as! HtmlCell
+                self.procedure.text3 = textCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("text4"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.text4,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("text4"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.text4,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.text4 = textCell.textView.text
+                let textCell = cell as! HtmlCell
+                self.procedure.text4 = textCell.textString
                 self.enableSave()
         })])
  
@@ -225,32 +228,36 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 self.enableSave()
         })])
 
-        formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText1,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.resultsText1,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.resultsText1 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.resultsText1 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText2"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText2,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("resultsText2"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.resultsText2,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.resultsText2 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.resultsText2 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText3"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText3,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("resultsText3"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.resultsText3,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.resultsText3 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.resultsText3 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText4"), data: [CellData(identifier: "TextAutoSizeCell", value: procedure.resultsText4,
-            setup: formHelper.textViewSetup,
+        formHelper.addSection(self.t("resultsText4"), data: [CellData(identifier: "HtmlCell",
+            value: procedure.resultsText4,
+            setup: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! TextAutoSizeCell
-                self.procedure.resultsText4 = textCell.textView.text
+                let htmlCell = cell as! HtmlCell
+                self.procedure.resultsText4 = htmlCell.textString
                 self.enableSave()
         })])
         
@@ -287,7 +294,13 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         let cellData = formHelper.getCellData(indexPath)
         
         if let nibName = cellData.nibIdentifier {
-            cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
+            if (nibName == "HtmlCell") {
+                let c = NSBundle.mainBundle().loadNibNamed("HtmlCell", owner: self, options: nil)[0]
+                cell = c as! UITableViewCell
+            }
+            else {
+                cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
+            }
         }
         else if let identifier = cellData.identifier {
             if let c = tableView.dequeueReusableCellWithIdentifier(identifier) {
@@ -302,27 +315,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             fatalError("cellForRowAtIndexPath has not been handled")
         }
         
-        configureCell(tableView, cell: cell, forRowAtIndexPath: indexPath)
-
         return cell
     }
     
-    private func configureCell(tableView: UITableView,
-        cell: UITableViewCell,
-        forRowAtIndexPath indexPath: NSIndexPath)
-    {
-        let cellData = formHelper.getCellData(indexPath)
- 
-        cell.textLabel?.text = cellData.label
-        cell.detailTextLabel?.text = cellData.value as! String?
-
-        if let imageName = cellData.imageName {
-            cell.imageView?.image = UIImage(named: imageName)
-        }
-
-        cellData.setup(cell)
-    }
-
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)!
         let data = formHelper.getCellData(indexPath)
@@ -333,12 +328,30 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         // so that the separator appears under the image
         cell.separatorInset = UIEdgeInsetsZero
+        configureCell(tableView, cell: cell, forRowAtIndexPath: indexPath)
+    }
+    
+    private func configureCell(tableView: UITableView,
+        cell: UITableViewCell,
+        forRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let cellData = formHelper.getCellData(indexPath)
+        
+        cell.textLabel?.text = cellData.label
+        cell.detailTextLabel?.text = cellData.value as! String?
+        
+        if let imageName = cellData.imageName {
+            cell.imageView?.image = UIImage(named: imageName)
+        }
+        
+        cellData.setup(cell)
     }
     
     func changed(cell: UITableViewCell) {
-        let indexPath = tableView.indexPathForCell(cell)
-        let cellData = formHelper.getCellData(indexPath!)
-        cellData.changed(cell)
+        if let indexPath = tableView.indexPathForCell(cell) {
+            let cellData = formHelper.getCellData(indexPath)
+            cellData.changed(cell)
+        }
     }
     
     private func enableSave()
