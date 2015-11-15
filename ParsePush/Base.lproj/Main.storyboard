@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYH-4G-NKi">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -123,7 +123,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pO1-0o-na5">
-                                <rect key="frame" x="-75" y="-61" width="0.0" height="0.0"/>
+                                <rect key="frame" x="150" y="282" width="45" height="31"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -209,6 +209,14 @@
                                     <action selector="miscPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="d5c-Pi-eVL"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_implemented" translatesAutoresizingMaskIntoConstraints="NO" id="QW0-3M-gjj" userLabel="IP Address Result">
+                                <rect key="frame" x="307" y="103" width="25" height="25"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="2uA-Mj-InY"/>
+                                    <constraint firstAttribute="width" constant="25" id="l26-sN-uUn"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -240,6 +248,7 @@
                             <constraint firstItem="BGA-ai-Bla" firstAttribute="centerY" secondItem="z25-cC-dZS" secondAttribute="centerY" id="LeM-kW-6m5"/>
                             <constraint firstItem="aIm-Aa-P5R" firstAttribute="top" secondItem="jAc-xo-tMT" secondAttribute="bottom" constant="8" id="M0V-XP-1aq"/>
                             <constraint firstItem="mKb-wJ-uMH" firstAttribute="trailing" secondItem="AkQ-tf-u7H" secondAttribute="trailing" id="MN1-vk-8kn"/>
+                            <constraint firstItem="QW0-3M-gjj" firstAttribute="bottom" secondItem="zvx-9e-MNm" secondAttribute="bottom" id="NKa-vi-P4Q"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="width" secondItem="5Wn-G2-Qdd" secondAttribute="width" id="OnG-54-Hpi"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="top" secondItem="RnH-4i-QhM" secondAttribute="bottom" constant="9" id="Pdi-vi-rvo"/>
                             <constraint firstItem="00k-W1-lfG" firstAttribute="trailing" secondItem="mKb-wJ-uMH" secondAttribute="trailing" id="Pua-8R-oTs"/>
@@ -255,6 +264,7 @@
                             <constraint firstItem="00k-W1-lfG" firstAttribute="leading" secondItem="mKb-wJ-uMH" secondAttribute="leading" id="eHq-sm-Zqq"/>
                             <constraint firstItem="0PL-UW-pNg" firstAttribute="width" secondItem="RnH-4i-QhM" secondAttribute="width" constant="-3" id="hd7-T3-O7r"/>
                             <constraint firstItem="zvx-9e-MNm" firstAttribute="leading" secondItem="toG-cj-t0E" secondAttribute="trailing" constant="20" id="idL-mJ-ZNu"/>
+                            <constraint firstItem="QW0-3M-gjj" firstAttribute="leading" secondItem="BGA-ai-Bla" secondAttribute="leading" id="jSW-eU-hr8"/>
                             <constraint firstItem="jZ9-mI-7WB" firstAttribute="firstBaseline" secondItem="00k-W1-lfG" secondAttribute="baseline" id="jmO-3e-EQh"/>
                             <constraint firstItem="z25-cC-dZS" firstAttribute="top" secondItem="zvx-9e-MNm" secondAttribute="bottom" constant="17" id="jxw-5b-DFz"/>
                             <constraint firstItem="5Wn-G2-Qdd" firstAttribute="width" secondItem="00k-W1-lfG" secondAttribute="width" id="kAm-S6-GDa"/>
@@ -272,6 +282,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="kBh-l0-xqp"/>
                     <connections>
+                        <outlet property="imgIPAddressResult" destination="QW0-3M-gjj" id="WiL-ZQ-IiS"/>
                         <outlet property="imgLoginResult" destination="BGA-ai-Bla" id="hCM-HC-Mde"/>
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
                         <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
@@ -283,7 +294,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="885" y="-53"/>
+            <point key="canvasLocation" x="821" y="-53"/>
         </scene>
         <!--Workpaper Grid Controller-->
         <scene sceneID="33b-T8-3v7">

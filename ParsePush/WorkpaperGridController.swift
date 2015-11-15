@@ -184,6 +184,10 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
             wCell.documentType = DocumentType(rawValue: procedure.attachmentExtension!)!
             return true
             
+        case "sync" :
+            let wCell = cell as! DataGridImageCell
+            wCell.documentType = DocumentType(rawValue: procedure.attachmentExtension!)!
+            return true
             
         case "workflowState" :
             let wCell = cell as! DataGridImageCell

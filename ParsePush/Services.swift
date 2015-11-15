@@ -23,6 +23,22 @@ public class Services {
 
     static var appGroupStorageDirectory = "File Provider Storage"
     
+    internal static func initializeServices() {
+        
+        //grab the default ipaddress from last used
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ipAddress = defaults.objectForKey("ipAddress") as? String {
+            Services.ipAddress = ipAddress
+        }
+        if let userName = defaults.objectForKey("userName") as? String {
+            Services.userName = userName
+        }
+        if let mock = defaults.objectForKey("mock") as? Bool {
+            Services.mock = mock
+        }
+    
+    }
+    
     public static func setDeviceToken(token: NSData) {
         Services.deviceToken = tokenToString(token)
     }
@@ -54,8 +70,8 @@ public class Services {
     }
     
     //MARK:  Assessments
-    static func GetPOCAssessmentId(completed: (result: Int?)->()) {
-        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, encoding: .JSON)
+    static func getPOCAssessmentId(completed: (result: Int?)->()) {
+        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, headers:Services.headers, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -63,6 +79,7 @@ public class Services {
                     completed(result: result)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
+                    completed(result: nil)
                 }
         }
     }

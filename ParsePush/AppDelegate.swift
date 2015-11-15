@@ -26,19 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings (settings)
         application.registerForRemoteNotifications()
         
-        //grab the default ipaddress from last used
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let ipAddress = defaults.objectForKey("ipAddress") as? String {
-            Services.ipAddress = ipAddress
-        }
-        if let userName = defaults.objectForKey("userName") as? String {
-            Services.userName = userName
-        }
-        if let mock = defaults.objectForKey("mock") as? Bool {
-            Services.mock = mock
-        }
+        Services.initializeServices()
         
-        ShinobiDataGrids.setLicenseKey("m4cVN5mstCwhJBRMjAxNTEyMTF0aG9tYXMuZmFubm9uQHdvbHRlcnNrbHV3ZXIuY29tNMM9uJhARkKuwSKUHXWdxAHd+BoSZGIWZeYUAZQal/0P7ANJvTwjDp/wEkJ3L/YiatGruoebY9kYNwY6nN+2GanmRhXF6M0K/zw7j3qWoKolhv5eXM5Ye25qoBjJRpQ4FNcaGiJBH5RP6eYwiUUbFGCzZv04=AXR/y+mxbZFM+Bz4HYAHkrZ/ekxdI/4Aa6DClSrE4o73czce7pcia/eHXffSfX9gssIRwBWEPX9e+kKts4mY6zZWsReM+aaVF0BL6G9Vj2249wYEThll6JQdqaKda41AwAbZXwcssavcgnaHc3rxWNBjJDOk6Cd78fr/LwdW8q7gmlj4risUXPJV0h7d21jO1gzaaFCPlp5G8l05UUe2qe7rKbarpjoddMoXrpErC9j8Lm5Oj7XKbmciqAKap+71+9DGNE2sBC+sY4V/arvEthfhk52vzLe3kmSOsvg5q+DQG/W9WbgZTmlMdWHY2B2nbgm3yZB7jFCiXH/KfzyE1A==PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+") 
+    ShinobiDataGrids.setLicenseKey("m4cVN5mstCwhJBRMjAxNTEyMTF0aG9tYXMuZmFubm9uQHdvbHRlcnNrbHV3ZXIuY29tNMM9uJhARkKuwSKUHXWdxAHd+BoSZGIWZeYUAZQal/0P7ANJvTwjDp/wEkJ3L/YiatGruoebY9kYNwY6nN+2GanmRhXF6M0K/zw7j3qWoKolhv5eXM5Ye25qoBjJRpQ4FNcaGiJBH5RP6eYwiUUbFGCzZv04=AXR/y+mxbZFM+Bz4HYAHkrZ/ekxdI/4Aa6DClSrE4o73czce7pcia/eHXffSfX9gssIRwBWEPX9e+kKts4mY6zZWsReM+aaVF0BL6G9Vj2249wYEThll6JQdqaKda41AwAbZXwcssavcgnaHc3rxWNBjJDOk6Cd78fr/LwdW8q7gmlj4risUXPJV0h7d21jO1gzaaFCPlp5G8l05UUe2qe7rKbarpjoddMoXrpErC9j8Lm5Oj7XKbmciqAKap+71+9DGNE2sBC+sY4V/arvEthfhk52vzLe3kmSOsvg5q+DQG/W9WbgZTmlMdWHY2B2nbgm3yZB7jFCiXH/KfzyE1A==PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+")
 
         return true
     }

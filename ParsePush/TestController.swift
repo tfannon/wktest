@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TestController.swift
 //  ParsePush
 //
 //  Created by Tommy Fannon on 9/13/15.
@@ -11,7 +11,7 @@ import ObjectMapper
 
 
 class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate  {
-    
+    //MARK: - view controller
     override func viewDidLoad() {
         super.viewDidLoad()
         txtIPAddress.delegate = self
@@ -23,14 +23,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         segMockMode.selectedSegmentIndex = (Services.mock) ? 1 : 0
     }
     
-    //MARK - view controller
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK - Outlets
+    //MARK: - Outlets
     @IBOutlet weak var txtIPAddress: UITextField!
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var imgLoginResult: UIImageView!
@@ -38,8 +32,64 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBOutlet weak var lblProcedures: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
     @IBOutlet weak var segMockMode: UISegmentedControl!
+    @IBOutlet weak var imgIPAddressResult: UIImageView!
     
-    //MARK - persistent store
+    //MARK: - Connection options
+    @IBAction func segMockModeChanged(sender: UISegmentedControl) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        Services.mock = sender.selectedSegmentIndex == 1
+        defaults.setBool(Services.mock, forKey: "mock")
+        defaults.synchronize()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        var key = ""
+        let value = textField.text!
+        
+        if textField == self.txtIPAddress {
+            self.imgIPAddressResult.hidden = true
+            //set the ip address and make sure it works by making a simple call
+            Services.ipAddress = value
+            Services.getPOCAssessmentId() { result in
+                self.imgIPAddressResult.hidden = false
+                let imageName = result != nil ? "icons_implemented" : "icons_issue"
+                self.imgIPAddressResult.image = UIImage(named: imageName)
+            }
+            key = "ipAddress"
+        }
+        else if textField == self.txtUserName {
+            self.imgLoginResult.hidden = true
+            Services.userName = value
+            Services.login(Services.userName, token: "foobar") { result in
+                self.imgLoginResult.hidden = false
+                let imageName = result != nil ? "icons_implemented" : "icons_issue"
+                self.imgLoginResult.image = UIImage(named: imageName)
+            }
+            key = "userName"
+        }
+        defaults.setObject(value, forKey: key)
+        defaults.synchronize()
+        textField.resignFirstResponder();
+        return true;
+    }
+    
+    @IBAction func miscPressed(sender: UIButton) {
+        //let procedures = Mock.getProcedures()
+        //        let proc = Procedure()
+        //        proc.title = "something new"
+        //        let json = Mapper().toJSONString(proc, prettyPrint: true)!
+        //        print(json)
+        let procedure = Mock.getProcedures()[0]
+        let controller = ProcedureFormController(procedure: procedure)
+        //let controller = ProcedureFormControllerViewController()
+        //controller.procedure = items[row.rowIndex]
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
+
+    //MARK: - Local store
     @IBAction func storeLocalPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
         Services.getMyProcedures {
@@ -58,7 +108,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         Services.clearStore()
     }
     
-    //MARK - Actions
+    //MARK: - Notifications
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in
             self.lblCount.text = String(result)
@@ -67,42 +117,6 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     @IBAction func markReadPressed(sender: AnyObject) {
         Services.markRead([2,3]) { result in
-        }
-    }
-    
-    @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormController(procedure: Mock.getProcedures()[0])
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        var key = ""
-        let value = textField.text!
-        if (textField == self.txtIPAddress) {
-            key = "ipAddress"
-            Services.ipAddress = value
-        }
-        else if (textField == self.txtUserName) {
-            self.imgLoginResult.hidden = false
-            Services.userName = value
-            
-            Services.login(Services.userName, token: "foobar") { result in
-                let imageName = result != nil ? "icons_implemented" : "icons_issue"
-                self.imgLoginResult.image = UIImage(named: imageName)
-            }
-        }
-        defaults.setObject(value, forKey: key)
-        defaults.synchronize()
-        textField.resignFirstResponder();
-        return true;
-    }
-    
-    @IBAction func getAttachmentPressed(sender: AnyObject) {
-        Services.getAttachment { result in
-            let dc = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: result))
-            dc.delegate = self
-            dc.presentPreviewAnimated(true)
         }
     }
     
@@ -116,32 +130,29 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         }
     }
     
-    @IBAction func segMockModeChanged(sender: UISegmentedControl) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        Services.mock = sender.selectedSegmentIndex == 1
-        defaults.setBool(Services.mock, forKey: "mock")
-        defaults.synchronize()
+    //MARK: - Procedures
+    @IBAction func editProcedurePressed(sender: AnyObject) {
+        let vc = ProcedureFormController(procedure: Mock.getProcedures()[0])
+        navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func miscPressed(sender: UIButton) {
-        //let procedures = Mock.getProcedures()
-//        let proc = Procedure()
-//        proc.title = "something new"
-//        let json = Mapper().toJSONString(proc, prettyPrint: true)!
-//        print(json)
-        let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController(procedure: procedure)
-        //let controller = ProcedureFormControllerViewController()
-        //controller.procedure = items[row.rowIndex]
-        navigationController?.pushViewController(controller, animated: true)
-    }
-    
+
     @IBAction func proceduresPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
         Services.getMyProcedures { result in
             self.lblProcedures.text = String(result!.count)
         }
     }
+    
+    //MARK: - Attachments
+    @IBAction func getAttachmentPressed(sender: AnyObject) {
+        Services.getAttachment { result in
+            let dc = UIDocumentInteractionController(URL: NSURL(fileURLWithPath: result))
+            dc.delegate = self
+            dc.presentPreviewAnimated(true)
+        }
+    }
+    
     
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self
