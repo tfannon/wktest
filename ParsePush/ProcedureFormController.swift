@@ -90,7 +90,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             
             CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"),
                 style: UITableViewCellStyle.Value1,
-                imageName: "UserMale",
+                imageName: "769-male",
                 setup: { cell, _ in cell.selectionStyle = .None }),
             
             CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(),
@@ -155,7 +155,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             CellData(identifier: "_BasicCell",
                 value: procedure.reviewer,
                 label: self.t("reviewer"),
-                imageName: "UserMale",
+                imageName: "769-male",
                 style: UITableViewCellStyle.Value1,
                 setup: { cell, _ in cell.selectionStyle = .None }),
             
