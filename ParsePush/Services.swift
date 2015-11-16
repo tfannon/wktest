@@ -171,43 +171,48 @@ public class Services {
         case LocalOnly
     }
     
-    static func getMyData(fetchOptions: FetchOptions = .Default, completed: ((procedures:[Procedure]?, workpapers:[Workpaper]?)->())) {
+    
+    
+    static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
         if (mock) {
-            completed(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers())
+            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers()))
         }
         else {
+            //this is to test local store
             if fetchOptions == .LocalOnly {
-                let procs = loadProcedures()
+                let procedures = loadProcedures()
                 let workpapers = loadWorkpapers()
-                completed(procedures: procs, workpapers: workpapers)
+                completed(container: ObjectContainer(procedures: procedures!, workpapers: workpapers!))
                 return
             }
-            //default is to check the local store first
+            //this is the default which is to check the local store first
             if fetchOptions == .Default {
                 if let procedures = loadProcedures(),
                        workpapers = loadWorkpapers() {
-                    completed(procedures: procedures, workpapers: workpapers)
+                    print("fetched objects using local store")
+                    completed(container: ObjectContainer(procedures: procedures, workpapers: workpapers))
                     return
                 }
             }
-//            //if the store had nothing or we force a refresh fetch from services
-//            Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
-//                .responseJSON { request, response, result in
-//                    switch result {
-//                    case .Success(let data):
-//                        let jsonAlamo = data as? [[String:AnyObject]]
-//                        let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-//                        //save it back to local store, erasing whatever was there
-//                        saveAll(result!)
-//                        completed(result: result)
-//                    case .Failure(_, let error):
-//                        print("Request failed with error: \(error)")
-//                    }
-//            }
+            //if the store had nothing or we force a refresh fetch from services
+            Alamofire.request(.GET, procedureUrl + "/GetMyObjects", headers:Services.headers, parameters: nil, encoding: .JSON)
+                .responseJSON { request, response, result in
+                    switch result {
+                    case .Success(let data):
+                        let jsonAlamo = data as? [String:AnyObject]
+                        if let objects = Mapper<ObjectContainer>().map(jsonAlamo) {
+                            print("fetched objects using web service")
+                            saveObjects(objects)
+                            completed(container: objects)
+                        }
+                    case .Failure(_, let error):
+                        print("Request failed with error: \(error)")
+                    }
+            }
         }
     }
     
-    
+    /*
     static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
         if (mock) {
             completed(result: Mock.getProcedures())
@@ -240,8 +245,9 @@ public class Services {
             }
         }
     }
+
     
-    //todo: refactor to reuse MyProcedures
+
     static func getMyWorkpapers(fetchOptions: FetchOptions = .Default, completed: (result: [Workpaper]?)->()) {
         if (mock) {
             completed(result: Mock.getWorkpapers())
@@ -275,13 +281,14 @@ public class Services {
             }
         }
     }
+*/
     
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
     static func sync(completed: (result: [Procedure]?)->()) {
         print(__FUNCTION__)
-        getMyProcedures(FetchOptions.LocalOnly) { procs in
-            let dirty = procs?.filter { $0.isDirty() == true }
+        getMyData(FetchOptions.LocalOnly) { result in
+            let dirty = result?.procedures.filter { $0.isDirty() == true }
             saveProcedures(dirty!) {
                 completed(result:$0)
             }
@@ -340,7 +347,7 @@ public class Services {
                     print ("\(server!.filter({ $0.syncState == .New }).count) new")
                     print ("\(server!.filter({ $0.syncState == .Modified }).count) modified")
                     
-                    saveAll(server!)
+                    saveObjects(ObjectContainer(procedures: server!, workpapers: []))
                     
                     completed(result: server!)
                 case .Failure(_, let error):
@@ -359,18 +366,6 @@ public class Services {
         let key = DataKey.getProcKey(obj.id!)
         //print("Saving \(key) to local store")
         NSUserDefaults.standardUserDefaults().setValue(procJson, forKey: key)
-        //if its coming from the load from services, all keys need to be persisted
-//        if persistKey {
-//            if let ids = loadProcedureIds()
-//                where ids.indexOf(obj.id!) == nil {
-//                    var newIds = ids
-//                    newIds.append(obj.id!)
-//                    defaults.setObject(newIds, forKey: DataKey.ProcedureIds.rawValue)
-//            } else {
-//                //make a new id collection and put it in the store
-//                defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
-//            }
-//        }
     }
     
  
@@ -382,6 +377,25 @@ public class Services {
         case Proc = "procedure:"
         case Workpaper = "workpaper:"
         case Attachment = "attachment:"
+        
+        static func getKeyForIdList(obj: [BaseObject]) -> String {
+            if obj is [Procedure] {
+                return DataKey.ProcedureIds.rawValue
+            }
+            else {
+                return DataKey.WorkpaperIds.rawValue
+            }
+        }
+        
+        static func getKeyForObject(obj: BaseObject) -> String {
+            if obj is Procedure {
+                return getProcKey(obj.id!)
+            }
+            else {
+                return getWorkpaperKey(obj.id!)
+            }
+            
+        }
 
         static func getProcKey(id : Int) -> String {
             return "\(Proc.rawValue)\(id)"
@@ -396,6 +410,7 @@ public class Services {
     }
 
     static func clearStore() {
+        print (__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
         let appGroupDefaults = Services.appGroupDefaults
         
@@ -425,13 +440,30 @@ public class Services {
         attachmentIds:[5,10] //array of ints
         attachment5:[FilePath]
     */
-    private static func saveAll(objects: [Procedure]) {
+    
+    private static func saveObjects(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
-        let ids = objects.map { $0.id! }
-        NSUserDefaults.standardUserDefaults().setObject(ids, forKey: DataKey.ProcedureIds.rawValue)
-        //write them all in but we have already saved the keys so skip that
-        objects.each { save($0) }
+        saveObjectsImpl(objects.procedures)
+        saveObjectsImpl(objects.workpapers)
+    }
+    
+    private static func saveObjectsImpl(objects: [BaseObject]) {
+        if objects.count > 0 {
+            print ("saving \(objects.count) \(objects[0].dynamicType)")
+            let ids = objects.map { $0.id! }
+            let idListKey = DataKey.getKeyForIdList(objects)
+            NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
+            objects.each { saveObject($0) }
+        }
+    }
+  
+    static func saveObject(obj: BaseObject) {
+        let json = Mapper().toJSONString(obj, prettyPrint: true)!
+        //save it in its own slot.  will overwrite anything there
+        let key = DataKey.getKeyForObject(obj)
+        //print("Saving \(key) to local store")
+        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
     }
     
     
@@ -462,6 +494,7 @@ public class Services {
     
     //MARK: Workpapers
     private static func loadWorkpapers() -> [Workpaper]? {
+        print(__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
         if let ids = loadWorkpaperIds() {

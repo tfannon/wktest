@@ -91,24 +91,13 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
 
     //MARK: - Local store
     @IBAction func storeLocalPressed(sender: AnyObject) {
-        self.lblProcedures.text = ""
-        Services.getMyProcedures {
-            self.lblProcedures.text = String($0!.count)
-        }
+//        self.lblProcedures.text = ""
+//        Services.getMyProcedures {
+//            self.lblProcedures.text = String($0!.count)
+//        }
     }
     
-    @IBAction func readLocalPressed(sender: AnyObject) {
-        self.lblProcedures.text = ""
-        Services.getMyProcedures(.LocalOnly) {
-            self.lblProcedures.text = String($0!.count)
-        }
-    }
-    
-    @IBAction func clearLocalPressed(sender: AnyObject) {
-        Services.clearStore()
-    }
-    
-    //MARK: - Notifications
+      //MARK: - Notifications
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in
             self.lblCount.text = String(result)
@@ -136,13 +125,26 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         navigationController?.pushViewController(vc, animated: true)
     }
     
-
-    @IBAction func proceduresPressed(sender: AnyObject) {
+    @IBAction func readLocalPressed(sender: AnyObject) {
         self.lblProcedures.text = ""
-        Services.getMyProcedures { result in
-            self.lblProcedures.text = String(result!.count)
+        Services.getMyData(.LocalOnly) { result in
+            self.lblProcedures.text = "\(result!.procedures.count) p, \(result!.workpapers.count) wp"
         }
     }
+    
+    @IBAction func clearLocalPressed(sender: AnyObject) {
+        Services.clearStore()
+    }
+    
+    
+    @IBAction func proceduresPressed(sender: AnyObject) {
+        self.lblProcedures.text = ""
+        Services.getMyData() { result in
+            self.lblProcedures.text = "\(result!.procedures.count) p, \(result!.workpapers.count) wp"
+        }
+    }
+    
+    
     
     //MARK: - Attachments
     @IBAction func getAttachmentPressed(sender: AnyObject) {

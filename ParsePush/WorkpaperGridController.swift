@@ -41,9 +41,9 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     func getWorkpapers(completed: ()->()) {
         self.items = []
         self.sortedItems = []
-        Services.getMyWorkpapers { result in
-            if result?.count > 0 {
-                result?.each {
+        Services.getMyData { result in
+            if result?.workpapers.count > 0 {
+                result?.workpapers.each {
                     self.items.append($0)
                 }
                 self.sortedItems = self.items

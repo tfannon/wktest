@@ -41,9 +41,9 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     func getProcedures(completed: ()->()) {
         self.items = []
         self.sortedItems = []
-        Services.getMyProcedures { result in
-            if result?.count > 0 {
-                result?.each {
+        Services.getMyData { result in
+            if result?.procedures.count > 0 {
+                result?.procedures.each {
                     self.items.append($0)
                 }
                 self.sortedItems = self.items

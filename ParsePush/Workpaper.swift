@@ -9,13 +9,14 @@
 import Foundation
 import ObjectMapper
 
-class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
-    required init(_ map: Map) {
-    }
-    
-    // used for creating one from scratch
-    override init() {
-    }
+class Workpaper : BaseObject {
+
+    //    required init(_ map: Map) {
+//    }
+//    
+//    // used for creating one from scratch
+//    override init() {
+//    }
     
     private static var terminology = [
         "title":"Title",
@@ -44,7 +45,7 @@ class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
         return terminology[key] ?? ""
     }
     
-    var id: Int?
+    //var id: Int?
     var parentTitle: String?
     var parentType: Int = 0
     var title: String? { didSet { setDirty("Title") } }
@@ -89,7 +90,7 @@ class Workpaper : NSObject, Mappable, CustomDebugStringConvertible {
     }
     
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         isMapping = true
         
         id <- map["Id"]

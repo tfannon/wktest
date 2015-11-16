@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; };
 		651A4C3A1BEE80E3008737A2 /* WorkpaperGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */; };
-		651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3B1BEE8319008737A2 /* Workpaper.swift */; };
 		651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */; };
 		655DEF861BF16D5100120892 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF851BF16D5100120892 /* FileHelper.swift */; };
 		655DEF881BF1836600120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
@@ -51,6 +50,8 @@
 		659D1C6E1BA7C44E0023AAFD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6D1BA7C44E0023AAFD /* libc++.dylib */; };
 		659D1C701BA7C4560023AAFD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */; };
 		659D1C721BA7C45C0023AAFD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D1C711BA7C45C0023AAFD /* Security.framework */; };
+		65B0623C1BF9911300375D17 /* ObjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0623B1BF9911300375D17 /* ObjectContainer.swift */; };
+		65B0623E1BF99A9400375D17 /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0623D1BF99A9400375D17 /* BaseObject.swift */; };
 		65B1FE0C1BF0251C0096EA07 /* DocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B1FE0B1BF0251C0096EA07 /* DocumentPickerViewController.swift */; };
 		65B1FE0F1BF0251C0096EA07 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B1FE0D1BF0251C0096EA07 /* MainInterface.storyboard */; };
 		65B1FE1A1BF0251C0096EA07 /* FileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B1FE191BF0251C0096EA07 /* FileProvider.swift */; };
@@ -60,6 +61,7 @@
 		65D3812C1BCE072E00E4C74B /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D3812B1BCE072E00E4C74B /* ShinobiGrids.framework */; };
 		65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D507311BB5DC1D00EC8E1F /* Services.swift */; };
 		65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E85BB61BB8E99B00C5C272 /* Notification.swift */; };
+		65F4D0241BFA3254009D7C0A /* Workpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3B1BEE8319008737A2 /* Workpaper.swift */; };
 		6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */; };
 		6616C38D1BF4DAA4004D763E /* FormHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C38C1BF4DAA4004D763E /* FormHelper.swift */; };
 		663259BA1BF1959E00D3C76E /* ProcedureFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259B91BF1959E00D3C76E /* ProcedureFormController.swift */; };
@@ -176,6 +178,8 @@
 		659D1C6F1BA7C4560023AAFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		659D1C711BA7C45C0023AAFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		659D1C751BA7C4DE0023AAFD /* ParsePush-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParsePush-Bridging-Header.h"; sourceTree = "<group>"; };
+		65B0623B1BF9911300375D17 /* ObjectContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectContainer.swift; sourceTree = "<group>"; };
+		65B0623D1BF99A9400375D17 /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
 		65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeamMateDoc.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B1FE0A1BF0251C0096EA07 /* TeamMateDoc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TeamMateDoc.entitlements; sourceTree = "<group>"; };
 		65B1FE0B1BF0251C0096EA07 /* DocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewController.swift; sourceTree = "<group>"; };
@@ -399,6 +403,8 @@
 				651A4C3B1BEE8319008737A2 /* Workpaper.swift */,
 				651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */,
 				655DEF851BF16D5100120892 /* FileHelper.swift */,
+				65B0623B1BF9911300375D17 /* ObjectContainer.swift */,
+				65B0623D1BF99A9400375D17 /* BaseObject.swift */,
 			);
 			name = MT;
 			sourceTree = "<group>";
@@ -504,10 +510,10 @@
 				BCBE5D022436F25D613A0640 /* Check Pods Manifest.lock */,
 				65768AD71BA641C500DADD43 /* Sources */,
 				65768AD81BA641C500DADD43 /* Frameworks */,
-				65768AD91BA641C500DADD43 /* Resources */,
 				B66AAA481DE7C814F20D789B /* Embed Pods Frameworks */,
 				24F2B795248F1493726F996F /* Copy Pods Resources */,
 				65B1FE281BF0251C0096EA07 /* Embed App Extensions */,
+				65768AD91BA641C500DADD43 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -741,6 +747,7 @@
 				66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */,
 				6564FFF11BDF91530014FE08 /* UIColor+SPUColor.m in Sources */,
 				659A64CE1BBF3A340047AAD3 /* Extensions.swift in Sources */,
+				65F4D0241BFA3254009D7C0A /* Workpaper.swift in Sources */,
 				6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */,
 				655DEF861BF16D5100120892 /* FileHelper.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,
@@ -749,6 +756,7 @@
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,
 				65768AE31BA641C500DADD43 /* TestController.swift in Sources */,
 				65D507321BB5DC1D00EC8E1F /* Services.swift in Sources */,
+				65B0623E1BF99A9400375D17 /* BaseObject.swift in Sources */,
 				663259BA1BF1959E00D3C76E /* ProcedureFormController.swift in Sources */,
 				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
 				663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */,
@@ -758,9 +766,9 @@
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
 				655DEF881BF1836600120892 /* Shared.swift in Sources */,
 				6616C38D1BF4DAA4004D763E /* FormHelper.swift in Sources */,
-				651A4C3C1BEE8319008737A2 /* Workpaper.swift in Sources */,
 				65C194F21BDC3332004C4FB8 /* Store.swift in Sources */,
 				663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */,
+				65B0623C1BF9911300375D17 /* ObjectContainer.swift in Sources */,
 				6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */,
 				66C6DFB21BD9A79F00A30597 /* ChangeController.swift in Sources */,
 				6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */,
