@@ -16,7 +16,6 @@ protocol Saveable {
     
 public class Services {
     static var ipAddress = "192.168.1.14"
-    static var assessmentId = "572301013"
     static var userName = "joe.tester"
     static var deviceToken = ""
     static var mock = false
@@ -52,7 +51,7 @@ public class Services {
     }
     
     static var procedureUrl: String {
-        return "http://\(Services.ipAddress)/Offline/api/BO"
+        return "http://\(Services.ipAddress)/Offline/api/Offline"
     }
     
     static var headers: [String:String] {
@@ -354,35 +353,33 @@ public class Services {
     
 
     //MARK: Save local
-    static func save(obj: Procedure, persistKey: Bool = false) {
-        //print(__FUNCTION__)
+    static func save(obj: Procedure) {
         let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
-        let defaults = NSUserDefaults.standardUserDefaults()
         //save it in its own slot.  will overwrite anything there
         let key = DataKey.getProcKey(obj.id!)
         //print("Saving \(key) to local store")
-        defaults.setValue(procJson, forKey: key)
+        NSUserDefaults.standardUserDefaults().setValue(procJson, forKey: key)
         //if its coming from the load from services, all keys need to be persisted
-        if persistKey {
-            if let ids = loadProcedureIds()
-                where ids.indexOf(obj.id!) == nil {
-                    var newIds = ids
-                    newIds.append(obj.id!)
-                    defaults.setObject(newIds, forKey: DataKey.ProcedureIds.rawValue)
-            } else {
-                //make a new id collection and put it in the store
-                defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
-            }
-        }
+//        if persistKey {
+//            if let ids = loadProcedureIds()
+//                where ids.indexOf(obj.id!) == nil {
+//                    var newIds = ids
+//                    newIds.append(obj.id!)
+//                    defaults.setObject(newIds, forKey: DataKey.ProcedureIds.rawValue)
+//            } else {
+//                //make a new id collection and put it in the store
+//                defaults.setObject([obj.id!], forKey: DataKey.ProcedureIds.rawValue)
+//            }
+//        }
     }
     
  
     //MARK: Store - private
     enum DataKey : String {
-        case ProcedureIds = "procIds"
+        case ProcedureIds = "procedureIds"
         case WorkpaperIds = "workpaperIds"
-        case AttachmentIds = "atttachmentIds"
-        case Proc = "proc:"
+        case AttachmentIds = "attachmentIds"
+        case Proc = "procedure:"
         case Workpaper = "workpaper:"
         case Attachment = "attachment:"
 
@@ -397,30 +394,44 @@ public class Services {
         }
         
     }
-    
+
     static func clearStore() {
         let defaults = NSUserDefaults.standardUserDefaults()
-
-        let appDomain = NSBundle.mainBundle().bundleIdentifier!
-        defaults.removePersistentDomainForName(appDomain)
-        
-        //this removes some apple keys along with everything we put in there.  wonder if there is a better way?
         let appGroupDefaults = Services.appGroupDefaults
-        appGroupDefaults.dictionaryRepresentation().keys.forEach {
-            print("removing \($0)")
-            appGroupDefaults.removeObjectForKey($0)
+        
+        if let procIds = defaults.valueForKey(DataKey.ProcedureIds.rawValue) as? [Int] {
+            procIds.each { defaults.removeObjectForKey(DataKey.getProcKey($0)) }
+            defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
+        }
+        if let workpaperIds = defaults.valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int] {
+            workpaperIds.each { defaults.removeObjectForKey(DataKey.getWorkpaperKey($0)) }
+            defaults.removeObjectForKey(DataKey.WorkpaperIds.rawValue)
+        }
+
+        if let attachmentIds = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] {
+            //remove file paths
+            attachmentIds.each { appGroupDefaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }
+            defaults.removeObjectForKey(DataKey.AttachmentIds.rawValue)
         }
         //delete all the files in the storage directory as well
         FileHelper.deleteDirectory(storageProviderLocation)
     }
-    
+
+    /*
+        procedureIds:[3,10] //array of ints
+        procedure3:[Data]
+        workpaperIds:[2,3,4] //array of ints
+        workpaper2:[Data]
+        attachmentIds:[5,10] //array of ints
+        attachment5:[FilePath]
+    */
     private static func saveAll(objects: [Procedure]) {
         print(__FUNCTION__)
         clearStore()
         let ids = objects.map { $0.id! }
         NSUserDefaults.standardUserDefaults().setObject(ids, forKey: DataKey.ProcedureIds.rawValue)
         //write them all in but we have already saved the keys so skip that
-        objects.each { save($0, persistKey: false) }
+        objects.each { save($0) }
     }
     
     
@@ -475,6 +486,12 @@ public class Services {
             print("Downloaded file was stored at: \(destination.path!)")
             //write this location into the app group defaults.
             appGroupDefaults.setValue(destination.path!, forKey: key)
+            //grab the existing collection of attachment ids, create if non exist,  add if it does not contain
+            var attachmentIds = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] ?? [Int]()
+            if attachmentIds.indexOf(id) == nil {
+                attachmentIds.append(id)
+            }
+            appGroupDefaults.setValue(attachmentIds, forKey: DataKey.AttachmentIds.rawValue)
             completed(destination.path!)
             return destination
         }

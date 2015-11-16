@@ -34,13 +34,17 @@ enum ObjectType: Int, ImageProvider {
 
 enum DocumentType: String, ImageProvider {
     case Word = "docx"
-    case Excel = "xlsx"
+    case Excel = "xls"
+    case PDF = "pdf"
+    case Powerpoint = "ppt"
     
     var imageName: String {
         get {
             switch self {
             case .Word: return "icons_word"
             case .Excel: return  "icons_excel"
+            case .PDF: return  "icons_pdf"
+            case .Powerpoint: return "icons_powerpoint"
             }
         }
     }
