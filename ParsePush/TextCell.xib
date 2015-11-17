@@ -25,6 +25,7 @@
                 <constraints>
                     <constraint firstItem="qtG-OY-buo" firstAttribute="leading" secondItem="uTU-F4-Zyo" secondAttribute="leadingMargin" id="GhG-Uv-3lN"/>
                     <constraint firstItem="qtG-OY-buo" firstAttribute="top" secondItem="uTU-F4-Zyo" secondAttribute="topMargin" id="P7S-xP-YLE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="qtG-OY-buo" secondAttribute="bottom" id="tlG-Wc-yfT"/>
                     <constraint firstAttribute="trailingMargin" secondItem="qtG-OY-buo" secondAttribute="trailing" id="wFy-e6-rzP"/>
                 </constraints>
             </tableViewCellContentView>
