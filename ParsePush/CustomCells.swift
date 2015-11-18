@@ -188,7 +188,6 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
         webView.scrollView.scrollEnabled = false
         webView.scrollView.bounces = false
         self.contentView.bringSubviewToFront(indicator)
-        startWaiting()
      }
     
     /// Custom setter so we can initialise the height of the text view
