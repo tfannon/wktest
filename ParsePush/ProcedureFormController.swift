@@ -71,6 +71,15 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     private func setupForm() {
         
+        formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
+            setup: { cell, data in
+                cell.accessoryType = .DisclosureIndicator },
+            selected: { cell, data, indexPath in
+                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
+                vc.items = self.procedure.changes!
+                self.navigationController?.pushViewController(vc, animated: true)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        })])
         formHelper.addSection(" ",
         data: [
             CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
@@ -265,8 +274,8 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             setup: { cell, data in
                 cell.accessoryType = .DisclosureIndicator },
             selected: { cell, data, indexPath in
-                let vc : ChangeController = Misc.getTableViewController("Procedure", viewIdentifier: "ChangeViewController")
-                vc.changes = self.procedure.changes
+                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
+                vc.items = self.procedure.changes!
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])

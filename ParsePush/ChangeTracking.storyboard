@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <scenes>
+        <!--Change Grid Controller-->
+        <scene sceneID="eEh-0L-cnc">
+            <objects>
+                <viewController storyboardIdentifier="ChangeGridController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0LL-11-aJD" customClass="ChangeGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7uD-bK-Pbt"/>
+                        <viewControllerLayoutGuide type="bottom" id="8it-xj-z6R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZCU-5x-rC6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JR5-H5-ehL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3602" y="-2497"/>
+        </scene>
+        <!--Change Detail Grid Controller-->
+        <scene sceneID="g8v-6F-sBE">
+            <objects>
+                <viewController storyboardIdentifier="ChangeDetailGridController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RQk-DB-m68" customClass="ChangeDetailGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hyM-Zh-4pp"/>
+                        <viewControllerLayoutGuide type="bottom" id="e9X-6w-I1I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nkE-Nd-OhC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V9h-QX-0Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2970" y="-2497"/>
+        </scene>
+    </scenes>
+</document>

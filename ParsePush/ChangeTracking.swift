@@ -9,23 +9,15 @@
 import Foundation
 import ObjectMapper
 
-class Change: NSObject, Mappable
+class Change: BaseObject 
 {
-    required init(_ map: Map) {
-    }
-    
-    // from scratch
-    override init(){
-    }
-    
-    var id : Int?
     var user : String?
     var date : NSDate?
     var title : String?
     var changeDescription : String?
     var details : [ChangeDetail]?
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         id <- map["Id"]
         user <- map["User"]
         title <- map["Title"]
@@ -37,21 +29,14 @@ class Change: NSObject, Mappable
     }
 }
 
-class ChangeDetail: NSObject, Mappable
+class ChangeDetail: BaseObject
 {
-    required init(_ map: Map) {
-    }
-    
-    // from scratch
-    override init(){
-    }
-    
     var label : String?
     var isHtml : Bool?
     var priorValue : String?
     var currentValue : String?
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         label <- map["Label"]
         isHtml <- map["IsHtml"]
         priorValue <- map["PriorValue"]

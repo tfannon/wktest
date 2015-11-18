@@ -3,24 +3,23 @@ import UIKit
 
 
 
-class ChangeDetailGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
+class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
     
-    var items: [ChangeDetail] = []
+    var items: [Change] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
     var gridColumnsOrder: [String]!
     var dataSourceHelper: SDataGridDataSourceHelper!
+    var detailWidth : CGFloat = 30
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Change Tracking Detail"
+        self.title = "Change Tracking"
         self.setupGrid()
         self.addColumns()
         self.createDataSource()
         self.styleGrid()
-        
-        self.grid.selectionMode = SDataGridSelectionModeNone
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -28,15 +27,12 @@ class ChangeDetailGridController: UIViewController, SDataGridDataSourceHelperDel
         dataSourceHelper.data = items
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     override func viewDidLayoutSubviews() {
-        
+
         let size = self.view.bounds
-        let cWidth = Float(size.width / CGFloat(self.grid.columns.count))
-        for c in grid.columns.map({ x in x as! SDataGridColumn }) {
+        let cWidth = Float((size.width - detailWidth) / 3.0)
+        for i in 0...2 {
+            let c = grid.columns[i] as! SDataGridColumn
             c.width = cWidth
         }
         grid.frame = size
@@ -45,19 +41,21 @@ class ChangeDetailGridController: UIViewController, SDataGridDataSourceHelperDel
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["label","priorValue","currentValue"]
+            gridColumnsOrder = ["title","user","date","details"]
         }
-        let cWidth = Float(grid.frame.width / 3.0)
+        let cWidth = Float((grid.frame.width - detailWidth) / 3.0)
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             switch key {
                 
-            case "label": addColumnWithTitle(key, title: "Label", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "title": addColumnWithTitle(key, title: "Action", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "priorValue": addColumnWithTitle(key, title: "Previous Value", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+            case "user": addColumnWithTitle(key, title: "User", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "currentValue": addColumnWithTitle(key, title: "Current Value", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+            case "date": addColumnWithTitle(key, title: "Date", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
+            case "details": addColumnWithTitle(key, title: "", width: Float(detailWidth), textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+
             default:
                 fatalError("addColumns has not been handled")
                 
@@ -140,26 +138,44 @@ class ChangeDetailGridController: UIViewController, SDataGridDataSourceHelperDel
     
     
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
-        let detail = object as! ChangeDetail
+        let change = object as! Change
         
         switch (propertyKey) {
-            
-        case "label" :
+
+        case "title" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text = detail.label
+            wCell.text = change.title
             return true
             
-        case "priorValue" :
+        case "user" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  detail.priorValue
+            wCell.text =  change.user
             return true
             
-        case "currentValue" :
+        case "date" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  detail.currentValue
+            wCell.text =  change.date?.ToLongDateStyle()
+            return true
+            
+        case "details":
+            let wCell = cell as! SDataGridTextCell
+            wCell.text = (change.details?.count > 0) ? ">" : ""
             return true
             
         default: return false
+        }
+    }
+    
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
+        let change = items[row.rowIndex]
+        if (change.details?.count > 0)
+        {
+            let vc : ChangeDetailGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeDetailGridController")
+            vc.items = change.details!
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        else {
+            grid.clearSelectionWithAnimation(false)
         }
     }
 }

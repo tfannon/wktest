@@ -19,7 +19,7 @@ class Misc {
     
     // Works around a bug in Swift where pushing the ViewController the normal way
     //  doesn't initialize the cell templates in a UITableView
-    static func getTableViewController<T : UITableViewController>(
+    static func getViewController<T : UIViewController>(
         storyboardName : String,
         viewIdentifier: String) -> T
     {
