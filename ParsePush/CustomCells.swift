@@ -172,8 +172,12 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
 }
 
 public class HtmlCell: CustomCell, UIWebViewDelegate {
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet var webView: UIWebView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    private var loaded = false
+    private var timer : NSTimer?
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -183,15 +187,20 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
         webView.delegate = self
         webView.scrollView.scrollEnabled = false
         webView.scrollView.bounces = false
+        self.contentView.bringSubviewToFront(indicator)
+        startWaiting()
      }
     
     /// Custom setter so we can initialise the height of the text view
+    var _textString : String?
     var textString: String {
         get {
             return webView.stringByEvaluatingJavaScriptFromString("document.documentElement.innerText;")
                 ?? ""
         }
         set {
+            startWaiting()
+            _textString = newValue
             webView.loadHTMLString(newValue, baseURL: nil)
         }
     }
@@ -210,12 +219,54 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
     
     public func webViewDidFinishLoad(_: UIWebView)
     {
-        let content_height =  CGFloat(Int(webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight") ?? "0")!)
-        heightConstraint.constant = content_height
-        UIView.setAnimationsEnabled(false)
-        tableView?.beginUpdates()
-        tableView?.endUpdates()
-        UIView.setAnimationsEnabled(true)
+        loaded = true
     }
     
+    private func startWaiting() {
+        if !webView.hidden {
+            webView.hidden = true
+            indicator.sizeToFit()
+            indicator.hidden = false
+            indicator.startAnimating()
+        }
+    }
+    private func stopWaiting() {
+        if webView.hidden {
+            webView.hidden = false
+            indicator.hidden = true
+            indicator.stopAnimating()
+        }
+    }
+    
+    public func resize() {
+        startWaiting()
+        if (!loaded && self.timer == nil) {
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "resizeImpl", userInfo: nil, repeats: true)
+        }
+        else {
+            resizeImpl()
+        }
+    }
+    
+    public func resizeImpl() {
+        if (loaded) {
+            self.timer?.invalidate()
+            self.timer = nil
+
+            let content_height =  CGFloat(Int(webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight") ?? "0")!)
+            let current_height = webView.frame.size.height
+            
+            if current_height != content_height {
+                UIView.setAnimationsEnabled(false)
+                tableView?.beginUpdates()
+                if heightConstraint.constant != content_height {
+                    heightConstraint.constant = content_height
+                }
+                tableView?.endUpdates()
+                UIView.setAnimationsEnabled(true)
+            }
+            
+            stopWaiting()
+        }
+    }
 }

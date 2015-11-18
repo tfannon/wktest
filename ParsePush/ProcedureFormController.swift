@@ -270,6 +270,15 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
+        
+        // load up ALL the html cells
+        for section in formHelper.data {
+            for data in section {
+                if data.nibIdentifier == "HtmlCell" {
+                    self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
+                }
+            }
+        }
     }
     
     override func tableView(tableView: UITableView,
@@ -288,35 +297,25 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         return formHelper.data[section].filter { data in return data.visible }.count
     }
     
-    var cellLookup = [Int : UITableViewCell]()
-    var cellSetup = [Int : Bool]()
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : UITableViewCell
-        let cellData = formHelper.getCellData(indexPath)
+        let data = formHelper.getCellData(indexPath)
         
-        if let nibName = cellData.nibIdentifier {
-            if (nibName == "HtmlCell") {
-                if let c = cellLookup[cellData.tag] {
-                    cell = c
-                }
-                else {
-                    let d = NSBundle.mainBundle().loadNibNamed("HtmlCell", owner: self, options: nil)[0]
-                    cell = d as! UITableViewCell
-                    cellLookup[cellData.tag] = cell
-                }
+        if let nibName = data.nibIdentifier {
+            if nibName == "HtmlCell" {
+                cell = self.tableView.dequeueReusableCellWithIdentifier(data.uuid, forIndexPath: indexPath)
             }
             else {
                 cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
             }
         }
-        else if let identifier = cellData.identifier {
+        else if let identifier = data.identifier {
             if let c = tableView.dequeueReusableCellWithIdentifier(identifier) {
                 cell = c
             }
             else {
-                cell = cellData.initialize()
+                cell = data.initialize()
             }
             
         }
@@ -352,12 +351,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         if let imageName = cellData.imageName {
             cell.imageView?.image = UIImage(named: imageName)
         }
-        
-        if let _ = cell as? HtmlCell, let _ = cellSetup[cellData.tag] {
-            return
-        }
-        
-        cellSetup[cellData.tag] = true
         
         cellData.setup(cell)
     }

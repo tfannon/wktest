@@ -22,18 +22,25 @@
                             <constraint firstAttribute="height" priority="900" constant="62" id="mdW-lL-f7z"/>
                         </constraints>
                     </webView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rvp-DT-SQE">
+                        <rect key="frame" x="147" y="92" width="20" height="20"/>
+                        <animations/>
+                    </activityIndicatorView>
                 </subviews>
                 <animations/>
                 <constraints>
                     <constraint firstItem="mqY-Zi-xTr" firstAttribute="leading" secondItem="qAE-H5-Tl5" secondAttribute="leadingMargin" id="KkK-LI-udQ"/>
+                    <constraint firstItem="rvp-DT-SQE" firstAttribute="centerX" secondItem="qAE-H5-Tl5" secondAttribute="centerX" id="YZR-dd-9gI"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mqY-Zi-xTr" secondAttribute="bottom" id="bC2-CD-Dg1"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mqY-Zi-xTr" secondAttribute="trailing" id="ddM-AH-UXu"/>
+                    <constraint firstItem="rvp-DT-SQE" firstAttribute="centerY" secondItem="qAE-H5-Tl5" secondAttribute="centerY" id="k2K-wi-0z4"/>
                     <constraint firstAttribute="topMargin" secondItem="mqY-Zi-xTr" secondAttribute="top" id="uGe-zO-DQa"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="heightConstraint" destination="mdW-lL-f7z" id="Nkf-gM-6KC"/>
+                <outlet property="indicator" destination="rvp-DT-SQE" id="rQt-bX-faB"/>
                 <outlet property="webView" destination="mqY-Zi-xTr" id="5hy-5e-qHt"/>
             </connections>
             <point key="canvasLocation" x="301" y="265.5"/>

@@ -24,6 +24,14 @@ class CellData {
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
     private var changedFunction : ((UITableViewCell, CellData) -> Void)?
     let tag = tagCount++
+    var cell : UITableViewCell?
+
+    private let _uuid = NSUUID().UUIDString
+    var uuid: String! {
+        get {
+            return _uuid
+        }
+    }
     
     init (
         identifier : String,
@@ -124,6 +132,7 @@ class FormHelper {
         { cell, data in
             let textCell = cell as! HtmlCell
             textCell.textString = data.value as? String ?? ""
+            textCell.resize()
             textCell.delegate = self.controllerAsDelegate
         }
 
