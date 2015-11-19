@@ -5,11 +5,19 @@ import UIKit
 
 class ChangeDetailGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
     
-    var items: [ChangeDetail] = []
+    private var items: [ChangeDetail] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
     var gridColumnsOrder: [String]!
     var dataSourceHelper: SDataGridDataSourceHelper!
+    
+    var details : [ChangeDetail] {
+        get { return items }
+        set {
+            items = newValue.sort(
+                { c1, c2 in c1.label ?? "" < c2.label ?? "" })
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

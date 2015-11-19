@@ -5,12 +5,24 @@ import UIKit
 
 class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
     
-    var items: [Change] = []
+    private var items: [Change] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
     var gridColumnsOrder: [String]!
     var dataSourceHelper: SDataGridDataSourceHelper!
-    var detailWidth : CGFloat = 30
+    
+    var changes : [Change] {
+        get { return items }
+        set {
+            items = newValue.sort(
+                { c1, c2 in
+                    if c1.date! == c1.date! {
+                        return (c1.id > c2.id)
+                    }
+                    return c1.date!.isLaterThanDate(c2.date!)
+            })
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +39,17 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
         dataSourceHelper.data = items
     }
     
+    var detailWidth : CGFloat = 30
+    private var cWidth : Float {
+        get {
+            let w = Float((grid.frame.width - detailWidth) / 3.0)
+            return w
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
 
         let size = self.view.bounds
-        let cWidth = Float((size.width - detailWidth) / 3.0)
         for i in 0...2 {
             let c = grid.columns[i] as! SDataGridColumn
             c.width = cWidth
@@ -43,7 +62,6 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
         if gridColumnsOrder == nil {
             gridColumnsOrder = ["title","user","date","details"]
         }
-        let cWidth = Float((grid.frame.width - detailWidth) / 3.0)
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             switch key {
@@ -153,8 +171,12 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
             return true
             
         case "date" :
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            formatter.timeStyle = .MediumStyle
+            
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  change.date?.ToLongDateStyle()
+            wCell.text =  (change.date == nil) ? "" : formatter.stringFromDate(change.date!)
             return true
             
         case "details":
@@ -171,7 +193,7 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
         if (change.details?.count > 0)
         {
             let vc : ChangeDetailGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeDetailGridController")
-            vc.items = change.details!
+            vc.details = change.details!
             navigationController?.pushViewController(vc, animated: true)
         }
         else {

@@ -76,7 +76,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 cell.accessoryType = .DisclosureIndicator },
             selected: { cell, data, indexPath in
                 let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                vc.items = self.procedure.changes!
+                vc.changes = self.procedure.changes!
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
@@ -275,7 +275,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 cell.accessoryType = .DisclosureIndicator },
             selected: { cell, data, indexPath in
                 let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                vc.items = self.procedure.changes!
+                vc.changes = self.procedure.changes!
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])

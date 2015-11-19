@@ -59,6 +59,7 @@ class Mock {
         if id % 10 != 0 {
             for i in 1...10 {
                 let change = Change()
+                change.id = id * 1000 + i
                 change.date = NSDate().dateByAddingDays(i)
                 change.title = "I Changed This \(i)"
                 change.user = "User #\(id)"
