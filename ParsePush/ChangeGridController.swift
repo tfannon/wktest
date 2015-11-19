@@ -4,7 +4,7 @@ import UIKit
 
 
 class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate {
-    
+
     private var items: [Change] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
@@ -39,22 +39,24 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
         dataSourceHelper.data = items
     }
     
-    var detailWidth : CGFloat = 30
+    override func viewDidLayoutSubviews() {
+        let f = self.view.frame
+        self.grid.frame = f
+    }
+    
+    var detailWidth : CGFloat = 100
     private var cWidth : Float {
         get {
-            let w = Float((grid.frame.width - detailWidth) / 3.0)
+            let w = Float((self.grid.frame.width - detailWidth) / 3.0)
             return w
         }
     }
     
-    override func viewDidLayoutSubviews() {
-
-        let size = self.view.bounds
+    func didFinishLayingOutShinobiDataGrid(grid : ShinobiDataGrid) {
         for i in 0...2 {
             let c = grid.columns[i] as! SDataGridColumn
             c.width = cWidth
         }
-        grid.frame = size
         grid.reload()
     }
     
@@ -72,7 +74,7 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
                 
             case "date": addColumnWithTitle(key, title: "Date", width: cWidth, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "details": addColumnWithTitle(key, title: "", width: Float(detailWidth), textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            case "details": addColumnWithTitle(key, title: "", width: Float(detailWidth), textAlignment: NSTextAlignment.Right, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
 
             default:
                 fatalError("addColumns has not been handled")
@@ -96,6 +98,14 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
         column.cellStyle.contentInset = edgeInsets
         column.headerCellStyle.textAlignment = textAlignment
         column.headerCellStyle.contentInset = edgeInsets
+        if key == "details" {
+            let style = SDataGridCellStyle()
+            let f = grid.defaultCellStyleForRows.font
+            let f2 = UIFont.boldSystemFontOfSize(f.pointSize * 1.25)
+            style.font = f2
+            column.cellStyle.textColor = UIColor.lightGrayColor()
+            column.cellStyle.font = style.font
+        }
         if sortMode != nil {
             column.sortMode = sortMode!
         }
@@ -110,9 +120,6 @@ class ChangeGridController: UIViewController, SDataGridDataSourceHelperDelegate,
     func setupGrid() {
         self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
         self.view.addSubview(grid)
-        let views : [String : AnyObject] = ["grid" : grid]
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[grid]-|", options: NSLayoutFormatOptions.AlignAllLeft, metrics: nil, views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[grid]-|", options: NSLayoutFormatOptions.AlignAllLeft, metrics: nil, views: views))
     }
     
     func styleGrid() {

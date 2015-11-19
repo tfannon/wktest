@@ -12,7 +12,7 @@
                         <viewControllerLayoutGuide type="top" id="7uD-bK-Pbt"/>
                         <viewControllerLayoutGuide type="bottom" id="8it-xj-z6R"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ZCU-5x-rC6">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ZCU-5x-rC6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -31,7 +31,7 @@
                         <viewControllerLayoutGuide type="top" id="hyM-Zh-4pp"/>
                         <viewControllerLayoutGuide type="bottom" id="e9X-6w-I1I"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nkE-Nd-OhC">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="nkE-Nd-OhC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>

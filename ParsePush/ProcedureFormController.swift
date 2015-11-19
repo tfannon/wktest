@@ -272,7 +272,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
             setup: { cell, data in
-                cell.accessoryType = .DisclosureIndicator },
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = self.procedure.changes?.count > 0
+            },
             selected: { cell, data, indexPath in
                 let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
                 vc.changes = self.procedure.changes!
