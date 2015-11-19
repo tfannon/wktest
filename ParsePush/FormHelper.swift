@@ -19,6 +19,7 @@ class CellData {
     var identifier : String?
     var style : UITableViewCellStyle?
     var visible : Bool = true
+    var toggled : Bool = false
     private var initFunction : (() -> UITableViewCell)?
     private var setupFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
@@ -39,6 +40,7 @@ class CellData {
         label : String? = nil,
         imageName : String? = nil,
         placeHolder: String? = nil,
+        toggled: Bool = false,
         style : UITableViewCellStyle? = nil,
         initialize : (() -> UITableViewCell)? = nil,
         setup : ((UITableViewCell, CellData) -> Void)? = nil,
@@ -57,6 +59,7 @@ class CellData {
         self.style = style
         self.imageName = imageName
         self.placeHolder = placeHolder
+        self.toggled = toggled
         self.initFunction = initialize
         self.setupFunction = setup
         self.selectedFunction = selected
@@ -85,6 +88,7 @@ class FormHelper {
     private let controller : UITableViewController!
     private let controllerAsDelegate : CustomCellDelegate!
     var data = [[CellData]]()
+    var hiddenSections = Set<Int>()
     
     private var _sections = [String]()
     var sections : [String] { get { return _sections } }
@@ -179,9 +183,25 @@ class FormHelper {
         }
     }
     
+    func getSectionTitle(section : Int) -> String {
+        var visibleSections = [String]()
+        for i in 0..<sections.count {
+            if !hiddenSections.contains(i) {
+                visibleSections.append(sections[i])
+            }
+        }
+        return visibleSections[section]
+    }
+    
     func getCellData(indexPath: NSIndexPath) -> CellData
     {
-        let filtered = data[indexPath.section].filter { d in return d.visible }
+        var visibleSections = [[CellData]]()
+        for i in 0..<data.count {
+            if !hiddenSections.contains(i) {
+                visibleSections.append(data[i])
+            }
+        }
+        let filtered = visibleSections[indexPath.section].filter { d in return d.visible }
         return filtered[indexPath.row]
     }
 

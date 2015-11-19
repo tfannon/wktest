@@ -65,6 +65,12 @@ extension String {
     {
         return (self as NSString).substringFromIndex(startingIndex)
     }
+    
+    func startsWith(string: String) -> Bool
+    {
+        let range = (self as NSString).rangeOfString(string, options:.CaseInsensitiveSearch)
+        return range.location == 0
+    }
 }
 
 extension UITableViewCell {

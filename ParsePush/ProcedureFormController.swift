@@ -45,7 +45,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         setupForm()
         
         self.tableView.reloadData()
-        
+
         watchForChanges = true
     }
     
@@ -71,15 +71,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     private func setupForm() {
         
-        formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
-            setup: { cell, data in
-                cell.accessoryType = .DisclosureIndicator },
-            selected: { cell, data, indexPath in
-                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                vc.changes = self.procedure.changes!
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        })])
         formHelper.addSection(" ",
         data: [
             CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
@@ -190,6 +181,51 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     self.enableSave()
                 })
             ])
+
+//        formHelper.addSection(" ", data:
+//            [CellData(identifier: "_HideTextFields1",
+//                label: "Show Text Fields",
+//                style: UITableViewCellStyle.Value1,
+//                toggled: false,
+//                setup: { cell, data in
+//                    cell.selectionStyle = .None
+//                    cell.backgroundColor = UIColor.lightGrayColor()
+//                },
+//                selected: { cell, data, indexPath in
+//                    let show = !data.toggled
+//                    data.toggled = !data.toggled
+//                    if show {
+//                        cell.textLabel?.text = "Hide Text Fields"
+//                    }
+//                    else {
+//                        cell.textLabel?.text = "Show Text Fields"
+//                    }
+//                    let s = NSMutableIndexSet()
+//                    self.tableView.beginUpdates()
+//                    for i in indexPath.section + 1...indexPath.section + 4 {
+//                        if (show) {
+//                            if self.formHelper.hiddenSections.contains(i) {
+//                                self.formHelper.hiddenSections.remove(i)
+//                                s.addIndex(i)
+//                            }
+//                        }
+//                        else {
+//                            if !self.formHelper.hiddenSections.contains(i) {
+//                                self.formHelper.hiddenSections.insert(i)
+//                                s.addIndex(i)
+//                            }
+//                        }
+//                    }
+//                    if (show) {
+//                        self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Right)
+//                    }
+//                    else {
+//                        self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Right)
+//                    }
+//                    self.tableView.endUpdates()
+//                })
+//            ])
+
         formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text1,
             setup: formHelper.htmlCellSetup,
@@ -281,27 +317,42 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
-        
+
         // load up ALL the html cells
-        for section in formHelper.data {
+        let hideSections = NSMutableIndexSet()
+        for i in 0..<formHelper.data.count {
+            let section = formHelper.data[i]
             for data in section {
-                if data.nibIdentifier == "HtmlCell" {
-                    self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
+                if let nib = data.nibIdentifier {
+                    if nib == "HtmlCell" {
+                        self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
+                        
+//                        if !hideSections.contains(i) {
+//                            hideSections.addIndex(i)
+//                        }
+                    }
                 }
             }
         }
+        self.tableView.beginUpdates()
+        for section in hideSections {
+            self.formHelper.hiddenSections.insert(section)
+        }
+        self.tableView.deleteSections(hideSections, withRowAnimation: .None)
+        self.tableView.endUpdates()
+    
     }
     
     override func tableView(tableView: UITableView,
         titleForHeaderInSection section: Int) -> String?
     {
-        return formHelper.sections[section]
+        return formHelper.getSectionTitle(section)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return formHelper.data.count
+        return formHelper.data.count - self.formHelper.hiddenSections.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

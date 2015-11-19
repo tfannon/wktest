@@ -252,7 +252,12 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
             self.timer?.invalidate()
             self.timer = nil
 
-            let content_height =  CGFloat(Int(webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight") ?? "0")!)
+            var content_height : CGFloat = 100
+            let a = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight")
+            let b = a ?? "0"
+            if let c = Int(b) {
+                content_height = CGFloat(c)
+            }
             let current_height = webView.frame.size.height
             
             if current_height != content_height {
