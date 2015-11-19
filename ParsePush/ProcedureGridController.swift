@@ -37,7 +37,12 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             self.dataSourceHelper.data = self.items
         }
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        let f = self.view.frame
+        self.grid.frame = f
+    }
+
     func getProcedures(completed: ()->()) {
         self.items = []
         self.sortedItems = []
