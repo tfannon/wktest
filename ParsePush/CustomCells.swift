@@ -94,6 +94,53 @@ public class DatePickerCell : CustomCell
     }
 }
 
+public class DatePickerNullableCell : CustomCell
+{
+    @IBOutlet weak var noneLabel: UILabel!
+    @IBOutlet weak var noneSelector: UISwitch!
+    @IBOutlet var datePicker : UIDatePicker!
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        
+        selectionStyle = .None
+        datePicker.datePickerMode = .Date
+        datePicker.addTarget(self, action: Selector("datePickerDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
+        noneSelector.addTarget(self, action: Selector("switchDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    var value : NSDate? {
+        get {
+            return (noneSelector.on) ? nil : datePicker.date
+        }
+        set {
+            if let v = newValue {
+                noneSelector.on = false
+                datePicker.date = v
+            }
+            else {
+                noneSelector.on = true
+                datePicker.date = NSDate()
+            }
+            displayChange()
+        }
+    }
+
+    private func displayChange() {
+        datePicker.enabled = !noneSelector.on
+        datePicker.userInteractionEnabled = !noneSelector.on
+        datePicker.alpha = (noneSelector.on) ? 0.5 : 1
+    }
+    
+    func datePickerDidChange(sender: UIDatePicker) {
+        changed()
+    }
+    func switchDidChange(sender: UISwitch) {
+        displayChange()
+        changed()
+    }
+}
+
 public class TextCell : CustomCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!

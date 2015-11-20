@@ -74,6 +74,7 @@
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
 		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; };
+		66A87FEB1BFFCF230042A95A /* DatePickerNullableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */; };
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; };
 		66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E65F641BD5B4D200B8B351 /* Procedure.storyboard */; };
 		66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */; };
@@ -206,6 +207,7 @@
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
 		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
+		66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerNullableCell.xib; sourceTree = "<group>"; };
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		66E65F651BD5B4D200B8B351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Procedure.storyboard; sourceTree = "<group>"; };
 		66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
@@ -372,6 +374,7 @@
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
 				668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */,
 				663259BF1BF2405F00D3C76E /* DatePickerCell.xib */,
+				66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */,
 				6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */,
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
 				6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */,
@@ -644,6 +647,7 @@
 				65768AE61BA641C500DADD43 /* Main.storyboard in Resources */,
 				6564FFE91BDF91530014FE08 /* Roboto-LightItalic.ttf in Resources */,
 				6564FFE51BDF91530014FE08 /* Roboto-Bold.ttf in Resources */,
+				66A87FEB1BFFCF230042A95A /* DatePickerNullableCell.xib in Resources */,
 				6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */,
 				663259BC1BF1972D00D3C76E /* TextCell.xib in Resources */,
 				6564FFEB1BDF91530014FE08 /* Roboto-MediumItalic.ttf in Resources */,

@@ -74,14 +74,14 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         formHelper.addSection(" ",
         data: [
             CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
-                setup: formHelper.textCellSetup,
+                willDisplay: formHelper.textCellSetup,
                 changed: { cell, _ in
                     let textCell = cell as! TextCell
                     self.procedure.title = textCell.textField.text
                     self.enableSave()
             }),
             CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"),
-                setup: formHelper.textCellSetup,
+                willDisplay: formHelper.textCellSetup,
                 changed: { cell, _ in
                     let textCell = cell as! TextCell
                     self.procedure.code = textCell.textField.text
@@ -91,23 +91,21 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"),
                 style: UITableViewCellStyle.Value1,
                 imageName: "769-male",
-                setup: { cell, _ in cell.selectionStyle = .None }),
+                willDisplay: { cell, _ in cell.selectionStyle = .None }),
             
             CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(),
                 label: self.t("dueDate"),
                 style: UITableViewCellStyle.Value1,
-                setup: formHelper.dateCellSetup,
+                willDisplay: formHelper.dateCellSetup,
                 selected: formHelper.dateCellSelected),
-            CellData(identifier: "DatePickerCell",
-                setup: { cell, data in
-                    let dateCell = cell as! DatePickerCell
-                    if let date = self.procedure.dueDate {
-                        dateCell.datePicker.date = date
-                    }
+            CellData(identifier: "DatePickerNullableCell",
+                willDisplay: { cell, data in
+                    let dateCell = cell as! DatePickerNullableCell
+                    dateCell.value = self.procedure.dueDate
                     dateCell.delegate = self
-                },
+               },
                 changed: { cell, data in
-                    let dateCell = cell as! DatePickerCell
+                    let dateCell = cell as! DatePickerNullableCell
                     self.procedure.dueDate = dateCell.value
                     let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
                     let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
@@ -121,7 +119,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             CellData(identifier: "_BasicCell",
                 value: WorkflowState(rawValue: self.procedure.workflowState)?.displayName,
                 style: UITableViewCellStyle.Value1,
-                setup: { cell, _ in
+                willDisplay: { cell, _ in
                     cell.selectionStyle = .None
                     cell.detailTextLabel?.textColor = cell.textLabel?.textColor
                     cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
@@ -157,22 +155,20 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 label: self.t("reviewer"),
                 imageName: "769-male",
                 style: UITableViewCellStyle.Value1,
-                setup: { cell, _ in cell.selectionStyle = .None }),
+                willDisplay: { cell, _ in cell.selectionStyle = .None }),
             
             CellData(identifier: "_BasicCell", value: procedure.reviewDueDate?.ToLongDateStyle(), label: self.t("reviewDueDate"),
                 style: UITableViewCellStyle.Value1,
-                setup: formHelper.dateCellSetup,
+                willDisplay: formHelper.dateCellSetup,
                 selected: formHelper.dateCellSelected),
-            CellData(identifier: "DatePickerCell",
-                setup: { cell, data in
-                    let dateCell = cell as! DatePickerCell
-                    if let date = self.procedure.reviewDueDate {
-                        dateCell.datePicker.date = date
-                    }
+            CellData(identifier: "DatePickerNullableCell",
+                willDisplay: { cell, data in
+                    let dateCell = cell as! DatePickerNullableCell
+                    dateCell.value = self.procedure.reviewDueDate
                     dateCell.delegate = self
                 },
                 changed: { cell, data in
-                    let dateCell = cell as! DatePickerCell
+                    let dateCell = cell as! DatePickerNullableCell
                     self.procedure.reviewDueDate = dateCell.value
                     let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
                     let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
@@ -183,7 +179,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             ])
 
         formHelper.addSection("Results", data: [CellData(identifier: "SegmentedCell",
-            setup: { cell, data in
+            willDisplay: { cell, data in
                 let segmentedCell = cell as! SegmentedCell
                 segmentedCell.delegate = self
                 segmentedCell.setOptions(TestResults.displayNames)
@@ -197,7 +193,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         
         formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
-            setup: { cell, data in
+            willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = self.procedure.changes?.count > 0
             },
@@ -212,7 +208,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             [CellData(identifier: "_HideTextFields1",
                 style: UITableViewCellStyle.Value1,
                 toggled: false,
-                setup: { cell, data in
+                willDisplay: { cell, data in
                     cell.selectionStyle = .None
                     cell.backgroundColor = UIColor.lightGrayColor()
                     if data.toggled {
@@ -264,12 +260,13 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Right)
                     }
                     self.tableView.endUpdates()
+                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
                 })
             ])
 
         formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text1,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.text1 = htmlCell.textString
@@ -277,7 +274,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             })])
         formHelper.addSection(self.t("text2"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text2,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.text2 = htmlCell.textString
@@ -285,7 +282,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         formHelper.addSection(self.t("text3"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text3,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let textCell = cell as! HtmlCell
                 self.procedure.text3 = textCell.textString
@@ -293,7 +290,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         formHelper.addSection(self.t("text4"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text4,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let textCell = cell as! HtmlCell
                 self.procedure.text4 = textCell.textString
@@ -302,7 +299,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
  
         formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.resultsText1,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.resultsText1 = htmlCell.textString
@@ -310,7 +307,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         formHelper.addSection(self.t("resultsText2"), data: [CellData(identifier: "HtmlCell",
             value: procedure.resultsText2,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.resultsText2 = htmlCell.textString
@@ -318,7 +315,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         formHelper.addSection(self.t("resultsText3"), data: [CellData(identifier: "HtmlCell",
             value: procedure.resultsText3,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.resultsText3 = htmlCell.textString
@@ -326,7 +323,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         })])
         formHelper.addSection(self.t("resultsText4"), data: [CellData(identifier: "HtmlCell",
             value: procedure.resultsText4,
-            setup: formHelper.htmlCellSetup,
+            willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
                 let htmlCell = cell as! HtmlCell
                 self.procedure.resultsText4 = htmlCell.textString
@@ -410,16 +407,12 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
+        let cellData = formHelper.getCellData(indexPath)
+
         // so that the separator appears under the image
         cell.separatorInset = UIEdgeInsetsZero
-        configureCell(tableView, cell: cell, forRowAtIndexPath: indexPath)
-    }
-    
-    private func configureCell(tableView: UITableView,
-        cell: UITableViewCell,
-        forRowAtIndexPath indexPath: NSIndexPath)
-    {
-        let cellData = formHelper.getCellData(indexPath)
+        // other initialization to clear previous usage of the cell
+        cell.accessoryType = .None
         
         cell.textLabel?.text = cellData.label
         cell.detailTextLabel?.text = cellData.value as! String?
@@ -428,7 +421,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             cell.imageView?.image = UIImage(named: imageName)
         }
         
-        cellData.setup(cell)
+        cellData.willDisplay(cell)
     }
     
     func changed(cell: UITableViewCell) {

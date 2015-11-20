@@ -21,7 +21,7 @@ class CellData {
     var visible : Bool = true
     var toggled : Bool = false
     private var initFunction : (() -> UITableViewCell)?
-    private var setupFunction : ((UITableViewCell, CellData) -> Void)?
+    private var willDisplayFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
     private var changedFunction : ((UITableViewCell, CellData) -> Void)?
     let tag = tagCount++
@@ -43,7 +43,7 @@ class CellData {
         toggled: Bool = false,
         style : UITableViewCellStyle? = nil,
         initialize : (() -> UITableViewCell)? = nil,
-        setup : ((UITableViewCell, CellData) -> Void)? = nil,
+        willDisplay : ((UITableViewCell, CellData) -> Void)? = nil,
         selected: ((UITableViewCell, CellData, NSIndexPath) -> Void)? = nil,
         changed: ((UITableViewCell, CellData) -> Void)? = nil
         )
@@ -61,10 +61,10 @@ class CellData {
         self.placeHolder = placeHolder
         self.toggled = toggled
         self.initFunction = initialize
-        self.setupFunction = setup
+        self.willDisplayFunction = willDisplay
         self.selectedFunction = selected
         self.changedFunction = changed
-        self.visible = identifier != "DatePickerCell"
+        self.visible = !identifier.startsWith("DatePicker")
     }
     func initialize() -> UITableViewCell {
         if let f = initFunction {
@@ -72,8 +72,8 @@ class CellData {
         }
         return UITableViewCell(style: self.style ?? .Default, reuseIdentifier: self.identifier)
     }
-    func setup(cell : UITableViewCell) {
-        setupFunction?(cell, self)
+    func willDisplay(cell : UITableViewCell) {
+        willDisplayFunction?(cell, self)
     }
     func selected(cell : UITableViewCell, indexPath: NSIndexPath) {
         selectedFunction?(cell, self, indexPath)
@@ -167,7 +167,7 @@ class FormHelper {
         // remove any visible datetimepicker cells that aren't this one
         if dpData.visible {
             for otherCell in self.controller.tableView.visibleCells {
-                if let _ = otherCell as? DatePickerCell {
+                if let _ = otherCell as? DatePickerNullableCell {
                     let otherIndexPath = self.controller.tableView.indexPathForCell(otherCell)!
                     if (otherIndexPath != dpIndexPath) {
                         let otherData = self.getCellData(otherIndexPath)
