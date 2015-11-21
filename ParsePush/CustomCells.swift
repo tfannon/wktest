@@ -108,7 +108,6 @@ public class DatePickerNullableCell : CustomCell
         datePicker.datePickerMode = .Date
         datePicker.addTarget(self, action: Selector("datePickerDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
         noneSelector.addTarget(self, action: Selector("switchDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
-        contentView.bringSubviewToFront(nodateView)
     }
     
     var value : NSDate? {
