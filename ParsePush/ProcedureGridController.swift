@@ -66,7 +66,7 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
             let title = Procedure.getTerminology(key)
             switch key {
 
-            case "sync": addColumnWithTitle(key, title: "Sync", width: 70, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
+            case "sync": addColumnWithTitle(key, title: "Sync", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
                 
             case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
