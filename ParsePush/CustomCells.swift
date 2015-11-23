@@ -264,9 +264,18 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
         }
     }
     
+    public func webView(_: UIWebView,
+        didFailLoadWithError error: NSError?) {
+            loaded = true
+    }
+    
     public func webViewDidFinishLoad(_: UIWebView)
     {
         loaded = true
+    }
+    
+    public var isLoaded : Bool {
+        get { return loaded }
     }
     
     private func startWaiting() {
