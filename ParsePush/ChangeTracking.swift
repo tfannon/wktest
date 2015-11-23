@@ -13,14 +13,12 @@ class Change: BaseObject
 {
     var user : String?
     var date : NSDate?
-    var title : String?
     var changeDescription : String?
     var details : [ChangeDetail]?
     
     override func mapping(map: Map) {
-        id <- map["Id"]
+        super.mapping(map)
         user <- map["User"]
-        title <- map["Title"]
         changeDescription <- map["Description"]
         date <- (map["Date"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: (($0!.length >= 19) ? $0!.substring(19) : $0!.substring(10)) + "-5:00", format: DateFormat.ISO8601(ISO8601Format.DateTime)) : nil },

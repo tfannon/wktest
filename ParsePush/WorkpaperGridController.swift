@@ -105,12 +105,6 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
         self.grid.addColumn(column)
     }
     
-    //this needs to happen after data has loaded
-    func setupSort() {
-        let column = self.grid.columns.filter { $0.propertyKey == "dueDate" }.first! as! SDataGridColumn
-        column.sortMode = SDataGridColumnSortModeBiState
-    }
-    
     func createDataSource() {
         self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
         self.dataSourceHelper.delegate = self
