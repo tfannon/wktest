@@ -291,6 +291,11 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
 
                         NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
                             if firstCell.isResized {
+                                // after the first cell is resized 
+                                // we check to see if others that are visible are still being resized
+                                // after the resizing is done - we scroll - otherwise, we may scroll
+                                // to a place that shifts AFTER the other cells are loading.
+                                // UIWebView is a pain!
                                 let waiting = self.tableView.visibleCells
                                     .filter { x in x.isKindOfClass(HtmlCell) }
                                     .map { x in x as! HtmlCell }
@@ -299,19 +304,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                                     timer.invalidate()
                                     scroll()
                                 }
-                            }
-                        })
-                    }
-                    else {
-                        NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
-                            let waiting = self.tableView.visibleCells
-                                .filter { x in x.isKindOfClass(HtmlCell) }
-                                .map { x in self.tableView.indexPathForCell(x) }
-                                .filter { x in x != nil }
-                                .any { x in htmlIndexPaths.contains(x!) }
-                            if !waiting {
-                                timer.invalidate()
-                                scroll()
                             }
                         })
                     }
