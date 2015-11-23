@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DTFoundation
 
 class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
@@ -207,25 +208,25 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         formHelper.addSection(" ", data:
             [CellData(identifier: "_HideTextFields1",
                 style: UITableViewCellStyle.Value1,
+                label: "Text Fields",
                 toggled: false,
                 willDisplay: { cell, data in
                     cell.selectionStyle = .None
-                    cell.backgroundColor = UIColor.lightGrayColor()
                     if data.toggled {
-                        cell.textLabel?.text = "Hide Text Fields"
+                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Down)
                     }
                     else {
-                        cell.textLabel?.text = "Show Text Fields"
+                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Up)
                     }
                 },
                 selected: { cell, data, indexPath in
                     data.toggled = !data.toggled
                     let show = data.toggled
                     if show {
-                        cell.textLabel?.text = "Hide Text Fields"
+                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Down)
                     }
                     else {
-                        cell.textLabel?.text = "Show Text Fields"
+                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
                     }
                     let s = NSMutableIndexSet()
                     self.tableView.beginUpdates()
