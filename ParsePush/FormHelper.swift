@@ -20,6 +20,7 @@ class CellData {
     var style : UITableViewCellStyle?
     var visible : Bool = true
     var toggled : Bool = false
+    var selectedIfAccessoryButtonTapped : Bool = false
     private var initFunction : (() -> UITableViewCell)?
     private var willDisplayFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
@@ -41,6 +42,7 @@ class CellData {
         imageName : String? = nil,
         placeHolder: String? = nil,
         toggled: Bool = false,
+        selectedIfAccessoryButtonTapped: Bool = false,
         style : UITableViewCellStyle? = nil,
         initialize : (() -> UITableViewCell)? = nil,
         willDisplay : ((UITableViewCell, CellData) -> Void)? = nil,
@@ -58,6 +60,7 @@ class CellData {
         self.value = value
         self.style = style
         self.imageName = imageName
+        self.selectedIfAccessoryButtonTapped = selectedIfAccessoryButtonTapped
         self.placeHolder = placeHolder
         self.toggled = toggled
         self.initFunction = initialize

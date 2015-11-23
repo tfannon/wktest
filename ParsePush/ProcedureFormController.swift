@@ -10,7 +10,6 @@ import UIKit
 import DTFoundation
 
 class ProcedureFormController: UITableViewController, CustomCellDelegate {
-    
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
@@ -210,6 +209,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                 style: UITableViewCellStyle.Value1,
                 label: "Text Fields",
                 toggled: false,
+                selectedIfAccessoryButtonTapped: true,
                 willDisplay: { cell, data in
                     cell.selectionStyle = .None
                     if data.toggled {
@@ -254,6 +254,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                             }
                         }
                     }
+                    
                     if (show) {
                         self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Right)
                     }
@@ -261,7 +262,35 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Right)
                     }
                     self.tableView.endUpdates()
-                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+
+                    
+                    var firstHtmlCell : HtmlCell?
+                    if show {
+                        let firstCell = self.tableView.cellForRowAtIndexPath(indexPath.getNextSection())
+                        firstHtmlCell = firstCell as? HtmlCell
+                    }
+
+                    // check the first html view every .1 seconds - when loaded, then scroll to it
+                    // we don't do it immediately because we want the true height of the loaded html to be considered
+                    //  for the scroll
+                    self.tableView.alpha = 0.5
+                    let scroll : () -> Void = {
+                        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                        self.tableView.alpha = 1
+                        self.tableView.userInteractionEnabled = true
+                    }
+                    if firstHtmlCell != nil {
+                        NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
+                            if firstHtmlCell!.isLoaded {
+                                timer.invalidate()
+                                scroll()
+                            }
+                        })
+                    }
+                    else {
+                        scroll()
+                    }
+
                 })
             ])
 
@@ -405,7 +434,16 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         let data = formHelper.getCellData(indexPath)
         data.selected(cell, indexPath: indexPath)
     }
-
+    
+    // need this so we can detect the tapping of an accessory view, which is otherwise independant of the UITableViewCell
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        let data = formHelper.getCellData(indexPath)
+        if data.selectedIfAccessoryButtonTapped {
+            data.selected(cell, indexPath: indexPath)
+        }
+    }
+    
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         let cellData = formHelper.getCellData(indexPath)
