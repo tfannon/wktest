@@ -13,6 +13,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
+    //private var htmlCellsThatWillDisplay = [HtmlCell]()
     
     init(procedure : Procedure)
     {
@@ -220,6 +221,18 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     }
                 },
                 selected: { cell, data, indexPath in
+                    
+                    let htmlIndexPaths = [
+                        indexPath.getFirstRowAtRelativeSection(1),
+                        indexPath.getFirstRowAtRelativeSection(2),
+                        indexPath.getFirstRowAtRelativeSection(3),
+                        indexPath.getFirstRowAtRelativeSection(4),
+                        indexPath.getFirstRowAtRelativeSection(5),
+                        indexPath.getFirstRowAtRelativeSection(6),
+                        indexPath.getFirstRowAtRelativeSection(7),
+                        indexPath.getFirstRowAtRelativeSection(8),
+                    ]
+                    
                     data.toggled = !data.toggled
                     let show = data.toggled
                     if show {
@@ -230,17 +243,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     }
                     let s = NSMutableIndexSet()
                     self.tableView.beginUpdates()
-                    for i in [
-                        indexPath.section + 1,
-                        indexPath.section + 2,
-                        indexPath.section + 3,
-                        indexPath.section + 4,
-                        indexPath.section + 5,
-                        indexPath.section + 6,
-                        indexPath.section + 7,
-                        indexPath.section + 8,
-                        ]
+                    for htmlIndexPath in htmlIndexPaths
                     {
+                        let i = htmlIndexPath.section
                         if (show) {
                             if self.formHelper.hiddenSections.contains(i) {
                                 self.formHelper.hiddenSections.remove(i)
@@ -256,44 +261,66 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     }
                     
                     if (show) {
-                        self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Right)
+                        self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     else {
-                        self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Right)
+                        self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     self.tableView.endUpdates()
 
                     
-                    var firstHtmlCell : HtmlCell?
-                    if show {
-                        let firstCell = self.tableView.cellForRowAtIndexPath(indexPath.getNextSection())
-                        firstHtmlCell = firstCell as? HtmlCell
-                    }
-
                     // check the first html view every .1 seconds - when loaded, then scroll to it
                     // we don't do it immediately because we want the true height of the loaded html to be considered
                     //  for the scroll
-                    self.tableView.alpha = 0.5
+                    var abc : UIActivityIndicatorView?
                     let scroll : () -> Void = {
-                        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                        self.tableView.scrollToRowAtIndexPath(indexPath,
+                            atScrollPosition: (show) ? .Top : .Bottom, animated: true)
+                        abc?.removeFromSuperview()
                         self.tableView.alpha = 1
                         self.tableView.userInteractionEnabled = true
                     }
-                    if firstHtmlCell != nil {
+                    if show {
+                        let firstCell = self.tableView.cellForRowAtIndexPath(htmlIndexPaths[0]) as! HtmlCell
+                        abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                        self.tableView.addSubview(abc!)
+                        self.tableView.bringSubviewToFront(abc!)
+                        abc!.center = self.tableView.center
+                        abc!.hidesWhenStopped = true
+                        abc!.hidden = false
+                        abc!.startAnimating()
+                        self.tableView.userInteractionEnabled = false
+                        self.tableView.alpha = 0.9
+
                         NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
-                            if firstHtmlCell!.isLoaded {
+                            if firstCell.isResized {
+                                let waiting = self.tableView.visibleCells
+                                    .filter { x in x.isKindOfClass(HtmlCell) }
+                                    .map { x in x as! HtmlCell }
+                                    .any { x in !x.isResized }
+                                if !waiting {
+                                    timer.invalidate()
+                                    scroll()
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
+                            let waiting = self.tableView.visibleCells
+                                .filter { x in x.isKindOfClass(HtmlCell) }
+                                .map { x in self.tableView.indexPathForCell(x) }
+                                .filter { x in x != nil }
+                                .any { x in htmlIndexPaths.contains(x!) }
+                            if !waiting {
                                 timer.invalidate()
                                 scroll()
                             }
                         })
                     }
-                    else {
-                        scroll()
-                    }
-
                 })
             ])
-
+    
         formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text1,
             willDisplay: formHelper.htmlCellSetup,
@@ -445,6 +472,11 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+//        if let hc = cell as? HtmlCell {
+//            self.htmlCellsThatWillDisplay.append(hc)
+//        }
+        
         
         let cellData = formHelper.getCellData(indexPath)
 

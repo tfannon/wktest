@@ -225,6 +225,7 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     private var loaded = false
+    private var resized = false
     private var timer : NSTimer?
     
     override public func awakeFromNib() {
@@ -246,6 +247,10 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
                 ?? ""
         }
         set {
+            // reset
+            loaded = false
+            resized = false
+
             startWaiting()
             _textString = newValue
             webView.loadHTMLString(newValue, baseURL: nil)
@@ -274,12 +279,13 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
         loaded = true
     }
     
-    public var isLoaded : Bool {
-        get { return loaded }
+    public var isResized : Bool {
+        get { return resized }
     }
     
     private func startWaiting() {
         if !webView.hidden {
+            self.resized = false
             webView.hidden = true
             indicator.sizeToFit()
             indicator.hidden = false
@@ -288,6 +294,7 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
     }
     private func stopWaiting() {
         if webView.hidden {
+            self.resized = true
             webView.hidden = false
             indicator.hidden = true
             indicator.stopAnimating()
