@@ -11,7 +11,7 @@ import UIKit
 class DocumentPickerViewController: UIDocumentPickerExtensionViewController {
 
     @IBAction func openDocument(sender: AnyObject?) {
-        let documentURL = self.documentStorageURL!.URLByAppendingPathComponent("Lorem.docx")
+        let documentURL = self.documentStorageURL!.URLByAppendingPathComponent("Test.docx")
         print ("opening document \(documentURL.path!)")
       
         // TODO: if you do not have a corresponding file provider, you must ensure that the URL returned here is backed by a file

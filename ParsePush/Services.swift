@@ -292,6 +292,10 @@ public class Services {
             saveProcedures(dirty!) {
                 completed(result:$0)
             }
+//            dirty = result?.workpapers.filter { $0.isDirty() == true }
+//            saveWorkpapers(dirty!) {
+//                completed(result:$0)
+//            }
         }
     }
     
@@ -445,7 +449,10 @@ public class Services {
         print(__FUNCTION__)
         clearStore()
         saveObjectsImpl(objects.procedures)
-        saveObjectsImpl(objects.workpapers)
+        //hack for sync
+        if objects.workpapers.count > 0 {
+            saveObjectsImpl(objects.workpapers)
+        }
     }
     
     private static func saveObjectsImpl(objects: [BaseObject]) {

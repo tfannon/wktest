@@ -59,25 +59,27 @@ class ProcedureGridController: UIViewController, SDataGridDataSourceHelperDelega
     
     func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState",/*"workflowStateTitle",*/ "testResults","dueDate","reviewer","reviewDueDate"]
+            gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState","workflowStateTitle", "tester","testResults","dueDate","reviewer","reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
             let title = Procedure.getTerminology(key)
             switch key {
 
-            case "sync": addColumnWithTitle(key, title: "Sync", width: 70, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5))
+            case "sync": addColumnWithTitle(key, title: "Sync", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
                 
             case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
             case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
                 
-            case "parentTitle": addColumnWithTitle(key, title: "Parent", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+            case "parentTitle": addColumnWithTitle(key, title: "Parent", width: 125, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
                 
 
-            case "workflowState": addColumnWithTitle(key, title: title, width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
+            case "workflowState": addColumnWithTitle(key, title: "", width: 63, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
                 
-            case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Right, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "workflowStateTitle": addColumnWithTitle(key, title: "State", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+                
+            case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
             case "dueDate": addColumnWithTitle(key, title: "Due", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), sortMode: SDataGridColumnSortModeTriState)
                 
