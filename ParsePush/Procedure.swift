@@ -80,6 +80,8 @@ class Procedure : BaseObject  {
 
     //grid cannot read enums
     var sync: String { get { return syncState.displayName } }
+    //another hack for the grid
+    var workflowStateTitle: String { get { return WorkflowState(rawValue: workflowState)!.displayName } }
     
 
     var changes : [Change]?
