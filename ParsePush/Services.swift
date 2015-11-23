@@ -514,6 +514,22 @@ public class Services {
         return nil
     }
     
+    //MARK: Workpapers
+    private static func loadIssues() -> [Issue]? {
+        print(__FUNCTION__)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        //may be empty
+//        if let ids = loadIssueIds() {
+//            return ids.map { id in
+//                let key = DataKey.getIssueKey(id)
+//                let jsonProc = defaults.valueForKey(key) as! String
+//                return Mapper<Issue>().map(jsonProc)!
+//            }
+//        }
+        return nil
+    }
+    
+    
     static func getAttachment(id: Int, completed: (String->())) {
         let key = DataKey.getAttachmentKey(id)
         if let destination = appGroupDefaults.valueForKey(key) as? String {

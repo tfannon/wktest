@@ -14,21 +14,18 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     private var watchForChanges = false
     private var formHelper : FormHelper!
     
-    init(procedure : Procedure)
-    {
+    init(procedure : Procedure) {
         super.init(style: .Grouped)
 
         self.procedure = procedure
         formHelper = FormHelper(controller: self)
     }
     
-    required init(coder: NSCoder)
-    {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func t(key : String) -> String
-    {
+    private func t(key : String) -> String {
         return Procedure.getTerminology(key)
     }
     

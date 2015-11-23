@@ -8,6 +8,11 @@
 
 import Foundation
 
+extension NSObject {
+    var theClassName: String {
+        return NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
+    }
+}
 
 extension Array{
     func each(each: (Element) -> ()){

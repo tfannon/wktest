@@ -9,15 +9,9 @@
 import Foundation
 import ObjectMapper
 
+
 class Procedure : BaseObject  {
-//    required init(_ map: Map) {
-//    }
-//    
-//    // used for creating one from scratch
-//    override init() {
-//    }
-    
-    private static var terminology = [
+    static var term =  [
         "title":"Title",
         "parentTitle":"Parent",
         "parentType":"Parent",
@@ -35,28 +29,12 @@ class Procedure : BaseObject  {
         "resultsText1":"Record of Work Done",
         "resultsText2":"Conclusion",
         "resultsText3":"Notes",
-        "resultsText4":"Results 4"
-    ]
-    
-    private var isMapping = false
-    
-    // this holds the names of the dirtied properties
-    // we use the name of the property as specified in the Map (Capital case)
-    // because this is used to match to a property name on the server side
-    private var setDirtyFields = Set<String>()
-    private var dirtyFields : [String] {
-        get { return Array(setDirtyFields) }
-        set { setDirtyFields = Set<String>(newValue) }
+        "resultsText4":"Results 4"]
+
+    class func getTerminology(key: String) -> String {
+        return term[key] ?? ""
     }
     
-    static func getTerminology(key : String) -> String{
-        return terminology[key] ?? ""
-    }
-    
-    //var id: Int?
-    var parentTitle: String?
-    var parentType: Int = 0
-    var title: String? { didSet { setDirty("Title") } }
     var code: String? { didSet { setDirty("Code") } }
     var text1: String? { didSet { setDirty("Text1") } }
     var text2: String? { didSet { setDirty("Text2") } }
@@ -71,47 +49,9 @@ class Procedure : BaseObject  {
     var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
     var tester: String = ""
     var reviewer: String = ""
-    var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
-    var readOnly  : Bool?
-    var allowedStates : [Int]?
-    var lmg: String?
-    var wasChangedOnServer : Bool?
-    var syncState: SyncState = .Unchanged
-
-    //grid cannot read enums
-    var sync: String { get { return syncState.displayName } }
-    //another hack for the grid
-    var workflowStateTitle: String { get { return WorkflowState(rawValue: workflowState)!.displayName } }
-    
-
-    var changes : [Change]?
-    
-    func isDirty() -> Bool{
-        return setDirtyFields.count > 0
-    }
-    
-    func clean() {
-        setDirtyFields = []
-    }
-
-    private func setDirty(field : String!)
-    {
-        if (!isMapping)
-        {
-            setDirtyFields.insert(field)
-            self.syncState = .Dirty
-        }
-    }
-
-
+   
     override func mapping(map: Map) {
-        isMapping = true
-        
-        id <- map["Id"]
-        title <- map["Title"]
-        parentTitle <- map["ParentTitle"]
-        parentType <- map["ParentType"]
-        workflowState <- map["WorkflowState"]
+        super.mapping(map)
         code <- map["Code"]
         text1 <- map["Text1"]
         text2 <- map["Text2"]
@@ -124,11 +64,6 @@ class Procedure : BaseObject  {
         resultsText2 <- map["ResultsText2"]
         resultsText3 <- map["ResultsText3"]
         resultsText4 <- map["ResultsText4"]
-        readOnly <- map["ReadOnly"]
-        dirtyFields <- map["DirtyFields"]
-        lmg <- map["LMG"]
-        wasChangedOnServer <- map["WasChangedOnServer"]
-        changes <- map["Changes"]
         
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
@@ -137,15 +72,9 @@ class Procedure : BaseObject  {
         reviewDueDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
-        
-        allowedStates <- map["AllowedStates"]
-        
-        syncState <- map["SyncState"]
-        
+       
         isMapping = false
     }
-    
-    
     
     override var description: String {
         return "\(title!) \(parentTitle) \(testResults) \(dueDate) \(allowedStates)"
