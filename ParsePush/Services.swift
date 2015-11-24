@@ -164,7 +164,7 @@ public class Services {
         }
     }
     
-    //MARK: Procedures
+    //MARK: Business Objects
     enum FetchOptions {
         case Default
         case ForceRefresh
@@ -214,76 +214,6 @@ public class Services {
         }
     }
     
-    /*
-    static func getMyProcedures(fetchOptions: FetchOptions = .Default, completed: (result: [Procedure]?)->()) {
-        if (mock) {
-            completed(result: Mock.getProcedures())
-        }
-        else {
-            if fetchOptions == .LocalOnly {
-                completed(result: loadProcedures())
-                return
-            }
-            //default is to check the local store first
-            if fetchOptions == .Default {
-                if let procedures = loadProcedures() {
-                    completed(result: procedures)
-                    return
-                }
-            }
-            //if the store had nothing or we force a refresh fetch from services
-            Alamofire.request(.GET, procedureUrl + "/GetMyProcedures", headers:Services.headers, parameters: nil, encoding: .JSON)
-                .responseJSON { request, response, result in
-                    switch result {
-                    case .Success(let data):
-                        let jsonAlamo = data as? [[String:AnyObject]]
-                        let result = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                        //save it back to local store, erasing whatever was there
-                        saveAll(result!)
-                        completed(result: result)
-                    case .Failure(_, let error):
-                        print("Request failed with error: \(error)")
-                    }
-            }
-        }
-    }
-
-    
-
-    static func getMyWorkpapers(fetchOptions: FetchOptions = .Default, completed: (result: [Workpaper]?)->()) {
-        if (mock) {
-            completed(result: Mock.getWorkpapers())
-        }
-        else {
-            if fetchOptions == .LocalOnly {
-                completed(result: loadWorkpapers())
-                return
-            }
-            //default is to check the local store first
-            if fetchOptions == .Default {
-                if let workpapers = loadWorkpapers() {
-                    completed(result: workpapers)
-                    return
-                }
-            }
-            //if the store had nothing or we force a refresh fetch from services
-            Alamofire.request(.GET, procedureUrl + "/GetMyWorkpapers", headers:Services.headers, parameters: nil, encoding: .JSON)
-                .responseJSON { request, response, result in
-                    switch result {
-                    case .Success(let data):
-                        let jsonAlamo = data as? [[String:AnyObject]]
-                        //print(jsonAlamo)
-                        let result = jsonAlamo?.map { Mapper<Workpaper>().map($0)! }
-                        //save it back to local store, erasing whatever was there
-                        //saveAll(result!)
-                        completed(result: result)
-                    case .Failure(_, let error):
-                        print("Request failed with error: \(error)")
-                    }
-            }
-        }
-    }
-*/
     
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
@@ -379,17 +309,26 @@ public class Services {
     enum DataKey : String {
         case ProcedureIds = "procedureIds"
         case WorkpaperIds = "workpaperIds"
+        case IssueIds = "issueIds"
         case AttachmentIds = "attachmentIds"
+        //cant be fullname or it conflicts with class definitions
         case Proc = "procedure:"
-        case Workpaper = "workpaper:"
+        case Iss = "issue:"
+        case Wp = "workpaper:"
         case Attachment = "attachment:"
         
         static func getKeyForIdList(obj: [BaseObject]) -> String {
             if obj is [Procedure] {
                 return DataKey.ProcedureIds.rawValue
             }
-            else {
+            else if obj is [Issue] {
+                return DataKey.IssueIds.rawValue
+            }
+            else if obj is [Workpaper] {
                 return DataKey.WorkpaperIds.rawValue
+            }
+            else {
+                return ""
             }
         }
         
@@ -397,22 +336,29 @@ public class Services {
             if obj is Procedure {
                 return getProcKey(obj.id!)
             }
-            else {
+            else if obj is Issue {
+                return getIssueKey(obj.id!)
+            }
+            else if obj is Workpaper {
                 return getWorkpaperKey(obj.id!)
             }
-            
+            else {
+                return ""
+            }
         }
 
         static func getProcKey(id : Int) -> String {
             return "\(Proc.rawValue)\(id)"
         }
+        static func getIssueKey(id : Int) -> String {
+            return "\(Iss.rawValue)\(id)"
+        }
         static func getWorkpaperKey(id : Int) -> String {
-            return "\(Workpaper.rawValue)\(id)"
+            return "\(Wp.rawValue)\(id)"
         }
         static func getAttachmentKey(id : Int) -> String {
             return "\(Attachment.rawValue)\(id)"
         }
-        
     }
 
     static func clearStore() {
@@ -424,11 +370,14 @@ public class Services {
             procIds.each { defaults.removeObjectForKey(DataKey.getProcKey($0)) }
             defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
         }
+        if let issueIds = defaults.valueForKey(DataKey.IssueIds.rawValue) as? [Int] {
+            issueIds.each { defaults.removeObjectForKey(DataKey.getIssueKey($0)) }
+            defaults.removeObjectForKey(DataKey.IssueIds.rawValue)
+        }
         if let workpaperIds = defaults.valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int] {
             workpaperIds.each { defaults.removeObjectForKey(DataKey.getWorkpaperKey($0)) }
             defaults.removeObjectForKey(DataKey.WorkpaperIds.rawValue)
         }
-
         if let attachmentIds = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] {
             //remove file paths
             attachmentIds.each { appGroupDefaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }
@@ -454,6 +403,9 @@ public class Services {
         //hack for sync
         if objects.workpapers.count > 0 {
             saveObjectsImpl(objects.workpapers)
+        }
+        if objects.issues.count > 0 {
+            saveObjectsImpl(objects.issues)
         }
     }
     
@@ -485,6 +437,9 @@ public class Services {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int]
     }
     
+    private static func loadIssueIds() -> [Int]? {
+        return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.IssueIds.rawValue) as? [Int]
+    }
     
     //may be empty
     private static func loadProcedures() -> [Procedure]? {
@@ -520,14 +475,13 @@ public class Services {
     private static func loadIssues() -> [Issue]? {
         print(__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
-        //may be empty
-//        if let ids = loadIssueIds() {
-//            return ids.map { id in
-//                let key = DataKey.getIssueKey(id)
-//                let jsonProc = defaults.valueForKey(key) as! String
-//                return Mapper<Issue>().map(jsonProc)!
-//            }
-//        }
+        if let ids = loadIssueIds() {
+            return ids.map { id in
+                let key = DataKey.getIssueKey(id)
+                let jsonProc = defaults.valueForKey(key) as! String
+                return Mapper<Issue>().map(jsonProc)!
+            }
+        }
         return nil
     }
     

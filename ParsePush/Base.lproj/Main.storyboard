@@ -484,7 +484,7 @@
         <!--Issues-->
         <scene sceneID="ujz-jW-3kq">
             <objects>
-                <viewController id="c4Z-hh-WO4" sceneMemberID="viewController">
+                <viewController id="c4Z-hh-WO4" customClass="IssueGridController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CAy-5H-MCV"/>
                         <viewControllerLayoutGuide type="bottom" id="I8v-cJ-xcs"/>

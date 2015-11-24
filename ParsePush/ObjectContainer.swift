@@ -27,7 +27,6 @@ class ObjectContainer : Mappable {
     func mapping(map: Map) {
         procedures <- map["Procedures"]
         workpapers <- map["Workpapers"]
-        workpapers <- map["Issues"]
+        issues <- map["Issues"]
     }
-    
 }
