@@ -21,7 +21,7 @@ class Issue : BaseObject {
         "businessContact":"Business Contact",
         
         "createdUser":"Creator",
-        "createdDate":"Created Date",
+        "createdDate":"Created",
         "released":"Released",
     ]
     
