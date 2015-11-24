@@ -206,6 +206,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             [CellData(identifier: "_HideTextFields1",
                 style: UITableViewCellStyle.Value1,
                 label: "Text Fields",
+                imageName:  "pen",
                 toggled: false,
                 selectedIfAccessoryButtonTapped: true,
                 willDisplay: { cell, data in
@@ -462,11 +463,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-//        if let hc = cell as? HtmlCell {
-//            self.htmlCellsThatWillDisplay.append(hc)
-//        }
-        
-        
         let cellData = formHelper.getCellData(indexPath)
 
         // so that the separator appears under the image
@@ -479,6 +475,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         
         if let imageName = cellData.imageName {
             cell.imageView?.image = UIImage(named: imageName)
+        }
+        else {
+            cell.imageView?.image = nil
         }
         
         cellData.willDisplay(cell)
