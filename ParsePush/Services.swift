@@ -175,22 +175,24 @@ public class Services {
     
     static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
         if (mock) {
-            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers()))
+            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers(), issues: Mock.getIssues()))
         }
         else {
             //this is to test local store
             if fetchOptions == .LocalOnly {
                 let procedures = loadProcedures()
                 let workpapers = loadWorkpapers()
-                completed(container: ObjectContainer(procedures: procedures!, workpapers: workpapers!))
+                let issues = loadIssues()
+                completed(container: ObjectContainer(procedures: procedures!, workpapers: workpapers!, issues:  issues!))
                 return
             }
             //this is the default which is to check the local store first
             if fetchOptions == .Default {
                 if let procedures = loadProcedures(),
-                       workpapers = loadWorkpapers() {
+                       workpapers = loadWorkpapers(),
+                       issues =     loadIssues() {
                     print("fetched objects using local store")
-                    completed(container: ObjectContainer(procedures: procedures, workpapers: workpapers))
+                    completed(container: ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues))
                     return
                 }
             }
@@ -351,7 +353,7 @@ public class Services {
                     print ("\(server!.filter({ $0.syncState == .New }).count) new")
                     print ("\(server!.filter({ $0.syncState == .Modified }).count) modified")
                     
-                    saveObjects(ObjectContainer(procedures: server!, workpapers: []))
+                    saveObjects(ObjectContainer(procedures: server!, workpapers: [], issues: []))
                     
                     completed(result: server!)
                 case .Failure(_, let error):

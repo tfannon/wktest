@@ -309,6 +309,7 @@
                         <segue destination="y1E-FG-ITs" kind="relationship" relationship="viewControllers" id="9zH-6B-K2i"/>
                         <segue destination="Gee-FM-iu3" kind="relationship" relationship="viewControllers" id="OLO-kk-z8J"/>
                         <segue destination="WkL-bK-6Vb" kind="relationship" relationship="viewControllers" id="60r-0I-UqT"/>
+                        <segue destination="c4Z-hh-WO4" kind="relationship" relationship="viewControllers" id="akF-Ho-Btp"/>
                         <segue destination="AFy-h1-jey" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
                         <segue destination="j1m-mE-xI7" kind="relationship" relationship="viewControllers" id="e5W-8l-QQH"/>
                     </connections>
@@ -480,6 +481,26 @@
             </objects>
             <point key="canvasLocation" x="-1795" y="1470"/>
         </scene>
+        <!--Issues-->
+        <scene sceneID="ujz-jW-3kq">
+            <objects>
+                <viewController id="c4Z-hh-WO4" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CAy-5H-MCV"/>
+                        <viewControllerLayoutGuide type="bottom" id="I8v-cJ-xcs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F4a-vo-ZMk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Issues" image="791-warning" id="lnV-C3-ZUh"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3EH-Ud-KEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-699" y="698"/>
+        </scene>
         <!--Procedures-->
         <scene sceneID="g5M-Pl-sWl">
             <objects>
@@ -526,6 +547,7 @@
         <image name="740-gear" width="28" height="28"/>
         <image name="756-bell" width="24" height="28"/>
         <image name="779-users" width="28" height="25"/>
+        <image name="791-warning" width="28" height="26"/>
         <image name="832-stack-1" width="28" height="22"/>
         <image name="icons_completed" width="42" height="42"/>
         <image name="icons_implemented" width="42" height="42"/>

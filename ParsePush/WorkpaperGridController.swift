@@ -134,10 +134,6 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
         }
     }
     
-    override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-    }
-    
-    
     //MARK: - DocumentInteractionController
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self

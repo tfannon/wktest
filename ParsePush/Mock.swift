@@ -32,6 +32,11 @@ class Mock {
         return []
     }
     
+    static func getIssues() -> [Issue] {
+        return []
+    }
+    
+    
     static private func getNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {
         let procedure = Procedure()

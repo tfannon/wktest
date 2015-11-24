@@ -130,8 +130,20 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
         //override this if supports refresh
     }
-
     
-    
-    
+//    //MARK: - Data
+//    func getItems(completed: ()->()) {
+//        self.items = []
+//        self.sortedItems = []
+//        Services.getMyData { result in
+//            
+//            if result?.procedures.count > 0 {
+//                result?.procedures.each {
+//                    self.items.append($0)
+//                }
+//                self.sortedItems = self.items
+//                completed()
+//            }
+//        }
+//    }
 }

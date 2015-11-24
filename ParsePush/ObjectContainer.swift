@@ -14,17 +14,20 @@ class ObjectContainer : Mappable {
     required init(_ map: Map) {
     }
     
-    init(procedures: [Procedure], workpapers: [Workpaper]) {
+    init(procedures: [Procedure], workpapers: [Workpaper], issues: [Issue]) {
         self.procedures = procedures
         self.workpapers = workpapers
+        self.issues = issues
     }
     
     var procedures = [Procedure]()
     var workpapers = [Workpaper]()
+    var issues = [Issue]()
     
     func mapping(map: Map) {
         procedures <- map["Procedures"]
         workpapers <- map["Workpapers"]
+        workpapers <- map["Issues"]
     }
     
 }
