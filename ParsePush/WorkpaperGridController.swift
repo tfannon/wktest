@@ -10,24 +10,9 @@ import Foundation
 import UIKit
 
 
-class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate, UIDocumentInteractionControllerDelegate {
+class WorkpaperGridController: BaseGridController, UIDocumentInteractionControllerDelegate {
     
-    var items: [Workpaper] = []
-    var sortedItems: [Workpaper] = []
-    var grid: ShinobiDataGrid!
-    var gridColumnSortOrder = [String:String]()
-    var gridColumnsOrder: [String]!
-    var dataSourceHelper: SDataGridDataSourceHelper!
     var documentInteractionController: UIDocumentInteractionController!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.setupGrid()
-        self.addColumns()
-        self.createDataSource()
-        self.styleGrid()
-    }
     
     
     override func viewWillAppear(animated: Bool) {
@@ -52,7 +37,7 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
         }
     }
     
-    func addColumns() {
+    override func addColumns() {
         if gridColumnsOrder == nil {
             gridColumnsOrder = ["sync","title","attachmentExtension","parentType","parentTitle","workflowState","workflowStateTitle","manager","dueDate","reviewer","reviewDueDate"]
         }
@@ -83,79 +68,6 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
             }
         }
     }
-    
-    func addColumnWithTitle(key: String?, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
-        var column: SDataGridColumn!
-        if key != nil {
-            column = SDataGridColumn(title: title, forProperty: key)
-        } else {
-            column = SDataGridColumn(title: title)
-        }
-        if cellClass != nil {
-            column.cellType = cellClass!
-        }
-        column.width = width
-        column.cellStyle.textAlignment = textAlignment
-        column.cellStyle.contentInset = edgeInsets
-        column.headerCellStyle.textAlignment = textAlignment
-        column.headerCellStyle.contentInset = edgeInsets
-        if sortMode != nil {
-            column.sortMode = sortMode!
-        }
-        self.grid.addColumn(column)
-    }
-    
-    func createDataSource() {
-        self.dataSourceHelper = SDataGridDataSourceHelper(dataGrid: grid)
-        self.dataSourceHelper.delegate = self
-    }
-    
-    func setupGrid() {
-        self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
-        self.view.addSubview(grid)
-        self.grid.showPullToAction = true
-        self.grid.pullToAction.delegate = self
-    }
-    
-    func styleGrid() {
-        let theme = SDataGridiOS7Theme()
-        
-        let headerRowStyle = self.createDataGridCellStyleWithFont(UIFont.boldShinobiFontOfSize(18), textColor:UIColor.whiteColor(),
-            backgroundColor:UIColor.shinobiPlayBlueColor().shinobiLightColor())
-        headerRowStyle.contentInset = UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10)
-        theme.headerRowStyle = headerRowStyle
-        
-        let selectedCellStyle = self.createDataGridCellStyleWithFont(UIFont.shinobiFontOfSize(13), textColor: UIColor.whiteColor(), backgroundColor: UIColor.shinobiPlayBlueColor())
-        theme.selectedCellStyle = selectedCellStyle
-        
-        let rowStyle = self.createDataGridCellStyleWithFont(UIFont.shinobiFontOfSize(13), textColor: UIColor.shinobiDarkGrayColor(), backgroundColor: UIColor.whiteColor())
-        theme.rowStyle = rowStyle
-        theme.alternateRowStyle = rowStyle
-        
-        let gridLineStyle = SDataGridLineStyle(width: 0.5, withColor: UIColor.lightGrayColor())
-        theme.gridLineStyle = gridLineStyle
-        
-        let gridSectionHeaderStyle = SDataGridSectionHeaderStyle()
-        gridSectionHeaderStyle.backgroundColor = UIColor.shinobiPlayBlueColor().shinobiBackgroundColor()
-        gridSectionHeaderStyle.font = UIFont.boldShinobiFontOfSize(14)
-        gridSectionHeaderStyle.textColor = UIColor.shinobiDarkGrayColor()
-        theme.sectionHeaderStyle = gridSectionHeaderStyle
-        
-        self.grid.applyTheme(theme)
-    }
-    
-    func createDataGridCellStyleWithFont(font: UIFont,
-        textColor:UIColor,
-        backgroundColor:UIColor) -> (SDataGridCellStyle) {
-            
-            let dataGridCellStyle = SDataGridCellStyle()
-            dataGridCellStyle.textVerticalAlignment = UIControlContentVerticalAlignment.Center;
-            dataGridCellStyle.font = font;
-            dataGridCellStyle.textColor = textColor;
-            dataGridCellStyle.backgroundColor = backgroundColor;
-            return dataGridCellStyle;
-    }
-    
     
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
         let procedure = object as! Workpaper
@@ -211,7 +123,7 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        let id = items[row.rowIndex].attachmentId
+        let id = (items[row.rowIndex] as! Workpaper).attachmentId
         Services.getAttachment(id) { result in
             if self.documentInteractionController == nil {
                 self.documentInteractionController = UIDocumentInteractionController()
@@ -222,6 +134,11 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
         }
     }
     
+    override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
+    }
+    
+    
+    //MARK: - DocumentInteractionController
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self
     }
@@ -237,25 +154,5 @@ class WorkpaperGridController: UIViewController, SDataGridDataSourceHelperDelega
     }
     
     func documentInteractionControllerDidDismissOpenInMenu(controller: UIDocumentInteractionController) {
-    }
-
-    
-    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-    }
-    
-    func shinobiDataGrid(grid: ShinobiDataGrid!, didChangeSortOrderForColumn column: SDataGridColumn!, to newSortOrder: SDataGridColumnSortOrder) {
-        if newSortOrder == SDataGridColumnSortOrderNone {
-            self.sortedItems = items
-        }
-        else {
-            switch (column.title) {
-            case "dueDate" :
-                self.sortedItems = items.sort {
-                    $0.0.dueDate?.timeIntervalSinceNow > $0.1.dueDate?.timeIntervalSinceNow
-                }
-                self.grid.reload()
-            default:""
-            }
-        }
     }
 }

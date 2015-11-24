@@ -163,7 +163,7 @@
 		65768AE01BA641C500DADD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65768AE21BA641C500DADD43 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		65768AE51BA641C500DADD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65768AF01BA641C500DADD43 /* ParsePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParsePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65768AF01BA641C500DADD43 /* TeamMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65768AF51BA641C500DADD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65768AF61BA641C500DADD43 /* TeamMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMateTests.swift; sourceTree = "<group>"; };
 		65768B041BA6448700DADD43 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -321,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				65768ADB1BA641C500DADD43 /* TeamMate.app */,
-				65768AF01BA641C500DADD43 /* ParsePushTests.xctest */,
+				65768AF01BA641C500DADD43 /* TeamMateTests.xctest */,
 				65B1FE071BF0251C0096EA07 /* TeamMateDoc.appex */,
 				65B1FE151BF0251C0096EA07 /* TeamMateDocFileProvider.appex */,
 			);
@@ -335,11 +335,11 @@
 				66E65F6E1BD5D83800B8B351 /* 3rdParty */,
 				659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */,
 				65768AE01BA641C500DADD43 /* AppDelegate.swift */,
+				655DEF871BF1836600120892 /* Shared.swift */,
 				659A64CC1BBF1C6D0047AAD3 /* MT */,
 				659A64C91BBEE8B40047AAD3 /* UI */,
 				66E65F731BD5DABD00B8B351 /* Utility */,
 				65768ADE1BA641C500DADD43 /* Supporting Files */,
-				655DEF871BF1836600120892 /* Shared.swift */,
 			);
 			name = TeamMate;
 			path = ParsePush;
@@ -538,9 +538,9 @@
 			productReference = 65768ADB1BA641C500DADD43 /* TeamMate.app */;
 			productType = "com.apple.product-type.application";
 		};
-		65768AEF1BA641C500DADD43 /* ParsePushTests */ = {
+		65768AEF1BA641C500DADD43 /* TeamMateTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65768AFD1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "ParsePushTests" */;
+			buildConfigurationList = 65768AFD1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "TeamMateTests" */;
 			buildPhases = (
 				65768AEC1BA641C500DADD43 /* Sources */,
 				65768AED1BA641C500DADD43 /* Frameworks */,
@@ -551,9 +551,9 @@
 			dependencies = (
 				65768AF21BA641C500DADD43 /* PBXTargetDependency */,
 			);
-			name = ParsePushTests;
+			name = TeamMateTests;
 			productName = ParsePushTests;
-			productReference = 65768AF01BA641C500DADD43 /* ParsePushTests.xctest */;
+			productReference = 65768AF01BA641C500DADD43 /* TeamMateTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		65B1FE061BF0251C0096EA07 /* TeamMateDoc */ = {
@@ -624,7 +624,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 65768AD61BA641C500DADD43 /* Build configuration list for PBXProject "ParsePush" */;
+			buildConfigurationList = 65768AD61BA641C500DADD43 /* Build configuration list for PBXProject "TeamMate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -638,7 +638,7 @@
 			projectRoot = "";
 			targets = (
 				65768ADA1BA641C500DADD43 /* TeamMate */,
-				65768AEF1BA641C500DADD43 /* ParsePushTests */,
+				65768AEF1BA641C500DADD43 /* TeamMateTests */,
 				65B1FE061BF0251C0096EA07 /* TeamMateDoc */,
 				65B1FE141BF0251C0096EA07 /* TeamMateDocFileProvider */,
 			);
@@ -1017,7 +1017,7 @@
 				INFOPLIST_FILE = ParsePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.crazy8dev.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TeamMateTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamMate.app/TeamMate";
 			};
 			name = Debug;
@@ -1030,7 +1030,7 @@
 				INFOPLIST_FILE = ParsePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.crazy8dev.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TeamMateTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamMate.app/TeamMate";
 			};
 			name = Release;
@@ -1100,7 +1100,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		65768AD61BA641C500DADD43 /* Build configuration list for PBXProject "ParsePush" */ = {
+		65768AD61BA641C500DADD43 /* Build configuration list for PBXProject "TeamMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65768AF81BA641C500DADD43 /* Debug */,
@@ -1118,7 +1118,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65768AFD1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "ParsePushTests" */ = {
+		65768AFD1BA641C500DADD43 /* Build configuration list for PBXNativeTarget "TeamMateTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65768AFE1BA641C500DADD43 /* Debug */,
