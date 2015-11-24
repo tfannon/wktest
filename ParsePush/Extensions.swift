@@ -101,17 +101,34 @@ extension UITableViewCell {
     }
 }
 
-extension NSIndexPath {
-    func getNextSection() -> NSIndexPath {
-        return getAtRelativeSection(1)
+extension Array {
+    func any(condition : (Array.Element) -> Bool) -> Bool {
+        for x in self {
+            if condition(x) {
+                return true
+            }
+        }
+        return false
     }
-    func getAtRelativeSection(deltaSection : Int) -> NSIndexPath {
-        let ip = getRelative(0, deltaSection: deltaSection)
+//    func any() -> Bool {
+//        return self.count > 0
+//    }
+}
+
+extension NSIndexPath {
+    func getNextRow() -> NSIndexPath {
+        return getRelativeRow(1)
+    }
+    func getRelativeRow(deltaRow : Int) -> NSIndexPath
+    {
+        let ip = NSIndexPath(forRow: self.row + deltaRow, inSection: self.section)
         return ip
     }
-    func getRelative(deltaRow : Int, deltaSection : Int) -> NSIndexPath
-    {
-        let ip = NSIndexPath(forRow: self.row + deltaRow, inSection: self.section + deltaSection)
+    func getFirstRowNextSection() -> NSIndexPath {
+        return getFirstRowAtRelativeSection(1)
+    }
+    func getFirstRowAtRelativeSection(deltaSection : Int) -> NSIndexPath {
+        let ip = NSIndexPath(forRow: 0, inSection: self.section + deltaSection)
         return ip
     }
 }
