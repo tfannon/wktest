@@ -81,7 +81,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         //        let json = Mapper().toJSONString(proc, prettyPrint: true)!
         //        print(json)
         let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController(procedure: procedure)
+        //let controller = ProcedureFormController(procedure: procedure)
+        let controller = HtmlEditorController(html: procedure.text1)
         //let controller = ProcedureFormControllerViewController()
         //controller.procedure = items[row.rowIndex]
         navigationController?.pushViewController(controller, animated: true)

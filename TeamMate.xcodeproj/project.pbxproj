@@ -76,6 +76,7 @@
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
+		669BD1151C0672ED008EBFC4 /* HtmlEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669BD1141C0672ED008EBFC4 /* HtmlEditorController.swift */; };
 		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; };
 		66A87FEB1BFFCF230042A95A /* DatePickerNullableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */; };
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; };
@@ -212,6 +213,7 @@
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
+		669BD1141C0672ED008EBFC4 /* HtmlEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlEditorController.swift; sourceTree = "<group>"; };
 		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
 		66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerNullableCell.xib; sourceTree = "<group>"; };
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				663259B91BF1959E00D3C76E /* ProcedureFormController.swift */,
 				668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */,
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
+				669BD1141C0672ED008EBFC4 /* HtmlEditorController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -784,6 +787,7 @@
 				663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */,
 				65B0623C1BF9911300375D17 /* ObjectContainer.swift in Sources */,
 				6564FFF21BDF91530014FE08 /* UIFont+SPUFont.m in Sources */,
+				669BD1151C0672ED008EBFC4 /* HtmlEditorController.swift in Sources */,
 				6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */,
 				668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */,
 				65F4D02A1C03C0FE009D7C0A /* BaseGridController.swift in Sources */,
