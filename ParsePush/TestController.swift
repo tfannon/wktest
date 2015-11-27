@@ -10,7 +10,8 @@ import UIKit
 import ObjectMapper
 
 
-class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate  {
+class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperOwnerDelegate
+{
     //MARK: - view controller
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,16 +88,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    
-
-    //MARK: - Local store
-    @IBAction func storeLocalPressed(sender: AnyObject) {
-//        self.lblProcedures.text = ""
-//        Services.getMyProcedures {
-//            self.lblProcedures.text = String($0!.count)
-//        }
-    }
-    
+ 
       //MARK: - Notifications
     @IBAction func countPressed(sender: AnyObject) {
         Services.getUnreadCount() { result in
@@ -154,10 +146,23 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
             dc.presentPreviewAnimated(true)
         }
     }
-    
-    
+  
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self
+    }
+    
+    var procedure: Procedure?
+    var owningObject: Procedure { return procedure! }
+    var owningViewController: UIViewController  { return self }
+  
+    @IBAction func addWorkpaperPressed(sender: AnyObject) {
+        if self.procedure == nil {
+            Services.getMyData() { result in
+                self.procedure = result?.procedures.first!
+            }
+        }
+        let chooser = WorkpaperChooser(owner: self)
+        chooser.handleAddWorkpaper()
     }
 }
 

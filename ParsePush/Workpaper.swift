@@ -10,6 +10,16 @@ import Foundation
 import ObjectMapper
 
 class Workpaper : BaseObject {
+    
+    init(initializer:((Workpaper)->Void)? = nil) {
+        super.init()
+        initializer?(self)
+    }
+    
+    required init(_ map: Map) {
+        super.init(map)
+    }
+
 
     static var term = [
         "title":"Title",
