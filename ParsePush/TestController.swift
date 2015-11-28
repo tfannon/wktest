@@ -10,8 +10,14 @@ import UIKit
 import ObjectMapper
 
 
-class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperOwnerDelegate
-{
+class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperChooserDelegate {
+
+    //MARK: - WorkpaperChooserDelegate
+    var procedure: Procedure?
+    var owningObject: Procedure { return procedure! }
+    var owningViewController: UIViewController  { return self }
+    
+
     //MARK: - view controller
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +28,11 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         txtUserName.text = Services.userName
         
         segMockMode.selectedSegmentIndex = (Services.mock) ? 1 : 0
+        //clear text fields
+        self.lblSync.text = ""
+        self.lblProcedures.text = ""
+        self.lblNotifications.text = ""
+        self.lblCount.text = ""
     }
     
     
@@ -34,6 +45,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBOutlet weak var lblNotifications: UILabel!
     @IBOutlet weak var segMockMode: UISegmentedControl!
     @IBOutlet weak var imgIPAddressResult: UIImageView!
+    @IBOutlet weak var lblSync: UILabel!
     
     //MARK: - Connection options
     @IBAction func segMockModeChanged(sender: UISegmentedControl) {
@@ -76,16 +88,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     @IBAction func miscPressed(sender: UIButton) {
-        //let procedures = Mock.getProcedures()
-        //        let proc = Procedure()
-        //        proc.title = "something new"
-        //        let json = Mapper().toJSONString(proc, prettyPrint: true)!
-        //        print(json)
-        let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController(procedure: procedure)
-        //let controller = ProcedureFormControllerViewController()
-        //controller.procedure = items[row.rowIndex]
-        navigationController?.pushViewController(controller, animated: true)
+        print ("test out some func here")
     }
     
  
@@ -137,6 +140,12 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     
+    @IBAction func syncPressed(sender: AnyObject) {
+        self.lblSync.text = ""
+        Services.sync { result in
+            print(result?.count)
+        }
+    }
     
     //MARK: - Attachments
     @IBAction func getAttachmentPressed(sender: AnyObject) {
@@ -151,18 +160,15 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         return self
     }
     
-    var procedure: Procedure?
-    var owningObject: Procedure { return procedure! }
-    var owningViewController: UIViewController  { return self }
-  
-    @IBAction func addWorkpaperPressed(sender: AnyObject) {
+   @IBAction func addWorkpaperPressed(sender: AnyObject) {
         if self.procedure == nil {
             Services.getMyData() { result in
                 self.procedure = result?.procedures.first!
+                WorkpaperChooser.choose(self)
             }
+        } else {
+            WorkpaperChooser.choose(self)
         }
-        let chooser = WorkpaperChooser(owner: self)
-        chooser.handleAddWorkpaper()
     }
 }
 

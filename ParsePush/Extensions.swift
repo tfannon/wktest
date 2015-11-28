@@ -101,6 +101,13 @@ extension UITableViewCell {
     }
 }
 
+//used for putting something into string format for wire transfer
+extension NSData {
+    func getEncodedString() -> String? {
+        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+    }
+}
+
 extension Array {
     func any(condition : (Array.Element) -> Bool) -> Bool {
         for x in self {
@@ -110,9 +117,10 @@ extension Array {
         }
         return false
     }
-//    func any() -> Bool {
-//        return self.count > 0
-//    }
+    
+    var any : Bool {
+        return !self.isEmpty
+    }
 }
 
 extension NSIndexPath {

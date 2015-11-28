@@ -10,10 +10,7 @@ import Foundation
 import Alamofire
 import ObjectMapper
 
-protocol Saveable {
-    
-}
-    
+
 public class Services {
     static var ipAddress = "192.168.1.14"
     static var userName = "joe.tester"
@@ -174,25 +171,23 @@ public class Services {
     
     
     static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
+        print(__FUNCTION__)
         if (mock) {
             completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers(), issues: Mock.getIssues()))
         }
         else {
-            //this is to test local store
+            //this is to test local store without going to server
             if fetchOptions == .LocalOnly {
-                let procedures = loadProcedures()
-                let workpapers = loadWorkpapers()
-                let issues = loadIssues()
-                completed(container: ObjectContainer(procedures: procedures!, workpapers: workpapers!, issues:  issues!))
+                if let container: ObjectContainer = loadObjects() {
+                     print("fetched \(container) using local store")
+                }
                 return
             }
             //this is the default which is to check the local store first
             if fetchOptions == .Default {
-                if let procedures = loadProcedures(),
-                       workpapers = loadWorkpapers(),
-                       issues =     loadIssues() {
-                    print("fetched objects using local store")
-                    completed(container: ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues))
+                if let container: ObjectContainer = loadObjects() {
+                    print("fetched \(container) using local store")
+                    completed(container: container)
                     return
                 }
             }
@@ -219,20 +214,19 @@ public class Services {
     //grab the dirty procedures from the local store and send them to server
     static func sync(completed: (result: [Procedure]?)->()) {
         print(__FUNCTION__)
-        getMyData(FetchOptions.LocalOnly) { result in
-            let dirty = result?.procedures.filter { $0.isDirty() == true }
-            saveProcedures(dirty!) {
+        getMyData() { result in
+            let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any }
+            sendDataToServer(dirty!) {
                 completed(result:$0)
             }
-//            dirty = result?.workpapers.filter { $0.isDirty() == true }
-//            saveWorkpapers(dirty!) {
-//                completed(result:$0)
-//            }
         }
     }
     
-    private static func saveProcedures(dirty: [Procedure], completed: (result: [Procedure]?)->()) {
+    private static func sendDataToServer(dirty: [Procedure], completed: (result: [Procedure]?)->()) {
         print(__FUNCTION__)
+        dirty.forEach {
+            print($0.title!, $0.workpapers.any ? "has workpapers" : "")
+        }
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
@@ -249,8 +243,12 @@ public class Services {
                     let jsonAlamo = data as? [[String:AnyObject]]
 
                     let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                    let local = loadProcedures()!
-
+                    let objects = loadObjects()
+                    if objects == nil {
+                        assertionFailure("Objects should have been available locally here")
+                    }
+                    let local = objects!.procedures
+                    
                     //replace this shit with a map
                     var localNotDirty = [Procedure]()
                     local.each { l in
@@ -400,13 +398,15 @@ public class Services {
         print(__FUNCTION__)
         clearStore()
         saveObjectsImpl(objects.procedures)
-        //hack for sync
-        if objects.workpapers.count > 0 {
-            saveObjectsImpl(objects.workpapers)
-        }
-        if objects.issues.count > 0 {
-            saveObjectsImpl(objects.issues)
-        }
+        saveObjectsImpl(objects.workpapers)
+        saveObjectsImpl(objects.issues)
+//        //hack for sync
+//        if objects.workpapers.count > 0 {
+//            saveObjectsImpl(objects.workpapers)
+//        }
+//        if objects.issues.count > 0 {
+//            saveObjectsImpl(objects.issues)
+//        }
     }
     
     private static func saveObjectsImpl(objects: [BaseObject]) {
@@ -427,8 +427,50 @@ public class Services {
         NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
     }
     
+    private static func loadObjects() -> ObjectContainer? {
+        print(__FUNCTION__)
+        if let
+            procedures: [Procedure] = loadObjects(),
+            workpapers: [Workpaper] = loadObjects(),
+            issues: [Issue] = loadObjects() {
+            return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+        }
+        return nil
+    }
     
-    //may be empty
+    private static func loadObjects<T: BaseObject>() -> [T]? {
+               let defaults = NSUserDefaults.standardUserDefaults()
+        //may be empty
+        var ids: [Int]?
+        var keyFunc: ((Int)->(String))
+        if T.self is Procedure.Type {
+            ids = loadProcedureIds()
+            keyFunc = DataKey.getProcKey
+        }
+        else if T.self is Workpaper.Type {
+            ids = loadWorkpaperIds()
+            keyFunc = DataKey.getWorkpaperKey
+        }
+        else if T.self is Issue.Type {
+            ids = loadIssueIds()
+            keyFunc = DataKey.getIssueKey
+        }
+        else {
+            preconditionFailure("loadObjects not implemented for \(T.self)")
+        }
+        if ids != nil {
+            return ids!.map {
+                let key = keyFunc($0)
+                let jsonProc = defaults.valueForKey(key) as! String
+                return Mapper<T>().map(jsonProc)!
+            }
+        }
+        return []
+    }
+
+    
+    
+    //MARK: - Load,  All functions return nil if there is no local store data
     private static func loadProcedureIds() -> [Int]? {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.ProcedureIds.rawValue) as? [Int]
     }
@@ -441,49 +483,46 @@ public class Services {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.IssueIds.rawValue) as? [Int]
     }
     
-    //may be empty
-    private static func loadProcedures() -> [Procedure]? {
-        print(__FUNCTION__)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        //may be empty
-        if let ids = loadProcedureIds() {
-            return ids.map { id in
-                let key = DataKey.getProcKey(id)
-                let jsonProc = defaults.valueForKey(key) as! String
-                return Mapper<Procedure>().map(jsonProc)!
-            }
-        }
-        return nil
-    }
-    
-    //MARK: Workpapers
-    private static func loadWorkpapers() -> [Workpaper]? {
-        print(__FUNCTION__)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        //may be empty
-        if let ids = loadWorkpaperIds() {
-            return ids.map { id in
-                let key = DataKey.getWorkpaperKey(id)
-                let jsonProc = defaults.valueForKey(key) as! String
-                return Mapper<Workpaper>().map(jsonProc)!
-            }
-        }
-        return nil
-    }
-    
-    //MARK: Workpapers
-    private static func loadIssues() -> [Issue]? {
-        print(__FUNCTION__)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let ids = loadIssueIds() {
-            return ids.map { id in
-                let key = DataKey.getIssueKey(id)
-                let jsonProc = defaults.valueForKey(key) as! String
-                return Mapper<Issue>().map(jsonProc)!
-            }
-        }
-        return nil
-    }
+//    private static func loadProcedures() -> [Procedure]? {
+//        print(__FUNCTION__)
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        //may be empty
+//        if let ids = loadProcedureIds() {
+//            return ids.map { id in
+//                let key = DataKey.getProcKey(id)
+//                let jsonProc = defaults.valueForKey(key) as! String
+//                return Mapper<Procedure>().map(jsonProc)!
+//            }
+//        }
+//        return []
+//    }
+//    
+//    private static func loadWorkpapers() -> [Workpaper]? {
+//        print(__FUNCTION__)
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        //may be empty
+//        if let ids = loadWorkpaperIds() {
+//            return ids.map { id in
+//                let key = DataKey.getWorkpaperKey(id)
+//                let jsonProc = defaults.valueForKey(key) as! String
+//                return Mapper<Workpaper>().map(jsonProc)!
+//            }
+//        }
+//        return []
+//    }
+//    
+//    private static func loadIssues() -> [Issue]? {
+//        print(__FUNCTION__)
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        if let ids = loadIssueIds() {
+//            return ids.map { id in
+//                let key = DataKey.getIssueKey(id)
+//                let jsonProc = defaults.valueForKey(key) as! String
+//                return Mapper<Issue>().map(jsonProc)!
+//            }
+//        }
+//        return nil
+//    }
     
     
     static func getAttachment(id: Int, completed: (String->())) {

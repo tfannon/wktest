@@ -78,29 +78,12 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible, BusinessObj
     }
     
     func setDirty(field : String!) {
-        if (!isMapping)
-        {
+        if (!isMapping) {
             setDirtyFields.insert(field)
             self.syncState = .Dirty
         }
     }
     
     var changes : [Change]?
-    
- 
-//    //will be populated by concrete initializer
-//    static var terminology: [String:[String:String]] = [String:[String:String]]()
-//    
-//    static func getTerminology(className: String, key: String) -> String{
-//        if BaseObject.terminology[className] == nil {
-//            BaseObject.terminology[className] = [String:String]()
-//            populateTerminology()
-//        }
-//        return BaseObject.terminology[className]![key] ?? ""
-//    }
-//    
-//    class func populateTerminology() {
-//        //preconditionFailure("This method must be overridden")
-//    }
 }
 

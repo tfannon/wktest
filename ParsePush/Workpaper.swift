@@ -11,6 +11,7 @@ import ObjectMapper
 
 class Workpaper : BaseObject {
     
+    //this syntax is to allow for a pseudo-c# like initializer
     init(initializer:((Workpaper)->Void)? = nil) {
         super.init()
         initializer?(self)
@@ -46,6 +47,8 @@ class Workpaper : BaseObject {
     var attachmentExtension: String?
     var attachmentSize: Int64 = 0
     
+    var attachmentData: NSData?
+    
     override func mapping(map: Map) {
         super.mapping(map)
         
@@ -57,6 +60,8 @@ class Workpaper : BaseObject {
         attachmentExtension <- map["AttachmentExtension"]
         attachmentSize <- map["AttachmentSize"]
         
+        attachmentData <- map["AttachmentData"]
+        
         dueDate <- (map["DueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
@@ -64,6 +69,10 @@ class Workpaper : BaseObject {
         reviewDueDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
+        
+        attachmentData <- (map["AttachmentData"], TransformOf<NSData, String>(
+            fromJSON: { _ in return nil },
+            toJSON: { $0.map { $0.getEncodedString()! }}))
         
         isMapping = false
     }

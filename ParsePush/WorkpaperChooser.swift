@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-protocol WorkpaperOwnerDelegate {
+//the workpaper chooser needs to know about its owner and viewcontroller so it can present and save
+protocol WorkpaperChooserDelegate {
     var owningObject: Procedure { get }
     var owningViewController: UIViewController { get }
 }
@@ -17,10 +18,15 @@ protocol WorkpaperOwnerDelegate {
 class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var _title = ""
     var _description: String?
-    var delegate: WorkpaperOwnerDelegate!
+    var delegate: WorkpaperChooserDelegate!
     
-    required init(owner: WorkpaperOwnerDelegate) {
+    required init(owner: WorkpaperChooserDelegate) {
         self.delegate = owner
+    }
+    
+    class func choose(delegate: WorkpaperChooserDelegate) {
+        let chooser = WorkpaperChooser(owner: delegate)
+        chooser.handleAddWorkpaper()
     }
     
     
@@ -67,17 +73,19 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
     internal func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //print(self.title, info)
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
-            data = UIImagePNGRepresentation(image) {
+            //data = UIImagePNGRepresentation(image) {
+            let jpg = UIImageJPEGRepresentation(image, 0.0) {
             let procedure = self.delegate.owningObject
-            let fileName = Services.storageProviderLocation.URLByAppendingPathComponent(self._title).path!
-                data.writeToFile(fileName, atomically: true)
-                print(try! NSFileManager.defaultManager().attributesOfItemAtPath(fileName))
-                procedure.workpapers.append(
-                    Workpaper() {
-                        $0.title = self._title
-                        $0.oDescription = self._description
-                })
-                Services.save(procedure)
+                        //let fileName = Services.storageProviderLocation.URLByAppendingPathComponent(self._title).path!
+            //data.writeToFile(fileName, atomically: true)
+                //print(try! NSFileManager.defaultManager().attributesOfItemAtPath(fileName))
+            procedure.workpapers.append(
+                Workpaper() {
+                    $0.title = self._title
+                    $0.oDescription = self._description
+                    $0.attachmentData = jpg
+            })
+            Services.save(procedure)
         }
         self.delegate.owningViewController.dismissViewControllerAnimated(true, completion: nil)
     }

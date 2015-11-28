@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class ObjectContainer : Mappable {
+class ObjectContainer : Mappable, CustomStringConvertible {
 
     required init(_ map: Map) {
     }
@@ -28,5 +28,9 @@ class ObjectContainer : Mappable {
         procedures <- map["Procedures"]
         workpapers <- map["Workpapers"]
         issues <- map["Issues"]
+    }
+    
+    var description: String {
+        return ("\(procedures.count) procs, \(workpapers.count) workpapers, \(issues.count) issues")
     }
 }
