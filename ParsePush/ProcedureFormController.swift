@@ -509,7 +509,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     func navbarSaveClicked()
     {
-        Services.save(self.procedure)
+        Services.saveObject(self.procedure)
         dismiss()
     }
     

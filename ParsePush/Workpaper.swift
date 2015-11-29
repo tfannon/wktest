@@ -71,7 +71,7 @@ class Workpaper : BaseObject {
             toJSON: { $0.map { $0.toIsoString() } }))
         
         attachmentData <- (map["AttachmentData"], TransformOf<NSData, String>(
-            fromJSON: { _ in return nil },
+            fromJSON: {  $0 != nil ? NSData.fromEncodedString($0!) : nil },
             toJSON: { $0.map { $0.getEncodedString()! }}))
         
         isMapping = false

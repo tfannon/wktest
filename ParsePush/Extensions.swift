@@ -106,6 +106,10 @@ extension NSData {
     func getEncodedString() -> String? {
         return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
     }
+    
+    class func fromEncodedString(str: String) -> NSData? {
+        return NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+    }
 }
 
 extension Array {

@@ -179,14 +179,14 @@ public class Services {
             //this is to test local store without going to server
             if fetchOptions == .LocalOnly {
                 if let container: ObjectContainer = loadObjects() {
-                     print("fetched \(container) using local store")
+                     print("\tfetched \(container) using local store")
                 }
                 return
             }
             //this is the default which is to check the local store first
             if fetchOptions == .Default {
                 if let container: ObjectContainer = loadObjects() {
-                    print("fetched \(container) using local store")
+                    print("\tfetched \(container) using local store")
                     completed(container: container)
                     return
                 }
@@ -198,7 +198,7 @@ public class Services {
                     case .Success(let data):
                         let jsonAlamo = data as? [String:AnyObject]
                         if let objects = Mapper<ObjectContainer>().map(jsonAlamo) {
-                            print("fetched objects using web service")
+                            print("\tfetched objects using web service")
                             saveObjects(objects)
                             completed(container: objects)
                         }
@@ -293,14 +293,15 @@ public class Services {
     
     
 
-    //MARK: Save local
-    static func save(obj: Procedure) {
-        let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
-        //save it in its own slot.  will overwrite anything there
-        let key = DataKey.getProcKey(obj.id!)
-        //print("Saving \(key) to local store")
-        NSUserDefaults.standardUserDefaults().setValue(procJson, forKey: key)
-    }
+//    //MARK: Save local
+//    static func save(obj: Procedure) {
+//        let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
+//        //print (procJson)
+//        //save it in its own slot.  will overwrite anything there
+//        let key = DataKey.getProcKey(obj.id!)
+//        //print("Saving \(key) to local store")
+//        NSUserDefaults.standardUserDefaults().setValue(procJson, forKey: key)
+//    }
     
  
     //MARK: Store - private
@@ -394,19 +395,22 @@ public class Services {
         attachment5:[FilePath]
     */
     
+    //MARK: save local
+    static func saveObject(obj: BaseObject) {
+        let json = Mapper().toJSONString(obj, prettyPrint: true)!
+        //save it in its own slot.  will overwrite anything there
+        let key = DataKey.getKeyForObject(obj)
+        //print("Saving \(key) to local store")
+        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+    }
+
+    
     private static func saveObjects(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
         saveObjectsImpl(objects.procedures)
         saveObjectsImpl(objects.workpapers)
         saveObjectsImpl(objects.issues)
-//        //hack for sync
-//        if objects.workpapers.count > 0 {
-//            saveObjectsImpl(objects.workpapers)
-//        }
-//        if objects.issues.count > 0 {
-//            saveObjectsImpl(objects.issues)
-//        }
     }
     
     private static func saveObjectsImpl(objects: [BaseObject]) {
@@ -418,14 +422,7 @@ public class Services {
             objects.each { saveObject($0) }
         }
     }
-  
-    static func saveObject(obj: BaseObject) {
-        let json = Mapper().toJSONString(obj, prettyPrint: true)!
-        //save it in its own slot.  will overwrite anything there
-        let key = DataKey.getKeyForObject(obj)
-        //print("Saving \(key) to local store")
-        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
-    }
+    
     
     private static func loadObjects() -> ObjectContainer? {
         print(__FUNCTION__)
@@ -482,48 +479,6 @@ public class Services {
     private static func loadIssueIds() -> [Int]? {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.IssueIds.rawValue) as? [Int]
     }
-    
-//    private static func loadProcedures() -> [Procedure]? {
-//        print(__FUNCTION__)
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        //may be empty
-//        if let ids = loadProcedureIds() {
-//            return ids.map { id in
-//                let key = DataKey.getProcKey(id)
-//                let jsonProc = defaults.valueForKey(key) as! String
-//                return Mapper<Procedure>().map(jsonProc)!
-//            }
-//        }
-//        return []
-//    }
-//    
-//    private static func loadWorkpapers() -> [Workpaper]? {
-//        print(__FUNCTION__)
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        //may be empty
-//        if let ids = loadWorkpaperIds() {
-//            return ids.map { id in
-//                let key = DataKey.getWorkpaperKey(id)
-//                let jsonProc = defaults.valueForKey(key) as! String
-//                return Mapper<Workpaper>().map(jsonProc)!
-//            }
-//        }
-//        return []
-//    }
-//    
-//    private static func loadIssues() -> [Issue]? {
-//        print(__FUNCTION__)
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        if let ids = loadIssueIds() {
-//            return ids.map { id in
-//                let key = DataKey.getIssueKey(id)
-//                let jsonProc = defaults.valueForKey(key) as! String
-//                return Mapper<Issue>().map(jsonProc)!
-//            }
-//        }
-//        return nil
-//    }
-    
     
     static func getAttachment(id: Int, completed: (String->())) {
         let key = DataKey.getAttachmentKey(id)
