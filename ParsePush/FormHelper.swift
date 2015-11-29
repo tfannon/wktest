@@ -120,7 +120,7 @@ class FormHelper {
         self.controllerAsDelegate = controller as! CustomCellDelegate
     }
     
-    lazy var textCellSetup : ((UITableViewCell, CellData) -> Void) =
+    lazy var textCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
             let textCell = cell as! TextCell
             textCell.textField.text = data.value as! String?
@@ -128,25 +128,21 @@ class FormHelper {
             textCell.delegate = self.controllerAsDelegate
         }
     
-    lazy var textViewSetup : ((UITableViewCell, CellData) -> Void) =
+    lazy var textViewWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
             let textCell = cell as! TextAutoSizeCell
             textCell.textString = data.value as? String ?? ""
             textCell.delegate = self.controllerAsDelegate
         }
 
-    lazy var htmlCellSetup : ((UITableViewCell, CellData) -> Void) =
+    lazy var htmlCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
-            let textCell = cell as! HtmlCell2
+            let textCell = cell as! HtmlCell
             textCell.delegate = self.controllerAsDelegate
             textCell.textString = data.value as! String? ?? ""
-//            let textCell = cell as! HtmlCell
-//            textCell.textString = data.value as? String ?? ""
-//            textCell.resize()
-//            textCell.delegate = self.controllerAsDelegate
         }
 
-    lazy var dateCellSetup : ((UITableViewCell, CellData) -> Void) =
+    lazy var dateCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
             cell.selectionStyle = .None
             cell.detailTextLabel?.textColor = cell.textLabel?.textColor
