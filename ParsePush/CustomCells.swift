@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RichEditorView
 
 protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
@@ -219,12 +220,14 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     }
 }
 
-public class HtmlCell: CustomCell, UIWebViewDelegate {
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
-    @IBOutlet var webView: UIWebView!
+public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, UIWebViewDelegate {
+
+    @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    private var loaded = false
+    private var editor : RichEditorView!
+    private var contentHeight : CGFloat = 0
     private var resized = false
     private var timer : NSTimer?
     
@@ -232,109 +235,159 @@ public class HtmlCell: CustomCell, UIWebViewDelegate {
         super.awakeFromNib()
         
         selectionStyle = .None
-        
-        webView.delegate = self
-        webView.scrollView.scrollEnabled = false
-        webView.scrollView.bounces = false
-        self.contentView.bringSubviewToFront(indicator)
-     }
+        editor = RichEditorView(frame: innerView.frame)
+        editor.delegate = self
+        editor.webView.scrollView.scrollEnabled = false
+        editor.webView.scrollView.bounces = false
+        self.innerView.addSubview(editor)
+        editor.frame.origin = CGPoint(x: 0, y: 0)
+        indicator.hidden = true
+        self.frame.size.height = 50
+    }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        editor.frame.size.width = innerView.bounds.width
+        //resize()
+    }
     
     /// Custom setter so we can initialise the height of the text view
-    var _textString : String?
+    var _textString : String! = ""
     var textString: String {
         get {
-            return webView.stringByEvaluatingJavaScriptFromString("document.documentElement.innerText;")
-                ?? ""
+            let html = editor.contentHTML
+            return html
         }
         set {
             // reset
-            loaded = false
-            resized = false
+            if (_textString != newValue) {
+                startWaiting()
+                resized = false
+                _textString = newValue
+                editor.setHTML(_textString)
+            }
+        }
+    }
 
-            startWaiting()
-            _textString = newValue
-            webView.loadHTMLString(newValue, baseURL: nil)
-        }
-    }
-    
-    override public func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if webView == nil {
-            return
-        }
-        if selected {
-            webView.becomeFirstResponder()
-        } else {
-            webView.resignFirstResponder()
-        }
-    }
-    
-    public func webView(_: UIWebView,
-        didFailLoadWithError error: NSError?) {
-            loaded = true
-    }
-    
-    public func webViewDidFinishLoad(_: UIWebView)
-    {
-        loaded = true
-    }
-    
-    public var isResized : Bool {
-        get { return resized }
-    }
-    
     private func startWaiting() {
-        if !webView.hidden {
+        if !editor.hidden {
             self.resized = false
-            webView.hidden = true
+            editor.hidden = true
             indicator.sizeToFit()
             indicator.hidden = false
             indicator.startAnimating()
         }
     }
     private func stopWaiting() {
-        if webView.hidden {
+        if (editor.hidden) {
             self.resized = true
-            webView.hidden = false
+            editor.hidden = false
             indicator.hidden = true
             indicator.stopAnimating()
         }
     }
-    
-    public func resize() {
-        startWaiting()
-        if (!loaded && self.timer == nil) {
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "resizeImpl", userInfo: nil, repeats: true)
-        }
-        else {
-            resizeImpl()
-        }
-    }
-    
-    public func resizeImpl() {
-        if (loaded) {
-            self.timer?.invalidate()
-            self.timer = nil
 
-            var content_height : CGFloat = 100
-            let a = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.scrollHeight")
-            let b = a ?? "0"
-            if let c = Int(b) {
-                content_height = CGFloat(c)
-            }
-            let current_height = webView.frame.size.height
-            
-            if current_height != content_height {
-                UIView.setAnimationsEnabled(false)
-                tableView?.beginUpdates()
-                if heightConstraint.constant != content_height {
-                    heightConstraint.constant = content_height
-                }
-                tableView?.endUpdates()
-                UIView.setAnimationsEnabled(true)
-            }
-            
-            stopWaiting()
+    public var isResized : Bool {
+        get {
+            return self.resized 
         }
     }
+    
+    private func resize() {
+        let currentHeight = editor.frame.size.height
+        if currentHeight != contentHeight {
+            UIView.setAnimationsEnabled(false)
+            tableView?.beginUpdates()
+            if heightConstraint.constant != contentHeight {
+                heightConstraint.constant = contentHeight
+            }
+            editor.frame.size.height = contentHeight
+            tableView?.endUpdates()
+            UIView.setAnimationsEnabled(true)
+        }
+        stopWaiting()
+    }
+
+    // MARK: - RichEditorDelegate
+    /**
+    Called when the inner height of the text being displayed changes
+    Can be used to update the UI
+    */
+    public func richEditor(editor: RichEditorView, heightDidChange height: Int) {
+        contentHeight = max(50.0, CGFloat(height))
+        resize()
+    }
+    
+    /**
+     Called whenever the content inside the view changes
+     */
+    public func richEditor(editor: RichEditorView, contentDidChange content: String) {
+        changed()
+    }
+
+    /**
+     Called when the rich editor starts editing
+     */
+    public func richEditorTookFocus(editor: RichEditorView) {
+    }
+    
+    /**
+     Called when the rich editor stops editing or loses focus
+     */
+    public func richEditorLostFocus(editor: RichEditorView) {
+    }
+    
+    /**
+     Called when the RichEditorView has become ready to receive input
+     More concretely, is called when the internal UIWebView loads for the first time, and contentHTML is set
+     */
+    public func richEditorDidLoad(editor: RichEditorView) {
+    }
+    
+    /**
+     Called when the internal UIWebView begins loading a URL that it does not know how to respond to
+     For example, if there is an external link, and then the user taps it
+     */
+    public func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool {
+        return false
+    }
+    
+    /**
+     Called when custom actions are called by callbacks in the JS
+     By default, this method is not used unless called by some custom JS that you add
+     */
+    public func richEditor(editor: RichEditorView, handleCustomAction action: String) {
+        
+    }
+    
+    // MARK: - RichEditorToolbarDelegate
+    /**
+    Called when the Text Color toolbar item is pressed.
+    */
+    public func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar) {
+        
+    }
+    
+    /**
+     Called when the Background Color toolbar item is pressed.
+     */
+    public func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar) {
+        
+    }
+    
+    /**
+     Called when the Insert Image toolbar item is pressed.
+     */
+    public func richEditorToolbarInsertImage(toolbar: RichEditorToolbar) {
+        
+    }
+    
+    /**
+     Called when the Isert Link toolbar item is pressed.
+     */
+    public func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar) {
+        
+    }
+
 }
+
