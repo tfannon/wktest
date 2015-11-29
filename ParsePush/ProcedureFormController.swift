@@ -13,6 +13,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
+    private var webViews = [UIWebView]()
     
     init(procedure : Procedure) {
         super.init(style: .Grouped)
@@ -238,30 +239,30 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     else {
                         cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
                     }
-                    let s = NSMutableIndexSet()
+
                     self.tableView.beginUpdates()
+                    let sections = NSMutableIndexSet()
                     for htmlIndexPath in htmlIndexPaths
                     {
                         let i = htmlIndexPath.section
                         if (show) {
                             if self.formHelper.hiddenSections.contains(i) {
                                 self.formHelper.hiddenSections.remove(i)
-                                s.addIndex(i)
                             }
                         }
                         else {
                             if !self.formHelper.hiddenSections.contains(i) {
                                 self.formHelper.hiddenSections.insert(i)
-                                s.addIndex(i)
                             }
                         }
+                        sections.addIndex(i)
                     }
                     
                     if (show) {
-                        self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Top)
+                        self.tableView.insertSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     else {
-                        self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Top)
+                        self.tableView.deleteSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     self.tableView.endUpdates()
 
@@ -278,7 +279,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.userInteractionEnabled = true
                     }
                     if show {
-                        let firstCell = self.tableView.cellForRowAtIndexPath(htmlIndexPaths[0]) as! HtmlCell2
                         abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
                         self.tableView.addSubview(abc!)
                         self.tableView.bringSubviewToFront(abc!)
@@ -289,21 +289,21 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.userInteractionEnabled = false
                         self.tableView.alpha = 0.9
 
+                        var cellsToWaitFor = [HtmlCell2]()
+                        for indexPath in htmlIndexPaths {
+                            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
+                                let htmlCell = cell as! HtmlCell2
+                                let data = self.formHelper.getCellData(indexPath)
+                                htmlCell.textString = data.value as! String? ?? ""
+                                cellsToWaitFor.append(htmlCell)
+                            }
+                        }
+                        
                         NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
-                            if firstCell.isResized {
-                                // after the first cell is resized 
-                                // we check to see if others that are visible are still being resized
-                                // after the resizing is done - we scroll - otherwise, we may scroll
-                                // to a place that shifts AFTER the other cells are loading.
-                                // UIWebView is a pain!
-                                let waiting = self.tableView.visibleCells
-                                    .filter { x in x.isKindOfClass(HtmlCell2) }
-                                    .map { x in x as! HtmlCell2 }
-                                    .any { x in !x.isResized }
-                                if !waiting {
-                                    timer.invalidate()
-                                    scroll()
-                                }
+                            let waiting = cellsToWaitFor.any { x in !x.isResized }
+                            if !waiting {
+                                timer.invalidate()
+                                scroll()
                             }
                         })
                     }
@@ -409,7 +409,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return formHelper.data.count - self.formHelper.hiddenSections.count
+        let total = formHelper.data.count
+        let hidden = self.formHelper.hiddenSections.count
+        return total - hidden
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

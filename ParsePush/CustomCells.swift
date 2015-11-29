@@ -235,21 +235,20 @@ public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegat
         super.awakeFromNib()
         
         selectionStyle = .None
-        
-        // Do any additional setup after loading the view.
-        editor = RichEditorView()
+        editor = RichEditorView(frame: innerView.frame)
         editor.delegate = self
         editor.webView.scrollView.scrollEnabled = false
         editor.webView.scrollView.bounces = false
         self.innerView.addSubview(editor)
         editor.frame.origin = CGPoint(x: 0, y: 0)
         indicator.hidden = true
+        self.frame.size.height = 50
     }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
         editor.frame.size.width = innerView.bounds.width
-        resize()
+        //resize()
     }
     
     /// Custom setter so we can initialise the height of the text view
@@ -260,11 +259,10 @@ public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegat
             return html
         }
         set {
+            // reset
             if (_textString != newValue) {
-                // reset
-                resized = false
-                
                 startWaiting()
+                resized = false
                 _textString = newValue
                 editor.setHTML(_textString)
             }
@@ -281,7 +279,7 @@ public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegat
         }
     }
     private func stopWaiting() {
-        if editor.hidden {
+        if (editor.hidden) {
             self.resized = true
             editor.hidden = false
             indicator.hidden = true
@@ -289,7 +287,11 @@ public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegat
         }
     }
 
-    public var isResized : Bool { get { return self.resized } }
+    public var isResized : Bool {
+        get {
+            return self.resized 
+        }
+    }
     
     private func resize() {
         let currentHeight = editor.frame.size.height
@@ -312,7 +314,7 @@ public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegat
     Can be used to update the UI
     */
     public func richEditor(editor: RichEditorView, heightDidChange height: Int) {
-        contentHeight = CGFloat(height)
+        contentHeight = max(50.0, CGFloat(height))
         resize()
     }
     

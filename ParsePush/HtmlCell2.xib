@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3N-i4-Ptd">
-                        <rect key="frame" x="8" y="8" width="304" height="169.5"/>
+                        <rect key="frame" x="8" y="8" width="304" height="170"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="d52-0a-u8w">
                                 <rect key="frame" x="142" y="75" width="20" height="20"/>
