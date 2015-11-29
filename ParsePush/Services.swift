@@ -212,7 +212,7 @@ public class Services {
     
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
-    static func sync(completed: (result: [Procedure]?)->()) {
+    static func sync(completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         getMyData() { result in
             let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any }
@@ -222,11 +222,9 @@ public class Services {
         }
     }
     
-    private static func sendDataToServer(dirty: [Procedure], completed: (result: [Procedure]?)->()) {
+    private static func sendDataToServer(dirty: [Procedure], completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
-//        dirty.forEach {
-//            print($0.title!, $0.workpapers.any ? "has workpapers" : "", $0.dirtyFields.any ? " has dirty fields" : "")
-//        }
+        print ("\t \(dirty.count { $0.workpapers.any }) procedures have new workpapers")
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
@@ -240,57 +238,57 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    let jsonAlamo = data as? [[String:AnyObject]]
-                    print(jsonAlamo?.count, " values returned")
-                    return
-
-                    let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
-                    let objects = loadObjects()
-                    if objects == nil {
-                        assertionFailure("Objects should have been available locally here")
+                    if  let jsonAlamo = data as? [String:AnyObject],
+                        server = Mapper<ObjectContainer>().map(jsonAlamo),
+                        local = loadObjects() {
+                            
+                        checkObjectState(dirty, local: local.procedures, server: server.procedures)
+                        checkObjectState([], local: local.issues, server: server.issues)
+                        checkObjectState([], local: local.workpapers, server: server.workpapers)
+                        
+                        saveObjects(server)
+                        
+                        completed(result: server)
+                    } else {
+                        print("\(__FUNCTION__) something went wrong with response or loading local objects")
                     }
-                    let local = objects!.procedures
-                    
-                    //replace this shit with a map
-                    var localNotDirty = [Procedure]()
-                    local.each { l in
-                        if dirty.indexOf ({ $0.id == l.id })  == nil {
-                            localNotDirty.append(l)
-                        }
-                    }
-                    print ("\(dirty.count) dirty")
-                    print ("\(localNotDirty.count) local not dirty")
-
-                    //compare results to local store.
-                    server!.each { p in
-                        //if not found in local store, it is new
-                        if local.indexOf({$0.id == p.id}) == nil {
-                            p.syncState = .New
-                        }
-                        else {
-                            //otherwise if it is one of the ones i sent down, check the server flag
-                            if dirty.indexOf ({ $0.id == p.id }) != nil {
-                                p.syncState = p.wasChangedOnServer! ? .Modified : .Unchanged
-                            }
-                            //otherwise if my guid != match the server guid, it is dirty
-                            else {
-                                let i = localNotDirty.indexOf({$0.id == p.id})!
-                                let l = localNotDirty[i]
-                                p.syncState = l.lmg != p.lmg ? .Modified : .Unchanged
-                            }
-                        }
-                    }
-                    print ("\(server!.filter({ $0.syncState == .New }).count) new")
-                    print ("\(server!.filter({ $0.syncState == .Modified }).count) modified")
-                    
-                    saveObjects(ObjectContainer(procedures: server!, workpapers: [], issues: []))
-                    
-                    completed(result: server!)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                     completed(result: nil)
                 }
         }
+    }
+    
+    
+    private static func checkObjectState<T: BaseObject>(dirty: [T], local: [T], server: [T]) {
+        var localNotDirty = [T]()
+        local.each { l in
+            if dirty.indexOf ({ $0.id == l.id })  == nil {
+                localNotDirty.append(l)
+            }
+        }
+        print("\t\(T.self)")
+        print("\t\tlocal:\(local.count), \(dirty.count) dirty  \(localNotDirty.count) not dirty")
+
+        server.each { p in
+            //if not found in local store, it is new
+            if local.indexOf({$0.id == p.id}) == nil {
+                p.syncState = .New
+            }
+            else {
+                //otherwise if it is one of the ones i sent down, check the server flag
+                if dirty.indexOf ({ $0.id == p.id }) != nil {
+                    p.syncState = p.wasChangedOnServer! ? .Modified : .Unchanged
+                }
+                //otherwise if my guid != match the server guid, it is dirty
+                else {
+                    let i = localNotDirty.indexOf({$0.id == p.id})!
+                    let l = localNotDirty[i]
+                    p.syncState = l.lmg != p.lmg ? .Modified : .Unchanged
+                }
+            }
+        }
+        print ("\t\tserver:\(server.count), \(server.filter({ $0.syncState == .New }).count) new, \(server.filter({ $0.syncState == .Modified }).count) modified")
     }
     
     //MARK: Store - private
@@ -353,16 +351,15 @@ public class Services {
         print (__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
         let appGroupDefaults = Services.appGroupDefaults
-        
-        if let procIds = defaults.valueForKey(DataKey.ProcedureIds.rawValue) as? [Int] {
+        if let procIds = loadProcedureIds() {
             procIds.each { defaults.removeObjectForKey(DataKey.getProcKey($0)) }
             defaults.removeObjectForKey(DataKey.ProcedureIds.rawValue)
         }
-        if let issueIds = defaults.valueForKey(DataKey.IssueIds.rawValue) as? [Int] {
+        if let issueIds = loadIssueIds() {
             issueIds.each { defaults.removeObjectForKey(DataKey.getIssueKey($0)) }
             defaults.removeObjectForKey(DataKey.IssueIds.rawValue)
         }
-        if let workpaperIds = defaults.valueForKey(DataKey.WorkpaperIds.rawValue) as? [Int] {
+        if let workpaperIds = loadWorkpaperIds() {
             workpaperIds.each { defaults.removeObjectForKey(DataKey.getWorkpaperKey($0)) }
             defaults.removeObjectForKey(DataKey.WorkpaperIds.rawValue)
         }
@@ -384,16 +381,7 @@ public class Services {
         attachment5:[FilePath]
     */
     
-    //MARK: save local
-    static func saveObject(obj: BaseObject) {
-        let json = Mapper().toJSONString(obj, prettyPrint: true)!
-        //save it in its own slot.  will overwrite anything there
-        let key = DataKey.getKeyForObject(obj)
-        //print("Saving \(key) to local store")
-        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
-    }
-
-    
+    //MARK: save local store
     private static func saveObjects(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
@@ -412,19 +400,28 @@ public class Services {
         }
     }
     
+    static func saveObject(obj: BaseObject) {
+        let json = Mapper().toJSONString(obj, prettyPrint: true)!
+        //save it in its own slot.  will overwrite anything there
+        let key = DataKey.getKeyForObject(obj)
+        //print("Saving \(key) to local store")
+        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+    }
     
+    
+    //MARK: load local store
     private static func loadObjects() -> ObjectContainer? {
         print(__FUNCTION__)
         if let
-            procedures: [Procedure] = loadObjects(),
-            workpapers: [Workpaper] = loadObjects(),
-            issues: [Issue] = loadObjects() {
+            procedures: [Procedure] = loadObjectsImpl(),
+            workpapers: [Workpaper] = loadObjectsImpl(),
+            issues:     [Issue] =     loadObjectsImpl() {
             return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
         }
         return nil
     }
     
-    private static func loadObjects<T: BaseObject>() -> [T]? {
+    private static func loadObjectsImpl<T: BaseObject>() -> [T]? {
                let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
         var ids: [Int]?

@@ -143,7 +143,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBAction func syncPressed(sender: AnyObject) {
         self.lblSync.text = ""
         Services.sync { result in
-            print(result?.count)
+            self.lblSync.text = result!.description
         }
     }
     

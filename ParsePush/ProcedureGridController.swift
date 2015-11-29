@@ -126,7 +126,7 @@ class ProcedureGridController: BaseGridController {
     
     override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
         Services.sync { result in
-            self.items = result!
+            self.items = result!.procedures
             self.dataSourceHelper.data = self.items
             self.grid.pullToAction.actionCompleted()
         }

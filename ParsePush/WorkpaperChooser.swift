@@ -74,14 +74,12 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
             let jpg = UIImageJPEGRepresentation(image, 0.0) {
             let procedure = self.delegate.owningObject
-            //let fileName = Services.storageProviderLocation.URLByAppendingPathComponent(self._title).path!
-            //data.writeToFile(fileName, atomically: true)
-            //print(try! NSFileManager.defaultManager().attributesOfItemAtPath(fileName))
             procedure.workpapers.append(
                 Workpaper() {
                     $0.title = self._title
                     $0.oDescription = self._description
                     $0.attachmentData = jpg
+                    $0.attachmentExtension = "jpg"
             })
             Services.saveObject(procedure)
         }
