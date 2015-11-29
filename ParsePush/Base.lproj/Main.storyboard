@@ -87,16 +87,6 @@
                                     <action selector="proceduresPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="epQ-sX-NE5"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-xO-4kp" userLabel="Objects">
-                                <rect key="frame" x="129" y="231" width="0.0" height="0.0"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="150" y="148" width="143" height="30"/>
-                                </variation>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00k-W1-lfG">
                                 <rect key="frame" x="30" y="264" width="62" height="30"/>
                                 <animations/>
@@ -196,6 +186,39 @@
                                     <action selector="miscPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="d5c-Pi-eVL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OEp-RJ-dzU">
+                                <rect key="frame" x="180" y="510" width="122" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Add Workpaper"/>
+                                <connections>
+                                    <action selector="addWorkpaperPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nME-20-NiR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4I9-cc-Yfo">
+                                <rect key="frame" x="123" y="264" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Sync"/>
+                                <connections>
+                                    <action selector="syncPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vKr-29-ax7"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 procs, 1 workpaper" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-hO-BXD">
+                                <rect key="frame" x="174" y="269" width="132" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 procs, 4 wp, 2 issues" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-xO-4kp" userLabel="Objects">
+                                <rect key="frame" x="129" y="232" width="138" height="14.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="150" y="148" width="143" height="30"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -208,7 +231,7 @@
                             <constraint firstItem="z25-cC-dZS" firstAttribute="width" secondItem="zvx-9e-MNm" secondAttribute="width" id="7ST-cD-t49"/>
                             <constraint firstItem="RnH-4i-QhM" firstAttribute="top" secondItem="5Wn-G2-Qdd" secondAttribute="bottom" constant="11" id="7Th-dw-VYw"/>
                             <constraint firstItem="pO1-0o-na5" firstAttribute="top" secondItem="5Wn-G2-Qdd" secondAttribute="top" constant="8" id="7pq-ku-VYh"/>
-                            <constraint firstItem="Kht-xO-4kp" firstAttribute="top" secondItem="mKb-wJ-uMH" secondAttribute="top" constant="8" id="7vD-BB-85L"/>
+                            <constraint firstItem="Kht-xO-4kp" firstAttribute="top" secondItem="mKb-wJ-uMH" secondAttribute="top" constant="9" id="7vD-BB-85L"/>
                             <constraint firstItem="aIm-Aa-P5R" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="9hP-CB-lET"/>
                             <constraint firstItem="mKb-wJ-uMH" firstAttribute="top" secondItem="jZ9-mI-7WB" secondAttribute="bottom" constant="11" id="9vr-tc-S4O"/>
                             <constraint firstItem="AkQ-tf-u7H" firstAttribute="top" secondItem="toG-cj-t0E" secondAttribute="bottom" constant="29.5" id="C8K-Ut-gUV"/>
@@ -246,6 +269,7 @@
                         <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
                         <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
                         <outlet property="lblProcedures" destination="Kht-xO-4kp" id="Wzd-EA-ea5"/>
+                        <outlet property="lblSync" destination="FFe-hO-BXD" id="ygS-qj-42A"/>
                         <outlet property="segMockMode" destination="QgD-cT-tdB" id="QiB-BG-SCm"/>
                         <outlet property="txtIPAddress" destination="zvx-9e-MNm" id="qV5-vQ-2hz"/>
                         <outlet property="txtUserName" destination="z25-cC-dZS" id="zBp-Ku-Hst"/>

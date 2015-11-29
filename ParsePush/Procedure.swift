@@ -49,7 +49,11 @@ class Procedure : BaseObject  {
     var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
     var tester: String = ""
     var reviewer: String = ""
-   
+    
+    //can hang new workpapers off here
+    var workpapers = [Workpaper]()
+    
+       
     override func mapping(map: Map) {
         super.mapping(map)
         code <- map["Code"]
@@ -72,6 +76,8 @@ class Procedure : BaseObject  {
         reviewDueDate <- (map["ReviewDueDate"], TransformOf<NSDate, String>(
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
+        
+        workpapers <- map["Workpapers"]
        
         isMapping = false
     }
