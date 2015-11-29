@@ -224,9 +224,9 @@ public class Services {
     
     private static func sendDataToServer(dirty: [Procedure], completed: (result: [Procedure]?)->()) {
         print(__FUNCTION__)
-        dirty.forEach {
-            print($0.title!, $0.workpapers.any ? "has workpapers" : "")
-        }
+//        dirty.forEach {
+//            print($0.title!, $0.workpapers.any ? "has workpapers" : "", $0.dirtyFields.any ? " has dirty fields" : "")
+//        }
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
@@ -241,6 +241,8 @@ public class Services {
                 switch result {
                 case .Success(let data):
                     let jsonAlamo = data as? [[String:AnyObject]]
+                    print(jsonAlamo?.count, " values returned")
+                    return
 
                     let server = jsonAlamo?.map { Mapper<Procedure>().map($0)! }
                     let objects = loadObjects()
@@ -291,19 +293,6 @@ public class Services {
         }
     }
     
-    
-
-//    //MARK: Save local
-//    static func save(obj: Procedure) {
-//        let procJson = Mapper().toJSONString(obj, prettyPrint: true)!
-//        //print (procJson)
-//        //save it in its own slot.  will overwrite anything there
-//        let key = DataKey.getProcKey(obj.id!)
-//        //print("Saving \(key) to local store")
-//        NSUserDefaults.standardUserDefaults().setValue(procJson, forKey: key)
-//    }
-    
- 
     //MARK: Store - private
     enum DataKey : String {
         case ProcedureIds = "procedureIds"
@@ -415,7 +404,7 @@ public class Services {
     
     private static func saveObjectsImpl(objects: [BaseObject]) {
         if objects.count > 0 {
-            print ("saving \(objects.count) \(objects[0].dynamicType)")
+            print ("\tsaving \(objects.count) \(objects[0].dynamicType)")
             let ids = objects.map { $0.id! }
             let idListKey = DataKey.getKeyForIdList(objects)
             NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)

@@ -9,12 +9,7 @@
 import Foundation
 import ObjectMapper
 
-protocol BusinessObject {
-    //static var terminology : [String:[String:String]] { get }
-    //class func populateTerminology()
-}
-
-class BaseObject : NSObject, Mappable, CustomDebugStringConvertible, BusinessObject {
+class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     
     required init(_ map: Map) {
     }
