@@ -44,12 +44,13 @@ class Mock {
         procedure.id = id
         procedure.title = title
         procedure.code = code
-        procedure.text1 = text1
+        procedure.text1 = text1.stringByReplacingOccurrencesOfString("Important", withString: "text1")
         procedure.tester = "Bob Dylan"
         procedure.reviewer = "Bronson Pichot"
         procedure.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
         procedure.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
-        procedure.text2 = text1 + text1 + text1 + text1
+        let text2 = text1.stringByReplacingOccurrencesOfString("Important", withString: "text2")
+        procedure.text2 = text2 + text2 + text2 + text2
         procedure.text3 = text1.stringByReplacingOccurrencesOfString("Important", withString: "text3")
         procedure.text4 = text1.stringByReplacingOccurrencesOfString("Important", withString: "text4")
         procedure.resultsText1 = text1.stringByReplacingOccurrencesOfString("Important", withString: "rtext1")

@@ -13,7 +13,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
-    //private var htmlCellsThatWillDisplay = [HtmlCell]()
+    private var webViews = [UIWebView]()
     
     init(procedure : Procedure) {
         super.init(style: .Grouped)
@@ -239,30 +239,30 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                     else {
                         cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
                     }
-                    let s = NSMutableIndexSet()
+
                     self.tableView.beginUpdates()
+                    let sections = NSMutableIndexSet()
                     for htmlIndexPath in htmlIndexPaths
                     {
                         let i = htmlIndexPath.section
                         if (show) {
                             if self.formHelper.hiddenSections.contains(i) {
                                 self.formHelper.hiddenSections.remove(i)
-                                s.addIndex(i)
                             }
                         }
                         else {
                             if !self.formHelper.hiddenSections.contains(i) {
                                 self.formHelper.hiddenSections.insert(i)
-                                s.addIndex(i)
                             }
                         }
+                        sections.addIndex(i)
                     }
                     
                     if (show) {
-                        self.tableView.insertSections(s, withRowAnimation: UITableViewRowAnimation.Top)
+                        self.tableView.insertSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     else {
-                        self.tableView.deleteSections(s, withRowAnimation: UITableViewRowAnimation.Top)
+                        self.tableView.deleteSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
                     }
                     self.tableView.endUpdates()
 
@@ -279,7 +279,6 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.userInteractionEnabled = true
                     }
                     if show {
-                        let firstCell = self.tableView.cellForRowAtIndexPath(htmlIndexPaths[0]) as! HtmlCell
                         abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
                         self.tableView.addSubview(abc!)
                         self.tableView.bringSubviewToFront(abc!)
@@ -290,89 +289,89 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
                         self.tableView.userInteractionEnabled = false
                         self.tableView.alpha = 0.9
 
+                        var cellsToWaitFor = [HtmlCell2]()
+                        for indexPath in htmlIndexPaths {
+                            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
+                                let htmlCell = cell as! HtmlCell2
+                                let data = self.formHelper.getCellData(indexPath)
+                                htmlCell.textString = data.value as! String? ?? ""
+                                cellsToWaitFor.append(htmlCell)
+                            }
+                        }
+                        
                         NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
-                            if firstCell.isResized {
-                                // after the first cell is resized 
-                                // we check to see if others that are visible are still being resized
-                                // after the resizing is done - we scroll - otherwise, we may scroll
-                                // to a place that shifts AFTER the other cells are loading.
-                                // UIWebView is a pain!
-                                let waiting = self.tableView.visibleCells
-                                    .filter { x in x.isKindOfClass(HtmlCell) }
-                                    .map { x in x as! HtmlCell }
-                                    .any { x in !x.isResized }
-                                if !waiting {
-                                    timer.invalidate()
-                                    scroll()
-                                }
+                            let waiting = cellsToWaitFor.any { x in !x.isResized }
+                            if !waiting {
+                                timer.invalidate()
+                                scroll()
                             }
                         })
                     }
                 })
             ])
     
-        formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.text1,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.text1 = htmlCell.textString
                 self.enableSave()
             })])
-        formHelper.addSection(self.t("text2"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("text2"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.text2,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.text2 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("text3"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("text3"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.text3,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! HtmlCell
+                let textCell = cell as! HtmlCell2
                 self.procedure.text3 = textCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("text4"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("text4"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.text4,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let textCell = cell as! HtmlCell
+                let textCell = cell as! HtmlCell2
                 self.procedure.text4 = textCell.textString
                 self.enableSave()
         })])
  
-        formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.resultsText1,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.resultsText1 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText2"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("resultsText2"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.resultsText2,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.resultsText2 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText3"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("resultsText3"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.resultsText3,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.resultsText3 = htmlCell.textString
                 self.enableSave()
         })])
-        formHelper.addSection(self.t("resultsText4"), data: [CellData(identifier: "HtmlCell",
+        formHelper.addSection(self.t("resultsText4"), data: [CellData(identifier: "HtmlCell2",
             value: procedure.resultsText4,
             willDisplay: formHelper.htmlCellSetup,
             changed: { cell, _ in
-                let htmlCell = cell as! HtmlCell
+                let htmlCell = cell as! HtmlCell2
                 self.procedure.resultsText4 = htmlCell.textString
                 self.enableSave()
         })])
@@ -383,8 +382,8 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             let section = formHelper.data[i]
             for data in section {
                 if let nib = data.nibIdentifier {
-                    if nib == "HtmlCell" {
-                        self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
+                    if nib == "HtmlCell2" {
+                        self.tableView.registerNib(UINib(nibName: "HtmlCell2", bundle: nil), forCellReuseIdentifier: data.uuid)
                         if !hideSections.contains(i) {
                             hideSections.addIndex(i)
                         }
@@ -410,7 +409,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return formHelper.data.count - self.formHelper.hiddenSections.count
+        let total = formHelper.data.count
+        let hidden = self.formHelper.hiddenSections.count
+        return total - hidden
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -423,7 +424,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         let data = formHelper.getCellData(indexPath)
         
         if let nibName = data.nibIdentifier {
-            if nibName == "HtmlCell" {
+            if nibName == "HtmlCell2" {
                 cell = self.tableView.dequeueReusableCellWithIdentifier(data.uuid, forIndexPath: indexPath)
             }
             else {
