@@ -217,106 +217,10 @@ class ProcedureFormController: UITableViewController {
                 label: "Text Fields",
                 imageName:  "pen",
                 toggled: false,
+                sectionsToHide: [1, 2, 3, 4],
                 selectedIfAccessoryButtonTapped: true,
-                willDisplay: { cell, data in
-                    cell.selectionStyle = .None
-                    if data.toggled {
-                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Down)
-                    }
-                    else {
-                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Up)
-                    }
-                },
-                selected: { cell, data, indexPath in
-                    
-                    let htmlIndexPaths = [
-                        indexPath.getFirstRowAtRelativeSection(1),
-                        indexPath.getFirstRowAtRelativeSection(2),
-                        indexPath.getFirstRowAtRelativeSection(3),
-                        indexPath.getFirstRowAtRelativeSection(4),
-                        indexPath.getFirstRowAtRelativeSection(5),
-                        indexPath.getFirstRowAtRelativeSection(6),
-                        indexPath.getFirstRowAtRelativeSection(7),
-                        indexPath.getFirstRowAtRelativeSection(8),
-                    ]
-                    
-                    data.toggled = !data.toggled
-                    let show = data.toggled
-                    if show {
-                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Down)
-                    }
-                    else {
-                        cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
-                    }
-
-                    self.tableView.beginUpdates()
-                    let sections = NSMutableIndexSet()
-                    for htmlIndexPath in htmlIndexPaths
-                    {
-                        let i = htmlIndexPath.section
-                        if (show) {
-                            if self.formHelper.hiddenSections.contains(i) {
-                                self.formHelper.hiddenSections.remove(i)
-                            }
-                        }
-                        else {
-                            if !self.formHelper.hiddenSections.contains(i) {
-                                self.formHelper.hiddenSections.insert(i)
-                            }
-                        }
-                        sections.addIndex(i)
-                    }
-                    
-                    if (show) {
-                        self.tableView.insertSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
-                    }
-                    else {
-                        self.tableView.deleteSections(sections, withRowAnimation: UITableViewRowAnimation.Top)
-                    }
-                    self.tableView.endUpdates()
-
-                    
-                    // check the first html view every .1 seconds - when loaded, then scroll to it
-                    // we don't do it immediately because we want the true height of the loaded html to be considered
-                    //  for the scroll
-                    var abc : UIActivityIndicatorView?
-                    let scroll : () -> Void = {
-                        self.tableView.scrollToRowAtIndexPath(indexPath,
-                            atScrollPosition: (show) ? .Top : .Bottom, animated: true)
-                        abc?.removeFromSuperview()
-                        self.tableView.alpha = 1
-                        self.tableView.userInteractionEnabled = true
-                    }
-                    if show {
-                        abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-                        self.tableView.addSubview(abc!)
-                        self.tableView.bringSubviewToFront(abc!)
-                        abc!.center = self.tableView.center
-                        abc!.hidesWhenStopped = true
-                        abc!.hidden = false
-                        abc!.startAnimating()
-                        self.tableView.userInteractionEnabled = false
-                        self.tableView.alpha = 0.9
-
-                        var cellsToWaitFor = [HtmlCell]()
-                        for indexPath in htmlIndexPaths {
-                            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
-                                let htmlCell = cell as! HtmlCell
-                                let data = self.formHelper.getCellData(indexPath)
-                                htmlCell.textString = data.value as! String? ?? ""
-                                cellsToWaitFor.append(htmlCell)
-                            }
-                        }
-                        
-                        NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
-                            let waiting = cellsToWaitFor.any { x in !x.isResized }
-                            if !waiting {
-                                timer.invalidate()
-                                scroll()
-                            }
-                        })
-                    }
-                })
+                willDisplay: formHelper.hideSectionWillDisplay,
+                selected: formHelper.hideSectionSelected)
             ])
     
         formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
@@ -352,6 +256,18 @@ class ProcedureFormController: UITableViewController {
                 self.enableSave()
         })])
  
+        formHelper.addSection(" ", data:
+            [CellData(identifier: "_HideTextFields2",
+                style: UITableViewCellStyle.Value1,
+                label: "Result Text Fields",
+                imageName:  "pen",
+                toggled: false,
+                sectionsToHide: [1, 2, 3, 4],
+                selectedIfAccessoryButtonTapped: true,
+                willDisplay: formHelper.hideSectionWillDisplay,
+                selected: formHelper.hideSectionSelected)
+            ])
+        
         formHelper.addSection(self.t("resultsText1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.resultsText1,
             willDisplay: formHelper.htmlCellWillDisplay,
@@ -387,45 +303,31 @@ class ProcedureFormController: UITableViewController {
         
         // register up ALL the html cells - each with their own idenfifier
         //  so we don't reuse html cells
-        let hideSections = NSMutableIndexSet()
+        var hideSections = [Int]()
         for i in 0..<formHelper.data.count {
             let section = formHelper.data[i]
             for data in section {
                 if let nib = data.nibIdentifier {
                     if nib == "HtmlCell" {
                         self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
-                        if !hideSections.contains(i) {
-                            hideSections.addIndex(i)
-                        }
+                        hideSections.append(i)
                     }
                 }
             }
         }
-        self.tableView.beginUpdates()
-        for section in hideSections {
-            self.formHelper.hiddenSections.insert(section)
-        }
-        self.tableView.deleteSections(hideSections, withRowAnimation: .None)
-        self.tableView.endUpdates()
-    
+        self.formHelper.hideSections(hideSections)
     }
     
-    override func tableView(tableView: UITableView,
-        titleForHeaderInSection section: Int) -> String?
-    {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return formHelper.getSectionTitle(section)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        let total = formHelper.data.count
-        let hidden = self.formHelper.hiddenSections.count
-        return total - hidden
+        return formHelper.getNumberOfSections()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return formHelper.data[section].filter { data in return data.visible }.count
+        return formHelper.getNumberOfRowsInSection(section)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

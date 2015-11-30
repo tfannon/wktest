@@ -145,6 +145,16 @@ extension NSIndexPath {
     }
 }
 
+extension NSIndexSet {
+    class func fromArray(set : [Int]) -> NSIndexSet {
+        let ret = NSMutableIndexSet()
+        for i in set {
+            ret.addIndex(i)
+        }
+        return NSIndexSet(indexSet: ret)
+    }
+}
+
 extension UITableView {
     func dequeueReusableCellWithNibName(nibName : String!) -> UITableViewCell? {
         var cell = self.dequeueReusableCellWithIdentifier(nibName)

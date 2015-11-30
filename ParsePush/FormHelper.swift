@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import DTFoundation
 
 class CellData {
     static var tagCount = 0
@@ -21,6 +22,7 @@ class CellData {
     var visible : Bool = true
     var toggled : Bool = false
     var selectedIfAccessoryButtonTapped : Bool = false
+    var sectionsToHide : [Int]?
     private var initFunction : (() -> UITableViewCell)?
     private var willDisplayFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
@@ -42,6 +44,7 @@ class CellData {
         imageName : String? = nil,
         placeHolder: String? = nil,
         toggled: Bool = false,
+        sectionsToHide : [Int]? = nil,
         selectedIfAccessoryButtonTapped: Bool = false,
         style : UITableViewCellStyle? = nil,
         initialize : (() -> UITableViewCell)? = nil,
@@ -59,6 +62,7 @@ class CellData {
         self.label = label
         self.value = value
         self.style = style
+        self.sectionsToHide = sectionsToHide
         self.imageName = imageName
         self.selectedIfAccessoryButtonTapped = selectedIfAccessoryButtonTapped
         self.placeHolder = placeHolder
@@ -91,7 +95,119 @@ class FormHelper {
     private let controller : UITableViewController!
     private let controllerAsDelegate : CustomCellDelegate!
     var data = [[CellData]]()
-    var hiddenSections = Set<Int>()
+    
+    private var hiddenSections = Set<Int>()
+    private func getActualVisibleSectionDataIndex(requestedSection : Int) -> Int {
+        var counter = 0
+        for i in 0..<sections.count {
+            if !hiddenSections.contains(i) {
+                if counter++ == requestedSection {
+                    return i
+                }
+            }
+        }
+        fatalError("getActualSectionDataIndex could not obtain index")
+    }
+
+    func hideSections(sections : [Int], animation: UITableViewRowAnimation = .None) {
+        var sectionsToDelete = [Int]()
+        var actualIndexes = [Int]()
+        for section in sections {
+            let actualIndex = self.getActualVisibleSectionDataIndex(section)
+            if !self.hiddenSections.contains(actualIndex) {
+                actualIndexes.append(actualIndex)
+                sectionsToDelete.append(section)
+            }
+        }
+        actualIndexes.forEach{ x in hiddenSections.insert(x) }
+
+        controller.tableView.beginUpdates()
+        controller.tableView.deleteSections(NSIndexSet.fromArray(sectionsToDelete), withRowAnimation: animation)
+        controller.tableView.endUpdates()
+    }
+
+    func showSections(sections : [Int], animation: UITableViewRowAnimation = .None, scrollDelta : Int = 0) {
+
+        if sections.any {
+            let firstSectionToShow = sections.first!
+            let preceedingVisibleSectionActualIndex = self.getActualVisibleSectionDataIndex(firstSectionToShow - 1)
+            let delta = preceedingVisibleSectionActualIndex - firstSectionToShow + 1
+            var sectionsToShow = [Int]()
+            for section in sections {
+                let recalced = section + delta
+                if hiddenSections.contains(recalced) {
+                    hiddenSections.remove(recalced)
+                    sectionsToShow.append(section)
+                }
+            }
+            
+            controller.tableView.beginUpdates()
+            controller.tableView.insertSections(NSIndexSet.fromArray(sectionsToShow), withRowAnimation: animation)
+            controller.tableView.endUpdates()
+            
+            let firstIndexPath = NSIndexPath(forRow: 0, inSection: sectionsToShow.first!)
+            let cell = self.tableView.cellForRowAtIndexPath(firstIndexPath)
+            let scrollToIndexPath = firstIndexPath.getFirstRowAtRelativeSection(scrollDelta)
+            
+            // check the first html view every .1 seconds - when loaded, then scroll to it
+            // we don't do it immediately because we want the true height of the loaded html to be considered
+            //  for the scroll
+            if let htmlCell = cell as? HtmlCell {
+                var abc : UIActivityIndicatorView?
+                abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                self.tableView.addSubview(abc!)
+                self.tableView.bringSubviewToFront(abc!)
+                abc!.center = self.tableView.center
+                abc!.hidesWhenStopped = true
+                abc!.hidden = false
+                abc!.startAnimating()
+                self.tableView.userInteractionEnabled = false
+                self.tableView.alpha = 0.9
+                
+                NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
+                    if htmlCell.isResized {
+                        timer.invalidate()
+                        self.tableView.scrollToRowAtIndexPath(scrollToIndexPath,
+                            atScrollPosition: .Top, animated: true)
+                        abc?.removeFromSuperview()
+                        self.tableView.alpha = 1
+                        self.tableView.userInteractionEnabled = true
+                    }
+                })
+            }
+        }
+    }
+
+    func getNumberOfSections() -> Int {
+        // Return the number of sections.
+        let total = data.count
+        let hidden = hiddenSections.count
+        let n = total - hidden
+        return n
+    }
+    
+    func getNumberOfRowsInSection(section : Int) -> Int {
+        let index = getActualVisibleSectionDataIndex(section)
+        let n = data[index].filter { x in x.visible }.count
+        return n
+    }
+    
+    func getSectionTitle(section : Int) -> String {
+        let index = getActualVisibleSectionDataIndex(section)
+        let t = sections[index]
+        return t
+    }
+    
+    func getCellData(indexPath: NSIndexPath) -> CellData
+    {
+        let index = getActualVisibleSectionDataIndex(indexPath.section)
+        let filtered = data[index].filter { d in return d.visible }
+        return filtered[indexPath.row]
+    }
+    
+    var tableView : UITableView {
+        get { return controller.tableView }
+    }
     
     private var _sections = [String]()
     var sections : [String] { get { return _sections } }
@@ -148,6 +264,41 @@ class FormHelper {
             cell.detailTextLabel?.textColor = cell.textLabel?.textColor
         }
     
+    lazy var hideSectionWillDisplay : ((UITableViewCell, CellData) -> Void) =
+        { cell, data in
+            cell.selectionStyle = .None
+            if data.toggled {
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Down)
+            }
+            else {
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Up)
+            }
+        }
+    
+    lazy var hideSectionSelected : ((UITableViewCell, CellData, NSIndexPath) -> Void) =
+        { cell, data, indexPath in
+            
+            let htmlIndexPaths = data.sectionsToHide!.map { x in
+                indexPath.getFirstRowAtRelativeSection(x) }
+            
+            data.toggled = !data.toggled
+            let show = data.toggled
+            if show {
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Down)
+            }
+            else {
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
+            }
+
+            let sections = htmlIndexPaths.map { x in x.section }
+            if (show) {
+                self.showSections(sections, animation: .Top, scrollDelta: -1)
+            }
+            else {
+                self.hideSections(sections, animation: .Top)
+            }
+        }
+    
     lazy var dateCellSelected : ((UITableViewCell, CellData, NSIndexPath) -> Void) =
         { cell, data, indexPath in
         let indexPath = self.controller.tableView.indexPathForCell(cell)!
@@ -185,26 +336,5 @@ class FormHelper {
         }
     }
     
-    func getSectionTitle(section : Int) -> String {
-        var visibleSections = [String]()
-        for i in 0..<sections.count {
-            if !hiddenSections.contains(i) {
-                visibleSections.append(sections[i])
-            }
-        }
-        return visibleSections[section]
-    }
-    
-    func getCellData(indexPath: NSIndexPath) -> CellData
-    {
-        var visibleSections = [[CellData]]()
-        for i in 0..<data.count {
-            if !hiddenSections.contains(i) {
-                visibleSections.append(data[i])
-            }
-        }
-        let filtered = visibleSections[indexPath.section].filter { d in return d.visible }
-        return filtered[indexPath.row]
-    }
 
 }
