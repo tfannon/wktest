@@ -205,32 +205,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
                 })
             ])
 
-        formHelper.addSection("Results", data: [CellData(identifier: "SegmentedCell",
-            willDisplay: { cell, data in
-                let segmentedCell = cell as! SegmentedCell
-                segmentedCell.delegate = self
-                segmentedCell.setOptions(TestResults.displayNames)
-                //segmentedCell.label.text = self.t("testResults")
-                segmentedCell.segmented.selectedSegmentIndex = self.procedure.testResults
-            },
-            changed: { cell, _ in
-                let segmentedCell = cell as! SegmentedCell
-                self.procedure.testResults = segmentedCell.segmented.selectedSegmentIndex
-                self.enableSave()
-        })])
-        
-        formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = self.procedure.changes?.count > 0
-            },
-            selected: { cell, data, indexPath in
-                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                vc.changes = self.procedure.changes!
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        })])
-        
         formHelper.addSection(" ", data:
             [CellData(identifier: "_HideTextFields1",
                 style: UITableViewCellStyle.Value1,
@@ -276,6 +250,20 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
                 self.enableSave()
         })])
  
+        formHelper.addSection("Results", data: [CellData(identifier: "SegmentedCell",
+            willDisplay: { cell, data in
+                let segmentedCell = cell as! SegmentedCell
+                segmentedCell.delegate = self
+                segmentedCell.setOptions(TestResults.displayNames)
+                //segmentedCell.label.text = self.t("testResults")
+                segmentedCell.segmented.selectedSegmentIndex = self.procedure.testResults
+            },
+            changed: { cell, _ in
+                let segmentedCell = cell as! SegmentedCell
+                self.procedure.testResults = segmentedCell.segmented.selectedSegmentIndex
+                self.enableSave()
+        })])
+        
         formHelper.addSection(" ", data:
             [CellData(identifier: "_HideTextFields2",
                 style: UITableViewCellStyle.Value1,
@@ -319,6 +307,18 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
                 let htmlCell = cell as! HtmlCell
                 self.procedure.resultsText4 = htmlCell.textString
                 self.enableSave()
+        })])
+ 
+        formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = self.procedure.changes?.count > 0
+            },
+            selected: { cell, data, indexPath in
+                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
+                vc.changes = self.procedure.changes!
+                self.navigationController?.pushViewController(vc, animated: true)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
         
         // register up ALL the html cells - each with their own idenfifier
