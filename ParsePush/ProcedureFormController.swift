@@ -9,7 +9,16 @@
 import UIKit
 import DTFoundation
 
-class ProcedureFormController: UITableViewController, CustomCellDelegate, WorkpaperChooserDelegate {
+extension ProcedureFormController : CustomCellDelegate {
+    func changed(cell: UITableViewCell) {
+        if let indexPath = tableView.indexPathForCell(cell) {
+            let cellData = formHelper.getCellData(indexPath)
+            cellData.changed(cell)
+        }
+    }
+}
+
+class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
@@ -79,7 +88,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate, Workpa
     private func setupToolbar() {
         if let _ = self.navigationController?.toolbar {
             let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addClicked")
-            let lbl = UIBarButtonItem(title: "0 items added", style: .Plain, target: nil, action: nil)
+            let lbl = UIBarButtonItem(title: itemsAddedText, style: .Plain, target: nil, action: nil)
             let undo = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "undoClicked")
             let spacer = UIBarButtonItem (barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             self.toolbarItems = [add, spacer, lbl, spacer, undo]
@@ -550,8 +559,12 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate, Workpa
     func workpaperAddedCallback(wasAdded: Bool) {
         if wasAdded {
             Services.saveObject(procedure, log: true)
-            self.toolbarLabel.title = "\(procedure.workpapers.count) items added"
+            self.toolbarLabel.title = itemsAddedText
         }
+    }
+    
+    var itemsAddedText: String {
+        get { return procedure.workpapers.any ? "\(procedure.workpapers.count) items added" : "" }
     }
     
     
