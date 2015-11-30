@@ -96,11 +96,11 @@ class FormHelper {
     private let controllerAsDelegate : CustomCellDelegate!
     var data = [[CellData]]()
     
-    private var hiddenSections = Set<Int>()
+    private var hiddenSectionActualIndexes = Set<Int>()
     private func getActualVisibleSectionDataIndex(requestedSection : Int) -> Int {
         var counter = 0
         for i in 0..<sections.count {
-            if !hiddenSections.contains(i) {
+            if !hiddenSectionActualIndexes.contains(i) {
                 if counter++ == requestedSection {
                     return i
                 }
@@ -109,46 +109,92 @@ class FormHelper {
         fatalError("getActualSectionDataIndex could not obtain index")
     }
 
+    //
+    // hides the provided sections from the table
+    //  sections: is the array of sections to show in the tableview
+    //  but we need to calculate the "actual" data[] index of these sections to hide
+    //  so we can keep our internal record keeping straight.  For example, if 
+    //  sections 6-9 and 11-14 are hidden, and we SHOW 7-10 - those positions are
+    //  actually 11-14 in our internal data[] because 6-9 are missing from the table at this point.
+    //
     func hideSections(sections : [Int], animation: UITableViewRowAnimation = .None) {
+        // sections we send to deleteSections
         var sectionsToDelete = [Int]()
+        // the corresponding index in data[] for the section we're hiding (see above)
         var actualIndexes = [Int]()
+        // for each one to hide
         for section in sections {
+            // get the actual index for data[]
             let actualIndex = self.getActualVisibleSectionDataIndex(section)
-            if !self.hiddenSections.contains(actualIndex) {
+            // if it's not already hidden
+            if !self.hiddenSectionActualIndexes.contains(actualIndex) {
+                // add the actual to actualIndexes (so we can add them to hiddenSectionActualIndexes later)
                 actualIndexes.append(actualIndex)
+                // add the relative ones to sectionsToDelete for tableView.deleteSections
                 sectionsToDelete.append(section)
             }
         }
-        actualIndexes.forEach{ x in hiddenSections.insert(x) }
+        // internal record keeping of hiddenSectionActualIndexes
+        actualIndexes.forEach{ x in hiddenSectionActualIndexes.insert(x) }
 
+        // make magic in the table
         controller.tableView.beginUpdates()
         controller.tableView.deleteSections(NSIndexSet.fromArray(sectionsToDelete), withRowAnimation: animation)
         controller.tableView.endUpdates()
     }
 
+    //
+    // shows hidden rows in the table
+    //  scrollDelta denotes which section to scroll to after they are made visible.  relative to the
+    //  FIRST section shown (e.g. -1 would scroll to the last row in the prior section that is visible before this call)
+    //
     func showSections(sections : [Int], animation: UITableViewRowAnimation = .None, scrollDelta : Int = 0) {
 
+        // if we have any sections to show
         if sections.any {
+            // grab the first section - we do this so we know what kind of cell is being hidden
             let firstSectionToShow = sections.first!
+            // this is the preceeding section that started visible when this function was called 
+            //  (usu. the table row which initiated the show)
             let preceedingVisibleSectionActualIndex = self.getActualVisibleSectionDataIndex(firstSectionToShow - 1)
+            // difference between the actual index in data[] and the sections to show
             let delta = preceedingVisibleSectionActualIndex - firstSectionToShow + 1
+            // this is for tableView insertSections
             var sectionsToShow = [Int]()
+            // for each one
             for section in sections {
+                // we recalc to get the actual data[] index for the section
                 let recalced = section + delta
-                if hiddenSections.contains(recalced) {
-                    hiddenSections.remove(recalced)
+                // if it's hidden
+                if hiddenSectionActualIndexes.contains(recalced) {
+                    // remove it from the hidden list
+                    hiddenSectionActualIndexes.remove(recalced)
+                    // this is passed to tableView.insertSections
                     sectionsToShow.append(section)
                 }
             }
             
+            // iOS magic
             controller.tableView.beginUpdates()
             controller.tableView.insertSections(NSIndexSet.fromArray(sectionsToShow), withRowAnimation: animation)
             controller.tableView.endUpdates()
             
+            // this is the first indexPath of the first section to show
             let firstIndexPath = NSIndexPath(forRow: 0, inSection: sectionsToShow.first!)
+            // this is the cell in that position
             let cell = self.tableView.cellForRowAtIndexPath(firstIndexPath)
-            let scrollToIndexPath = firstIndexPath.getFirstRowAtRelativeSection(scrollDelta)
+            // which section to scroll to after sections are made visible
+            let scrollToSection = firstIndexPath.section + scrollDelta
+            let scrollToIndexPath = NSIndexPath(forRow: self.getNumberOfRowsInSection(scrollToSection) - 1, inSection: scrollToSection)
             
+            let scroll = {
+                self.tableView.scrollToRowAtIndexPath(scrollToIndexPath,
+                    atScrollPosition: .Top, animated: true)
+                self.tableView.alpha = 1
+                self.tableView.userInteractionEnabled = true
+            }
+            
+            // if HtmlCell - pain!
             // check the first html view every .1 seconds - when loaded, then scroll to it
             // we don't do it immediately because we want the true height of the loaded html to be considered
             //  for the scroll
@@ -167,13 +213,14 @@ class FormHelper {
                 NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
                     if htmlCell.isResized {
                         timer.invalidate()
-                        self.tableView.scrollToRowAtIndexPath(scrollToIndexPath,
-                            atScrollPosition: .Top, animated: true)
                         abc?.removeFromSuperview()
-                        self.tableView.alpha = 1
-                        self.tableView.userInteractionEnabled = true
+                        scroll()
                     }
                 })
+            }
+            else {
+                // NOT html - scroll immediately
+                scroll()
             }
         }
     }
@@ -181,7 +228,7 @@ class FormHelper {
     func getNumberOfSections() -> Int {
         // Return the number of sections.
         let total = data.count
-        let hidden = hiddenSections.count
+        let hidden = hiddenSectionActualIndexes.count
         let n = total - hidden
         return n
     }
@@ -279,7 +326,7 @@ class FormHelper {
         { cell, data, indexPath in
             
             let htmlIndexPaths = data.sectionsToHide!.map { x in
-                indexPath.getFirstRowAtRelativeSection(x) }
+                indexPath.getRelativeSection(x) }
             
             data.toggled = !data.toggled
             let show = data.toggled

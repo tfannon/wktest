@@ -146,11 +146,11 @@ extension NSIndexPath {
         let ip = NSIndexPath(forRow: self.row + deltaRow, inSection: self.section)
         return ip
     }
-    func getFirstRowNextSection() -> NSIndexPath {
-        return getFirstRowAtRelativeSection(1)
+    func getNextSection() -> NSIndexPath {
+        return getRelativeSection(1)
     }
-    func getFirstRowAtRelativeSection(deltaSection : Int) -> NSIndexPath {
-        let ip = NSIndexPath(forRow: 0, inSection: self.section + deltaSection)
+    func getRelativeSection(deltaSection : Int) -> NSIndexPath {
+        let ip = NSIndexPath(forRow: row, inSection: self.section + deltaSection)
         return ip
     }
 }
