@@ -11,14 +11,16 @@ import UIKit
 
 //the workpaper chooser needs to know about its owner and viewcontroller so it can present and save
 protocol WorkpaperChooserDelegate {
-    var owningObject: Procedure { get }
+    var workpaperOwner: Procedure { get }
     var owningViewController: UIViewController { get }
+    func workpaperAddedCallback(wasAdded: Bool)
 }
 
 class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var _title = ""
     var _description: String?
     var delegate: WorkpaperChooserDelegate!
+    
     
     required init(owner: WorkpaperChooserDelegate) {
         self.delegate = owner
@@ -73,17 +75,15 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
     internal func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
             let jpg = UIImageJPEGRepresentation(image, 0.0) {
-            let procedure = self.delegate.owningObject
-            //let fileName = Services.storageProviderLocation.URLByAppendingPathComponent(self._title).path!
-            //data.writeToFile(fileName, atomically: true)
-            //print(try! NSFileManager.defaultManager().attributesOfItemAtPath(fileName))
-            procedure.workpapers.append(
+            let owner = self.delegate.workpaperOwner
+            owner.workpapers.append(
                 Workpaper() {
                     $0.title = self._title
                     $0.oDescription = self._description
                     $0.attachmentData = jpg
+                    $0.attachmentExtension = "jpg"
             })
-            Services.saveObject(procedure)
+            self.delegate.workpaperAddedCallback(true)
         }
         self.delegate.owningViewController.dismissViewControllerAnimated(true, completion: nil)
     }

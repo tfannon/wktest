@@ -125,6 +125,16 @@ extension Array {
     var any : Bool {
         return !self.isEmpty
     }
+    
+    func count(condition : (Array.Element) -> Bool) -> Int {
+        var count = 0
+        for x in self {
+            if condition(x) {
+                count++
+            }
+        }
+        return count
+    }
 }
 
 extension NSIndexPath {
