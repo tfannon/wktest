@@ -220,7 +220,7 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     }
 }
 
-public class HtmlCell2: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, UIWebViewDelegate {
+public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, UIWebViewDelegate {
 
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
