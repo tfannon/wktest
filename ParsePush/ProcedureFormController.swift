@@ -9,11 +9,13 @@
 import UIKit
 import DTFoundation
 
-class ProcedureFormController: UITableViewController, CustomCellDelegate {
+class ProcedureFormController: UITableViewController, CustomCellDelegate, WorkpaperChooserDelegate {
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
+    
+    private var toolbarLabel: UIBarButtonItem!
     
     init(procedure : Procedure) {
         super.init(style: .Grouped)
@@ -39,7 +41,9 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
         // Automatic dimensions to tell the table view to use dynamic height
         tableView.rowHeight = UITableViewAutomaticDimension
-         
+        
+        setupNavbar()
+        setupToolbar()
         setupForm()
         
         self.tableView.reloadData()
@@ -47,12 +51,17 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         watchForChanges = true
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.toolbarHidden = true
+    }
+    
     override func viewWillAppear(animated: Bool) {
-        
         self.navigationController?.navigationBarHidden = false
-        let bar = self.navigationController?.navigationBar
-        if (bar != nil)
-        {
+        self.navigationController?.toolbarHidden = false
+    }
+    
+    private func setupNavbar() {
+        if let _ = self.navigationController?.navigationBar {
             let left = UIBarButtonItem(title: "Cancel",
                 style: UIBarButtonItemStyle.Plain,
                 target: self, action: "navbarCancelClicked")
@@ -64,6 +73,17 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
             
             self.navigationItem.rightBarButtonItem = right
             self.navigationItem.rightBarButtonItem?.enabled = false
+        }
+    }
+    
+    private func setupToolbar() {
+        if let _ = self.navigationController?.toolbar {
+            let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addClicked")
+            let lbl = UIBarButtonItem(title: "0 items added", style: .Plain, target: nil, action: nil)
+            let undo = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "undoClicked")
+            let spacer = UIBarButtonItem (barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            self.toolbarItems = [add, spacer, lbl, spacer, undo]
+            self.toolbarLabel = lbl
         }
     }
     
@@ -510,7 +530,7 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
     
     func navbarSaveClicked()
     {
-        Services.saveObject(self.procedure)
+        Services.saveObject(self.procedure, log: true)
         dismiss()
     }
     
@@ -518,6 +538,28 @@ class ProcedureFormController: UITableViewController, CustomCellDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: - Workpaper Chooser
+    var workpaperOwner: Procedure { get { return procedure } }
+    var owningViewController: UIViewController { get { return self }}
+    
+    func addClicked() {
+        WorkpaperChooser.choose(self)
+    }
+    
+    func undoClicked() {
+        procedure.workpapers.removeAll()
+        Services.saveObject(procedure, log: true)
+        self.toolbarLabel.title = ""
+    }
+    
+    func workpaperAddedCallback(wasAdded: Bool) {
+        if wasAdded {
+            Services.saveObject(procedure, log: true)
+            self.toolbarLabel.title = "\(procedure.workpapers.count) items added"
+        }
+    }
+    
     
     /*
     // MARK: - Navigation

@@ -400,11 +400,11 @@ public class Services {
         }
     }
     
-    static func saveObject(obj: BaseObject) {
+    static func saveObject(obj: BaseObject, log: Bool = false) {
         let json = Mapper().toJSONString(obj, prettyPrint: true)!
         //save it in its own slot.  will overwrite anything there
         let key = DataKey.getKeyForObject(obj)
-        //print("Saving \(key) to local store")
+        if log { print("Saving \(key) to local store") }
         NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
     }
     

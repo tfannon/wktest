@@ -14,7 +14,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
 
     //MARK: - WorkpaperChooserDelegate
     var procedure: Procedure?
-    var owningObject: Procedure { return procedure! }
+    var workpaperOwner: Procedure { return procedure! }
     var owningViewController: UIViewController  { return self }
     
 
@@ -117,6 +117,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
         let vc = ProcedureFormController(procedure: Mock.getProcedures()[0])
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -160,7 +161,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         return self
     }
     
-   @IBAction func addWorkpaperPressed(sender: AnyObject) {
+    //MARK:-  WorkpaperChooser
+    @IBAction func addWorkpaperPressed(sender: AnyObject) {
         if self.procedure == nil {
             Services.getMyData() { result in
                 self.procedure = result?.procedures.first!
@@ -169,6 +171,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         } else {
             WorkpaperChooser.choose(self)
         }
+    }
+    
+    func workpaperAddedCallback(wasAdded: Bool) {
     }
 }
 
