@@ -16,13 +16,26 @@ extension ProcedureFormController : CustomCellDelegate {
             cellData.changed(cell)
         }
     }
+    func beganEditing(cell: UITableViewCell) {
+        self.editingCell = cell
+    }
+    func finishedEditing(cell: UITableViewCell) {
+        // make sure we only set to nil if we're finishing the start we started on
+        // don't know the order if you select another cell (if finished fires before start)
+        if cell == self.editingCell {
+            self.editingCell = nil
+        }
+    }
 }
 
 class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
+    private var bottomConstraint: NSLayoutConstraint!
     private var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
+    
+    private var editingCell : UITableViewCell?
     
     private var toolbarLabel: UIBarButtonItem!
     
@@ -61,14 +74,17 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         self.navigationController?.toolbarHidden = true
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = false
     }
-    
+
     private func setupNavbar() {
         if let _ = self.navigationController?.navigationBar {
             let left = UIBarButtonItem(title: "Cancel",
@@ -320,7 +336,24 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
-        
+
+        formHelper.addSection(" ",
+            data: [
+                CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
+                    willDisplay: formHelper.textCellWillDisplay,
+                    changed: { cell, _ in
+                        let textCell = cell as! TextCell
+                        self.procedure.title = textCell.textField.text
+                        self.enableSave()
+                }),
+                CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"),
+                    willDisplay: formHelper.textCellWillDisplay,
+                    changed: { cell, _ in
+                        let textCell = cell as! TextCell
+                        self.procedure.code = textCell.textField.text
+                        self.enableSave()
+        })])
+
         // register up ALL the html cells - each with their own idenfifier
         //  so we don't reuse html cells
         var hideSections = [Int]()

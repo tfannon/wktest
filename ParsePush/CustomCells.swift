@@ -10,14 +10,22 @@ import Foundation
 import UIKit
 import RichEditorView
 
-protocol CustomCellDelegate {
+@objc protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
+    optional func beganEditing(cell : UITableViewCell)
+    optional func finishedEditing(cell : UITableViewCell)
 }
 
 public class CustomCell : UITableViewCell {
     var delegate : CustomCellDelegate? = nil
     func changed() {
         delegate?.changed(self)
+    }
+    func beganEditing() {
+        delegate?.beganEditing?(self)
+    }
+    func finishedEditing() {
+        delegate?.finishedEditing?(self)
     }
 }
 
@@ -162,6 +170,14 @@ public class TextCell : CustomCell, UITextFieldDelegate
     func textFieldDidChange(textField: UITextField) {
         changed()
     }
+    
+    public func textFieldDidBeginEditing(textField: UITextField) {
+        beganEditing()
+    }
+    
+    public func textFieldDidEndEditing(textField: UITextField) {
+        finishedEditing()
+    }
 }
 
 public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
@@ -218,9 +234,17 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
         
         changed()
     }
+
+    public func textViewDidBeginEditing(textView: UITextView) {
+        beganEditing()
+    }
+    
+    public func textViewDidEndEditing(textView: UITextView) {
+        finishedEditing()
+    }
 }
 
-public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, UIWebViewDelegate {
+public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate {
 
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -229,16 +253,24 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     private var editor : RichEditorView!
     private var contentHeight : CGFloat = 0
     private var resized = false
-    private var timer : NSTimer?
-    
+
+    lazy var toolbar: RichEditorToolbar = {
+        let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.innerView.bounds.width, height: 44))
+        toolbar.options = RichEditorOptions.all()
+        return toolbar
+    }()
+
     override public func awakeFromNib() {
         super.awakeFromNib()
         
         selectionStyle = .None
+        
         editor = RichEditorView(frame: innerView.frame)
         editor.delegate = self
-        editor.webView.scrollView.scrollEnabled = false
-        editor.webView.scrollView.bounces = false
+        editor.inputAccessoryView = toolbar
+        toolbar.delegate = self
+        toolbar.editor = editor
+
         self.innerView.addSubview(editor)
         editor.frame.origin = CGPoint(x: 0, y: 0)
         indicator.hidden = true
@@ -329,12 +361,14 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
      Called when the rich editor starts editing
      */
     public func richEditorTookFocus(editor: RichEditorView) {
+        beganEditing()
     }
     
     /**
      Called when the rich editor stops editing or loses focus
      */
     public func richEditorLostFocus(editor: RichEditorView) {
+        finishedEditing()
     }
     
     /**
