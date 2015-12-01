@@ -337,23 +337,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
 
-        formHelper.addSection(" ",
-            data: [
-                CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
-                    willDisplay: formHelper.textCellWillDisplay,
-                    changed: { cell, _ in
-                        let textCell = cell as! TextCell
-                        self.procedure.title = textCell.textField.text
-                        self.enableSave()
-                }),
-                CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"),
-                    willDisplay: formHelper.textCellWillDisplay,
-                    changed: { cell, _ in
-                        let textCell = cell as! TextCell
-                        self.procedure.code = textCell.textField.text
-                        self.enableSave()
-        })])
-
         // register up ALL the html cells - each with their own idenfifier
         //  so we don't reuse html cells
         var hideSections = [Int]()

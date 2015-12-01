@@ -268,8 +268,37 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         editor = RichEditorView(frame: innerView.frame)
         editor.delegate = self
         editor.inputAccessoryView = toolbar
+        
         toolbar.delegate = self
         toolbar.editor = editor
+        toolbar.options = [
+            RichEditorOptions.Clear,
+            RichEditorOptions.Undo,
+            RichEditorOptions.Redo,
+            RichEditorOptions.Bold,
+            RichEditorOptions.Italic,
+            RichEditorOptions.Subscript,
+            RichEditorOptions.Superscript,
+            RichEditorOptions.Strike,
+            RichEditorOptions.Underline,
+            RichEditorOptions.TextColor,
+            RichEditorOptions.TextBackgroundColor,
+            RichEditorOptions.Header(1),
+            RichEditorOptions.Header(2),
+            RichEditorOptions.Header(3),
+            RichEditorOptions.Header(4),
+            RichEditorOptions.Header(5),
+            RichEditorOptions.Header(6),
+            RichEditorOptions.Indent,
+            RichEditorOptions.Outdent,
+            RichEditorOptions.OrderedList,
+            RichEditorOptions.UnorderedList,
+            RichEditorOptions.AlignLeft,
+            RichEditorOptions.AlignCenter,
+            RichEditorOptions.AlignRight,
+            /*RichEditorOptions.Image,*/
+            RichEditorOptions.Link
+        ]
 
         self.innerView.addSubview(editor)
         editor.frame.origin = CGPoint(x: 0, y: 0)
