@@ -466,17 +466,22 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     
     //MARK: FCColorPickerViewController
     
+    lazy var colorPicker: FCColorPickerViewController = {
+        let colorPicker = FCColorPickerViewController.colorPicker()
+        colorPicker.color = UIColor.blueColor()
+        colorPicker.delegate = self
+        return colorPicker
+    }()
+    
     private func showColorPicker(mode : ColorPickerMode) {
         self.colorPickerMode = mode
-//        let colorPicker = FCColorPickerViewController.colorPicker()
-//        colorPicker.delegate = self;
-//        colorPicker.backgroundColor = UIColor.whiteColor()
-//        colorPicker.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-//        getViewController().presentViewController(colorPicker, animated: true, completion: nil)
-        let colorPicker = FCColorPickerViewController.colorPicker()
-        colorPicker.color = UIColor.blackColor()
-        colorPicker.delegate = self
         getViewController().presentViewController(colorPicker, animated: true, completion: nil)
+    }
+    
+    private func hideColorPicker() {
+        delegate?.getViewController().dismissViewControllerAnimated(true, completion: { _ in
+            self.editor.webView.becomeFirstResponder()
+        })
     }
 
     public func colorPickerViewController(colorPicker: FCColorPickerViewController, didSelectColor color: UIColor) {
@@ -490,16 +495,16 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         default:
             break
         }
-        delegate?.getViewController().dismissViewControllerAnimated(true, completion: nil)
+        hideColorPicker()
     }
-    
+
     /**
      Called on the delegate of `colorPicker` when the user has canceled selecting a color.
      
      @param colorPicker The `FCColorPickerViewController` that has canceled picking a color.
      */
     public func colorPickerViewControllerDidCancel(colorPicker: FCColorPickerViewController) {
-        delegate?.getViewController().dismissViewControllerAnimated(true, completion: nil)
+        hideColorPicker()
     }
 }
 
