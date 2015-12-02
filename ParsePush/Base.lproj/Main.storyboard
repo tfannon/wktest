@@ -336,6 +336,7 @@
                         <segue destination="t4T-QP-yTb" kind="relationship" relationship="viewControllers" id="akF-Ho-Btp"/>
                         <segue destination="at1-ED-CIF" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
                         <segue destination="j1m-mE-xI7" kind="relationship" relationship="viewControllers" id="e5W-8l-QQH"/>
+                        <segue destination="d0z-2q-xr7" kind="relationship" relationship="viewControllers" id="hMD-Qa-Ifr"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xoQ-ZQ-jm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -605,6 +606,126 @@
             </objects>
             <point key="canvasLocation" x="758" y="318"/>
         </scene>
+        <!--SplitDetail Controller-->
+        <scene sceneID="8fJ-t1-XBL">
+            <objects>
+                <viewController id="4um-6O-tw5" userLabel="SplitDetail Controller" customClass="SplitDetailController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zZy-FM-VNO"/>
+                        <viewControllerLayoutGuide type="bottom" id="8YR-ju-DHB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Acq-BY-iOF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCI-Tw-iu4">
+                                <rect key="frame" x="279" y="237.5" width="42" height="126"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BjG-cA-FWr">
+                                <rect key="frame" x="262" y="402" width="75" height="75"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="Z0f-cb-IFe"/>
+                                    <constraint firstAttribute="height" constant="75" id="w29-5V-FBI"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8YR-ju-DHB" firstAttribute="top" secondItem="BjG-cA-FWr" secondAttribute="bottom" constant="74" id="AP7-LG-bAS"/>
+                            <constraint firstItem="kCI-Tw-iu4" firstAttribute="centerX" secondItem="Acq-BY-iOF" secondAttribute="centerX" id="Ahv-dM-9Yd"/>
+                            <constraint firstItem="BjG-cA-FWr" firstAttribute="centerX" secondItem="Acq-BY-iOF" secondAttribute="centerX" id="FVW-sI-Tk2"/>
+                            <constraint firstItem="BjG-cA-FWr" firstAttribute="top" secondItem="kCI-Tw-iu4" secondAttribute="bottom" constant="38.5" id="Ktu-Lh-kia"/>
+                            <constraint firstItem="kCI-Tw-iu4" firstAttribute="centerY" secondItem="Acq-BY-iOF" secondAttribute="centerY" id="kbr-s0-5i5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imgWorkflowState" destination="BjG-cA-FWr" id="Ofb-y2-EWP"/>
+                        <outlet property="lblTitle" destination="kCI-Tw-iu4" id="eWa-0i-Wa5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cpj-g8-3oO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="724" y="3260"/>
+        </scene>
+        <!--SplitMaster Controller-->
+        <scene sceneID="a3u-5u-040">
+            <objects>
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="y61-jI-EQI" userLabel="SplitMaster Controller" customClass="SplitMasterViewController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QNV-gF-PyE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Rbw-Fb-cnF" style="IBUITableViewCellStyleDefault" id="2OP-hY-Gw3">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2OP-hY-Gw3" id="9DQ-ay-YjN">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rbw-Fb-cnF">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="y61-jI-EQI" id="6y4-M7-10o"/>
+                            <outlet property="delegate" destination="y61-jI-EQI" id="EqQ-XF-UQx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Procedures" id="rlz-gc-H2Y"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbw-Vy-J79" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1538" y="2591"/>
+        </scene>
+        <!--Split Navigation Controller-->
+        <scene sceneID="gQW-cr-JLE">
+            <objects>
+                <navigationController id="KKX-nm-mNZ" userLabel="Split Navigation Controller" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TnR-pJ-zAK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="y61-jI-EQI" kind="relationship" relationship="rootViewController" id="8B2-DY-8rP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VOg-lh-qCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="718" y="2591"/>
+        </scene>
+        <!--TestSplit-->
+        <scene sceneID="etG-5q-rQQ">
+            <objects>
+                <splitViewController id="d0z-2q-xr7" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="TestSplit" image="854-list" id="7jM-KI-Axc"/>
+                    <connections>
+                        <segue destination="KKX-nm-mNZ" kind="relationship" relationship="masterViewController" id="FME-p2-46D"/>
+                        <segue destination="4um-6O-tw5" kind="relationship" relationship="detailViewController" id="2tb-U2-O1k"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S6d-w7-7vK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-780" y="2837"/>
+        </scene>
     </scenes>
     <resources>
         <image name="739-question" width="28" height="28"/>
@@ -613,6 +734,7 @@
         <image name="779-users" width="28" height="25"/>
         <image name="791-warning" width="28" height="26"/>
         <image name="832-stack-1" width="28" height="22"/>
+        <image name="854-list" width="26" height="16"/>
         <image name="icons_completed" width="42" height="42"/>
         <image name="icons_implemented" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>
