@@ -309,7 +309,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
             RichEditorOptions.AlignCenter,
             RichEditorOptions.AlignRight,
             /*RichEditorOptions.Image,*/
-            RichEditorOptions.Link
+            /*RichEditorOptions.Link*/
         ]
 
         self.innerView.addSubview(editor)
