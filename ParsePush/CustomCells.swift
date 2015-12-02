@@ -9,15 +9,17 @@
 import Foundation
 import UIKit
 import RichEditorView
+import iOS_Color_Picker
 
 @objc protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
+    func getViewController() -> UIViewController
     optional func beganEditing(cell : UITableViewCell)
     optional func finishedEditing(cell : UITableViewCell)
 }
 
 public class CustomCell : UITableViewCell {
-    var delegate : CustomCellDelegate? = nil
+    var delegate : CustomCellDelegate?
     func changed() {
         delegate?.changed(self)
     }
@@ -26,6 +28,9 @@ public class CustomCell : UITableViewCell {
     }
     func finishedEditing() {
         delegate?.finishedEditing?(self)
+    }
+    func getViewController() -> UIViewController {
+        return (delegate?.getViewController())!
     }
 }
 
@@ -244,7 +249,7 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     }
 }
 
-public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate {
+public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, FCColorPickerViewControllerDelegate {
 
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -253,6 +258,13 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     private var editor : RichEditorView!
     private var contentHeight : CGFloat = 0
     private var resized = false
+
+    private enum ColorPickerMode : Int {
+        case None
+        case Text
+        case TextBackground
+    }
+    private var colorPickerMode = ColorPickerMode.None
 
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.innerView.bounds.width, height: 44))
@@ -428,14 +440,14 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     Called when the Text Color toolbar item is pressed.
     */
     public func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar) {
-        
+        showColorPicker(.Text)
     }
     
     /**
      Called when the Background Color toolbar item is pressed.
      */
     public func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar) {
-        
+        showColorPicker(.TextBackground)
     }
     
     /**
@@ -451,6 +463,43 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     public func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar) {
         
     }
+    
+    //MARK: FCColorPickerViewController
+    
+    private func showColorPicker(mode : ColorPickerMode) {
+        self.colorPickerMode = mode
+//        let colorPicker = FCColorPickerViewController.colorPicker()
+//        colorPicker.delegate = self;
+//        colorPicker.backgroundColor = UIColor.whiteColor()
+//        colorPicker.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+//        getViewController().presentViewController(colorPicker, animated: true, completion: nil)
+        let colorPicker = FCColorPickerViewController.colorPicker()
+        colorPicker.color = UIColor.blackColor()
+        colorPicker.delegate = self
+        getViewController().presentViewController(colorPicker, animated: true, completion: nil)
+    }
 
+    public func colorPickerViewController(colorPicker: FCColorPickerViewController, didSelectColor color: UIColor) {
+        switch self.colorPickerMode {
+        case .Text:
+            editor.setTextColor(color)
+            break
+        case .TextBackground:
+            editor.setTextBackgroundColor(color)
+            break
+        default:
+            break
+        }
+        delegate?.getViewController().dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
+     Called on the delegate of `colorPicker` when the user has canceled selecting a color.
+     
+     @param colorPicker The `FCColorPickerViewController` that has canceled picking a color.
+     */
+    public func colorPickerViewControllerDidCancel(colorPicker: FCColorPickerViewController) {
+        delegate?.getViewController().dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 

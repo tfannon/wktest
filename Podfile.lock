@@ -1,22 +1,25 @@
 PODS:
-  - Alamofire (2.0.1)
+  - Alamofire (2.0.2)
   - DTFoundation/Core (1.7.8)
   - DTFoundation/UIKit (1.7.8):
     - DTFoundation/Core
-  - ObjectMapper (0.17)
+  - iOS-Color-Picker (1.1.4)
+  - ObjectMapper (0.19)
   - RichEditorView (2.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
   - DTFoundation/Core (~> 1.7)
   - DTFoundation/UIKit (~> 1.7)
+  - iOS-Color-Picker
   - ObjectMapper (~> 0.17)
   - RichEditorView
 
 SPEC CHECKSUMS:
-  Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
+  Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   DTFoundation: 46e2b2fafe78d67febfd8d1f85fe9845a093f00e
-  ObjectMapper: fa286b7cb5a398f1b0d8d64d0dd33fd1b307022c
+  iOS-Color-Picker: 0eebf395527785e1ff2180c35b69f6d369051555
+  ObjectMapper: a88114e5df20f055da63029f25cbc01014847c91
   RichEditorView: 1606b9b3e02afe3ccd0de0d8fa3ddb55247e868f
 
 COCOAPODS: 0.39.0

@@ -10,6 +10,9 @@ import UIKit
 import DTFoundation
 
 extension ProcedureFormController : CustomCellDelegate {
+    func getViewController() -> UIViewController {
+        return self
+    }
     func changed(cell: UITableViewCell) {
         if let indexPath = tableView.indexPathForCell(cell) {
             let cellData = formHelper.getCellData(indexPath)

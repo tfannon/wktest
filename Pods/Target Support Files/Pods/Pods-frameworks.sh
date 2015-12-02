@@ -88,10 +88,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/DTFoundation.framework"
   install_framework "Pods/ObjectMapper.framework"
   install_framework "Pods/RichEditorView.framework"
+  install_framework "Pods/iOS_Color_Picker.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
   install_framework "Pods/DTFoundation.framework"
   install_framework "Pods/ObjectMapper.framework"
   install_framework "Pods/RichEditorView.framework"
+  install_framework "Pods/iOS_Color_Picker.framework"
 fi
