@@ -480,7 +480,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     
     private func hideColorPicker() {
         delegate?.getViewController().dismissViewControllerAnimated(true, completion: { _ in
-            self.editor.webView.becomeFirstResponder()
+            self.editor.focus()
         })
     }
 
