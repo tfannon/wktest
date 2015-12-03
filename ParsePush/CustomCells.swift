@@ -365,7 +365,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate {
      */
     public func richEditorTookFocus(editor: RichEditorView) {
         beganEditing()
-        let vc = HtmlEditorController(value: self.textString)
+        let vc = HtmlEditorController()
         self.getViewController().navigationController?.pushViewController(vc, animated: true)
     }
     
