@@ -76,6 +76,7 @@
 		663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259C11BF24AD000D3C76E /* TableViewHelper.swift */; };
 		6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
+		668E21361C10D0E000663DFB /* ZSSEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E21351C10D0E000663DFB /* ZSSEditorController.swift */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
 		669BD11B1C093C7B008EBFC4 /* HtmlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */; };
@@ -215,6 +216,7 @@
 		663259C11BF24AD000D3C76E /* TableViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHelper.swift; sourceTree = "<group>"; };
 		6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDetailController.swift; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
+		668E21351C10D0E000663DFB /* ZSSEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZSSEditorController.swift; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
 		669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HtmlCell.xib; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
 				65891DAE1C0C1DB10087E71E /* SplitDetailController.swift */,
+				668E21351C10D0E000663DFB /* ZSSEditorController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
 				663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */,
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
+				668E21361C10D0E000663DFB /* ZSSEditorController.swift in Sources */,
 				65891DAF1C0C1DB10087E71E /* SplitDetailController.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,

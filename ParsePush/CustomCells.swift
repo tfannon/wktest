@@ -249,7 +249,7 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     }
 }
 
-public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, FCColorPickerViewControllerDelegate {
+public class HtmlCell: CustomCell, RichEditorDelegate {
 
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -266,12 +266,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     }
     private var colorPickerMode = ColorPickerMode.None
 
-    lazy var toolbar: RichEditorToolbar = {
-        let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.innerView.bounds.width, height: 44))
-        toolbar.options = RichEditorOptions.all()
-        return toolbar
-    }()
-
     override public func awakeFromNib() {
         super.awakeFromNib()
         
@@ -279,38 +273,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         
         editor = RichEditorView(frame: innerView.frame)
         editor.delegate = self
-        editor.inputAccessoryView = toolbar
-        
-        toolbar.delegate = self
-        toolbar.editor = editor
-        toolbar.options = [
-            RichEditorOptions.Clear,
-            RichEditorOptions.Undo,
-            RichEditorOptions.Redo,
-            RichEditorOptions.Bold,
-            RichEditorOptions.Italic,
-            RichEditorOptions.Subscript,
-            RichEditorOptions.Superscript,
-            RichEditorOptions.Strike,
-            RichEditorOptions.Underline,
-            RichEditorOptions.TextColor,
-            RichEditorOptions.TextBackgroundColor,
-            RichEditorOptions.Header(1),
-            RichEditorOptions.Header(2),
-            RichEditorOptions.Header(3),
-            RichEditorOptions.Header(4),
-            RichEditorOptions.Header(5),
-            RichEditorOptions.Header(6),
-            RichEditorOptions.Indent,
-            RichEditorOptions.Outdent,
-            RichEditorOptions.OrderedList,
-            RichEditorOptions.UnorderedList,
-            RichEditorOptions.AlignLeft,
-            RichEditorOptions.AlignCenter,
-            RichEditorOptions.AlignRight,
-            /*RichEditorOptions.Image,*/
-            /*RichEditorOptions.Link*/
-        ]
 
         self.innerView.addSubview(editor)
         editor.frame.origin = CGPoint(x: 0, y: 0)
@@ -403,6 +365,8 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
      */
     public func richEditorTookFocus(editor: RichEditorView) {
         beganEditing()
+        let vc = HtmlEditorController(value: self.textString)
+        self.getViewController().navigationController?.pushViewController(vc, animated: true)
     }
     
     /**
@@ -433,78 +397,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
      */
     public func richEditor(editor: RichEditorView, handleCustomAction action: String) {
         
-    }
-    
-    // MARK: - RichEditorToolbarDelegate
-    /**
-    Called when the Text Color toolbar item is pressed.
-    */
-    public func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar) {
-        showColorPicker(.Text)
-    }
-    
-    /**
-     Called when the Background Color toolbar item is pressed.
-     */
-    public func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar) {
-        showColorPicker(.TextBackground)
-    }
-    
-    /**
-     Called when the Insert Image toolbar item is pressed.
-     */
-    public func richEditorToolbarInsertImage(toolbar: RichEditorToolbar) {
-        
-    }
-    
-    /**
-     Called when the Isert Link toolbar item is pressed.
-     */
-    public func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar) {
-        
-    }
-    
-    //MARK: FCColorPickerViewController
-    
-    lazy var colorPicker: FCColorPickerViewController = {
-        let colorPicker = FCColorPickerViewController.colorPicker()
-        colorPicker.color = UIColor.blueColor()
-        colorPicker.delegate = self
-        return colorPicker
-    }()
-    
-    private func showColorPicker(mode : ColorPickerMode) {
-        self.colorPickerMode = mode
-        getViewController().presentViewController(colorPicker, animated: true, completion: nil)
-    }
-    
-    private func hideColorPicker() {
-        delegate?.getViewController().dismissViewControllerAnimated(true, completion: { _ in
-            self.editor.focus()
-        })
-    }
-
-    public func colorPickerViewController(colorPicker: FCColorPickerViewController, didSelectColor color: UIColor) {
-        switch self.colorPickerMode {
-        case .Text:
-            editor.setTextColor(color)
-            break
-        case .TextBackground:
-            editor.setTextBackgroundColor(color)
-            break
-        default:
-            break
-        }
-        hideColorPicker()
-    }
-
-    /**
-     Called on the delegate of `colorPicker` when the user has canceled selecting a color.
-     
-     @param colorPicker The `FCColorPickerViewController` that has canceled picking a color.
-     */
-    public func colorPickerViewControllerDidCancel(colorPicker: FCColorPickerViewController) {
-        hideColorPicker()
     }
 }
 
