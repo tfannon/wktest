@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import RichEditorView
-import iOS_Color_Picker
 
 @objc protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
@@ -249,7 +248,7 @@ public class TextAutoSizeCell: CustomCell, UITextViewDelegate {
     }
 }
 
-public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate, FCColorPickerViewControllerDelegate {
+public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate {
 
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -260,6 +259,8 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         toolbar.options = RichEditorOptions.all()
         return toolbar
     }()
+
+    var colorMatrix : [[UIColor]]?
 
     private var editor : RichEditorView!
     private var contentHeight : CGFloat = 0
@@ -441,6 +442,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     */
     public func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar) {
         showColorPicker(.Text)
+        
     }
     
     /**
@@ -464,48 +466,119 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         
     }
     
-    //MARK: FCColorPickerViewController
-    
-    var colorPicker : FCColorPickerViewController?
+    private let colorsInPicker = [
+        UIColor.redColor(),
+        UIColor.orangeColor(),
+        UIColor.yellowColor(),
+        UIColor.greenColor(),
+        UIColor.blueColor(),
+        UIColor.cyanColor(),
+        UIColor.purpleColor(),
+        UIColor.brownColor(),
+        UIColor.grayColor()
+    ]
     
     private func showColorPicker(mode : ColorPickerMode) {
         self.colorPickerMode = mode
-        if colorPicker == nil {
-            self.colorPicker = FCColorPickerViewController.colorPicker()
-            colorPicker!.color = UIColor.blueColor()
-            colorPicker!.delegate = self
+        
+        let colorPickerVC = SwiftColorPickerViewController()
+        colorPickerVC.delegate = self
+        colorPickerVC.dataSource = self
+        colorPickerVC.modalPresentationStyle = .Popover
+        colorPickerVC.numberColorsInXDirection = colorsInPicker.count
+        colorPickerVC.numberColorsInYDirection = 7
+        colorPickerVC.view.backgroundColor = UIColor.whiteColor()
+        (colorPickerVC.view as! SwiftColorView).showGridLines = true
+        let popVC = colorPickerVC.popoverPresentationController!
+        popVC.sourceRect = self.toolbar.frame
+        popVC.sourceView = self.toolbar
+        popVC.permittedArrowDirections = .Any
+        popVC.delegate = self;
+        self.getViewController().presentViewController(colorPickerVC, animated: true, completion: nil)
+    }
+
+    private func colorPicked(color : UIColor) {
+        self.chosenColor = color
+        switch self.colorPickerMode {
+        case .Text:
+            self.editor.setTextColor(color)
+            break
+        case .TextBackground:
+            self.editor.setTextBackgroundColor(color)
+            break
+        default:
+            break
         }
-        self.getViewController().presentViewController(colorPicker!, animated: true, completion: nil)
+    }
+}
+
+extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDelegate, SwiftColorPickerDataSource {
+    // this enables pop over on iphones
+    public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        return UIModalPresentationStyle.None
     }
     
-    private func hideColorPicker() {
-        self.getViewController().dismissViewControllerAnimated(true, completion: nil)
-        if let c = self.chosenColor {
-            switch self.colorPickerMode {
-            case .Text:
-                self.editor.setTextColor(c)
-                break
-            case .TextBackground:
-                self.editor.setTextBackgroundColor(c)
-                break
-            default:
-                break
+    private func midwayFill(inout data : [UIColor], startIndex: Int, finishIndex: Int) {
+        let delta = (finishIndex - startIndex) / 2
+        if delta > 0 {
+            let midPointIndex = startIndex + delta
+            let midColor = data[startIndex].betweenColor(data[finishIndex])
+            data[midPointIndex] = midColor
+            midwayFill(&data, startIndex: startIndex, finishIndex: midPointIndex)
+            midwayFill(&data, startIndex: midPointIndex, finishIndex: finishIndex)
+        }
+    }
+    
+    // MARK: - Color Matrix (only for test case)
+    private func fillColorMatrix(numX: Int, _ numY: Int) {
+        colorMatrix = [[UIColor]]()
+        let midPoint = numY / 2
+        if numX > 0 && numY > 0 {
+            for x in 0..<numX {
+                let color = self.colorsInPicker[x]
+                var colInX = [UIColor]()
+                for _ in 0..<numY {
+                    colInX.append(color)
+                }
+                let darkest = UIColor.blackColor()
+                let lightest = UIColor.whiteColor()
+                colInX[0] = darkest
+                colInX[numY-1] = lightest
+                colInX[midPoint] = color
+                midwayFill(&colInX, startIndex: 0, finishIndex: midPoint)
+                midwayFill(&colInX, startIndex: midPoint, finishIndex: numY-1)
+                if (color != UIColor.grayColor()) {
+                    colInX[0] = colInX[0].betweenColor(colInX[1])
+                    colInX[numY-1] = colInX[numY-1].betweenColor(colInX[numY-2])
+                }
+                colorMatrix!.append(colInX)
             }
         }
     }
     
-    public func colorPickerViewController(colorPicker: FCColorPickerViewController, didSelectColor color: UIColor) {
-        self.chosenColor = color
-        hideColorPicker()
+    
+    // MARK: - Swift Color Picker Data Source
+    
+    public func colorForPalletIndex(x: Int, y: Int, numXStripes: Int, numYStripes: Int) -> UIColor {
+        if colorMatrix?.count > x  {
+            let colorArray = colorMatrix![x]
+            if colorArray.count > y {
+                return colorArray[y]
+            } else {
+                fillColorMatrix(numXStripes,numYStripes)
+                return colorForPalletIndex(x, y:y, numXStripes: numXStripes, numYStripes: numYStripes)
+            }
+        } else {
+            fillColorMatrix(numXStripes,numYStripes)
+            return colorForPalletIndex(x, y:y, numXStripes: numXStripes, numYStripes: numYStripes)
+        }
     }
     
-    /**
-     Called on the delegate of `colorPicker` when the user has canceled selecting a color.
-     
-     @param colorPicker The `FCColorPickerViewController` that has canceled picking a color.
-     */
-    public func colorPickerViewControllerDidCancel(colorPicker: FCColorPickerViewController) {
-        hideColorPicker()
+    
+    // MARK: Color Picker Delegate
+    
+    public func colorSelectionChanged(selectedColor color: UIColor) {
+        colorPicked(color)
     }
 }
-

@@ -76,18 +76,17 @@
 		663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663259C11BF24AD000D3C76E /* TableViewHelper.swift */; };
 		6643CDFF1BDFEFF100F16D52 /* ChangeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
-		668E21361C10D0E000663DFB /* HtmlEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E21351C10D0E000663DFB /* HtmlEditorController.swift */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
 		669BD11B1C093C7B008EBFC4 /* HtmlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */; };
 		66A490221BD745D400A60334 /* DictionaryTwoWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A490211BD745D400A60334 /* DictionaryTwoWay.swift */; };
 		66A87FEB1BFFCF230042A95A /* DatePickerNullableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */; };
+		66E55B291C11F16600733A3B /* SwiftColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E55B281C11F16600733A3B /* SwiftColorPickerViewController.swift */; };
 		66E65F631BD573F000B8B351 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F621BD573F000B8B351 /* Mock.swift */; };
 		66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E65F641BD5B4D200B8B351 /* Procedure.storyboard */; };
 		66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */; };
 		66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F711BD5D94700B8B351 /* AFDateExtension.swift */; };
 		66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */; };
-		66FD47CC1C113DA200C675CF /* HtmlEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FD47CB1C113DA200C675CF /* HtmlEditor.storyboard */; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -217,18 +216,17 @@
 		663259C11BF24AD000D3C76E /* TableViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHelper.swift; sourceTree = "<group>"; };
 		6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDetailController.swift; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
-		668E21351C10D0E000663DFB /* HtmlEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlEditorController.swift; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
 		669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HtmlCell.xib; sourceTree = "<group>"; };
 		66A490211BD745D400A60334 /* DictionaryTwoWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTwoWay.swift; sourceTree = "<group>"; };
 		66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerNullableCell.xib; sourceTree = "<group>"; };
+		66E55B281C11F16600733A3B /* SwiftColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftColorPickerViewController.swift; sourceTree = "<group>"; };
 		66E65F621BD573F000B8B351 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		66E65F651BD5B4D200B8B351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Procedure.storyboard; sourceTree = "<group>"; };
 		66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		66E65F711BD5D94700B8B351 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtensions.swift; sourceTree = "<group>"; };
-		66FD47CB1C113DA200C675CF /* HtmlEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HtmlEditor.storyboard; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -388,14 +386,12 @@
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
 				668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */,
-				66FD47CB1C113DA200C675CF /* HtmlEditor.storyboard */,
 				663259BF1BF2405F00D3C76E /* DatePickerCell.xib */,
 				66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */,
 				6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */,
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
 				6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */,
 				669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */,
-				668E21351C10D0E000663DFB /* HtmlEditorController.swift */,
 				6616C38C1BF4DAA4004D763E /* FormHelper.swift */,
 				663259BD1BF1975000D3C76E /* CustomCells.swift */,
 				65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */,
@@ -502,6 +498,7 @@
 			children = (
 				6564FFCA1BDF91530014FE08 /* ShinobiPlayUtils */,
 				66E65F711BD5D94700B8B351 /* AFDateExtension.swift */,
+				66E55B281C11F16600733A3B /* SwiftColorPickerViewController.swift */,
 				663259C11BF24AD000D3C76E /* TableViewHelper.swift */,
 			);
 			name = 3rdParty;
@@ -683,7 +680,6 @@
 				6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */,
 				668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */,
 				6564FFEA1BDF91530014FE08 /* Roboto-Medium.ttf in Resources */,
-				66FD47CC1C113DA200C675CF /* HtmlEditor.storyboard in Resources */,
 				6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */,
 				6564FFEC1BDF91530014FE08 /* Roboto-Regular.ttf in Resources */,
 				6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */,
@@ -794,11 +790,11 @@
 				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
 				663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */,
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
-				668E21361C10D0E000663DFB /* HtmlEditorController.swift in Sources */,
 				65891DAF1C0C1DB10087E71E /* SplitDetailController.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
+				66E55B291C11F16600733A3B /* SwiftColorPickerViewController.swift in Sources */,
 				655DEF881BF1836600120892 /* Shared.swift in Sources */,
 				6616C38D1BF4DAA4004D763E /* FormHelper.swift in Sources */,
 				663259C21BF24AD000D3C76E /* TableViewHelper.swift in Sources */,
