@@ -61,14 +61,14 @@ class Mock {
         procedure.parentTitle = "Procedure \(id)'s Parent"
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
         
-        procedure.text1 = "a"
-        procedure.text2 = "b"
-        procedure.text3 = "c"
-        procedure.text4 = "d"
-        procedure.resultsText1 = "e"
-        procedure.resultsText2 = "f"
-        procedure.resultsText3 = "g"
-        procedure.resultsText4 = "h"
+//        procedure.text1 = "a"
+//        procedure.text2 = "b"
+//        procedure.text3 = "c"
+//        procedure.text4 = "d"
+//        procedure.resultsText1 = "e"
+//        procedure.resultsText2 = "f"
+//        procedure.resultsText3 = "g"
+//        procedure.resultsText4 = "h"
         
         
         procedure.changes = [Change]()

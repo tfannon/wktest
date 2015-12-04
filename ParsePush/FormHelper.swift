@@ -286,9 +286,9 @@ class FormHelper {
     lazy var textCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
             let textCell = cell as! TextCell
-            textCell.textField.text = data.value as! String?
-            textCell.textField.placeholder = data.placeHolder
             textCell.delegate = self.controllerAsDelegate
+            textCell.textField.placeholder = data.placeHolder
+            textCell.textField.text = data.value as! String?
         }
     
     lazy var textViewWillDisplay : ((UITableViewCell, CellData) -> Void) =
