@@ -5,7 +5,6 @@ PODS:
     - DTFoundation/Core
   - ObjectMapper (0.19)
   - RichEditorView (2.0.1)
-  - ZSSRichTextEditor (0.5.2.1)
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
@@ -13,13 +12,11 @@ DEPENDENCIES:
   - DTFoundation/UIKit (~> 1.7)
   - ObjectMapper (~> 0.17)
   - RichEditorView
-  - ZSSRichTextEditor
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   DTFoundation: 46e2b2fafe78d67febfd8d1f85fe9845a093f00e
   ObjectMapper: a88114e5df20f055da63029f25cbc01014847c91
   RichEditorView: 1606b9b3e02afe3ccd0de0d8fa3ddb55247e868f
-  ZSSRichTextEditor: 56ed060d6d7a98fb6be9fceb8074ced22160349b
 
 COCOAPODS: 0.39.0

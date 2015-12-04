@@ -90,7 +90,11 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBAction func miscPressed(sender: UIButton) {
         //print ("test out some func here")
         let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController(procedure: procedure)
+        //let controller = ProcedureFormController(procedure: procedure)
+        
+        //let controller = HtmlEditorController()
+        let controller : HtmlEditorController = Misc.getViewController("HtmlEditor", viewIdentifier: "HtmlEditor")
+        controller.textString = procedure.text1 ?? ""
         self.navigationController?.pushViewController(controller, animated: true)
     }
     

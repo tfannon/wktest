@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import RichEditorView
-import iOS_Color_Picker
 
 @objc protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
@@ -259,13 +258,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate {
     private var contentHeight : CGFloat = 0
     private var resized = false
 
-    private enum ColorPickerMode : Int {
-        case None
-        case Text
-        case TextBackground
-    }
-    private var colorPickerMode = ColorPickerMode.None
-
     override public func awakeFromNib() {
         super.awakeFromNib()
         
@@ -283,7 +275,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate {
     override public func layoutSubviews() {
         super.layoutSubviews()
         editor.frame.size.width = innerView.bounds.width
-        //resize()
     }
     
     /// Custom setter so we can initialise the height of the text view
@@ -365,8 +356,6 @@ public class HtmlCell: CustomCell, RichEditorDelegate {
      */
     public func richEditorTookFocus(editor: RichEditorView) {
         beganEditing()
-        let vc = HtmlEditorController()
-        self.getViewController().navigationController?.pushViewController(vc, animated: true)
     }
     
     /**

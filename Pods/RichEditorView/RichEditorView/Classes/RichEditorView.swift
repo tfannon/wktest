@@ -123,11 +123,6 @@ public class RichEditorView: UIView {
     }
 
     // MARK: - Initialization
-    public init(frame: CGRect, webView : UIWebView) {
-        self.webView = webView
-        super.init(frame: frame)
-        setup()
-    }
     
     public override init(frame: CGRect) {
         webView = UIWebView()

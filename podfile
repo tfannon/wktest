@@ -10,5 +10,4 @@ pod 'DTFoundation/Core', '~> 1.7'
 pod 'DTFoundation/UIKit', '~> 1.7'
 
 pod 'RichEditorView'
-pod 'ZSSRichTextEditor'
 
