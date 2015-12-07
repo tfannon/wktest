@@ -473,6 +473,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         UIColor.greenColor(),
         UIColor.blueColor(),
         UIColor.cyanColor(),
+        UIColor.magentaColor(),
         UIColor.purpleColor(),
         UIColor.brownColor(),
         UIColor.grayColor()
@@ -541,14 +542,14 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
             for x in 0..<numX {
                 // this is the seed color (goes in the middle)
                 let color = self.colorsInPicker[x]
-                let isGray = color == UIColor.grayColor()
+                let isShade = color == UIColor.grayColor() || color == UIColor.blackColor()
                 var colInX = [UIColor]()
                 // fill the array with that color (because we need to fill out the array with element)
                 for _ in 0..<numY {
                     colInX.append(color)
                 }
                 // dark is black for gray & 50% darker for colors
-                let darkest = (isGray) ? UIColor.blackColor() : color.darkerColor(0.5)
+                let darkest = (isShade) ? UIColor.blackColor() : color.darkerColor(0.5)
                 // light is white (extremes)
                 let lightest = UIColor.whiteColor()
                 // next is black
@@ -562,7 +563,7 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
                 // if the original color isn't gray - replace black with the mid point between
                 //  the nearest color to black and replace white with the mid point between the
                 //  nearest color and white (because gray will provide white & black as a choice)
-                if (!isGray) {
+                if (!isShade) {
                     colInX[1] = colInX[1].betweenColor(colInX[2])
                 }
                 colorMatrix!.append(colInX)
