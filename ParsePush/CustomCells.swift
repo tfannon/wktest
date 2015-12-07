@@ -486,7 +486,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         colorPickerVC.dataSource = self
         colorPickerVC.modalPresentationStyle = .Popover
         colorPickerVC.numberColorsInXDirection = colorsInPicker.count
-        colorPickerVC.numberColorsInYDirection = 7
+        colorPickerVC.numberColorsInYDirection = 6
         colorPickerVC.view.backgroundColor = UIColor.whiteColor()
         (colorPickerVC.view as! SwiftColorView).showGridLines = true
         let popVC = colorPickerVC.popoverPresentationController!
@@ -512,6 +512,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     }
 }
 
+// MARK: HtmlCell
 extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDelegate, SwiftColorPickerDataSource {
     // this enables pop over on iphones
     public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -519,6 +520,8 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
         return UIModalPresentationStyle.None
     }
     
+    // this populates the midway point in data between startindex & finishIndex 
+    //  with a color that is midway between the two values in startindex & finishIndex
     private func midwayFill(inout data : [UIColor], startIndex: Int, finishIndex: Int) {
         let delta = (finishIndex - startIndex) / 2
         if delta > 0 {
@@ -530,36 +533,44 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
         }
     }
     
-    // MARK: - Color Matrix (only for test case)
+    // fills the color matrix array with all the colors to make available
     private func fillColorMatrix(numX: Int, _ numY: Int) {
         colorMatrix = [[UIColor]]()
-        let midPoint = numY / 2
+        let midPoint = 1 + ((numY-1) / 2)
         if numX > 0 && numY > 0 {
             for x in 0..<numX {
+                // this is the seed color (goes in the middle)
                 let color = self.colorsInPicker[x]
+                let isGray = color == UIColor.grayColor()
                 var colInX = [UIColor]()
+                // fill the array with that color (because we need to fill out the array with element)
                 for _ in 0..<numY {
                     colInX.append(color)
                 }
-                let darkest = UIColor.blackColor()
+                // dark is black for gray & 50% darker for colors
+                let darkest = (isGray) ? UIColor.blackColor() : color.darkerColor(0.5)
+                // light is white (extremes)
                 let lightest = UIColor.whiteColor()
-                colInX[0] = darkest
-                colInX[numY-1] = lightest
-                colInX[midPoint] = color
-                midwayFill(&colInX, startIndex: 0, finishIndex: midPoint)
-                midwayFill(&colInX, startIndex: midPoint, finishIndex: numY-1)
-                if (color != UIColor.grayColor()) {
-                    colInX[0] = colInX[0].betweenColor(colInX[1])
-                    colInX[numY-1] = colInX[numY-1].betweenColor(colInX[numY-2])
+                // next is black
+                colInX[1] = lightest
+                // bottom is white
+                colInX[numY-1] = darkest
+                // fill in from black to mid-point
+                midwayFill(&colInX, startIndex: 1, finishIndex: midPoint)
+                // fill in from midpoint to white
+                midwayFill(&colInX, startIndex: midPoint - 1, finishIndex: numY-1)
+                // if the original color isn't gray - replace black with the mid point between
+                //  the nearest color to black and replace white with the mid point between the
+                //  nearest color and white (because gray will provide white & black as a choice)
+                if (!isGray) {
+                    colInX[1] = colInX[1].betweenColor(colInX[2])
                 }
                 colorMatrix!.append(colInX)
             }
         }
     }
     
-    
     // MARK: - Swift Color Picker Data Source
-    
     public func colorForPalletIndex(x: Int, y: Int, numXStripes: Int, numYStripes: Int) -> UIColor {
         if colorMatrix?.count > x  {
             let colorArray = colorMatrix![x]
@@ -577,7 +588,6 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
     
     
     // MARK: Color Picker Delegate
-    
     public func colorSelectionChanged(selectedColor color: UIColor) {
         colorPicked(color)
     }

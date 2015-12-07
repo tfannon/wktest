@@ -37,6 +37,8 @@ final public class SwiftColorPickerViewController: UIViewController
         }
     }
     
+    public var colorBoxSideSize : Int = 40
+    
     /// Width of the edge around the color palette.
     ///
     /// The border change the color with the selection by the user.
@@ -113,7 +115,6 @@ final public class SwiftColorPickerViewController: UIViewController
     public override func viewDidLoad() {
         super.viewDidLoad()
         // needed when using auto layout
-        //colorSelectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         colorSelectionView.translatesAutoresizingMaskIntoConstraints = false
         
         // add subviews
@@ -136,7 +137,8 @@ final public class SwiftColorPickerViewController: UIViewController
         colorPaletteView.addGestureRecognizer(panGr)
         colorPaletteView.viewDataSource = dataSource
         
-        self.preferredContentSize = CGSizeMake(300, 300)
+        self.preferredContentSize = CGSizeMake(CGFloat(numberColorsInXDirection) * CGFloat(colorBoxSideSize),
+            CGFloat(numberColorsInYDirection) * CGFloat(colorBoxSideSize))
     }
     
     
@@ -275,7 +277,6 @@ final public class SwiftColorPickerViewController: UIViewController
     public override func drawRect(rect: CGRect)
     {
         super.drawRect(rect)
-        //let lineColor = UIColor.grayColor()
         let lineColor = self.backgroundColor!
         let pS = patternSize()
         let w = pS.w
@@ -285,8 +286,10 @@ final public class SwiftColorPickerViewController: UIViewController
         {
             for x in 0..<numColorsX
             {
+                let topLineBuffer : CGFloat = (y > 0) ? CGFloat(coloredBorderWidth) : 0
+                
                 let path = UIBezierPath()
-                let start = CGPointMake(CGFloat(x)*w+CGFloat(coloredBorderWidth),CGFloat(y)*h+CGFloat(coloredBorderWidth))
+                let start = CGPointMake(CGFloat(x)*w+CGFloat(coloredBorderWidth),CGFloat(y)*h+CGFloat(coloredBorderWidth) + topLineBuffer)
                 path.moveToPoint(start);
                 path.addLineToPoint(CGPointMake(start.x+w, start.y))
                 path.addLineToPoint(CGPointMake(start.x+w, start.y+h))
@@ -349,7 +352,8 @@ final public class SwiftColorPickerViewController: UIViewController
     private func patternSize() -> (w: CGFloat, h:CGFloat)
     {
         let width = self.bounds.width-CGFloat(2*coloredBorderWidth)
-        let height = self.bounds.height-CGFloat(2*coloredBorderWidth)
+        // 3 times the width for Y so we have a buffer space between top row and the rest
+        let height = self.bounds.height-CGFloat(3*coloredBorderWidth)
         
         let w = width/CGFloat(numColorsX)
         let h = height/CGFloat(numColorsY)
