@@ -33,7 +33,15 @@ extension ProcedureFormController : CustomCellDelegate {
 
 class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
     private var bottomConstraint: NSLayoutConstraint!
-    var procedure : Procedure!
+    var procedure : Procedure! {
+        didSet (newProcedure) {
+            watchForChanges = false
+            formHelper = FormHelper(controller: self)
+            setupForm()
+            self.tableView.reloadData()
+            watchForChanges = true
+        }
+    }
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
@@ -48,8 +56,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        formHelper = FormHelper(controller: self)
 
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Procedure"
@@ -60,11 +66,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         
         setupNavbar()
         setupToolbar()
-        setupForm()
-        
-        self.tableView.reloadData()
-        
-        watchForChanges = true
     }
     
     override func viewWillDisappear(animated: Bool) {
