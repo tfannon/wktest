@@ -44,7 +44,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     
     init(procedure : Procedure) {
         super.init(style: .Grouped)
-
+        
         self.procedure = procedure
         formHelper = FormHelper(controller: self)
     }
@@ -72,7 +72,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         setupForm()
         
         self.tableView.reloadData()
-
+        
         watchForChanges = true
     }
     
@@ -87,7 +87,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = false
     }
-
+    
     private func setupNavbar() {
         if let _ = self.navigationController?.navigationBar {
             let left = UIBarButtonItem(title: "Cancel",
@@ -118,52 +118,52 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     private func setupForm() {
         
         formHelper.addSection(" ",
-        data: [
-            CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
-                willDisplay: formHelper.textCellWillDisplay,
-                changed: { cell, _ in
-                    let textCell = cell as! TextCell
-                    self.procedure.title = textCell.textField.text
-                    self.enableSave()
-            }),
-            CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"),
-                willDisplay: formHelper.textCellWillDisplay,
-                changed: { cell, _ in
-                    let textCell = cell as! TextCell
-                    self.procedure.code = textCell.textField.text
-                    self.enableSave()
-            }),
-            
-            CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"),
-                style: UITableViewCellStyle.Value1,
-                imageName: "769-male",
-                willDisplay: { cell, _ in cell.selectionStyle = .None }),
-            
-            CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(),
-                label: self.t("dueDate"),
-                style: UITableViewCellStyle.Value1,
-                willDisplay: formHelper.dateCellWillDisplay,
-                selected: formHelper.dateCellSelected),
-            CellData(identifier: "DatePickerNullableCell",
-                willDisplay: { cell, data in
-                    let dateCell = cell as! DatePickerNullableCell
-                    dateCell.value = self.procedure.dueDate
-                    dateCell.delegate = self
-               },
-                changed: { cell, data in
-                    let dateCell = cell as! DatePickerNullableCell
-                    self.procedure.dueDate = dateCell.value
-                    let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
-                    let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
-                    let displayCell = self.tableView.cellForRowAtIndexPath(displayIndexPath)!
-                    displayCell.detailTextLabel!.text = self.procedure.dueDate?.ToLongDateStyle()
-                    self.enableSave()
-            }),
-        ])
-
+            data: [
+                CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
+                    willDisplay: formHelper.textCellWillDisplay,
+                    changed: { cell, _ in
+                        let textCell = cell as! TextCell
+                        self.procedure.title = textCell.textField.text
+                        self.enableSave()
+                }),
+                CellData(identifier: "TextCell", value: procedure.code, placeHolder: self.t("code"),
+                    willDisplay: formHelper.textCellWillDisplay,
+                    changed: { cell, _ in
+                        let textCell = cell as! TextCell
+                        self.procedure.code = textCell.textField.text
+                        self.enableSave()
+                }),
+                
+                CellData(identifier: "_BasicCell", value: procedure.tester, label: self.t("tester"),
+                    style: UITableViewCellStyle.Value1,
+                    imageName: "769-male",
+                    willDisplay: { cell, _ in cell.selectionStyle = .None }),
+                
+                CellData(identifier: "_BasicCell", value: procedure.dueDate?.ToLongDateStyle(),
+                    label: self.t("dueDate"),
+                    style: UITableViewCellStyle.Value1,
+                    willDisplay: formHelper.dateCellWillDisplay,
+                    selected: formHelper.dateCellSelected),
+                CellData(identifier: "DatePickerNullableCell",
+                    willDisplay: { cell, data in
+                        let dateCell = cell as! DatePickerNullableCell
+                        dateCell.value = self.procedure.dueDate
+                        dateCell.delegate = self
+                    },
+                    changed: { cell, data in
+                        let dateCell = cell as! DatePickerNullableCell
+                        self.procedure.dueDate = dateCell.value
+                        let dpIndexPath = self.tableView.indexPathForCell(dateCell)!
+                        let displayIndexPath = NSIndexPath(forRow: dpIndexPath.row - 1, inSection: dpIndexPath.section)
+                        let displayCell = self.tableView.cellForRowAtIndexPath(displayIndexPath)!
+                        displayCell.detailTextLabel!.text = self.procedure.dueDate?.ToLongDateStyle()
+                        self.enableSave()
+                }),
+            ])
+        
         formHelper.addSection("Workflow",
             data: [formHelper.getWorkflowCellData(self, workflowObject: procedure)])
-
+        
         formHelper.addSection("Review", data: [
             CellData(identifier: "_BasicCell",
                 value: procedure.reviewer,
@@ -190,9 +190,9 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                     let displayCell = self.tableView.cellForRowAtIndexPath(displayIndexPath)!
                     displayCell.detailTextLabel!.text = self.procedure.reviewDueDate?.ToLongDateStyle()
                     self.enableSave()
-                })
+            })
             ])
-
+        
         formHelper.addSection(" ", data:
             [CellData(identifier: "_HideTextFields1",
                 style: UITableViewCellStyle.Value1,
@@ -204,7 +204,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 willDisplay: formHelper.hideSectionWillDisplay,
                 selected: formHelper.hideSectionSelected)
             ])
-    
+        
         formHelper.addSection(self.t("text1"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text1,
             willDisplay: formHelper.htmlCellWillDisplay,
@@ -212,7 +212,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 let htmlCell = cell as! HtmlCell
                 self.procedure.text1 = htmlCell.textString
                 self.enableSave()
-            })])
+        })])
         formHelper.addSection(self.t("text2"), data: [CellData(identifier: "HtmlCell",
             value: procedure.text2,
             willDisplay: formHelper.htmlCellWillDisplay,
@@ -237,7 +237,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.procedure.text4 = textCell.textString
                 self.enableSave()
         })])
- 
+        
         formHelper.addSection("Results", data: [CellData(identifier: "SegmentedCell",
             willDisplay: { cell, data in
                 let segmentedCell = cell as! SegmentedCell
@@ -296,7 +296,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.procedure.resultsText4 = htmlCell.textString
                 self.enableSave()
         })])
- 
+        
         formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
@@ -308,7 +308,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
-
+        
         // register up ALL the html cells - each with their own idenfifier
         //  so we don't reuse html cells
         var hideSections = [Int]()
@@ -385,7 +385,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         let cellData = formHelper.getCellData(indexPath)
-
+        
         // so that the separator appears under the image
         cell.separatorInset = UIEdgeInsetsZero
         // other initialization to clear previous usage of the cell
