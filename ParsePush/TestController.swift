@@ -90,7 +90,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBAction func miscPressed(sender: UIButton) {
         //print ("test out some func here")
         let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController(procedure: procedure)
+        let controller = ProcedureFormController()
+        controller.procedure = procedure
         
         //let controller = HtmlEditorController()
         //let controller : HtmlEditorController = Misc.getViewController("HtmlEditor", viewIdentifier: "HtmlEditor")
@@ -123,7 +124,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormController(procedure: Mock.getProcedures()[0])
+        let vc = ProcedureFormController()
+        vc.procedure = Mock.getProcedures()[0]
+
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

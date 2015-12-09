@@ -33,7 +33,7 @@ extension ProcedureFormController : CustomCellDelegate {
 
 class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
     private var bottomConstraint: NSLayoutConstraint!
-    private var procedure : Procedure!
+    var procedure : Procedure!
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
@@ -42,17 +42,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     
     private var toolbarLabel: UIBarButtonItem!
     
-    init(procedure : Procedure) {
-        super.init(style: .Grouped)
-        
-        self.procedure = procedure
-        formHelper = FormHelper(controller: self)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func t(key : String) -> String {
         return Procedure.getTerminology(key)
     }
@@ -60,6 +49,8 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        formHelper = FormHelper(controller: self)
+
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Procedure"
         
