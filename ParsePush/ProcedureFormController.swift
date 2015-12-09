@@ -33,15 +33,35 @@ extension ProcedureFormController : CustomCellDelegate {
 
 class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
     private var bottomConstraint: NSLayoutConstraint!
-    var procedure : Procedure! {
-        didSet (newProcedure) {
-            watchForChanges = false
-            formHelper = FormHelper(controller: self)
-            setupForm()
-            self.tableView.reloadData()
-            watchForChanges = true
-        }
+    
+    var procedure : Procedure!
+
+    //this is needed because the storyboard instantiates it this way when starting app
+    //may consider removing it from storyboard and setting it in app delegate
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
+    
+    init(procedure: Procedure) {
+        super.init(style: .Grouped)
+        self.procedure = procedure
+        initializeFormHelper()
+    }
+    
+    //needed because form controller
+    init() {
+        super.init(style: .Grouped)
+    }
+    
+    private func initializeFormHelper() {
+        watchForChanges = false
+        formHelper = FormHelper(controller: self)
+        setupForm()
+        self.tableView.reloadData()
+        watchForChanges = true
+    }
+    
+    private var clearTable = false
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
@@ -66,6 +86,8 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         
         setupNavbar()
         setupToolbar()
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -75,9 +97,16 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     }
     
     override func viewWillAppear(animated: Bool) {
+        if procedure == nil {
+            Services.getMyData {
+                self.procedure = $0?.procedures.first
+                self.initializeFormHelper()
+            }
+        }
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = false
+        
     }
     
     private func setupNavbar() {
@@ -323,11 +352,11 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return formHelper.getNumberOfSections()
+        return clearTable ? 0 : formHelper.getNumberOfSections()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return formHelper.getNumberOfRowsInSection(section)
+        return clearTable ? 0 : formHelper.getNumberOfRowsInSection(section)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
