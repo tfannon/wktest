@@ -87,16 +87,16 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         return true;
     }
     
+    var pfController : ProcedureFormController?
+    
     @IBAction func miscPressed(sender: UIButton) {
         //print ("test out some func here")
         let procedure = Mock.getProcedures()[0]
-        let controller = ProcedureFormController()
-        controller.procedure = procedure
-        
-        //let controller = HtmlEditorController()
-        //let controller : HtmlEditorController = Misc.getViewController("HtmlEditor", viewIdentifier: "HtmlEditor")
-        //controller.textString = procedure.text1 ?? ""
-        self.navigationController?.pushViewController(controller, animated: true)
+        if pfController == nil {
+            pfController  = ProcedureFormController.getProcedureFormController()
+        }
+        pfController!.procedure = procedure
+        self.navigationController?.pushViewController(pfController!, animated: true)
     }
     
  
@@ -124,7 +124,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormController()
+        let vc = ProcedureFormController.getProcedureFormController()
         vc.procedure = Mock.getProcedures()[0]
 
         vc.hidesBottomBarWhenPushed = true

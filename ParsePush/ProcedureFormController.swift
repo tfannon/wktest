@@ -53,6 +53,11 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     private func t(key : String) -> String {
         return Procedure.getTerminology(key)
     }
+    
+    class func getProcedureFormController() -> ProcedureFormController {
+        let vc : ProcedureFormController = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController")
+        return vc
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +113,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     }
     
     private func setupForm() {
-        
         formHelper.addSection(" ",
             data: [
                 CellData(identifier: "TextCell", value: procedure.title, placeHolder: self.t("title"),
