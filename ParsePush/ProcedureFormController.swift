@@ -45,7 +45,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     private func t(key : String) -> String {
         return Procedure.getTerminology(key)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
