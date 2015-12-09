@@ -9,6 +9,10 @@
 import Foundation
 import DTFoundation
 
+protocol SaveableFormControllerDelegate {
+    func enableSave()
+}
+
 class CellData {
     static var tagCount = 0
     
@@ -383,5 +387,44 @@ class FormHelper {
         }
     }
     
+    func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData
+    {
+        let saveableFormController = viewController as! SaveableFormControllerDelegate
+        
+        let data = CellData(identifier: "_BasicCell",
+            value: WorkflowState(rawValue: workflowObject.workflowState)?.displayName,
+            style: UITableViewCellStyle.Value1,
+            willDisplay: { cell, _ in
+                cell.selectionStyle = .None
+                cell.detailTextLabel?.textColor = cell.textLabel?.textColor
+                cell.imageView?.image = UIImage(named: WorkflowState(rawValue: workflowObject.workflowState)!.imageName)
+            },
+            selected: { cell, data, indexPath in
+                let alertController = UIAlertController(title: "Workflow State", message: "Choose the new workflow state", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                let choices = WorkflowState.getFilteredDisplayNames(workflowObject.allowedStates, current: workflowObject.workflowState)
+                for choice in choices {
+                    let action = UIAlertAction(title: choice, style: UIAlertActionStyle.Default, handler: { alertAction in
+                        saveableFormController.enableSave()
+                        workflowObject.workflowState = WorkflowState.getFromDisplayName(alertAction.title!).rawValue
+                        cell.detailTextLabel?.text = alertAction.title
+                        cell.imageView?.image = UIImage(named: WorkflowState(rawValue: workflowObject.workflowState)!.imageName)
+                    })
+                    alertController.addAction(action)
+                }
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                
+                if let popover = alertController.popoverPresentationController
+                {
+                    popover.sourceView = cell;
+                    popover.sourceRect = cell.bounds;
+                    popover.permittedArrowDirections = UIPopoverArrowDirection.Any;
+                }
+                
+                viewController.presentViewController(alertController, animated: true, completion: nil)
+        })
+        
+        return data
+    }
+
 
 }

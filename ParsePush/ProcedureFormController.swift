@@ -31,7 +31,7 @@ extension ProcedureFormController : CustomCellDelegate {
     }
 }
 
-class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
+class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
     private var bottomConstraint: NSLayoutConstraint!
     private var procedure : Procedure!
     private var watchForChanges = false
@@ -161,39 +161,8 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
             }),
         ])
 
-        formHelper.addSection("Workflow", data: [
-            CellData(identifier: "_BasicCell",
-                value: WorkflowState(rawValue: self.procedure.workflowState)?.displayName,
-                style: UITableViewCellStyle.Value1,
-                willDisplay: { cell, _ in
-                    cell.selectionStyle = .None
-                    cell.detailTextLabel?.textColor = cell.textLabel?.textColor
-                    cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
-                },
-                selected: { cell, data, indexPath in
-                    let alertController = UIAlertController(title: "Workflow State", message: "Choose the new workflow state", preferredStyle: UIAlertControllerStyle.ActionSheet)
-                    let choices = WorkflowState.getFilteredDisplayNames(self.procedure.allowedStates, current: self.procedure.workflowState)
-                    for choice in choices {
-                        let action = UIAlertAction(title: choice, style: UIAlertActionStyle.Default, handler: { alertAction in
-                                self.enableSave()
-                                self.procedure.workflowState = WorkflowState.getFromDisplayName(alertAction.title!).rawValue
-                                cell.detailTextLabel?.text = alertAction.title
-                                cell.imageView?.image = UIImage(named: WorkflowState(rawValue: self.procedure.workflowState)!.imageName)
-                            })
-                        alertController.addAction(action)
-                    }
-                    alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                    
-                    if let popover = alertController.popoverPresentationController
-                    {
-                        popover.sourceView = cell;
-                        popover.sourceRect = cell.bounds;
-                        popover.permittedArrowDirections = UIPopoverArrowDirection.Any;
-                    }
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                })
-        ])
+        formHelper.addSection("Workflow",
+            data: [formHelper.getWorkflowCellData(self, workflowObject: procedure)])
 
         formHelper.addSection("Review", data: [
             CellData(identifier: "_BasicCell",
@@ -435,7 +404,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate {
         cellData.willDisplay(cell)
     }
     
-    private func enableSave()
+    func enableSave()
     {
         if watchForChanges {
             self.navigationItem.rightBarButtonItem!.enabled = true
