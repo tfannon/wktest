@@ -36,7 +36,6 @@ class SplitMasterViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -52,16 +51,14 @@ class SplitMasterViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-//        let procedure = procedures[indexPath.row]
-//        let master = self.splitViewController?.viewControllers.first as? UIViewController
-//        var detailVC: UIViewController?
-//        if self.splitViewController?.viewControllers.count > 1 {
-//            detailVC = self.splitViewController?.viewControllers[1] as? UIViewController
-//        }
-//
-//    }
-    /*
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print (self.splitViewController?.viewControllers.count)
+        //let detail = self.splitViewController?.viewControllers.last as! SplitDetailController
+        let detail = self.splitViewController?.viewControllers.last as! ProcedureFormController
+        detail.procedure = procedures[indexPath.row]
+    }
+    
+       /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -96,14 +93,13 @@ class SplitMasterViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print (segue)
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
-
 }
