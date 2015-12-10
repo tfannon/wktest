@@ -302,8 +302,42 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.procedure.resultsText4 = htmlCell.textString
                 self.enableSave()
         })])
+
+        formHelper.addSection(" ", data:
+            [CellData(identifier: "_Workpapers",
+                style: UITableViewCellStyle.Value1,
+                label: "Workpapers",
+                imageName:  "icons_workpaper",
+                toggled: false,
+                sectionsToHide: [1],
+                selectedIfAccessoryButtonTapped: true,
+                willDisplay: formHelper.hideSectionWillDisplay,
+                selected: formHelper.hideSectionSelected)
+            ])
         
-        formHelper.addSection("", data: [CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
+        // create cell data for each of the workpapers 
+        var workpaperCellData = [CellData]()
+        for w in self.procedure.workpapers {
+            let cellData =
+                CellData(identifier: "_NavigationCell", label: w.title,
+                    imageName: w.documentType?.imageName ?? "icon-document",
+                    willDisplay: { cell, data in
+                        cell.accessoryType = .DisclosureIndicator
+                        cell.userInteractionEnabled = true
+                    },
+                    selected: { cell, data, indexPath in
+//                        let vc : [Workpaper form]
+//                        vc.changes = self.procedure.changes!
+//                        self.navigationController?.pushViewController(vc, animated: true)
+                        self.alert("", message: "Show workpaper form here")
+                    }
+                )
+            workpaperCellData.append(cellData)
+        }
+        formHelper.addSection("Workpapers", data: workpaperCellData)
+        
+        formHelper.addSection("", data: [
+            CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = self.procedure.changes?.count > 0
@@ -314,18 +348,26 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
+        
+        
+        
+        
+        // now that our data is wired up - reload
         tableView.reloadData()
         
         // register up ALL the html cells - each with their own idenfifier
-        //  so we don't reuse html cells
+        //  so we don't reuse html cells - and hide the sections
         var hideSections = [Int]()
         for i in 0..<formHelper.data.count {
             let section = formHelper.data[i]
             for data in section {
+                if let s = data.sectionsToHide where s.count > 0 {
+                    let hideList = s.map{ x in x + i }
+                    hideSections.appendContentsOf(hideList)
+                }
                 if let nib = data.nibIdentifier {
                     if nib == "HtmlCell" {
                         self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
-                        hideSections.append(i)
                     }
                 }
             }

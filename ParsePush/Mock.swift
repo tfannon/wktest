@@ -71,6 +71,16 @@ class Mock {
 //        procedure.resultsText4 = "h"
         
         
+        procedure.workpapers = [Workpaper]()
+        for i in 0...3 {
+            let wp = Workpaper()
+            wp.title = "Workpaper \(i)"
+            wp.workflowState = i % 4
+            wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
+            
+            procedure.workpapers.append(wp)
+        }
+        
         procedure.changes = [Change]()
         if id % 10 != 0 {
             for i in 1...10 {

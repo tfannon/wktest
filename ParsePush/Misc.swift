@@ -27,4 +27,9 @@ class Misc {
         let vc = storyboard.instantiateViewControllerWithIdentifier(viewIdentifier) as! T
         return vc
     }
+    
+    static func random<T>(array : Array<T>) -> T {
+        let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+        return array[randomIndex]
+    }
 }

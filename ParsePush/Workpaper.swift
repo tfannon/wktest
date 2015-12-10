@@ -46,6 +46,11 @@ class Workpaper : BaseObject {
     var attachmentTitle: String?
     var attachmentExtension: String?
     var attachmentSize: Int64 = 0
+    var documentType : DocumentType? {
+        get {
+            return DocumentType(rawValue: attachmentExtension ?? "")
+        }
+    }
     
     var attachmentData: NSData?
     

@@ -186,6 +186,16 @@ extension UITableView {
     }
 }
 
+extension UIViewController {
+    func alert(title : String?, message : String?) {
+        let alertController = UIAlertController(title: title, message:
+            message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+}
+
 extension NSTimer {
     /**
      Creates and schedules a one-time `NSTimer` instance.
