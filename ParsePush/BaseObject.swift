@@ -17,6 +17,24 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     override init() {
     }
     
+    static let baseTerm = [
+        "sync":"Sync",
+        "title":"Title",
+        "code":"Code",
+
+        "parentType":"",
+        "parentTitle":"Parent",
+
+        "tester":"Tester",
+        "reviewer":"Reviewer",
+        "manager":"Manager",
+        "dueDate":"Due",
+        "reviewDueDate":"Review Due",
+        
+        "workflowState":"",
+        "workflowStateTitle":"State",
+    ]
+    
     var id: Int?
     var parentTitle: String?
     var parentType: Int = 0

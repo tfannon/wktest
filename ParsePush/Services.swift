@@ -347,6 +347,7 @@ public class Services {
         }
     }
 
+    //this is problematic in we have to remember to add each thing we store?
     static func clearStore() {
         print (__FUNCTION__)
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -363,6 +364,8 @@ public class Services {
             workpaperIds.each { defaults.removeObjectForKey(DataKey.getWorkpaperKey($0)) }
             defaults.removeObjectForKey(DataKey.WorkpaperIds.rawValue)
         }
+        defaults.removeObjectForKey("procedureColumnPrefs")
+        
         if let attachmentIds = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] {
             //remove file paths
             attachmentIds.each { appGroupDefaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }

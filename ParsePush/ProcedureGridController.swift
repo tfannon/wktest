@@ -21,8 +21,19 @@ class ProcedureGridController: BaseGridController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        let order = self.grid.columns.map { $0.propertyKey }
-        NSUserDefaults.standardUserDefaults().setObject(order, forKey: "procedureColumnOrder")
+        //rebuild the prefs using column data which has new order and width
+        self.gridColumnPrefs = (self.grid.columns as! [SDataGridColumn]).map { ColumnPrefs(key:$0.propertyKey, width:
+            Int($0.width)) }
+        
+//        print ("persisting")
+//        gridColumnPrefs.forEach {
+//            print($0.key, $0.width)
+//        }
+        //convert to something we can store
+        let prefsData = NSKeyedArchiver.archivedDataWithRootObject(gridColumnPrefs)
+        
+        //let order = self.grid.columns.map { $0.propertyKey }
+        NSUserDefaults.standardUserDefaults().setObject(prefsData, forKey: "procedureColumnPrefs")
     }
 
     func getProcedures(completed: ()->()) {
@@ -39,39 +50,57 @@ class ProcedureGridController: BaseGridController {
         }
     }
     
-    //can probably push this up
+    let defaults = [
+        ColumnPrefs(key: "sync", width:75),
+        ColumnPrefs(key: "title", width:220),
+        ColumnPrefs(key: "parentType", width:50),
+        ColumnPrefs(key: "parentTitle", width:125),
+        ColumnPrefs(key: "workflowState", width:63),
+        ColumnPrefs(key: "workflowStateTitle", width:100),
+        ColumnPrefs(key: "tester", width:125),
+        ColumnPrefs(key: "testResults", width:100),
+        ColumnPrefs(key: "dueDate", width:100),
+        ColumnPrefs(key: "reviewer", width:125),
+        ColumnPrefs(key: "reviewDueDate", width:60)
+    ]
+    
+    
+    //needs to be pushed up to base
     override func addColumns() {
-        if gridColumnsOrder == nil {
-            gridColumnsOrder = NSUserDefaults.standardUserDefaults().objectForKey("procedureColumnOrder") as? [String]
+        if let prefsData = NSUserDefaults.standardUserDefaults().objectForKey("procedureColumnPrefs") as? NSData {
+            gridColumnPrefs = NSKeyedUnarchiver.unarchiveObjectWithData(prefsData) as? [ColumnPrefs]
         }
-        if gridColumnsOrder == nil {
-            gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState","workflowStateTitle", "tester","testResults","dueDate","reviewer","reviewDueDate"]
+        //if not use the defaults
+        if gridColumnPrefs == nil {
+            gridColumnPrefs = defaults
         }
-        for (var i=0;i<gridColumnsOrder.count;i++) {
-            let key = gridColumnsOrder[i]
+        for x in gridColumnPrefs {
+            let key = x.key
+            let width = x.width
             let title = Procedure.getTerminology(key)
             switch key {
 
-            case "sync": addColumnWithTitle(key, title: "Sync", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
+            case "sync": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
                 
-            case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "title": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
 
-            case "parentType": addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
+            case "parentType": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
                 
-            case "parentTitle": addColumnWithTitle(key, title: "Parent", width: 125, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
-                
+            case "parentTitle": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
 
-            case "workflowState": addColumnWithTitle(key, title: "", width: 63, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
+            case "workflowState": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
                 
-            case "workflowStateTitle": addColumnWithTitle(key, title: "State", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+            case "tester": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
                 
-            case "testResults": addColumnWithTitle(key, title: title, width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "workflowStateTitle": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
                 
-            case "dueDate": addColumnWithTitle(key, title: "Due", width: 100, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), sortMode: SDataGridColumnSortModeTriState)
+            case "testResults": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "reviewDueDate": addColumnWithTitle(key, title: "Review Due", width: 160, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            case "dueDate": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), sortMode: SDataGridColumnSortModeTriState)
                 
-            default: addColumnWithTitle(key, title: title, width: 125, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
+            case "reviewDueDate": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
+            default: addColumnWithTitle(key, title: title, width: width, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
             }
         }
     }
@@ -124,6 +153,14 @@ class ProcedureGridController: BaseGridController {
             default: return false
         }
     }
+    
+ 
+
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didEndResizingColumn column: SDataGridColumn!, fromWidth oldWidth: CGFloat, toWidth newWidth: CGFloat) {
+        //print ("was\(column.width) is\(newWidth)")
+        //set this or it wont be remembered when navigating away then back or when persisting
+        column.width = newWidth
+    }
 
     //can probably push this up when form support comes in for all
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
@@ -134,14 +171,14 @@ class ProcedureGridController: BaseGridController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-        Services.sync { result in
-            self.items = result!.procedures
-            self.dataSourceHelper.data = self.items
-            self.grid.pullToAction.actionCompleted()
-        }
-    }
-    
+//    override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
+//        Services.sync { result in
+//            self.items = result!.procedures
+//            self.dataSourceHelper.data = self.items
+//            self.grid.pullToAction.actionCompleted()
+//        }
+//    }
+//    
     /*
     func shinobiDataGrid(grid: ShinobiDataGrid!, didChangeSortOrderForColumn column: SDataGridColumn!, to newSortOrder: SDataGridColumnSortOrder) {
         if newSortOrder == SDataGridColumnSortOrderNone {

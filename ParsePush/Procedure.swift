@@ -11,28 +11,21 @@ import ObjectMapper
 
 
 class Procedure : BaseObject  {
+    
     static var term =  [
-        "title":"Title",
-        "parentTitle":"Parent",
-        "parentType":"Parent",
-        "code":"Code",
-        "dueDate":"Due Date",
-        "tester":"Tester",
-        "reviewer":"Reviewer",
-        "reviewDueDate":"Review Due Date",
         "text1":"Details",
         "text2":"Scope",
         "text3":"Purpose",
         "text4":"Sample Criteria",
         "testResults":"Results",
-        "workflowState":"State",
+
         "resultsText1":"Record of Work Done",
         "resultsText2":"Conclusion",
         "resultsText3":"Notes",
         "resultsText4":"Results 4"]
 
     class func getTerminology(key: String) -> String {
-        return term[key] ?? ""
+        return term[key] ?? BaseObject.baseTerm[key]!
     }
     
     var code: String? { didSet { setDirty("Code") } }

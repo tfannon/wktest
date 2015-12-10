@@ -15,6 +15,26 @@ protocol ObjectProvider {
     var sortedItems: [T] { get set }
 }
 
+final class ColumnPrefs: NSObject {
+    var key: String
+    var width: Int
+    
+    init(key: String, width:Int=0) {
+        self.key = key
+        self.width = width
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.key = String(aDecoder.decodeObjectForKey("key")!)
+        self.width =  aDecoder.decodeIntegerForKey("width")
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(key, forKey:"key")
+        aCoder.encodeInteger(width, forKey:"width")
+    }
+}
+
 class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate, ObjectProvider {
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -28,8 +48,15 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
     var sortedItems: [BaseObject] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
-    var gridColumnsOrder: [String]!
+    var gridColumnsOrder: [String]!  //remove this other columns are ported
+
+    //ordered array of dict
+    var gridColumnPrefs: [ColumnPrefs]!
+    var resizedColumns = [String:Int]()
+
     var dataSourceHelper: SDataGridDataSourceHelper!
+    
+    
     
     //MARK: - UIViewController
     override func viewDidLoad() {
@@ -106,14 +133,9 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
     }
     
     //MARK: - add columns
-    func addColumnWithTitle(key: String, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
+    func addColumnWithTitle(key: String, title: String, width: Int, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
         var column: SDataGridColumn!
             column = SDataGridColumn(title: title, forProperty: key)
-//        if key != nil {
-//            column = SDataGridColumn(title: title, forProperty: key)
-//        } else {
-//            column = SDataGridColumn(title: title)
-//        }
         if cellClass != nil {
             column.cellType = cellClass!
         }
