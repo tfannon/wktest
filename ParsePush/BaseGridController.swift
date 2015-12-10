@@ -106,13 +106,14 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
     }
     
     //MARK: - add columns
-    func addColumnWithTitle(key: String?, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
+    func addColumnWithTitle(key: String, title: String, width: Float, textAlignment: NSTextAlignment, edgeInsets: UIEdgeInsets, cellClass: AnyClass? = nil, sortMode: SDataGridColumnSortMode? = nil) {
         var column: SDataGridColumn!
-        if key != nil {
             column = SDataGridColumn(title: title, forProperty: key)
-        } else {
-            column = SDataGridColumn(title: title)
-        }
+//        if key != nil {
+//            column = SDataGridColumn(title: title, forProperty: key)
+//        } else {
+//            column = SDataGridColumn(title: title)
+//        }
         if cellClass != nil {
             column.cellType = cellClass!
         }
@@ -124,6 +125,8 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         if sortMode != nil {
             column.sortMode = sortMode!
         }
+        column.canReorderViaLongPress = true
+        column.canResizeViaPinch = true
         self.grid.addColumn(column)
     }
     
