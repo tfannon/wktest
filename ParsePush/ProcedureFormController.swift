@@ -33,35 +33,8 @@ extension ProcedureFormController : CustomCellDelegate {
 
 class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
     private var bottomConstraint: NSLayoutConstraint!
-    
-    var procedure : Procedure!
 
-    //this is needed because the storyboard instantiates it this way when starting app
-    //may consider removing it from storyboard and setting it in app delegate
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init(procedure: Procedure) {
-        super.init(style: .Grouped)
-        self.procedure = procedure
-        initializeFormHelper()
-    }
-    
-    //needed because form controller
-    init() {
-        super.init(style: .Grouped)
-    }
-    
-    private func initializeFormHelper() {
-        watchForChanges = false
-        formHelper = FormHelper(controller: self)
-        setupForm()
-        self.tableView.reloadData()
-        watchForChanges = true
-    }
-    
-    private var clearTable = false
+    private var clearTable = true
     private var watchForChanges = false
     private var formHelper : FormHelper!
     private var webViews = [UIWebView]()
@@ -69,6 +42,31 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     private var editingCell : UITableViewCell?
     
     private var toolbarLabel: UIBarButtonItem!
+    
+    var procedure : Procedure! {
+        didSet {
+            initializeFormHelper()
+        }
+    }
+    
+    private func initializeFormHelper() {
+        
+        self.view.backgroundColor = UIColor.whiteColor()
+        self.title = "Procedure"
+        
+        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
+        // Automatic dimensions to tell the table view to use dynamic height
+        tableView.rowHeight = UITableViewAutomaticDimension
+
+        clearTable = true
+        self.tableView.reloadData()
+        clearTable = false
+        
+        watchForChanges = false
+        formHelper = FormHelper(controller: self)
+        setupForm()
+        watchForChanges = true
+    }
     
     private func t(key : String) -> String {
         return Procedure.getTerminology(key)
@@ -81,18 +79,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "Procedure"
-        
-        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
-        // Automatic dimensions to tell the table view to use dynamic height
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        setupNavbar()
-        setupToolbar()
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -102,16 +88,11 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     }
     
     override func viewWillAppear(animated: Bool) {
-        if procedure == nil {
-            Services.getMyData {
-                self.procedure = $0?.procedures.first
-                self.initializeFormHelper()
-            }
-        }
         super.viewWillAppear(animated)
+        setupNavbar()
+        setupToolbar()
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = false
-        
     }
     
     private func setupNavbar() {
@@ -333,6 +314,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.navigationController?.pushViewController(vc, animated: true)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         })])
+        tableView.reloadData()
         
         // register up ALL the html cells - each with their own idenfifier
         //  so we don't reuse html cells
@@ -432,7 +414,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     func enableSave()
     {
         if watchForChanges {
-            self.navigationItem.rightBarButtonItem!.enabled = true
+            self.navigationItem.rightBarButtonItem?.enabled = true
         }
     }
     

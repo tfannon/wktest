@@ -78,6 +78,16 @@ extension String {
     }
 }
 
+extension UITableView {
+    func clear() {
+        var set = [Int]()
+        for i in 0...self.numberOfSections {
+            set.append(i)
+        }
+        self.deleteSections(NSIndexSet.fromArray(set), withRowAnimation: .None)
+    }
+}
+
 extension UITableViewCell {
     func enable(on: Bool) {
         self.userInteractionEnabled = on
