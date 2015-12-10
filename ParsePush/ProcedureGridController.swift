@@ -19,6 +19,11 @@ class ProcedureGridController: BaseGridController {
             self.dataSourceHelper.data = self.items
         }
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let order = self.grid.columns.map { $0.propertyKey }
+        NSUserDefaults.standardUserDefaults().setObject(order, forKey: "procedureColumnOrder")
+    }
 
     func getProcedures(completed: ()->()) {
         self.items = []
@@ -36,6 +41,9 @@ class ProcedureGridController: BaseGridController {
     
     //can probably push this up
     override func addColumns() {
+        if gridColumnsOrder == nil {
+            gridColumnsOrder = NSUserDefaults.standardUserDefaults().objectForKey("procedureColumnOrder") as? [String]
+        }
         if gridColumnsOrder == nil {
             gridColumnsOrder = ["sync","title","parentType","parentTitle","workflowState","workflowStateTitle", "tester","testResults","dueDate","reviewer","reviewDueDate"]
         }
