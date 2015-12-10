@@ -53,11 +53,8 @@ class SplitMasterViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print (self.splitViewController?.viewControllers.count)
-        //let detail = self.splitViewController?.viewControllers.last as! SplitDetailController
-        self.splitViewController?.viewControllers[1] = ProcedureFormController(procedure: procedures[indexPath.row])
-        
-//        let detail = self.splitViewController?.viewControllers.last as! ProcedureFormController
-//        detail.procedure = procedures[indexPath.row]
+        let detail = self.splitViewController?.viewControllers.last as! ProcedureFormController
+        detail.procedure = procedures[indexPath.row]
     }
     
        /*
