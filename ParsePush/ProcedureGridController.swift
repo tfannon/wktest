@@ -23,6 +23,8 @@ class ProcedureGridController: BaseGridController {
     override func viewWillDisappear(animated: Bool) {
         let order = self.grid.columns.map { $0.propertyKey }
         NSUserDefaults.standardUserDefaults().setObject(order, forKey: "procedureColumnOrder")
+        let foo = (self.grid.columns as! [SDataGridColumn]) .map { $0.width }
+        print (foo)
     }
 
     func getProcedures(completed: ()->()) {
@@ -74,6 +76,9 @@ class ProcedureGridController: BaseGridController {
             default: addColumnWithTitle(key, title: title, width: 125, textAlignment: .Left, edgeInsets: UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10))
             }
         }
+        let foo = (self.grid.columns as! [SDataGridColumn]) .map { $0.width }
+        print (foo)
+        
     }
     
     
