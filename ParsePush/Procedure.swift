@@ -45,7 +45,8 @@ class Procedure : BaseObject  {
     
     //can hang new workpapers off here
     var workpapers = [Workpaper]()
-    
+    // issues
+    var issues = [Issue]()
        
     override func mapping(map: Map) {
         super.mapping(map)
@@ -71,6 +72,7 @@ class Procedure : BaseObject  {
             toJSON: { $0.map { $0.toIsoString() } }))
         
         workpapers <- map["Workpapers"]
+        issues <- map["Issues"]
        
         isMapping = false
     }

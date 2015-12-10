@@ -303,6 +303,10 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 self.enableSave()
         })])
 
+        ///////////////////
+        // workpapers
+        ///////////////////
+        
         formHelper.addSection(" ", data:
             [CellData(identifier: "_Workpapers",
                 style: UITableViewCellStyle.Value1,
@@ -314,8 +318,8 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                 willDisplay: formHelper.hideSectionWillDisplay,
                 selected: formHelper.hideSectionSelected)
             ])
-        
-        // create cell data for each of the workpapers 
+
+        // create cell data for each of the workpapers
         var workpaperCellData = [CellData]()
         for w in self.procedure.workpapers {
             let cellData =
@@ -324,23 +328,90 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
                     willDisplay: { cell, data in
                         cell.accessoryType = .DisclosureIndicator
                         cell.userInteractionEnabled = true
+                        cell.textLabel?.textAlignment = NSTextAlignment.Left
                     },
                     selected: { cell, data, indexPath in
 //                        let vc : [Workpaper form]
-//                        vc.changes = self.procedure.changes!
+//                        vc.workpaper = w
 //                        self.navigationController?.pushViewController(vc, animated: true)
                         self.alert("", message: "Show workpaper form here")
                     }
                 )
             workpaperCellData.append(cellData)
         }
-        formHelper.addSection("Workpapers", data: workpaperCellData)
+        workpaperCellData.append(CellData(
+            identifier: "_NavigationCell",
+            label: "Add",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = true
+                cell.textLabel?.textAlignment = NSTextAlignment.Right
+            },
+            selected: { cell, data, indexPath in
+                self.alert("", message: "Show wp form here in ADD mode")
+            }
+            ))
+        formHelper.addSection("", data: workpaperCellData)
+
+        ///////////////////
+        // issues
+        ///////////////////
+        formHelper.addSection("", data:
+            [CellData(identifier: "_Issues",
+                style: UITableViewCellStyle.Value1,
+                label: "Issues",
+                imageName:  "icons_issue",
+                toggled: false,
+                sectionsToHide: [1],
+                selectedIfAccessoryButtonTapped: true,
+                willDisplay: formHelper.hideSectionWillDisplay,
+                selected: formHelper.hideSectionSelected)
+            ])
         
+
+        // create cell data for each of the issues
+        var issueCellData = [CellData]()
+        for i in self.procedure.issues {
+            let cellData =
+            CellData(identifier: "_NavigationCell", label: i.title,
+                imageName: "icons_issue",
+                willDisplay: { cell, data in
+                    cell.accessoryType = .DisclosureIndicator
+                    cell.userInteractionEnabled = true
+                    cell.textLabel?.textAlignment = NSTextAlignment.Left
+                },
+                selected: { cell, data, indexPath in
+//                    let vc : [Issue form]
+//                    vc.issue = i
+//                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.alert("", message: "Show issue form here")
+                }
+            )
+            issueCellData.append(cellData)
+        }
+        issueCellData.append(CellData(
+            identifier: "_NavigationCell",
+            label: "Add",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = true
+                cell.textLabel?.textAlignment = NSTextAlignment.Right
+            },
+            selected: { cell, data, indexPath in
+                self.alert("", message: "Show issue form here in ADD mode")
+            }
+        ))
+        formHelper.addSection("", data: issueCellData)
+
+        //
+        // Change Tracking
+        //
         formHelper.addSection("", data: [
             CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = self.procedure.changes?.count > 0
+                cell.textLabel?.textAlignment = NSTextAlignment.Left
             },
             selected: { cell, data, indexPath in
                 let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")

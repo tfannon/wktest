@@ -81,6 +81,15 @@ class Mock {
             procedure.workpapers.append(wp)
         }
         
+        procedure.issues = [Issue]()
+        for i in 0...3 {
+            let iss = Issue()
+            iss.title = "Issue \(i)"
+            iss.workflowState = i % 4
+            
+            procedure.issues.append(iss)
+        }
+        
         procedure.changes = [Change]()
         if id % 10 != 0 {
             for i in 1...10 {
