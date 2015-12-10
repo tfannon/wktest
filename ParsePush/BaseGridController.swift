@@ -48,10 +48,11 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
     var sortedItems: [BaseObject] = []
     var grid: ShinobiDataGrid!
     var gridColumnSortOrder = [String:String]()
-    var gridColumnsOrder: [String]!  //remove this when its working
+    var gridColumnsOrder: [String]!  //remove this other columns are ported
 
     //ordered array of dict
     var gridColumnPrefs: [ColumnPrefs]!
+    var resizedColumns = [String:Int]()
 
     var dataSourceHelper: SDataGridDataSourceHelper!
     

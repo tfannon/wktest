@@ -22,12 +22,13 @@ class ProcedureGridController: BaseGridController {
     
     override func viewWillDisappear(animated: Bool) {
         //rebuild the prefs using column data which has new order and width
-        self.gridColumnPrefs = (self.grid.columns as! [SDataGridColumn]).map { ColumnPrefs(key:$0.propertyKey, width: Int($0.minimumWidth ?? $0.width)) }
+        self.gridColumnPrefs = (self.grid.columns as! [SDataGridColumn]).map { ColumnPrefs(key:$0.propertyKey, width:
+            Int($0.width)) }
         
-        print ("persisting")
-        gridColumnPrefs.forEach {
-            print($0.key, $0.width)
-        }
+//        print ("persisting")
+//        gridColumnPrefs.forEach {
+//            print($0.key, $0.width)
+//        }
         //convert to something we can store
         let prefsData = NSKeyedArchiver.archivedDataWithRootObject(gridColumnPrefs)
         
@@ -64,25 +65,15 @@ class ProcedureGridController: BaseGridController {
     ]
     
     
-    //can probably push this up
+    //needs to be pushed up to base
     override func addColumns() {
-        //if we are coming into the view first time, we see if there are any persisted defaults
-        if gridColumnPrefs == nil {
-            if let prefsData = NSUserDefaults.standardUserDefaults().objectForKey("procedureColumnPrefs") as? NSData {
-                gridColumnPrefs = NSKeyedUnarchiver.unarchiveObjectWithData(prefsData) as? [ColumnPrefs]
-            }
+        if let prefsData = NSUserDefaults.standardUserDefaults().objectForKey("procedureColumnPrefs") as? NSData {
+            gridColumnPrefs = NSKeyedUnarchiver.unarchiveObjectWithData(prefsData) as? [ColumnPrefs]
         }
         //if not use the defaults
         if gridColumnPrefs == nil {
             gridColumnPrefs = defaults
-        } else {
-//            print ("remembering")
-//            gridColumnPrefs.forEach {
-//                print($0.key, $0.width)
-//            }
-            print (gridColumnPrefs)
         }
-
         for x in gridColumnPrefs {
             let key = x.key
             let width = x.width
@@ -161,6 +152,14 @@ class ProcedureGridController: BaseGridController {
             
             default: return false
         }
+    }
+    
+ 
+
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didEndResizingColumn column: SDataGridColumn!, fromWidth oldWidth: CGFloat, toWidth newWidth: CGFloat) {
+        //print ("was\(column.width) is\(newWidth)")
+        //set this or it wont be remembered when navigating away then back or when persisting
+        column.width = newWidth
     }
 
     //can probably push this up when form support comes in for all
