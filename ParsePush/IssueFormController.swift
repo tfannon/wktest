@@ -130,6 +130,11 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
                     style: UITableViewCellStyle.Value1,
                     imageName: "769-male",
                     willDisplay: { cell, _ in cell.selectionStyle = .None }),
+                CellData(identifier: "_BasicCell", value: issue.businessContact,
+                    label: self.t("businessContact"),
+                    style: UITableViewCellStyle.Value1,
+                    imageName: "769-male",
+                    willDisplay: { cell, _ in cell.selectionStyle = .None }),
                 
                 CellData(identifier: "_BasicCell", value: issue.dueDate?.ToLongDateStyle(),
                     label: self.t("dueDate"),
@@ -186,24 +191,28 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
             ])
         
         formHelper.addSection("Properties", data: [
-            CellData(identifier: "TextCell", value: self.issue.numericValue1, placeHolder: self.t("numericValue1"),
-                willDisplay: formHelper.getTextCellWillDisplay(UIKeyboardType.DecimalPad),
+            CellData(identifier: "TextCellWithLabel", value: self.issue.numericValue1,                 willDisplay: formHelper.getTextCellWillDisplay(
+                UIKeyboardType.DecimalPad,
+                label: self.t("numericValue1")),
                 changed: { cell, _ in
                     let textCell = cell as! TextCell
                     if let v = textCell.textField?.text {
-                        self.issue.numericValue1 = Float(v)
+                        self.issue.numericValue1 = v.toDouble()
                     }
                     else {
                         self.issue.numericValue1 = 0
                     }
                     self.enableSave()
             }),
-            CellData(identifier: "TextCell", value: self.issue.numericValue2, placeHolder: self.t("numericValue2"),
-                willDisplay: formHelper.getTextCellWillDisplay(UIKeyboardType.DecimalPad),
+            CellData(identifier: "TextCellWithLabel",
+                value: self.issue.numericValue2,
+                willDisplay: formHelper.getTextCellWillDisplay(
+                    UIKeyboardType.DecimalPad,
+                    label: self.t("numericValue2")),
                 changed: { cell, _ in
                     let textCell = cell as! TextCell
                     if let v = textCell.textField?.text {
-                        self.issue.numericValue2 = Float(v) 
+                        self.issue.numericValue2 = v.toDouble()
                     }
                     else {
                         self.issue.numericValue2 = 0

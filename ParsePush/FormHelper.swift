@@ -322,22 +322,28 @@ class FormHelper {
         textCell.textField.text = data.value as! String?
     }
     
-    func getTextCellWillDisplay(keyboardType : UIKeyboardType = UIKeyboardType.Default) -> ((UITableViewCell, CellData) -> Void) {
+    func getTextCellWillDisplay(
+        keyboardType : UIKeyboardType = UIKeyboardType.Default,
+        label : String? = nil) -> ((UITableViewCell, CellData) -> Void) {
         return { cell, data in
             let textCell = cell as! TextCell
             textCell.delegate = self.controllerAsDelegate
             textCell.textField.placeholder = data.placeHolder
             textCell.textField.text = nil
-            if let v = data.value as? Float {
+            if let v = data.value as? Double {
                 let nf = NSNumberFormatter()
                 nf.numberStyle = .DecimalStyle
-                // Configure the number formatter to your liking
+                nf.groupingSeparator = ""
                 textCell.textField.text = nf.stringFromNumber(v)
             }
             else {
                 textCell.textField.text = data.value as! String?
             }
             textCell.textField.keyboardType = keyboardType
+            
+            if let tcwl = textCell as? TextCellWithLabel {
+                tcwl.label.text = label
+            }
         }
     }
     

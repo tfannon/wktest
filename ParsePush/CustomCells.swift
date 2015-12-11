@@ -174,12 +174,16 @@ public class SwitchCell: CustomCell {
     }
 }
 
+public class TextCellWithLabel : TextCell {
+    
+    @IBOutlet weak var label: UILabel!
+}
+
 public class TextCell : CustomCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!
 
     let NUMERIC_CHARACTERS = "0123456789"
-    let NUMERIC_WITH_DECIMAL_CHARACTERS = "0123456789."
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -201,12 +205,14 @@ public class TextCell : CustomCell, UITextFieldDelegate
         shouldChangeCharactersInRange range: NSRange,
         replacementString string: String) -> Bool {
             
+            let converter = NSNumberFormatter()
+            
             var allowedCharacters : String
             var onlyOneDecimalAllowed : Bool = false
             if textField.keyboardType == UIKeyboardType.NumberPad {
                 allowedCharacters = NUMERIC_CHARACTERS
             } else if textField.keyboardType == UIKeyboardType.DecimalPad {
-                allowedCharacters = NUMERIC_WITH_DECIMAL_CHARACTERS
+                allowedCharacters = NUMERIC_CHARACTERS + converter.decimalSeparator
                 onlyOneDecimalAllowed = true
             }
             else {
@@ -214,8 +220,8 @@ public class TextCell : CustomCell, UITextFieldDelegate
             }
             
             // how many '.' are there - there can be only one :)
-            if onlyOneDecimalAllowed && string == "." &&
-                (textField.text?.containsString(".") ?? false) {
+            if onlyOneDecimalAllowed && string == converter.decimalSeparator &&
+                (textField.text?.containsString(converter.decimalSeparator) ?? false) {
                 return false
             }
             

@@ -117,7 +117,10 @@ class Mock {
             iss.parentType = ObjectType.Procedure.rawValue
             iss.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
             iss.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
- 
+            iss.manager = "Alice Cooper"
+            iss.businessContact = "Russell Edwin Nash"
+            iss.reviewer = "Gordon Sumner"
+            
             iss.workpapers = [Workpaper]()
             for i in 0...3 {
                 let wp = Workpaper()

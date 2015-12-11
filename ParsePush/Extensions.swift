@@ -96,6 +96,14 @@ extension String {
         }
         return false
     }
+
+    func toDouble() -> Double {
+        let converter = NSNumberFormatter()
+        if let result = converter.numberFromString(self) {
+            return result.doubleValue
+        }
+        return 0
+    }
 }
 
 extension UITableView {

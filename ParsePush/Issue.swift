@@ -57,8 +57,8 @@ class Issue : BaseObject {
     var text4: String? { didSet { setDirty("Text4") } }
     var text5: String? { didSet { setDirty("Text5") } }
 
-    var numericValue1: Float? { didSet { setDirty("numericValue1") } }
-    var numericValue2: Float? { didSet { setDirty("numericValue2") } }
+    var numericValue1: Double? { didSet { setDirty("numericValue1") } }
+    var numericValue2: Double? { didSet { setDirty("numericValue2") } }
 
     var yesNo1: Bool? { didSet { setDirty("yesNo1") } }
     var yesNo2: Bool? { didSet { setDirty("yesNo2") } }

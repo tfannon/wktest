@@ -93,6 +93,7 @@
 		66FFCBA91C1A1D5A0001BF38 /* IssueFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFCBA81C1A1D590001BF38 /* IssueFormController.swift */; };
 		66FFCBAB1C1A251B0001BF38 /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */; };
 		66FFCBAF1C1A7E0B0001BF38 /* FormHelperSpecialized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFCBAE1C1A7E0B0001BF38 /* FormHelperSpecialized.swift */; };
+		66FFCBB11C1A84790001BF38 /* TextCellWithLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66FFCBB01C1A84790001BF38 /* TextCellWithLabel.xib */; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -239,6 +240,7 @@
 		66FFCBA81C1A1D590001BF38 /* IssueFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFormController.swift; sourceTree = "<group>"; };
 		66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchCell.xib; sourceTree = "<group>"; };
 		66FFCBAE1C1A7E0B0001BF38 /* FormHelperSpecialized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormHelperSpecialized.swift; sourceTree = "<group>"; };
+		66FFCBB01C1A84790001BF38 /* TextCellWithLabel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCellWithLabel.xib; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -404,6 +406,7 @@
 				6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */,
 				66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */,
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
+				66FFCBB01C1A84790001BF38 /* TextCellWithLabel.xib */,
 				6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */,
 				669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */,
 				6616C38C1BF4DAA4004D763E /* FormHelper.swift */,
@@ -698,6 +701,7 @@
 				6564FFE71BDF91530014FE08 /* Roboto-Italic.ttf in Resources */,
 				6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */,
 				66FFCBAB1C1A251B0001BF38 /* SwitchCell.xib in Resources */,
+				66FFCBB11C1A84790001BF38 /* TextCellWithLabel.xib in Resources */,
 				668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */,
 				6564FFEA1BDF91530014FE08 /* Roboto-Medium.ttf in Resources */,
 				6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */,

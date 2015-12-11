@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextCellWithLabel" id="fEy-WX-1V6" customClass="TextCellWithLabel" customModule="TeamMate" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="fEy-WX-1V6" id="EFs-2Q-A8b">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cm-fF-dNC">
+                        <rect key="frame" x="8" y="8" width="42" height="27.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-Js-fAR">
+                        <rect key="frame" x="66" y="8" width="246" height="27.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="3cm-fF-dNC" firstAttribute="bottom" secondItem="EFs-2Q-A8b" secondAttribute="bottomMargin" id="47a-0H-Ylj"/>
+                    <constraint firstItem="Zex-Js-fAR" firstAttribute="trailing" secondItem="EFs-2Q-A8b" secondAttribute="trailingMargin" id="RRO-Jg-IQQ"/>
+                    <constraint firstItem="3cm-fF-dNC" firstAttribute="top" secondItem="EFs-2Q-A8b" secondAttribute="topMargin" id="WIw-Oc-PXg"/>
+                    <constraint firstItem="3cm-fF-dNC" firstAttribute="leading" secondItem="EFs-2Q-A8b" secondAttribute="leadingMargin" id="Yrf-Wi-lBX"/>
+                    <constraint firstItem="Zex-Js-fAR" firstAttribute="leading" secondItem="3cm-fF-dNC" secondAttribute="trailing" constant="16" id="gyJ-42-a2w"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Zex-Js-fAR" secondAttribute="bottom" id="iYj-5k-gOi"/>
+                    <constraint firstItem="Zex-Js-fAR" firstAttribute="top" secondItem="EFs-2Q-A8b" secondAttribute="topMargin" id="oFS-ez-uwN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="label" destination="3cm-fF-dNC" id="Kr2-05-B8r"/>
+                <outlet property="textField" destination="Zex-Js-fAR" id="Gr1-zc-Nqj"/>
+            </connections>
+            <point key="canvasLocation" x="207" y="148"/>
+        </tableViewCell>
+    </objects>
+</document>
