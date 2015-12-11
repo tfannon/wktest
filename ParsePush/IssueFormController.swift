@@ -70,7 +70,7 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         return Issue.getTerminology(key)
     }
     
-    class func getIssueFormController() -> IssueFormController {
+    class func create() -> IssueFormController {
         let vc : IssueFormController = Misc.getViewController("Issue", viewIdentifier: "IssueFormController")
         return vc
     }
@@ -287,93 +287,25 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
                 self.enableSave()
         })])
         
-        
         ///////////////////
         // workpapers
         ///////////////////
+        formHelper.addWorkpaperCells(self.issue.workpapers)
         
-        // create cell data for each of the workpapers
-        var workpaperCellData = [CellData]()
-        workpaperCellData.append(CellData(identifier: "_Workpapers",
-            style: UITableViewCellStyle.Value1,
-            label: "Workpapers",
-            imageName:  "icons_workpaper",
-            toggled: false,
-            selectedIfAccessoryButtonTapped: true,
-            willDisplay: formHelper.hideSectionWillDisplay,
-            selected: { cell, data, indexPath in
-                self.formHelper.hideRows(cell, data: data, indexPath: indexPath, rowCount: self.issue.workpapers.count + 1)
-            }))
-        for w in self.issue.workpapers {
-            let cellData =
-            CellData(identifier: "_NavigationCell", label: w.title,
-                imageName: w.documentType?.imageName ?? "icon-document",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = true
-                },
-                visible: false,
-                selected: { cell, data, indexPath in
-                    //                        let vc : [Workpaper form]
-                    //                        vc.workpaper = w
-                    //                        self.navigationController?.pushViewController(vc, animated: true)
-                    self.alert("", message: "Show workpaper form here")
-                }
-            )
-            workpaperCellData.append(cellData)
-        }
-        workpaperCellData.append(CellData(
-            identifier: "_NavigationCell",
-            label: "Add",
-            visible: false,
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-                cell.textLabel?.textAlignment = NSTextAlignment.Right
-            },
-            selected: { cell, data, indexPath in
-                self.alert("", message: "Show wp form here in ADD mode")
-            }
-            ))
-        formHelper.addSection(" ", data: workpaperCellData)
-        
-        //
+        ///////////////////
         // Change Tracking
-        //
-        formHelper.addSection("", data: [
-            CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = self.issue.changes?.count > 0
-                },
-                selected: { cell, data, indexPath in
-                    let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                    vc.changes = self.issue.changes!
-                    self.navigationController?.pushViewController(vc, animated: true)
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            })])
+        ///////////////////
+        formHelper.addChangeTracking(self.issue.changes)
         
+        ///////////////////
         // now that our data is wired up - reload
+        ///////////////////
         tableView.reloadData()
         
-        // register up ALL the html cells - each with their own idenfifier
-        //  so we don't reuse html cells - and hide the sections
-        var hideSections = [Int]()
-        for i in 0..<formHelper.data.count {
-            let section = formHelper.data[i]
-            for data in section {
-                if let s = data.sectionsToHide where s.count > 0 {
-                    let hideList = s.map{ x in x + i }
-                    hideSections.appendContentsOf(hideList)
-                }
-                if let nib = data.nibIdentifier {
-                    if nib == "HtmlCell" {
-                        self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
-                    }
-                }
-            }
-        }
-        self.formHelper.hideSections(hideSections)
+        ///////////////////
+        // hide html
+        ///////////////////
+        formHelper.hideHtmlSections()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

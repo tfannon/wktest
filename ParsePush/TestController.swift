@@ -94,7 +94,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         let procedure = Mock.getProcedures()[0]
         let issue = procedure.issues.first
         if ifController == nil {
-            ifController = IssueFormController.getIssueFormController()
+            ifController = IssueFormController.create()
         }
         ifController!.issue = issue
         self.navigationController?.pushViewController(ifController!, animated: true)
@@ -130,7 +130,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormController.getProcedureFormController()
+        let vc = ProcedureFormController.create()
         vc.procedure = Mock.getProcedures()[0]
 
         vc.hidesBottomBarWhenPushed = true

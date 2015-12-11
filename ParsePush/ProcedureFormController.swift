@@ -70,7 +70,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         return Procedure.getTerminology(key)
     }
     
-    class func getProcedureFormController() -> ProcedureFormController {
+    class func create() -> ProcedureFormController {
         let vc : ProcedureFormController = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController")
         return vc
     }
@@ -304,145 +304,27 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         ///////////////////
         // workpapers
         ///////////////////
-        
-        ///////////////////
-        // workpapers
-        ///////////////////
-        
-        // create cell data for each of the workpapers
-        var workpaperCellData = [CellData]()
-        workpaperCellData.append(CellData(identifier: "_Workpapers",
-            style: UITableViewCellStyle.Value1,
-            label: "Workpapers",
-            imageName:  "icons_workpaper",
-            toggled: false,
-            selectedIfAccessoryButtonTapped: true,
-            willDisplay: formHelper.hideSectionWillDisplay,
-            selected: { cell, data, indexPath in
-                self.formHelper.hideRows(cell, data: data, indexPath: indexPath, rowCount: self.procedure.workpapers.count + 1)
-        }))
-        for w in self.procedure.workpapers {
-            let cellData =
-            CellData(identifier: "_NavigationCell", label: w.title,
-                imageName: w.documentType?.imageName ?? "icon-document",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = true
-                },
-                visible: false,
-                selected: { cell, data, indexPath in
-                    //                        let vc : [Workpaper form]
-                    //                        vc.workpaper = w
-                    //                        self.navigationController?.pushViewController(vc, animated: true)
-                    self.alert("", message: "Show workpaper form here")
-                }
-            )
-            workpaperCellData.append(cellData)
-        }
-        workpaperCellData.append(CellData(
-            identifier: "_NavigationCell",
-            label: "Add",
-            visible: false,
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-                cell.textLabel?.textAlignment = NSTextAlignment.Right
-            },
-            selected: { cell, data, indexPath in
-                self.alert("", message: "Show wp form here in ADD mode")
-            }
-            ))
-        formHelper.addSection(" ", data: workpaperCellData)
+        formHelper.addWorkpaperCells(self.procedure.workpapers)
 
         ///////////////////
         // issues
         ///////////////////
-        formHelper.addSection("", data:
-            [CellData(identifier: "_Issues",
-                style: UITableViewCellStyle.Value1,
-                label: "Issues",
-                imageName:  "icons_issue",
-                toggled: false,
-                sectionsToHide: [1],
-                selectedIfAccessoryButtonTapped: true,
-                willDisplay: formHelper.hideSectionWillDisplay,
-                selected: formHelper.hideSectionSelected)
-            ])
-        
+        formHelper.addIssueCells(self.procedure.issues)
 
-        // create cell data for each of the issues
-        var issueCellData = [CellData]()
-        for i in self.procedure.issues {
-            let cellData =
-            CellData(identifier: "_NavigationCell", label: i.title,
-                imageName: "icons_issue",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = true
-                },
-                selected: { cell, data, indexPath in
-//                    let vc : [Issue form]
-//                    vc.issue = i
-//                    self.navigationController?.pushViewController(vc, animated: true)
-                    self.alert("", message: "Show issue form here")
-                }
-            )
-            issueCellData.append(cellData)
-        }
-        issueCellData.append(CellData(
-            identifier: "_NavigationCell",
-            label: "Add",
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-                cell.textLabel?.textAlignment = NSTextAlignment.Right
-            },
-            selected: { cell, data, indexPath in
-                self.alert("", message: "Show issue form here in ADD mode")
-            }
-        ))
-        formHelper.addSection("", data: issueCellData)
-
-        //
+        ///////////////////
         // Change Tracking
-        //
-        formHelper.addSection("", data: [
-            CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = self.procedure.changes?.count > 0
-            },
-            selected: { cell, data, indexPath in
-                let vc : ChangeGridController = Misc.getViewController("ChangeTracking", viewIdentifier: "ChangeGridController")
-                vc.changes = self.procedure.changes!
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        })])
+        ///////////////////
+        formHelper.addChangeTracking(self.procedure.changes)
         
-        
-        
-        
+        ///////////////////
         // now that our data is wired up - reload
+        ///////////////////
         tableView.reloadData()
-        
-        // register up ALL the html cells - each with their own idenfifier
-        //  so we don't reuse html cells - and hide the sections
-        var hideSections = [Int]()
-        for i in 0..<formHelper.data.count {
-            let section = formHelper.data[i]
-            for data in section {
-                if let s = data.sectionsToHide where s.count > 0 {
-                    let hideList = s.map{ x in x + i }
-                    hideSections.appendContentsOf(hideList)
-                }
-                if let nib = data.nibIdentifier {
-                    if nib == "HtmlCell" {
-                        self.tableView.registerNib(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: data.uuid)
-                    }
-                }
-            }
-        }
-        self.formHelper.hideSections(hideSections)
+
+        ///////////////////
+        // hide html
+        ///////////////////
+        formHelper.hideHtmlSections()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
