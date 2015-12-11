@@ -64,15 +64,23 @@ class IssueGridController: BaseGridController {
         }
     }
     
+    //can probably push this up when form support comes in for all
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
+        let issue = items[row.rowIndex] as! Issue
+        let controller = IssueFormController.getIssueFormController()
+        controller.issue = issue
+        controller.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
-        let procedure = object as! Issue
+        let issue = object as! Issue
         
         switch (propertyKey) {
         case "sync" :
             let wCell = cell as! SDataGridTextCell
-            wCell.textField.text = procedure.syncState.displayName
-            switch procedure.syncState {
+            wCell.textField.text = issue.syncState.displayName
+            switch issue.syncState {
             case .New :
                 wCell.backgroundColor = UIColor.lightGrayColor()
             case .Modified :
@@ -85,24 +93,24 @@ class IssueGridController: BaseGridController {
             
         case "workflowState" :
             let wCell = cell as! DataGridImageCell
-            wCell.state = WorkflowState(rawValue: procedure.workflowState)!
+            wCell.state = WorkflowState(rawValue: issue.workflowState)!
             return true
             
         case "released" :
             let wCell = cell as! SDataGridTextCell
-            if procedure.released {
+            if issue.released {
                 wCell.text = "Released"
             }
             return true
             
         case "parentType" :
             let wCell = cell as! DataGridImageCell
-            wCell.parentType = ObjectType(rawValue: procedure.parentType)!
+            wCell.parentType = ObjectType(rawValue: issue.parentType)!
             return true
             
         case "createdDate" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  procedure.createdDate?.toShortString()
+            wCell.text =  issue.createdDate?.toShortString()
             return true
             
         default: return false

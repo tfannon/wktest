@@ -292,20 +292,18 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         // workpapers
         ///////////////////
         
-        formHelper.addSection(" ", data:
-            [CellData(identifier: "_Workpapers",
-                style: UITableViewCellStyle.Value1,
-                label: "Workpapers",
-                imageName:  "icons_workpaper",
-                toggled: false,
-                sectionsToHide: [1],
-                selectedIfAccessoryButtonTapped: true,
-                willDisplay: formHelper.hideSectionWillDisplay,
-                selected: formHelper.hideSectionSelected)
-            ])
-        
         // create cell data for each of the workpapers
         var workpaperCellData = [CellData]()
+        workpaperCellData.append(CellData(identifier: "_Workpapers",
+            style: UITableViewCellStyle.Value1,
+            label: "Workpapers",
+            imageName:  "icons_workpaper",
+            toggled: false,
+            selectedIfAccessoryButtonTapped: true,
+            willDisplay: formHelper.hideSectionWillDisplay,
+            selected: { cell, data, indexPath in
+                self.formHelper.hideRows(cell, data: data, indexPath: indexPath, rowCount: self.issue.workpapers.count + 1)
+            }))
         for w in self.issue.workpapers {
             let cellData =
             CellData(identifier: "_NavigationCell", label: w.title,
@@ -314,6 +312,7 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
                     cell.accessoryType = .DisclosureIndicator
                     cell.userInteractionEnabled = true
                 },
+                visible: false,
                 selected: { cell, data, indexPath in
                     //                        let vc : [Workpaper form]
                     //                        vc.workpaper = w
@@ -326,6 +325,7 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         workpaperCellData.append(CellData(
             identifier: "_NavigationCell",
             label: "Add",
+            visible: false,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = true
@@ -335,7 +335,7 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
                 self.alert("", message: "Show wp form here in ADD mode")
             }
             ))
-        formHelper.addSection("", data: workpaperCellData)
+        formHelper.addSection(" ", data: workpaperCellData)
         
         //
         // Change Tracking
@@ -352,9 +352,6 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
                     self.navigationController?.pushViewController(vc, animated: true)
                     self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             })])
-        
-        
-        
         
         // now that our data is wired up - reload
         tableView.reloadData()
