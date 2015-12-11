@@ -10,6 +10,8 @@
 		6518EF781BD3464400DD558A /* DataGridImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518EF771BD3464400DD558A /* DataGridImageCell.swift */; };
 		651A4C3A1BEE80E3008737A2 /* WorkpaperGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */; };
 		651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */; };
+		652CD43B1C1A58F50012E012 /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CD43A1C1A58F50012E012 /* Attachment.swift */; };
+		652CD43D1C1A5CA10012E012 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CD43C1C1A5CA10012E012 /* Protocols.swift */; };
 		653F66241C07E7BD00B9058A /* WorkpaperChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */; };
 		655DEF861BF16D5100120892 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF851BF16D5100120892 /* FileHelper.swift */; };
 		655DEF881BF1836600120892 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
@@ -138,6 +140,8 @@
 		651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperGridController.swift; sourceTree = "<group>"; };
 		651A4C3B1BEE8319008737A2 /* Workpaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workpaper.swift; sourceTree = "<group>"; };
 		651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeTracking.swift; sourceTree = "<group>"; };
+		652CD43A1C1A58F50012E012 /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
+		652CD43C1C1A5CA10012E012 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperChooser.swift; sourceTree = "<group>"; };
 		655DEF841BF059F200120892 /* TeamMate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TeamMate.entitlements; path = ../TeamMate.entitlements; sourceTree = "<group>"; };
 		655DEF851BF16D5100120892 /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
@@ -435,7 +439,10 @@
 				651A4C3B1BEE8319008737A2 /* Workpaper.swift */,
 				651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */,
 				655DEF851BF16D5100120892 /* FileHelper.swift */,
+				65F4D0251C039AF6009D7C0A /* Issue.swift */,
+				652CD43A1C1A58F50012E012 /* Attachment.swift */,
 				653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */,
+				652CD43C1C1A5CA10012E012 /* Protocols.swift */,
 			);
 			name = MT;
 			sourceTree = "<group>";
@@ -778,6 +785,7 @@
 				6564FFF31BDF91530014FE08 /* UITextView+SPUImage.m in Sources */,
 				6564FFEF1BDF91530014FE08 /* SPUGalleryManagedViewController.m in Sources */,
 				653F66241C07E7BD00B9058A /* WorkpaperChooser.swift in Sources */,
+				652CD43D1C1A5CA10012E012 /* Protocols.swift in Sources */,
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
 				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
@@ -791,6 +799,7 @@
 				655DEF861BF16D5100120892 /* FileHelper.swift in Sources */,
 				66E65F631BD573F000B8B351 /* Mock.swift in Sources */,
 				651A4C3A1BEE80E3008737A2 /* WorkpaperGridController.swift in Sources */,
+				652CD43B1C1A58F50012E012 /* Attachment.swift in Sources */,
 				65F4D0281C03C066009D7C0A /* IssueGridController.swift in Sources */,
 				651A4C3E1BEE834E008737A2 /* ChangeTracking.swift in Sources */,
 				65890DF81BC33A3900506192 /* Enums.swift in Sources */,

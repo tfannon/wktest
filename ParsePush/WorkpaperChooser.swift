@@ -9,12 +9,7 @@
 import Foundation
 import UIKit
 
-//the workpaper chooser needs to know about its owner and viewcontroller so it can present and save
-protocol WorkpaperChooserDelegate {
-    var workpaperOwner: Procedure { get }
-    var owningViewController: UIViewController { get }
-    func workpaperAddedCallback(wasAdded: Bool)
-}
+
 
 class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var _title = ""

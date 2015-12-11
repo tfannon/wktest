@@ -20,17 +20,25 @@ class ObjectContainer : Mappable, CustomStringConvertible {
         self.issues = issues
     }
     
+    convenience init(procedures: [Procedure], workpapers: [Workpaper], issues: [Issue], attachments: [Attachment]) {
+        self.init(procedures: procedures, workpapers: workpapers, issues: issues)
+        self.attachments = attachments
+    }
+    
+    
     var procedures = [Procedure]()
     var workpapers = [Workpaper]()
     var issues = [Issue]()
+    var attachments = [Attachment]()
     
     func mapping(map: Map) {
         procedures <- map["Procedures"]
         workpapers <- map["Workpapers"]
         issues <- map["Issues"]
+        attachments <- map["Attachments"]
     }
     
     var description: String {
-        return ("\(procedures.count) procs, \(workpapers.count) workpapers, \(issues.count) issues")
+        return ("\(procedures.count) procs, \(workpapers.count) workpapers, \(issues.count) issues  \(attachments.count)")
     }
 }
