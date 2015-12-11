@@ -334,6 +334,7 @@ class FormHelper {
                 let nf = NSNumberFormatter()
                 nf.numberStyle = .DecimalStyle
                 nf.groupingSeparator = ""
+                nf.maximumFractionDigits = 4
                 textCell.textField.text = nf.stringFromNumber(v)
             }
             else {

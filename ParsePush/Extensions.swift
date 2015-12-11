@@ -104,6 +104,12 @@ extension String {
         }
         return 0
     }
+    
+    func replace(findString: String, withString: String) -> String {
+        let toArray = self.componentsSeparatedByString(findString)
+        let result = toArray.joinWithSeparator(withString)
+        return result
+    }
 }
 
 extension UITableView {

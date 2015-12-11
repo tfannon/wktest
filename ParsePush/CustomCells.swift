@@ -183,8 +183,6 @@ public class TextCell : CustomCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!
 
-    let NUMERIC_CHARACTERS = "0123456789"
-    
     override public func awakeFromNib() {
         super.awakeFromNib()
         
@@ -204,42 +202,41 @@ public class TextCell : CustomCell, UITextFieldDelegate
     public func textField(textField: UITextField,
         shouldChangeCharactersInRange range: NSRange,
         replacementString string: String) -> Bool {
+
+            var isOk = true
+            let checkNumbers =
+                textField.keyboardType == UIKeyboardType.NumberPad
+                || textField.keyboardType == UIKeyboardType.DecimalPad
+            let allowDecimal = textField.keyboardType == UIKeyboardType.DecimalPad
+            let checkRequired = checkNumbers
             
-            let converter = NSNumberFormatter()
-            
-            var allowedCharacters : String
-            var onlyOneDecimalAllowed : Bool = false
-            if textField.keyboardType == UIKeyboardType.NumberPad {
-                allowedCharacters = NUMERIC_CHARACTERS
-            } else if textField.keyboardType == UIKeyboardType.DecimalPad {
-                allowedCharacters = NUMERIC_CHARACTERS + converter.decimalSeparator
-                onlyOneDecimalAllowed = true
+            if checkRequired {
+                let nf = Application.formatterForDouble
+                
+                let t = ((textField.text ?? "") as NSString).stringByReplacingCharactersInRange(range, withString: string)
+                if t.length > 0 {
+                    if t == "-" {
+                        // ok
+                    } else if !allowDecimal && t.containsString(nf.decimalSeparator) {
+                        isOk = false
+                    } else if allowDecimal && t == "." {
+                        // ok
+                    } else if let _ = nf.numberFromString(t) {
+                        // max integer & decimal places
+                        var integerDigits = t.replace("-", withString: "")
+                        if let p = t.indexOfCharacter(nf.decimalSeparator.characters.first!) {
+                            integerDigits = t.substring(p - 1)
+                            let s = t.substringFrom(p)
+                            isOk = s.length <= (nf.maximumFractionDigits + 1) //including the '.'
+                        }
+                        isOk = isOk && integerDigits.length <= nf.maximumIntegerDigits
+                    } else {
+                        isOk = false
+                    }
+                }
             }
-            else {
-                return true
-            }
             
-            // how many '.' are there - there can be only one :)
-            if onlyOneDecimalAllowed && string == converter.decimalSeparator &&
-                (textField.text?.containsString(converter.decimalSeparator) ?? false) {
-                return false
-            }
-            
-            // Create an `NSCharacterSet` set which includes everything *but* the digits
-            let inverseSet = NSCharacterSet(charactersInString:allowedCharacters).invertedSet
-            
-            // At every character in this "inverseSet" contained in the string,
-            // split the string up into components which exclude the characters
-            // in this inverse set
-            let components = string.componentsSeparatedByCharactersInSet(inverseSet)
-            
-            // Rejoin these components
-            let filtered = components.joinWithSeparator("")  // use join("", components) if you are using Swift 1.2
-            
-            // If the original string is equal to the filtered string, i.e. if no
-            // inverse characters were present to be eliminated, the input is valid
-            // and the statement returns true; else it returns false
-            return string == filtered
+            return isOk
     }
     
     public func textFieldDidBeginEditing(textField: UITextField) {
