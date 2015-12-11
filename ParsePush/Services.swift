@@ -215,7 +215,7 @@ public class Services {
     static func sync(completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         getMyData() { result in
-            let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any }
+            let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any() }
             sendDataToServer(dirty!) {
                 completed(result:$0)
             }
@@ -224,7 +224,7 @@ public class Services {
     
     private static func sendDataToServer(dirty: [Procedure], completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
-        print ("\t \(dirty.count { $0.workpapers.any }) procedures have new workpapers")
+        print ("\t \(dirty.count { $0.workpapers.any() }) procedures have new workpapers")
 
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"

@@ -28,7 +28,6 @@ class Procedure : BaseObject  {
         return term[key] ?? BaseObject.baseTerm[key]!
     }
     
-    var code: String? { didSet { setDirty("Code") } }
     var text1: String? { didSet { setDirty("Text1") } }
     var text2: String? { didSet { setDirty("Text2") } }
     var text3: String? { didSet { setDirty("Text3") } }

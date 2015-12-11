@@ -36,6 +36,7 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     ]
     
     var id: Int?
+    var code: String?
     var parentTitle: String?
     var parentType: Int = 0
     var title: String? { didSet { setDirty("Title") } }

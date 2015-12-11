@@ -87,6 +87,9 @@
 		66E65F6D1BD5BD8200B8B351 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */; };
 		66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F711BD5D94700B8B351 /* AFDateExtension.swift */; };
 		66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */; };
+		66FFCBA71C1A1D210001BF38 /* Issue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FFCBA61C1A1D210001BF38 /* Issue.storyboard */; };
+		66FFCBA91C1A1D5A0001BF38 /* IssueFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFCBA81C1A1D590001BF38 /* IssueFormController.swift */; };
+		66FFCBAB1C1A251B0001BF38 /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */; };
 		E3DC53D1F75A81A11FDBBA74 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -227,6 +230,9 @@
 		66E65F6B1BD5BCAF00B8B351 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		66E65F711BD5D94700B8B351 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		66E65F741BD5DAD800B8B351 /* NSDateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtensions.swift; sourceTree = "<group>"; };
+		66FFCBA61C1A1D210001BF38 /* Issue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Issue.storyboard; sourceTree = "<group>"; };
+		66FFCBA81C1A1D590001BF38 /* IssueFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFormController.swift; sourceTree = "<group>"; };
+		66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchCell.xib; sourceTree = "<group>"; };
 		BCB731A34F86733301978B50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D18A7B33A17C6A01E3E5CCD1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -385,10 +391,12 @@
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
+				66FFCBA61C1A1D210001BF38 /* Issue.storyboard */,
 				668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */,
 				663259BF1BF2405F00D3C76E /* DatePickerCell.xib */,
 				66A87FEA1BFFCF230042A95A /* DatePickerNullableCell.xib */,
 				6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */,
+				66FFCBAA1C1A251B0001BF38 /* SwitchCell.xib */,
 				663259BB1BF1972D00D3C76E /* TextCell.xib */,
 				6611F4901BE31083008204A5 /* TextAutoSizeCell.xib */,
 				669BD11A1C093C7B008EBFC4 /* HtmlCell.xib */,
@@ -404,6 +412,7 @@
 				651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */,
 				6518EF771BD3464400DD558A /* DataGridImageCell.swift */,
 				663259B91BF1959E00D3C76E /* ProcedureFormController.swift */,
+				66FFCBA81C1A1D590001BF38 /* IssueFormController.swift */,
 				668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */,
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
@@ -422,10 +431,10 @@
 				65B0623B1BF9911300375D17 /* ObjectContainer.swift */,
 				65B0623D1BF99A9400375D17 /* BaseObject.swift */,
 				65890DF91BC763D700506192 /* Procedure.swift */,
+				65F4D0251C039AF6009D7C0A /* Issue.swift */,
 				651A4C3B1BEE8319008737A2 /* Workpaper.swift */,
 				651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */,
 				655DEF851BF16D5100120892 /* FileHelper.swift */,
-				65F4D0251C039AF6009D7C0A /* Issue.swift */,
 				653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */,
 			);
 			name = MT;
@@ -662,6 +671,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66FFCBA71C1A1D210001BF38 /* Issue.storyboard in Resources */,
 				6564FFEE1BDF91530014FE08 /* Roboto-ThinItalic.ttf in Resources */,
 				6564FFED1BDF91530014FE08 /* Roboto-Thin.ttf in Resources */,
 				66E65F661BD5B4D200B8B351 /* Procedure.storyboard in Resources */,
@@ -678,6 +688,7 @@
 				659A64D01BBF4A2D0047AAD3 /* Media.xcassets in Resources */,
 				6564FFE71BDF91530014FE08 /* Roboto-Italic.ttf in Resources */,
 				6564FFE61BDF91530014FE08 /* Roboto-BoldItalic.ttf in Resources */,
+				66FFCBAB1C1A251B0001BF38 /* SwitchCell.xib in Resources */,
 				668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */,
 				6564FFEA1BDF91530014FE08 /* Roboto-Medium.ttf in Resources */,
 				6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */,
@@ -792,6 +803,7 @@
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65891DAF1C0C1DB10087E71E /* SplitDetailController.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
+				66FFCBA91C1A1D5A0001BF38 /* IssueFormController.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
 				66E55B291C11F16600733A3B /* SwiftColorPickerViewController.swift in Sources */,
