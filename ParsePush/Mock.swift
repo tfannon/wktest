@@ -36,6 +36,10 @@ class Mock {
         return []
     }
     
+    static func getAttachments() -> [Attachment] {
+        return []
+    }
+    
     
     static private func getNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {

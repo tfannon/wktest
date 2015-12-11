@@ -173,7 +173,7 @@ public class Services {
     static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
         print(__FUNCTION__)
         if (mock) {
-            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers(), issues: Mock.getIssues()))
+            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers(), issues: Mock.getIssues(), attachments: Mock.getAttachments()))
         }
         else {
             //this is to test local store without going to server
@@ -301,7 +301,7 @@ public class Services {
         case Proc = "procedure:"
         case Iss = "issue:"
         case Wp = "workpaper:"
-        case Attachment = "attachment:"
+        case Att = "attachment:"
         
         static func getKeyForIdList(obj: [BaseObject]) -> String {
             if obj is [Procedure] {
@@ -313,9 +313,13 @@ public class Services {
             else if obj is [Workpaper] {
                 return DataKey.WorkpaperIds.rawValue
             }
-            else {
-                return ""
+            else if obj is [Attachment] {
+                return DataKey.AttachmentIds.rawValue
             }
+            else {
+                assertionFailure("no key defined for \(obj)")
+            }
+            return ""
         }
         
         static func getKeyForObject(obj: BaseObject) -> String {
@@ -328,9 +332,13 @@ public class Services {
             else if obj is Workpaper {
                 return getWorkpaperKey(obj.id!)
             }
-            else {
-                return ""
+            else if obj is Attachment {
+                return getAttachmentKey(obj.id!)
             }
+            else {
+                assertionFailure("no key defined for \(obj)")
+            }
+            return ""
         }
 
         static func getProcKey(id : Int) -> String {
@@ -343,7 +351,7 @@ public class Services {
             return "\(Wp.rawValue)\(id)"
         }
         static func getAttachmentKey(id : Int) -> String {
-            return "\(Attachment.rawValue)\(id)"
+            return "\(Att.rawValue)\(id)"
         }
     }
 
@@ -364,11 +372,18 @@ public class Services {
             workpaperIds.each { defaults.removeObjectForKey(DataKey.getWorkpaperKey($0)) }
             defaults.removeObjectForKey(DataKey.WorkpaperIds.rawValue)
         }
+        
+        if let attachmentIds = loadAttachmentIds() {
+            attachmentIds.each { defaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }
+            defaults.removeObjectForKey(DataKey.AttachmentIds.rawValue)
+        }
+        
+        //remove all preferences
         defaults.removeObjectForKey("procedureColumnPrefs")
         
-        if let attachmentIds = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] {
+        if let attachmentIds2 = appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int] {
             //remove file paths
-            attachmentIds.each { appGroupDefaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }
+            attachmentIds2.each { appGroupDefaults.removeObjectForKey(DataKey.getAttachmentKey($0)) }
             defaults.removeObjectForKey(DataKey.AttachmentIds.rawValue)
         }
         //delete all the files in the storage directory as well
@@ -391,23 +406,24 @@ public class Services {
         saveObjectsImpl(objects.procedures)
         saveObjectsImpl(objects.workpapers)
         saveObjectsImpl(objects.issues)
+        saveObjectsImpl(objects.attachments)
     }
     
     private static func saveObjectsImpl(objects: [BaseObject]) {
         if objects.count > 0 {
-            print ("\tsaving \(objects.count) \(objects[0].dynamicType)")
+            print ("\tsaving \(objects.count) \(objects[0].dynamicType)s")
             let ids = objects.map { $0.id! }
             let idListKey = DataKey.getKeyForIdList(objects)
             NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
-            objects.each { saveObject($0) }
+            objects.each { saveObject($0, log: objects is [Attachment]) }
         }
     }
     
     static func saveObject(obj: BaseObject, log: Bool = false) {
-        let json = Mapper().toJSONString(obj, prettyPrint: true)!
+        let json = Mapper().toJSONString(obj, prettyPrint: true)
         //save it in its own slot.  will overwrite anything there
         let key = DataKey.getKeyForObject(obj)
-        if log { print("Saving \(key) to local store") }
+        if log { print("Saving \(key) sizeof:\(json!.length) to local store") }
         NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
     }
     
@@ -416,15 +432,15 @@ public class Services {
     private static func loadObjects() -> ObjectContainer? {
         print(__FUNCTION__)
         if let
-            procedures: [Procedure] = loadObjectsImpl(),
-            workpapers: [Workpaper] = loadObjectsImpl(),
-            issues:     [Issue] =     loadObjectsImpl() {
+            procedures:  [Procedure] = loadObjectsImpl(),
+            workpapers:  [Workpaper] = loadObjectsImpl(),
+            issues:      [Issue] =     loadObjectsImpl() {
             return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
         }
         return nil
     }
     
-    private static func loadObjectsImpl<T: BaseObject>() -> [T]? {
+    private static func loadObjectsImpl<T: Mappable>() -> [T]? {
                let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
         var ids: [Int]?
@@ -468,6 +484,11 @@ public class Services {
     private static func loadIssueIds() -> [Int]? {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.IssueIds.rawValue) as? [Int]
     }
+    
+    private static func loadAttachmentIds() -> [Int]? {
+        return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.AttachmentIds.rawValue) as? [Int]
+    }
+    
     
     static func getAttachment(id: Int, completed: (String->())) {
         let key = DataKey.getAttachmentKey(id)
