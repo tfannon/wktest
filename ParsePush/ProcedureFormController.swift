@@ -31,7 +31,7 @@ extension ProcedureFormController : CustomCellDelegate {
     }
 }
 
-class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, SaveableFormControllerDelegate {
+class ProcedureFormController: UITableViewController, SaveableFormControllerDelegate {
 
     private var clearTable = true
     private var watchForChanges = false
@@ -39,7 +39,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     
     private var editingCell : UITableViewCell?
     
-    private var toolbarLabel: UIBarButtonItem!
+   
     
     var procedure : Procedure! {
         didSet {
@@ -88,9 +88,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupNavbar()
-        //setupToolbar()
         self.navigationController?.navigationBarHidden = false
-        //self.navigationController?.toolbarHidden = false
     }
     
     private func setupNavbar() {
@@ -108,7 +106,9 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
             self.navigationItem.rightBarButtonItem?.enabled = false
         }
     }
-    
+
+    /* keep just in case foa  few days
+    private var toolbarLabel: UIBarButtonItem!
     private func setupToolbar() {
         if let _ = self.navigationController?.toolbar {
             let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addClicked")
@@ -119,6 +119,7 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
             self.toolbarLabel = lbl
         }
     }
+    */
     
     private func setupForm() {
         formHelper.addSection(" ",
@@ -551,32 +552,6 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    //MARK: - Workpaper Chooser
-    var workpaperOwner: Procedure { get { return procedure } }
-    var owningViewController: UIViewController { get { return self }}
-    
-    func addClicked() {
-        WorkpaperChooser.choose(self)
-    }
-    
-    func undoClicked() {
-        procedure.workpapers.removeAll()
-        Services.saveObject(procedure, log: true)
-        self.toolbarLabel.title = ""
-    }
-    
-    func workpaperAddedCallback(wasAdded: Bool) {
-        if wasAdded {
-            Services.saveObject(procedure, log: true)
-            self.toolbarLabel.title = itemsAddedText
-        }
-    }
-    
-    var itemsAddedText: String {
-        get { return procedure.workpapers.any() ? "\(procedure.workpapers.count) items added" : "" }
-    }
-    
     
     /*
     // MARK: - Navigation
