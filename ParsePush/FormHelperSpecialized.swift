@@ -8,6 +8,8 @@
 
 import Foundation
 
+// specialized FormHelper functions for this app's business objects
+
 extension FormHelper {
     
     // used for creating a Workflow selector cell
