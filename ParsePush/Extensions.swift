@@ -76,6 +76,26 @@ extension String {
         let range = (self as NSString).rangeOfString(string, options:.CaseInsensitiveSearch)
         return range.location == 0
     }
+
+    func indexOfCharacter(char: Character) -> Int? {
+        if let idx = self.characters.indexOf(char) {
+            return self.startIndex.distanceTo(idx)
+        }
+        return nil
+    }
+    
+    func hasTwoOrMore(char: Character) -> Bool {
+        var count : Int = 0
+        for c in self.characters {
+            if (c == char) {
+                count++
+                if count >= 2 {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
 
 extension UITableView {
@@ -132,7 +152,7 @@ extension Array {
         return false
     }
     
-    var any : Bool {
+    func any() -> Bool {
         return !self.isEmpty
     }
     

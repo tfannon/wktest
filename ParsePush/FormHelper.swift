@@ -155,7 +155,7 @@ class FormHelper {
     func showSections(sections : [Int], animation: UITableViewRowAnimation = .None, scrollDelta : Int = 0) {
 
         // if we have any sections to show
-        if sections.any {
+        if sections.any() {
             // grab the first section - we do this so we know what kind of cell is being hidden
             let firstSectionToShow = sections.first!
             // this is the preceeding section that started visible when this function was called 
@@ -287,13 +287,32 @@ class FormHelper {
         self.controllerAsDelegate = controller as! CustomCellDelegate
     }
     
-    lazy var textCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
-        { cell, data in
+    lazy var numericCellWillDisplay : ((UITableViewCell, CellData) -> Void) =
+    { cell, data in
+        let textCell = cell as! TextCell
+        textCell.delegate = self.controllerAsDelegate
+        textCell.textField.placeholder = data.placeHolder
+        textCell.textField.text = data.value as! String?
+    }
+    
+    func getTextCellWillDisplay(keyboardType : UIKeyboardType = UIKeyboardType.Default) -> ((UITableViewCell, CellData) -> Void) {
+        return { cell, data in
             let textCell = cell as! TextCell
             textCell.delegate = self.controllerAsDelegate
             textCell.textField.placeholder = data.placeHolder
-            textCell.textField.text = data.value as! String?
+            textCell.textField.text = nil
+            if let v = data.value as? Float {
+                let nf = NSNumberFormatter()
+                nf.numberStyle = .DecimalStyle
+                // Configure the number formatter to your liking
+                textCell.textField.text = nf.stringFromNumber(v)
+            }
+            else {
+                textCell.textField.text = data.value as! String?
+            }
+            textCell.textField.keyboardType = keyboardType
         }
+    }
     
     lazy var textViewWillDisplay : ((UITableViewCell, CellData) -> Void) =
         { cell, data in
@@ -398,6 +417,7 @@ class FormHelper {
                 cell.selectionStyle = .None
                 cell.detailTextLabel?.textColor = cell.textLabel?.textColor
                 cell.imageView?.image = UIImage(named: WorkflowState(rawValue: workflowObject.workflowState)!.imageName)
+                cell.userInteractionEnabled = workflowObject.allowedStates?.any() ?? false
             },
             selected: { cell, data, indexPath in
                 let alertController = UIAlertController(title: "Workflow State", message: "Choose the new workflow state", preferredStyle: UIAlertControllerStyle.ActionSheet)

@@ -78,8 +78,9 @@ class Mock {
         procedure.workpapers = [Workpaper]()
         for i in 0...3 {
             let wp = Workpaper()
+            wp.id = i
             wp.title = "Workpaper \(i)"
-            wp.workflowState = i % 4
+            wp.workflowState = i % 4 + 1
             wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
             
             procedure.workpapers.append(wp)
@@ -88,8 +89,9 @@ class Mock {
         procedure.issues = [Issue]()
         for i in 0...3 {
             let iss = Issue()
+            iss.id = i
             iss.title = "Issue \(i)"
-            iss.workflowState = i % 4
+            iss.workflowState = i % 4 + 1
             
             procedure.issues.append(iss)
         }

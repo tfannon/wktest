@@ -14,7 +14,7 @@ class Change: BaseObject
     var user : String?
     var date : NSDate?
     var changeDescription : String?
-    var details : [ChangeDetail]?
+    var details : [ChangeDetail]? = [ChangeDetail]()
     
     override func mapping(map: Map) {
         super.mapping(map)

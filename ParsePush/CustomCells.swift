@@ -155,10 +155,32 @@ public class DatePickerNullableCell : CustomCell
     }
 }
 
+public class SwitchCell: CustomCell {
+    
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var ctrlSwitch: UISwitch!
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        
+        selectionStyle = .None
+        ctrlSwitch.addTarget(self, action: Selector("switchDidChange:"), forControlEvents: UIControlEvents.ValueChanged)
+    }
+    var value : Bool {
+        get { return ctrlSwitch.on }
+        set { ctrlSwitch.on = newValue }
+    }
+    func switchDidChange(sender: UISwitch) {
+        changed()
+    }
+}
+
 public class TextCell : CustomCell, UITextFieldDelegate
 {
     @IBOutlet var textField: UITextField!
 
+    let NUMERIC_CHARACTERS = "0123456789"
+    let NUMERIC_WITH_DECIMAL_CHARACTERS = "0123456789."
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
         
@@ -173,6 +195,45 @@ public class TextCell : CustomCell, UITextFieldDelegate
 
     func textFieldDidChange(textField: UITextField) {
         changed()
+    }
+    
+    public func textField(textField: UITextField,
+        shouldChangeCharactersInRange range: NSRange,
+        replacementString string: String) -> Bool {
+            
+            var allowedCharacters : String
+            var onlyOneDecimalAllowed : Bool = false
+            if textField.keyboardType == UIKeyboardType.NumberPad {
+                allowedCharacters = NUMERIC_CHARACTERS
+            } else if textField.keyboardType == UIKeyboardType.DecimalPad {
+                allowedCharacters = NUMERIC_WITH_DECIMAL_CHARACTERS
+                onlyOneDecimalAllowed = true
+            }
+            else {
+                return true
+            }
+            
+            // how many '.' are there - there can be only one :)
+            if onlyOneDecimalAllowed && string == "." &&
+                (textField.text?.containsString(".") ?? false) {
+                return false
+            }
+            
+            // Create an `NSCharacterSet` set which includes everything *but* the digits
+            let inverseSet = NSCharacterSet(charactersInString:allowedCharacters).invertedSet
+            
+            // At every character in this "inverseSet" contained in the string,
+            // split the string up into components which exclude the characters
+            // in this inverse set
+            let components = string.componentsSeparatedByCharactersInSet(inverseSet)
+            
+            // Rejoin these components
+            let filtered = components.joinWithSeparator("")  // use join("", components) if you are using Swift 1.2
+            
+            // If the original string is equal to the filtered string, i.e. if no
+            // inverse characters were present to be eliminated, the input is valid
+            // and the statement returns true; else it returns false
+            return string == filtered
     }
     
     public func textFieldDidBeginEditing(textField: UITextField) {
@@ -593,3 +654,4 @@ extension HtmlCell: UIPopoverPresentationControllerDelegate, SwiftColorPickerDel
         colorPicked(color)
     }
 }
+
