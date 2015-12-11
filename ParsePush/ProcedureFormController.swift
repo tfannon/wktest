@@ -88,9 +88,9 @@ class ProcedureFormController: UITableViewController, WorkpaperChooserDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupNavbar()
-        setupToolbar()
+        //setupToolbar()
         self.navigationController?.navigationBarHidden = false
-        self.navigationController?.toolbarHidden = false
+        //self.navigationController?.toolbarHidden = false
     }
     
     private func setupNavbar() {
