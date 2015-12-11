@@ -334,6 +334,7 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
     private var chosenColor : UIColor?
 
     private var resized = false
+    private var firstSet = true
 
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -395,7 +396,8 @@ public class HtmlCell: CustomCell, RichEditorDelegate, RichEditorToolbarDelegate
         }
         set {
             // reset
-            if (_textString != newValue) {
+            if (firstSet || _textString != newValue) {
+                firstSet = false
                 startWaiting()
                 resized = false
                 _textString = newValue

@@ -29,11 +29,28 @@ class Mock {
     }
     
     static func getWorkpapers() -> [Workpaper] {
-        return []
+        var workpapers = [Workpaper]()
+        for p in getProcedures() {
+            for w in p.workpapers {
+                workpapers.append(w)
+            }
+        }
+        for i in getIssues() {
+            for w in i.workpapers {
+                workpapers.append(w)
+            }
+        }
+        return workpapers
     }
     
     static func getIssues() -> [Issue] {
-        return []
+        var issues = [Issue]()
+        for p in getProcedures() {
+            for i in p.issues {
+                issues.append(i)
+            }
+        }
+        return issues
     }
     
     
@@ -74,10 +91,14 @@ class Mock {
         procedure.workpapers = [Workpaper]()
         for i in 0...3 {
             let wp = Workpaper()
-            wp.id = i
-            wp.title = "Workpaper \(i)"
+            wp.id = id * 100 + i
+            wp.title = "Workpaper \(wp.id)"
             wp.workflowState = i % 4 + 1
             wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
+            wp.parentTitle = procedure.title
+            wp.parentType = ObjectType.Procedure.rawValue
+            wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
+            wp.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
             
             procedure.workpapers.append(wp)
         }
@@ -85,10 +106,29 @@ class Mock {
         procedure.issues = [Issue]()
         for i in 0...3 {
             let iss = Issue()
-            iss.id = i
-            iss.title = "Issue \(i)"
+            iss.id = id * 100 + i
+            iss.title = "Issue \(iss.id)"
             iss.workflowState = i % 4 + 1
-            
+            iss.parentTitle = procedure.title
+            iss.parentType = ObjectType.Procedure.rawValue
+            iss.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
+            iss.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
+ 
+            iss.workpapers = [Workpaper]()
+            for i in 0...3 {
+                let wp = Workpaper()
+                wp.id = iss.id! * 100 + i
+                wp.title = "Workpaper \(wp.id)"
+                wp.workflowState = i % 4 + 1
+                wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
+                wp.parentTitle = procedure.title
+                wp.parentType = ObjectType.Procedure.rawValue
+                wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
+                wp.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
+                
+                iss.workpapers.append(wp)
+            }
+
             procedure.issues.append(iss)
         }
         

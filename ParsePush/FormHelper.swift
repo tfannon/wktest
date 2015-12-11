@@ -51,6 +51,7 @@ class CellData {
         sectionsToHide : [Int]? = nil,
         selectedIfAccessoryButtonTapped: Bool = false,
         style : UITableViewCellStyle? = nil,
+        visible: Bool = true,
         initialize : (() -> UITableViewCell)? = nil,
         willDisplay : ((UITableViewCell, CellData) -> Void)? = nil,
         selected: ((UITableViewCell, CellData, NSIndexPath) -> Void)? = nil,
@@ -75,7 +76,7 @@ class CellData {
         self.willDisplayFunction = willDisplay
         self.selectedFunction = selected
         self.changedFunction = changed
-        self.visible = !identifier.startsWith("DatePicker")
+        self.visible = visible && !identifier.startsWith("DatePicker")
     }
     func initialize() -> UITableViewCell {
         if let f = initFunction {
@@ -147,6 +148,28 @@ class FormHelper {
         controller.tableView.endUpdates()
     }
 
+    func hideRows(cell : UITableViewCell, data : CellData, indexPath: NSIndexPath, rowCount : Int) {
+        self.tableView.beginUpdates()
+        data.toggled = !data.toggled
+        let section = indexPath.section
+        var indexPaths = [NSIndexPath]()
+        for i in 1...rowCount {
+            self.getRelativeCellData(data, delta: i).visible = data.toggled
+            indexPaths.append(NSIndexPath(forRow: i, inSection: section))
+        }
+        if data.toggled {
+            self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Top)
+            cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Down)
+        } else {
+            self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Top)
+            cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Up)
+        }
+        self.tableView.endUpdates()
+        if (data.toggled) {
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+    }
+    
     //
     // shows hidden rows in the table
     //  scrollDelta denotes which section to scroll to after they are made visible.  relative to the
@@ -203,21 +226,20 @@ class FormHelper {
             // we don't do it immediately because we want the true height of the loaded html to be considered
             //  for the scroll
             if let htmlCell = cell as? HtmlCell {
-                var abc : UIActivityIndicatorView?
-                abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-                self.tableView.addSubview(abc!)
-                self.tableView.bringSubviewToFront(abc!)
-                abc!.center = self.tableView.center
-                abc!.hidesWhenStopped = true
-                abc!.hidden = false
-                abc!.startAnimating()
+                let abc = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                self.tableView.addSubview(abc)
+                self.tableView.bringSubviewToFront(abc)
+                abc.center = self.tableView.center
+                abc.hidesWhenStopped = true
+                abc.hidden = false
+                abc.startAnimating()
                 self.tableView.userInteractionEnabled = false
                 self.tableView.alpha = 0.9
                 
                 NSTimer.schedule(repeatInterval: 0.1, handler: { timer in
                     if htmlCell.isResized {
                         timer.invalidate()
-                        abc?.removeFromSuperview()
+                        abc.removeFromSuperview()
                         scroll()
                     }
                 })
@@ -247,6 +269,11 @@ class FormHelper {
         let index = getActualVisibleSectionDataIndex(section)
         let t = sections[index]
         return t
+    }
+    
+    func getRelativeCellData(data : CellData, delta : Int) -> CellData {
+        let index = data.tag + delta
+        return self.dataLookup[index]!
     }
     
     func getCellData(indexPath: NSIndexPath) -> CellData
@@ -354,10 +381,10 @@ class FormHelper {
             data.toggled = !data.toggled
             let show = data.toggled
             if show {
-                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Down)
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Down)
             }
             else {
-                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.grayColor(), type: .Up)
+                cell.accessoryView = DTCustomColoredAccessory(color: UIColor.lightGrayColor(), type: .Up)
             }
 
             let sections = htmlIndexPaths.map { x in x.section }
@@ -373,8 +400,7 @@ class FormHelper {
         { cell, data, indexPath in
         let indexPath = self.controller.tableView.indexPathForCell(cell)!
         let dpIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-        let dpTag = data.tag + 1
-        let dpData = self.dataLookup[dpTag]!
+        let dpData = self.getRelativeCellData(data, delta: 1)
         let currentlyVisible = dpData.visible
         dpData.visible = !dpData.visible
         self.controller.tableView.beginUpdates()
