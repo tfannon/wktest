@@ -46,6 +46,9 @@ class Procedure : BaseObject  {
     var workpapers = [Workpaper]()
     // issues
     var issues = [Issue]()
+    
+    var issueIds = [Int]()
+    var workpaperIds = [Int]()
        
     override func mapping(map: Map) {
         super.mapping(map)
@@ -72,6 +75,9 @@ class Procedure : BaseObject  {
         
         workpapers <- map["Workpapers"]
         issues <- map["Issues"]
+        
+        workpaperIds <- map["WorkpaperIds"]
+        issueIds <- map["IssueIds"]
        
         isMapping = false
     }

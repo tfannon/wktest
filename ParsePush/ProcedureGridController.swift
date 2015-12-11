@@ -25,10 +25,6 @@ class ProcedureGridController: BaseGridController {
         self.gridColumnPrefs = (self.grid.columns as! [SDataGridColumn]).map { ColumnPrefs(key:$0.propertyKey, width:
             Int($0.width)) }
         
-//        print ("persisting")
-//        gridColumnPrefs.forEach {
-//            print($0.key, $0.width)
-//        }
         //convert to something we can store
         let prefsData = NSKeyedArchiver.archivedDataWithRootObject(gridColumnPrefs)
         
@@ -43,6 +39,7 @@ class ProcedureGridController: BaseGridController {
             if result?.procedures.count > 0 {
                 result?.procedures.each {
                     self.items.append($0)
+                    //print($0.issueIds, " : ", $0.workpaperIds)
                 }
                 self.sortedItems = self.items
                 completed()
