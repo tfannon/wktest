@@ -9,6 +9,13 @@
 import Foundation
 import ObjectMapper
 
+protocol IssueParent {
+    var issues : [Issue] { get }
+}
+protocol WorkpaperParent {
+    var workpapers : [Workpaper] { get }
+}
+
 class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     
     required init(_ map: Map) {
@@ -47,6 +54,17 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     var wasChangedOnServer : Bool?
     var syncState: SyncState = .Unchanged
     
+    var isNew : Bool { return id < 0 }
+    
+    //can hang new workpapers off here
+    var workpapers = [Workpaper]()
+    // issues
+    var issues = [Issue]()
+    
+    var issueIds = [Int]()
+    var workpaperIds = [Int]()
+    
+
     //grid cannot read enums
     var sync: String { get { return syncState.displayName } }
     //another hack for the grid
@@ -96,6 +114,27 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
             setDirtyFields.insert(field)
             self.syncState = .Dirty
         }
+    }
+    
+    func addChild(child : BaseObject) -> Bool {
+        if let issue = child as? Issue {
+            if !self.issueIds.contains(issue.id!) {
+                self.issues.append(issue)
+                self.issueIds.append(issue.id!)
+                return true
+            }
+        }
+        else if let workpaper = child as? Workpaper {
+            if !self.workpaperIds.contains(workpaper.id!) {
+                self.workpapers.append(workpaper)
+                self.workpaperIds.append(workpaper.id!)
+                return true
+            }
+        }
+        else {
+            fatalError("not handling child of type \(child.className)")
+        }
+        return false
     }
     
     var changes : [Change]?

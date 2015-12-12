@@ -39,7 +39,10 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
     
     private var editingCell : UITableViewCell?
     
-   
+    var parent : BaseObject?
+    var primaryObject : BaseObject { return self.procedure }
+    var savedChildIndexPath : NSIndexPath?
+    var parentForm : SaveableFormControllerDelegate?
     
     var procedure : Procedure! {
         didSet {
@@ -411,6 +414,17 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
     {
         if watchForChanges {
             self.navigationItem.rightBarButtonItem?.enabled = true
+        }
+    }
+
+    func childSaved(child : BaseObject) {
+        if let issue = child as? Issue {
+            formHelper.repaintIssueRow(self.savedChildIndexPath!, issue: issue)
+        }
+    }
+    func childCancelled(child : BaseObject) {
+        if let issue = child as? Issue {
+            formHelper.revertIssue(self.savedChildIndexPath!, issue: issue)
         }
     }
     

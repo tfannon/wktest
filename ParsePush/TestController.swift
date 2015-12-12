@@ -92,17 +92,17 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBAction func miscPressed(sender: UIButton) {
         //print ("test out some func here")
         let procedure = Mock.getProcedures()[0]
-        let issue = procedure.issues.first
-        if ifController == nil {
-            ifController = IssueFormController.create()
-        }
-        ifController!.issue = issue
-        self.navigationController?.pushViewController(ifController!, animated: true)
-//        if pfController == nil {
-//            pfController  = ProcedureFormController.getProcedureFormController()
+//        let issue = procedure.issues.first
+//        if ifController == nil {
+//            ifController = IssueFormController.create()
 //        }
-//        pfController!.procedure = procedure
-//        self.navigationController?.pushViewController(pfController!, animated: true)
+//        ifController!.issue = issue
+//        self.navigationController?.pushViewController(ifController!, animated: true)
+        if pfController == nil {
+            pfController  = ProcedureFormController.create()
+        }
+        pfController!.procedure = procedure
+        self.navigationController?.pushViewController(pfController!, animated: true)
     }
     
  

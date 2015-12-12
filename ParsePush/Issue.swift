@@ -43,6 +43,12 @@ class Issue : BaseObject {
         return term[key] ?? ""
     }
 
+    class func create() -> Issue {
+        let i = Issue()
+        i.id = Application.getNewId()
+        return i
+    }
+    
     var businessContact: String = ""
     var manager: String = ""
     var reviewer: String = ""
@@ -65,9 +71,6 @@ class Issue : BaseObject {
     
     var dueDate: NSDate? { didSet { setDirty("DueDate") } }
     var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
-
-    //can hang new workpapers off here
-    var workpapers = [Workpaper]()
 
     override func mapping(map: Map) {
         super.mapping(map)

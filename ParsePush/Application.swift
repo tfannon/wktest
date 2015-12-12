@@ -10,6 +10,10 @@ import Foundation
 
 class Application {
     
+    private static let newIdForObjectsKey = "Application.newIdForObjectsKey"
+    private static let lockQueue = dispatch_queue_create("Application.getNewId", nil)
+    
+    //MARK: Singleton
     // using a singleton ensures tread safety - only one is created
     // so everything in the init() of the singleton is only executed once
     static private let singleton = _Singleton()
@@ -24,5 +28,17 @@ class Application {
         }
     }
     
+    // MARK: Public properties/functions
     static var formatterForDouble : NSNumberFormatter { return singleton.formatterForDouble }
+
+    static func getNewId() -> Int {
+        var value = -1
+        dispatch_sync(lockQueue) {
+            if let current = NSUserDefaults.standardUserDefaults().valueForKey(newIdForObjectsKey) as? Int {
+                value  = current - 1
+            }
+            NSUserDefaults.standardUserDefaults().setInteger(value, forKey: newIdForObjectsKey)
+        }
+        return value
+    }
 }

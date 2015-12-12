@@ -10,7 +10,7 @@ import Foundation
 import ObjectMapper
 
 
-class Procedure : BaseObject  {
+class Procedure : BaseObject, IssueParent  {
     
     static var term =  [
         "text1":"Details",
@@ -42,14 +42,6 @@ class Procedure : BaseObject  {
     var tester: String = ""
     var reviewer: String = ""
     
-    //can hang new workpapers off here
-    var workpapers = [Workpaper]()
-    // issues
-    var issues = [Issue]()
-    
-    var issueIds = [Int]()
-    var workpaperIds = [Int]()
-       
     override func mapping(map: Map) {
         super.mapping(map)
         code <- map["Code"]

@@ -114,25 +114,13 @@ extension FormHelper {
                 self.hideRows(cell, data: data, indexPath: indexPath, rowCount: issues.count + 1)
         }))
         for iss in issues {
-            let cellData =
-            CellData(identifier: "_NavigationCell", label: iss.title,
-                imageName: "icon_issue",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = true
-                },
-                visible: false,
-                selected: { cell, data, indexPath in
-                    let vc = IssueFormController.create()
-                    vc.issue = issues[indexPath.row - 1]
-                    self.controller.navigationController?.pushViewController(vc, animated: true)
-                }
-            )
+            let cellData = createIssueCellData(iss, visible: false)
             issueCellData.append(cellData)
         }
         issueCellData.append(CellData(
             identifier: "_NavigationCell",
             label: "Add",
+            isAddCell: true,
             visible: false,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
@@ -140,10 +128,37 @@ extension FormHelper {
                 cell.textLabel?.textAlignment = NSTextAlignment.Right
             },
             selected: { cell, data, indexPath in
-                self.controller.alert("", message: "Show issue form here in ADD mode")
+                let vc = IssueFormController.create()
+                vc.issue = Issue.create()
+                vc.parent = self.controllerAsDelegate.primaryObject
+                var sd = self.controller as! SaveableFormControllerDelegate
+                sd.savedChildIndexPath = indexPath
+                vc.parentForm = sd
+                self.controller.navigationController?.pushViewController(vc, animated: true)
             }
             ))
         addSection(" ", data: issueCellData)
+    }
+    
+    private func createIssueCellData(issue : Issue, visible : Bool) -> CellData {
+        let data = CellData(identifier: "_NavigationCell", label: issue.title,
+            imageName: "icon_issue",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = true
+            },
+            visible: visible,
+            selected: { cell, data, indexPath in
+                let vc = IssueFormController.create()
+                vc.issue = issue
+                vc.parent = self.controllerAsDelegate.primaryObject
+                var sd = self.controller as! SaveableFormControllerDelegate
+                sd.savedChildIndexPath = indexPath
+                vc.parentForm = sd
+                self.controller.navigationController?.pushViewController(vc, animated: true)
+            }
+        )
+        return data
     }
     
     func addChangeTracking(changes : [Change]?) {
@@ -180,5 +195,38 @@ extension FormHelper {
             }
         }
         self.hideSections(hideSections)
+    }
+    
+    func repaintIssueRow(indexPath : NSIndexPath, issue : Issue?) {
+ 
+        let newData = createIssueCellData(issue!, visible: true)
+        let currentData = getCellData(indexPath)
+        let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
+        
+        tableView.beginUpdates()
+        if currentData.isAddCell {
+            self.data[sectionIndex].insert(newData, atIndex: indexPath.row)
+            tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            let newAddIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+            tableView.moveRowAtIndexPath(indexPath, toIndexPath: newAddIndexPath)
+        }
+        else {
+            self.data[sectionIndex][indexPath.row] = newData
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        }
+        tableView.endUpdates()
+    }
+    
+    func revertIssue(indexPath : NSIndexPath, issue : Issue) {
+        if let reloaded = Services.getIssue(issue.id!) {
+            let newData = createIssueCellData(reloaded, visible: true)
+            let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
+            let p = self.controllerAsDelegate.primaryObject.issues.indexOf{ x in x.id! == reloaded.id }!
+            self.controllerAsDelegate.primaryObject.issues[p] = reloaded
+            self.data[sectionIndex][indexPath.row] = newData
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            tableView.endUpdates()
+        }
     }
 }

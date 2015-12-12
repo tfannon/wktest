@@ -11,6 +11,10 @@ import DTFoundation
 
 protocol SaveableFormControllerDelegate {
     func enableSave()
+    func childSaved(child : BaseObject)
+    func childCancelled(child : BaseObject)
+    var savedChildIndexPath : NSIndexPath? { get set }
+    var parentForm : SaveableFormControllerDelegate? { get set }
 }
 
 class CellData {
@@ -27,6 +31,7 @@ class CellData {
     var toggled : Bool = false
     var selectedIfAccessoryButtonTapped : Bool = false
     var sectionsToHide : [Int]?
+    var isAddCell : Bool = false
     private var initFunction : (() -> UITableViewCell)?
     private var willDisplayFunction : ((UITableViewCell, CellData) -> Void)?
     private var selectedFunction : ((UITableViewCell, CellData, NSIndexPath) -> Void)?
@@ -46,6 +51,7 @@ class CellData {
         value : Any? = nil,
         label : String? = nil,
         imageName : String? = nil,
+        isAddCell : Bool = false,
         placeHolder: String? = nil,
         toggled: Bool = false,
         sectionsToHide : [Int]? = nil,
@@ -68,6 +74,7 @@ class CellData {
         self.value = value
         self.style = style
         self.sectionsToHide = sectionsToHide
+        self.isAddCell = isAddCell
         self.imageName = imageName
         self.selectedIfAccessoryButtonTapped = selectedIfAccessoryButtonTapped
         self.placeHolder = placeHolder
@@ -102,7 +109,7 @@ class FormHelper {
     var data = [[CellData]]()
     
     private var hiddenSectionActualIndexes = Set<Int>()
-    private func getActualVisibleSectionDataIndex(requestedSection : Int) -> Int {
+    func getActualVisibleSectionDataIndex(requestedSection : Int) -> Int {
         var counter = 0
         for i in 0..<sections.count {
             if !hiddenSectionActualIndexes.contains(i) {
@@ -276,13 +283,25 @@ class FormHelper {
         return self.dataLookup[index]!
     }
     
+    func getCellData(identifier: String) -> CellData?
+    {
+        for s in self.data {
+            for r in s {
+                if let current = r.identifier where current == identifier {
+                    return r
+                }
+            }
+        }
+        return nil
+    }
+    
     func getCellData(indexPath: NSIndexPath) -> CellData
     {
         let index = getActualVisibleSectionDataIndex(indexPath.section)
         let filtered = data[index].filter { d in return d.visible }
         return filtered[indexPath.row]
     }
-    
+
     var tableView : UITableView {
         get { return controller.tableView }
     }

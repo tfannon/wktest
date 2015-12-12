@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSObject {
-    var theClassName: String {
+    var className: String {
         return NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
     }
 }

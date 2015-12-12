@@ -13,6 +13,8 @@ import RichEditorView
 @objc protocol CustomCellDelegate {
     func changed(cell : UITableViewCell)
     func getViewController() -> UIViewController
+    var parent : BaseObject? { get set }
+    var primaryObject : BaseObject { get }
     optional func beganEditing(cell : UITableViewCell)
     optional func finishedEditing(cell : UITableViewCell)
 }

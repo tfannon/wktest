@@ -33,6 +33,11 @@ extension IssueFormController : CustomCellDelegate {
 
 class IssueFormController: UITableViewController, SaveableFormControllerDelegate {
     
+    var parent : BaseObject?
+    var primaryObject : BaseObject { return self.issue }
+    var savedChildIndexPath : NSIndexPath?
+    var parentForm : SaveableFormControllerDelegate?
+    
     private var clearTable = true
     private var watchForChanges = false
     private var formHelper : FormHelper!
@@ -403,6 +408,11 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         }
     }
     
+    func childSaved(child : BaseObject) {
+    }
+    func childCancelled(child : BaseObject) {
+    }
+    
     private func dismiss()
     {
         self.navigationController?.popViewControllerAnimated(true)
@@ -410,12 +420,14 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
     
     func navbarCancelClicked()
     {
-        dismiss();
+        self.parentForm?.childCancelled(self.issue)
+        dismiss()
     }
     
     func navbarSaveClicked()
     {
-        Services.saveObject(self.issue, log: true)
+        Services.saveObject(self.issue, parent: self.parent!, log: true)
+        self.parentForm?.childSaved(self.issue)
         dismiss()
     }
     

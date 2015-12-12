@@ -355,6 +355,13 @@ public class Services {
         }
     }
 
+    static func getIssue(id : Int) -> Issue? {
+        if let issues: [Issue] = loadObjectsImpl() {
+            return issues.filter { x in x.id == id }.first
+        }
+        return nil
+    }
+    
     //this is problematic in we have to remember to add each thing we store?
     static func clearStore() {
         print (__FUNCTION__)
@@ -400,7 +407,7 @@ public class Services {
     */
     
     //MARK: save local store
-    private static func saveObjects(objects: ObjectContainer) {
+    static func saveObjects(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
         saveObjectsImpl(objects.procedures)
@@ -419,7 +426,20 @@ public class Services {
         }
     }
     
-    static func saveObject(obj: BaseObject, log: Bool = false) {
+    static func saveObject(obj: BaseObject, parent: BaseObject? = nil, log: Bool = false) {
+
+        // if there is a parent
+        if let p = parent {
+            // and it's actually a brand new child
+            if p.addChild(obj) {
+                // save the parent - not the child directly
+                saveObject(p, log: true)
+            }
+        }
+
+        // save it in it's own slot regardless whether it was saved via the parent
+        // probably don't need to
+        
         let json = Mapper().toJSONString(obj, prettyPrint: true)
         //save it in its own slot.  will overwrite anything there
         let key = DataKey.getKeyForObject(obj)

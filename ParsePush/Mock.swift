@@ -24,7 +24,11 @@ class Mock {
                 let p = getNewProcedure(i, code: code, title: title, text1: text1)
                 procedures.append(p)
             }
+            // save the objects to the store!
+            let objectContainer = ObjectContainer(procedures: procedures, workpapers: getWorkpapers(), issues: getIssues())
+            Services.saveObjects(objectContainer)
         }
+        
         return procedures
     }
     
@@ -113,6 +117,7 @@ class Mock {
             iss.id = id * 100 + i
             iss.title = "Issue \(iss.id)"
             iss.workflowState = i % 4 + 1
+            iss.allowedStates = [1, 2, 3, 4]
             iss.parentTitle = procedure.title
             iss.parentType = ObjectType.Procedure.rawValue
             iss.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))

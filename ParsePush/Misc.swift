@@ -32,4 +32,12 @@ class Misc {
         let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
         return array[randomIndex]
     }
+    
+    enum CustomError : ErrorType {
+        case DevelopmentError(String)
+    }
+
+    static func throwDevError(message : String) throws {
+        throw CustomError.DevelopmentError(message)
+    }
 }
