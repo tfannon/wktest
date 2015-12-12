@@ -40,7 +40,7 @@ class Issue : BaseObject {
     ]
     
     class func getTerminology(key: String) -> String {
-        return term[key] ?? ""
+        return term[key] ?? BaseObject.baseTerm[key]!
     }
 
     class func create() -> Issue {
