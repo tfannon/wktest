@@ -9,11 +9,6 @@
 import Foundation
 import UIKit
 
-protocol ObjectProvider {
-    typealias T : BaseObject
-    var items: [T] { get set }
-    var sortedItems: [T] { get set }
-}
 
 final class ColumnPrefs: NSObject {
     var key: String
@@ -35,7 +30,7 @@ final class ColumnPrefs: NSObject {
     }
 }
 
-class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate, SDataGridPullToActionDelegate, ObjectProvider {
+class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, SDataGridDelegate  {
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -78,7 +73,7 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
         self.view.addSubview(grid)
         self.grid.showPullToAction = true
-        self.grid.pullToAction.delegate = self
+        //self.grid.pullToAction.delegate = self
     }
     
     func addColumns() {
@@ -152,10 +147,10 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         self.grid.addColumn(column)
     }
     
-    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-        //override this if supports refresh
-    }
-    
+//    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
+//        //override this if supports refresh
+//    }
+//    
 //    //MARK: - Data
 //    func getItems(completed: ()->()) {
 //        self.items = []

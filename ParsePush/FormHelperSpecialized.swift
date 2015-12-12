@@ -13,9 +13,8 @@ import Foundation
 extension FormHelper {
     
     // used for creating a Workflow selector cell
-    func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData
-    {
-        let saveableFormController = viewController as! SaveableFormControllerDelegate
+    func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData {
+        let saveableFormController = viewController as! SaveableFormController
         
         let data = CellData(identifier: "_BasicCell",
             value: WorkflowState(rawValue: workflowObject.workflowState)?.displayName,
@@ -131,7 +130,7 @@ extension FormHelper {
                 let vc = IssueFormController.create()
                 vc.issue = Issue.create()
                 vc.parent = self.controllerAsDelegate.primaryObject
-                var sd = self.controller as! SaveableFormControllerDelegate
+                var sd = self.controller as! SaveableFormController
                 sd.savedChildIndexPath = indexPath
                 vc.parentForm = sd
                 self.controller.navigationController?.pushViewController(vc, animated: true)
@@ -152,7 +151,7 @@ extension FormHelper {
                 let vc = IssueFormController.create()
                 vc.issue = issue
                 vc.parent = self.controllerAsDelegate.primaryObject
-                var sd = self.controller as! SaveableFormControllerDelegate
+                var sd = self.controller as! SaveableFormController
                 sd.savedChildIndexPath = indexPath
                 vc.parentForm = sd
                 self.controller.navigationController?.pushViewController(vc, animated: true)

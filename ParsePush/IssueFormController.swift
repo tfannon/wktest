@@ -36,7 +36,7 @@ extension IssueFormController : CustomCellDelegate {
 }
 
 
-class IssueFormController: UITableViewController, SaveableFormControllerDelegate {
+class IssueFormController: UITableViewController, SaveableFormController {
     
     private var clearTable = true
     private var watchForChanges = false
@@ -45,8 +45,6 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
 
     var parent : BaseObject?
     var primaryObject : BaseObject { return self.issue }
-    var savedChildIndexPath : NSIndexPath?
-    var parentForm : SaveableFormControllerDelegate?
     
     var issue : Issue! {
         didSet {
@@ -406,8 +404,28 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         cellData.willDisplay(cell)
     }
     
-    func enableSave()
-    {
+    //MARK: - Navbar
+    private func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func navbarCancelClicked() {
+        self.parentForm?.childCancelled(self.issue)
+        dismiss()
+    }
+    
+    func navbarSaveClicked() {
+        Services.saveObject(self.issue, parent: self.parent!, log: true)
+        self.parentForm?.childSaved(self.issue)
+        dismiss()
+    }
+    
+    
+    //MARK: - SaveableFormController
+    var savedChildIndexPath : NSIndexPath?
+    var parentForm : SaveableFormController?
+    
+    func enableSave() {
         if watchForChanges {
             self.navigationItem.rightBarButtonItem?.enabled = true
         }
@@ -415,41 +433,9 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
     
     func childSaved(child : BaseObject) {
     }
+    
     func childCancelled(child : BaseObject) {
     }
-    
-    private func dismiss()
-    {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func navbarCancelClicked()
-    {
-        self.parentForm?.childCancelled(self.issue)
-        dismiss()
-    }
-    
-    func navbarSaveClicked()
-    {
-        Services.saveObject(self.issue, parent: self.parent!, log: true)
-        self.parentForm?.childSaved(self.issue)
-        dismiss()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
     
 }
 

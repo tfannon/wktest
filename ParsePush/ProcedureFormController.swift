@@ -36,7 +36,7 @@ extension ProcedureFormController : CustomCellDelegate {
 }
 
 
-class ProcedureFormController: UITableViewController, SaveableFormControllerDelegate {
+class ProcedureFormController: UITableViewController, SaveableFormController {
     
     private var clearTable = true
     private var watchForChanges = false
@@ -45,8 +45,6 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
     
     var parent : BaseObject?
     var primaryObject : BaseObject { return self.procedure }
-    var savedChildIndexPath : NSIndexPath?
-    var parentForm : SaveableFormControllerDelegate?
     
     var procedure : Procedure! {
         didSet {
@@ -404,6 +402,26 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         cellData.willDisplay(cell)
     }
     
+    //MARK: - NavBar
+    func navbarCancelClicked() {
+        dismiss();
+    }
+    
+    func navbarSaveClicked() {
+        Services.saveObject(self.procedure, log: true)
+        dismiss()
+    }
+    
+    private func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    
+    //MARK: - SaveableFormController
+    var savedChildIndexPath : NSIndexPath?
+    var parentForm : SaveableFormController?
+    
+    
     func enableSave() {
         if watchForChanges {
             self.navigationItem.rightBarButtonItem?.enabled = true
@@ -422,18 +440,6 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         }
     }
     
-    private func dismiss() {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func navbarCancelClicked() {
-        dismiss();
-    }
-    
-    func navbarSaveClicked() {
-        Services.saveObject(self.procedure, log: true)
-        dismiss()
-    }
     
     
     /* keep just in case foa  few days
