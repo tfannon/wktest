@@ -44,7 +44,6 @@
 		65890DF61BC332EA00506192 /* NotificationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */; };
 		65890DF81BC33A3900506192 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF71BC33A3900506192 /* Enums.swift */; };
 		65890DFA1BC763D700506192 /* Procedure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65890DF91BC763D700506192 /* Procedure.swift */; };
-		65891DAF1C0C1DB10087E71E /* SplitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65891DAE1C0C1DB10087E71E /* SplitDetailController.swift */; };
 		659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C51BBEDEE10047AAD3 /* NotificationController.swift */; };
 		659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */; };
 		659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */; };
@@ -187,7 +186,6 @@
 		65890DF51BC332EA00506192 /* NotificationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHeaderCell.swift; sourceTree = "<group>"; };
 		65890DF71BC33A3900506192 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		65890DF91BC763D700506192 /* Procedure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Procedure.swift; sourceTree = "<group>"; };
-		65891DAE1C0C1DB10087E71E /* SplitDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitDetailController.swift; sourceTree = "<group>"; };
 		659A64C51BBEDEE10047AAD3 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcedureGridController.swift; sourceTree = "<group>"; };
 		659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
@@ -428,7 +426,6 @@
 				668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */,
 				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
-				65891DAE1C0C1DB10087E71E /* SplitDetailController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -821,7 +818,6 @@
 				659A64C61BBEDEE10047AAD3 /* NotificationController.swift in Sources */,
 				663259BE1BF1975000D3C76E /* CustomCells.swift in Sources */,
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
-				65891DAF1C0C1DB10087E71E /* SplitDetailController.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				66FFCBA91C1A1D5A0001BF38 /* IssueFormController.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,

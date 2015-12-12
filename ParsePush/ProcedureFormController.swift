@@ -10,18 +10,22 @@ import UIKit
 import DTFoundation
 
 extension ProcedureFormController : CustomCellDelegate {
+    
     func getViewController() -> UIViewController {
         return self
     }
+    
     func changed(cell: UITableViewCell) {
         if let indexPath = tableView.indexPathForCell(cell) {
             let cellData = formHelper.getCellData(indexPath)
             cellData.changed(cell)
         }
     }
+    
     func beganEditing(cell: UITableViewCell) {
         self.editingCell = cell
     }
+    
     func finishedEditing(cell: UITableViewCell) {
         // make sure we only set to nil if we're finishing the start we started on
         // don't know the order if you select another cell (if finished fires before start)
@@ -31,12 +35,12 @@ extension ProcedureFormController : CustomCellDelegate {
     }
 }
 
-class ProcedureFormController: UITableViewController, SaveableFormControllerDelegate {
 
+class ProcedureFormController: UITableViewController, SaveableFormControllerDelegate {
+    
     private var clearTable = true
     private var watchForChanges = false
     private var formHelper : FormHelper!
-    
     private var editingCell : UITableViewCell?
     
     var parent : BaseObject?
@@ -50,34 +54,7 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         }
     }
     
-    private func initializeFormHelper() {
-        
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "Procedure"
-        
-        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
-        // Automatic dimensions to tell the table view to use dynamic height
-        tableView.rowHeight = UITableViewAutomaticDimension
-
-        clearTable = true
-        self.tableView.reloadData()
-        clearTable = false
-        
-        watchForChanges = false
-        formHelper = FormHelper(controller: self)
-        setupForm()
-        watchForChanges = true
-    }
-    
-    private func t(key : String) -> String {
-        return Procedure.getTerminology(key)
-    }
-    
-    class func create() -> ProcedureFormController {
-        let vc : ProcedureFormController = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController")
-        return vc
-    }
-
+    //MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -92,6 +69,37 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         super.viewWillAppear(animated)
         setupNavbar()
         self.navigationController?.navigationBarHidden = false
+    }
+    
+    
+    //MARK: - Helpers
+    private func t(key : String) -> String {
+        return Procedure.getTerminology(key)
+    }
+    
+    class func create() -> ProcedureFormController {
+        let vc : ProcedureFormController = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController")
+        return vc
+    }
+    
+    
+    //MARK: - Form setup
+    private func initializeFormHelper() {
+        self.view.backgroundColor = UIColor.whiteColor()
+        self.title = "Procedure"
+        
+        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
+        // Automatic dimensions to tell the table view to use dynamic height
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        clearTable = true
+        self.tableView.reloadData()
+        clearTable = false
+        
+        watchForChanges = false
+        formHelper = FormHelper(controller: self)
+        setupForm()
+        watchForChanges = true
     }
     
     private func setupNavbar() {
@@ -110,20 +118,6 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         }
     }
 
-    /* keep just in case foa  few days
-    private var toolbarLabel: UIBarButtonItem!
-    private func setupToolbar() {
-        if let _ = self.navigationController?.toolbar {
-            let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addClicked")
-            let lbl = UIBarButtonItem(title: itemsAddedText, style: .Plain, target: nil, action: nil)
-            let undo = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "undoClicked")
-            let spacer = UIBarButtonItem (barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            self.toolbarItems = [add, spacer, lbl, spacer, undo]
-            self.toolbarLabel = lbl
-        }
-    }
-    */
-    
     private func setupForm() {
         formHelper.addSection(" ",
             data: [
@@ -331,6 +325,7 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         formHelper.hideHtmlSections()
     }
     
+    //MARK: - TableViewController methods
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return formHelper.getSectionTitle(section)
     }
@@ -344,7 +339,6 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         var cell : UITableViewCell
         let data = formHelper.getCellData(indexPath)
         
@@ -410,8 +404,7 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
         cellData.willDisplay(cell)
     }
     
-    func enableSave()
-    {
+    func enableSave() {
         if watchForChanges {
             self.navigationItem.rightBarButtonItem?.enabled = true
         }
@@ -422,43 +415,41 @@ class ProcedureFormController: UITableViewController, SaveableFormControllerDele
             formHelper.repaintIssueRow(self.savedChildIndexPath!, issue: issue)
         }
     }
+
     func childCancelled(child : BaseObject) {
         if let issue = child as? Issue {
             formHelper.revertIssue(self.savedChildIndexPath!, issue: issue)
         }
     }
     
-    private func dismiss()
-    {
+    private func dismiss() {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func navbarCancelClicked()
-    {
+    func navbarCancelClicked() {
         dismiss();
     }
     
-    func navbarSaveClicked()
-    {
+    func navbarSaveClicked() {
         Services.saveObject(self.procedure, log: true)
         dismiss()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    /* keep just in case foa  few days
+    private var toolbarLabel: UIBarButtonItem!
+    private func setupToolbar() {
+    if let _ = self.navigationController?.toolbar {
+    let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addClicked")
+    let lbl = UIBarButtonItem(title: itemsAddedText, style: .Plain, target: nil, action: nil)
+    let undo = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "undoClicked")
+    let spacer = UIBarButtonItem (barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+    self.toolbarItems = [add, spacer, lbl, spacer, undo]
+    self.toolbarLabel = lbl
     }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
     }
     */
     
+    
 }
-
 

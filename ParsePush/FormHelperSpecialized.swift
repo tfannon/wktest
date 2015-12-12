@@ -24,7 +24,7 @@ extension FormHelper {
                 cell.selectionStyle = .None
                 cell.detailTextLabel?.textColor = cell.textLabel?.textColor
                 cell.imageView?.image = UIImage(named: WorkflowState(rawValue: workflowObject.workflowState)!.imageName)
-                cell.userInteractionEnabled = workflowObject.allowedStates?.any() ?? false
+                cell.userInteractionEnabled = workflowObject.allowedStates?.any ?? false
             },
             selected: { cell, data, indexPath in
                 let alertController = UIAlertController(title: "Workflow State", message: "Choose the new workflow state", preferredStyle: UIAlertControllerStyle.ActionSheet)

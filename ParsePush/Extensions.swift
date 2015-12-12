@@ -166,7 +166,7 @@ extension Array {
         return false
     }
     
-    func any() -> Bool {
+    var any: Bool {
         return !self.isEmpty
     }
     
@@ -185,8 +185,7 @@ extension NSIndexPath {
     func getNextRow() -> NSIndexPath {
         return getRelativeRow(1)
     }
-    func getRelativeRow(deltaRow : Int) -> NSIndexPath
-    {
+    func getRelativeRow(deltaRow : Int) -> NSIndexPath {
         let ip = NSIndexPath(forRow: self.row + deltaRow, inSection: self.section)
         return ip
     }
@@ -196,6 +195,9 @@ extension NSIndexPath {
     func getRelativeSection(deltaSection : Int) -> NSIndexPath {
         let ip = NSIndexPath(forRow: row, inSection: self.section + deltaSection)
         return ip
+    }
+    class var firstElement: NSIndexPath {
+        return NSIndexPath(forRow: 0, inSection: 0)
     }
 }
 

@@ -185,7 +185,7 @@ class FormHelper {
     func showSections(sections : [Int], animation: UITableViewRowAnimation = .None, scrollDelta : Int = 0) {
 
         // if we have any sections to show
-        if sections.any() {
+        if sections.any {
             // grab the first section - we do this so we know what kind of cell is being hidden
             let firstSectionToShow = sections.first!
             // this is the preceeding section that started visible when this function was called 

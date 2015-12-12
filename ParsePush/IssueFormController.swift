@@ -10,18 +10,22 @@ import UIKit
 import DTFoundation
 
 extension IssueFormController : CustomCellDelegate {
+    
     func getViewController() -> UIViewController {
         return self
     }
+    
     func changed(cell: UITableViewCell) {
         if let indexPath = tableView.indexPathForCell(cell) {
             let cellData = formHelper.getCellData(indexPath)
             cellData.changed(cell)
         }
     }
+    
     func beganEditing(cell: UITableViewCell) {
         self.editingCell = cell
     }
+    
     func finishedEditing(cell: UITableViewCell) {
         // make sure we only set to nil if we're finishing the start we started on
         // don't know the order if you select another cell (if finished fires before start)
@@ -31,20 +35,18 @@ extension IssueFormController : CustomCellDelegate {
     }
 }
 
+
 class IssueFormController: UITableViewController, SaveableFormControllerDelegate {
-    
-    var parent : BaseObject?
-    var primaryObject : BaseObject { return self.issue }
-    var savedChildIndexPath : NSIndexPath?
-    var parentForm : SaveableFormControllerDelegate?
     
     private var clearTable = true
     private var watchForChanges = false
     private var formHelper : FormHelper!
-    
     private var editingCell : UITableViewCell?
-    
-    private var toolbarLabel: UIBarButtonItem!
+
+    var parent : BaseObject?
+    var primaryObject : BaseObject { return self.issue }
+    var savedChildIndexPath : NSIndexPath?
+    var parentForm : SaveableFormControllerDelegate?
     
     var issue : Issue! {
         didSet {
@@ -52,8 +54,36 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         }
     }
     
+    //MARK: - View Controller methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.toolbarHidden = true
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavbar()
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    
+    //MARK: - Helpers
+    private func t(key : String) -> String {
+        return Issue.getTerminology(key)
+    }
+    
+    class func create() -> IssueFormController {
+        let vc : IssueFormController = Misc.getViewController("Issue", viewIdentifier: "IssueFormController")
+        return vc
+    }
+    
+     //MARK: - Form setup
     private func initializeFormHelper() {
-        
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Issue"
         
@@ -69,32 +99,6 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         formHelper = FormHelper(controller: self)
         setupForm()
         watchForChanges = true
-    }
-    
-    private func t(key : String) -> String {
-        return Issue.getTerminology(key)
-    }
-    
-    class func create() -> IssueFormController {
-        let vc : IssueFormController = Misc.getViewController("Issue", viewIdentifier: "IssueFormController")
-        return vc
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.toolbarHidden = true
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavbar()
-        self.navigationController?.navigationBarHidden = false
-        self.navigationController?.toolbarHidden = false
     }
     
     private func setupNavbar() {
@@ -322,6 +326,7 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         formHelper.hideHtmlSections()
     }
     
+    //MARK: - TableViewController methods
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return formHelper.getSectionTitle(section)
     }

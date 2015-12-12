@@ -11,6 +11,7 @@ import UIKit
 class SplitMasterViewController: UITableViewController {
     
     var procedures = [Procedure]()
+    var selectedIndex: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +25,21 @@ class SplitMasterViewController: UITableViewController {
 
     override func viewWillAppear(animated: Bool) {
         Services.getMyData {
-            if $0?.procedures != nil {
-                self.procedures = $0!.procedures
-                self.tableView.reloadData()
+            self.procedures = $0!.procedures
+            self.tableView.reloadData()
+            
+            if self.selectedIndex == nil {
+                if self.procedures.any {
+                    self.tableView.selectRowAtIndexPath(NSIndexPath.firstElement, animated: false, scrollPosition: .None)
+                    self.tableView(self.tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                }
+            }
+            else {
+                self.tableView.selectRowAtIndexPath(self.selectedIndex, animated: false, scrollPosition: .None)
             }
         }
     }
     
-    
-
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,11 +47,9 @@ class SplitMasterViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return procedures.count
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.textLabel?.text = procedures[indexPath.row].title
@@ -53,7 +58,10 @@ class SplitMasterViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print (self.splitViewController?.viewControllers.count)
-        let detail = self.splitViewController?.viewControllers.last as! ProcedureFormController
+        let nav = self.splitViewController?.viewControllers.last as! UINavigationController
+        //nav.navigationBar.t = procedures[indexPath.row].title
+        let detail = nav.topViewController as! ProcedureFormController
+        selectedIndex = indexPath
         detail.procedure = procedures[indexPath.row]
     }
     
@@ -95,10 +103,11 @@ class SplitMasterViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print (segue)
+    /* In a storyboard-based application, you will often want to do a little preparation before navigation
+    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
+    */
 }
