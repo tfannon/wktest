@@ -66,9 +66,6 @@ class Procedure : BaseObject  {
             fromJSON: { $0 != nil ? NSDate(fromString: $0!.substring(10), format:DateFormat.ISO8601(nil)) : nil },
             toJSON: { $0.map { $0.toIsoString() } }))
         
-        workpapers <- map["Workpapers"]
-        issues <- map["Issues"]
-        
         workpaperIds <- map["WorkpaperIds"]
         issueIds <- map["IssueIds"]
        

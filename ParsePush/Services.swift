@@ -172,40 +172,40 @@ public class Services {
     
     static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
         print(__FUNCTION__)
+
         if (mock) {
-            completed(container: ObjectContainer(procedures: Mock.getProcedures(), workpapers: Mock.getWorkpapers(), issues: Mock.getIssues(), attachments: Mock.getAttachments()))
+            Mock.initialize()
         }
-        else {
-            //this is to test local store without going to server
-            if fetchOptions == .LocalOnly {
-                if let container: ObjectContainer = loadObjects() {
-                     print("\tfetched \(container) using local store")
-                }
+        
+        //this is to test local store without going to server
+        if fetchOptions == .LocalOnly {
+            if let container: ObjectContainer = loadObjects() {
+                print("\tfetched \(container) using local store")
+            }
+            return
+        }
+        //this is the default which is to check the local store first
+        if fetchOptions == .Default {
+            if let container: ObjectContainer = loadObjects() {
+                print("\tfetched \(container) using local store")
+                completed(container: container)
                 return
             }
-            //this is the default which is to check the local store first
-            if fetchOptions == .Default {
-                if let container: ObjectContainer = loadObjects() {
-                    print("\tfetched \(container) using local store")
-                    completed(container: container)
-                    return
-                }
-            }
-            //if the store had nothing or we force a refresh fetch from services
-            Alamofire.request(.GET, procedureUrl + "/GetMyObjects", headers:Services.headers, parameters: nil, encoding: .JSON)
-                .responseJSON { request, response, result in
-                    switch result {
-                    case .Success(let data):
-                        let jsonAlamo = data as? [String:AnyObject]
-                        if let objects = Mapper<ObjectContainer>().map(jsonAlamo) {
-                            print("\tfetched objects using web service")
-                            saveObjects(objects)
-                            completed(container: objects)
-                        }
-                    case .Failure(_, let error):
-                        print("Request failed with error: \(error)")
+        }
+        //if the store had nothing or we force a refresh fetch from services
+        Alamofire.request(.GET, procedureUrl + "/GetMyObjects", headers:Services.headers, parameters: nil, encoding: .JSON)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let data):
+                    let jsonAlamo = data as? [String:AnyObject]
+                    if let objects = Mapper<ObjectContainer>().map(jsonAlamo) {
+                        print("\tfetched objects using web service")
+                        saveObjects(objects)
+                        completed(container: objects)
                     }
-            }
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
         }
     }
     
@@ -371,6 +371,13 @@ public class Services {
         return nil
     }
     
+    static func getWorkpaper(id : Int) -> Workpaper? {
+        if let workpapers: [Workpaper] = loadObjectsImpl() {
+            return workpapers.filter { x in x.id == id }.first
+        }
+        return nil
+    }
+
     //this is problematic in we have to remember to add each thing we store?
     static func clearStore() {
         print (__FUNCTION__)
@@ -416,7 +423,7 @@ public class Services {
     */
     
     //MARK: save local store
-    static func saveObjects(objects: ObjectContainer) {
+    private static func saveObjects(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
         saveObjectsImpl(objects.procedures)
@@ -441,19 +448,39 @@ public class Services {
         if let p = parent {
             // and it's actually a brand new child
             if p.addChild(obj) {
-                // save the parent - not the child directly
+                // save the parent so that the parent's id list gets saved
                 saveObject(p, log: true)
             }
         }
 
-        // save it in it's own slot regardless whether it was saved via the parent
-        // probably don't need to
-        
-        let json = Mapper().toJSONString(obj, prettyPrint: true)
         //save it in its own slot.  will overwrite anything there
+        let json = Mapper().toJSONString(obj, prettyPrint: true)
         let key = DataKey.getKeyForObject(obj)
         if log { print("Saving \(key) sizeof:\(json!.length) to local store") }
         NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+
+        // add the id
+        var idListKey : String
+        var ids = [Int]()
+        if let _ = obj as? Procedure {
+            ids = loadProcedureIds() ?? [Int]()
+            idListKey = DataKey.ProcedureIds.rawValue
+        }
+        else if let _ = obj as? Issue {
+            ids = loadIssueIds() ?? [Int]()
+            idListKey = DataKey.IssueIds.rawValue
+        }
+        else if let _ = obj as? Workpaper {
+            ids = loadWorkpaperIds() ?? [Int]()
+            idListKey = DataKey.WorkpaperIds.rawValue
+        }
+        else {
+            fatalError("save object not handled")
+        }
+        if !ids.contains(obj.id!) {
+            ids.append(obj.id!)
+            NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
+        }
     }
     
     

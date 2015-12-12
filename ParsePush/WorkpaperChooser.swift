@@ -68,18 +68,18 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
     }
     
     internal func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
-            let jpg = UIImageJPEGRepresentation(image, 0.0) {
-            let owner = self.delegate.workpaperOwner
-            owner.workpapers.append(
-                Workpaper() {
-                    $0.title = self._title
-                    $0.oDescription = self._description
-                    $0.attachmentData = jpg
-                    $0.attachmentExtension = "jpg"
-            })
-            self.delegate.workpaperAddedCallback(true)
-        }
-        self.delegate.owningViewController.dismissViewControllerAnimated(true, completion: nil)
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
+//            let jpg = UIImageJPEGRepresentation(image, 0.0) {
+//            let owner = self.delegate.workpaperOwner
+//            owner.addChild(
+//                Workpaper() {
+//                    $0.title = self._title
+//                    $0.oDescription = self._description
+//                    $0.attachmentData = jpg
+//                    $0.attachmentExtension = "jpg"
+//            })
+//            self.delegate.workpaperAddedCallback(true)
+//        }
+//        self.delegate.owningViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -64,12 +64,24 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         return ObjectType.None
     }
     
-    var isNew : Bool { return id < 0 }
-    
-    //can hang new workpapers off here
-    var workpapers = [Workpaper]()
     // issues
-    var issues = [Issue]()
+    var issues : [Issue] {
+        var issues = [Issue]()
+        for id in self.issueIds {
+            let issue = Services.getIssue(id)!
+            issues.append(issue)
+        }
+        return issues
+    }
+    // workpapers
+    var workpapers : [Workpaper] {
+        var workpapers = [Workpaper]()
+        for id in self.workpaperIds {
+            let workpaper = Services.getWorkpaper(id)!
+            workpapers.append(workpaper)
+        }
+        return workpapers
+    }
     
     var issueIds = [Int]()
     var workpaperIds = [Int]()
@@ -111,7 +123,7 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     }
     
     func isDirty() -> Bool{
-        return setDirtyFields.count > 0
+        return id < 0 || setDirtyFields.count > 0
     }
     
     func clean() {
@@ -125,29 +137,15 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         }
     }
     
-    func replaceChild(child : BaseObject) {
-        if let issue = child as? Issue {
-            let p = issues.indexOf{ x in x.id! == child.id }!
-            self.issues[p] = issue
-        }
-        else if let workpaper = child as? Workpaper {
-            let p = workpapers.indexOf{ x in x.id! == child.id }!
-            self.workpapers[p] = workpaper
-        }
-        fatalError("not handling child of type \(child.className)")
-    }
-    
     func addChild(child : BaseObject) -> Bool {
         if let issue = child as? Issue {
             if !self.issueIds.contains(issue.id!) {
-                self.issues.append(issue)
                 self.issueIds.append(issue.id!)
                 return true
             }
         }
         else if let workpaper = child as? Workpaper {
             if !self.workpaperIds.contains(workpaper.id!) {
-                self.workpapers.append(workpaper)
                 self.workpaperIds.append(workpaper.id!)
                 return true
             }

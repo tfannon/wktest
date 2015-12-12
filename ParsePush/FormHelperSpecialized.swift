@@ -178,7 +178,6 @@ extension FormHelper {
         if let reloaded = Services.getObject(baseObject) {
             let newData = createObjectCellData(reloaded, visible: true)
             let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
-            self.controllerAsDelegate.primaryObject.replaceChild(reloaded)
             self.data[sectionIndex][indexPath.row] = newData
             tableView.beginUpdates()
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)

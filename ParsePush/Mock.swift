@@ -10,59 +10,24 @@ import Foundation
 
 class Mock {
     
-    private static var procedures = [Procedure]()
+
+    private static var initialized = false
     
-    static func getProcedures() -> [Procedure]
-    {
-        if (procedures.count == 0)
-        {
+    static func initialize() {
+        if !initialized {
+            initialized = true
+            Services.clearStore()
             for i in 1...20
             {
                 let code = "CODE\(i)"
                 let title = "Test\(i)"
                 let text1 = "<html><head></head><body style='font-family:Helvetica;font-size:14pt'><h1>Important</h1>Lorem Ipsum is simply dummy text of the <span style='font-family:Brush Script MT, cursive;font-size:150%'>printing and typesetting</span> industry. <span style='color:red'>Lorem Ipsum</span> has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type <u>specimen book</u>. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. \(i)</body></html>"
-                let p = getNewProcedure(i, code: code, title: title, text1: text1)
-                procedures.append(p)
-            }
-            // save the objects to the store!
-            let objectContainer = ObjectContainer(procedures: procedures, workpapers: getWorkpapers(), issues: getIssues())
-            Services.saveObjects(objectContainer)
-        }
-        
-        return procedures
-    }
-    
-    static func getWorkpapers() -> [Workpaper] {
-        var workpapers = [Workpaper]()
-        for p in getProcedures() {
-            for w in p.workpapers {
-                workpapers.append(w)
+                let _ = createNewProcedure(i, code: code, title: title, text1: text1)
             }
         }
-        for i in getIssues() {
-            for w in i.workpapers {
-                workpapers.append(w)
-            }
-        }
-        return workpapers
     }
     
-    static func getIssues() -> [Issue] {
-        var issues = [Issue]()
-        for p in getProcedures() {
-            for i in p.issues {
-                issues.append(i)
-            }
-        }
-        return issues
-    }
-    
-    static func getAttachments() -> [Attachment] {
-        return []
-    }
-    
-    
-    static private func getNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
+    static private func createNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {
         let procedure = Procedure()
         
@@ -86,17 +51,6 @@ class Mock {
         procedure.parentTitle = "Procedure \(id)'s Parent"
         procedure.parentType = [ObjectType.Risk, ObjectType.Control][Int(arc4random_uniform(2))].rawValue
         
-//        procedure.text1 = "a"
-//        procedure.text2 = "b"
-//        procedure.text3 = "c"
-//        procedure.text4 = "d"
-//        procedure.resultsText1 = "e"
-//        procedure.resultsText2 = "f"
-//        procedure.resultsText3 = "g"
-//        procedure.resultsText4 = "h"
-        
-        
-        procedure.workpapers = [Workpaper]()
         for i in 0...3 {
             let wp = Workpaper()
             wp.id = id * 100 + i
@@ -107,11 +61,9 @@ class Mock {
             wp.parentType = ObjectType.Procedure.rawValue
             wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
             wp.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
-            
-            procedure.workpapers.append(wp)
+            Services.saveObject(wp, parent: procedure, log: true)
         }
         
-        procedure.issues = [Issue]()
         for i in 0...3 {
             let iss = Issue()
             iss.id = id * 100 + i
@@ -125,8 +77,9 @@ class Mock {
             iss.manager = "Alice Cooper"
             iss.businessContact = "Russell Edwin Nash"
             iss.reviewer = "Gordon Sumner"
+            iss.clean()
+            Services.saveObject(iss, parent: procedure, log: true)
             
-            iss.workpapers = [Workpaper]()
             for i in 0...3 {
                 let wp = Workpaper()
                 wp.id = iss.id! * 100 + i
@@ -138,10 +91,9 @@ class Mock {
                 wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
                 wp.dueDate = NSDate(fromString: "2015-11-30", format: DateFormat.ISO8601(.Date))
                 
-                iss.workpapers.append(wp)
+                wp.clean()
+                Services.saveObject(wp, parent: iss, log: true)
             }
-
-            procedure.issues.append(iss)
         }
         
         procedure.changes = [Change]()
@@ -169,6 +121,8 @@ class Mock {
         }
         
         procedure.clean()
+        Services.saveObject(procedure, log: true)
+
         return procedure
     }
 }
