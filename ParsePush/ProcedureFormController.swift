@@ -15,8 +15,7 @@ class ProcedureFormController: BaseFormController {
     
     // MARK: - Static
     class func create() -> ProcedureFormController {
-        let vc : ProcedureFormController = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController")
-        return vc
+        return BaseFormController.create(ObjectType.Procedure) as! ProcedureFormController
     }
     
     //MARK: - Helpers

@@ -23,7 +23,22 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     }
     var savedChildIndexPath : NSIndexPath?
     var parentForm : CustomCellDelegate?
+
+    // MARK: - Static
+    class func create(objectType : ObjectType) -> BaseFormController {
+        var vc : BaseFormController?
+        switch objectType {
+        case .Issue:
+            vc = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController") as ProcedureFormController
+        case .Procedure:
+            vc = Misc.getViewController("Issue", viewIdentifier: "IssueFormController") as IssueFormController
+        default:
+            vc = nil
+        }
+        return vc!
+    }
     
+    // MARK: ViewController
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.toolbarHidden = true
