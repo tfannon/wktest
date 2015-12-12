@@ -39,6 +39,9 @@ class Workpaper : BaseObject {
 
     static var term = [
         "description":"Description",
+        "attachmentExtension":"ext",
+        "attachmentSize":"size",
+        "attachmentData":"data",
     ]
     
     class func getTerminology(key: String) -> String {
