@@ -78,6 +78,7 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
         self.view.addSubview(grid)
         self.grid.showPullToAction = true
+        self.grid.selectionMode = SDataGridSelectionModeRowSingle
         self.grid.pullToAction.delegate = self
     }
     
