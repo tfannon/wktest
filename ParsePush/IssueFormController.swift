@@ -13,11 +13,6 @@ class IssueFormController: BaseFormController {
     
     private var issue : Issue { get { return self.primaryObject as! Issue } }
 
-    // MARK: - Static
-    class func create() -> IssueFormController {
-        return BaseFormController.create(ObjectType.Issue) as! IssueFormController
-    }
-    
     //MARK: - Helpers
     private func t(key : String) -> String {
         return Issue.getTerminology(key)

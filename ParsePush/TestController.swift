@@ -87,8 +87,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         return true;
     }
     
-    var pfController : ProcedureFormController?
-    var ifController : IssueFormController?
+    var pfController : BaseFormController?
+    var ifController : BaseFormController?
     @IBAction func miscPressed(sender: UIButton) {
         //print ("test out some func here")
         let procedure = Mock.getProcedures()[0]
@@ -99,7 +99,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
 //        ifController!.issue = issue
 //        self.navigationController?.pushViewController(ifController!, animated: true)
         if pfController == nil {
-            pfController  = ProcedureFormController.create()
+            pfController  = BaseFormController.create(.Procedure)
         }
         pfController!.primaryObject = procedure
         self.navigationController?.pushViewController(pfController!, animated: true)
@@ -130,7 +130,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
-        let vc = ProcedureFormController.create()
+        let vc = BaseFormController.create(.Procedure)
         vc.primaryObject = Mock.getProcedures()[0]
 
         vc.hidesBottomBarWhenPushed = true

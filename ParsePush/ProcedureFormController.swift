@@ -13,11 +13,6 @@ class ProcedureFormController: BaseFormController {
     
     var procedure : Procedure { return self.primaryObject as! Procedure }
     
-    // MARK: - Static
-    class func create() -> ProcedureFormController {
-        return BaseFormController.create(ObjectType.Procedure) as! ProcedureFormController
-    }
-    
     //MARK: - Helpers
     private func t(key : String) -> String {
         return Procedure.getTerminology(key)

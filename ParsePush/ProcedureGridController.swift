@@ -162,7 +162,7 @@ class ProcedureGridController: BaseGridController {
     //can probably push this up when form support comes in for all
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let procedure = items[row.rowIndex] as! Procedure
-        let controller = ProcedureFormController.create()
+        let controller = BaseFormController.create(.Procedure)
         controller.primaryObject = procedure
         controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
