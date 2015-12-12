@@ -73,7 +73,7 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         self.grid = ShinobiDataGrid(frame: CGRectInset(self.view.bounds, 5, 52))
         self.view.addSubview(grid)
         self.grid.showPullToAction = true
-        //self.grid.pullToAction.delegate = self
+        self.grid.selectionMode = SDataGridSelectionModeRowSingle
     }
     
     func addColumns() {
