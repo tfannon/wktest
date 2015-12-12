@@ -34,16 +34,16 @@ class FileProvider: NSFileProviderExtension {
         // Should call writePlaceholderAtURL(_:withMetadata:error:) with the placeholder URL, then call the completion handler with the error if applicable.
         let fileName = url.lastPathComponent!
         print ("provide placeholder called")
-        let placeholderURL = NSFileProviderExtension.placeholderURLForURL(self.documentStorageURL().URLByAppendingPathComponent(fileName))
+        _ = NSFileProviderExtension.placeholderURLForURL(self.documentStorageURL().URLByAppendingPathComponent(fileName))
     
         // TODO: get file size for file at <url> from model
         let fileSize = 0
-        let metadata = [NSURLFileSizeKey: fileSize]
-        do {
-//            try NSFileProviderExtension.writePlaceholderAtURL(placeholderURL, withMetadata: metadata)
-        } catch {
-            // Handle error
-        }
+        _ = [NSURLFileSizeKey: fileSize]
+//        do {
+////            try NSFileProviderExtension.writePlaceholderAtURL(placeholderURL, withMetadata: metadata)
+//        } catch {
+//            // Handle error
+//        }
 
         completionHandler?(error: nil)
     }
@@ -52,13 +52,13 @@ class FileProvider: NSFileProviderExtension {
         // Should ensure that the actual file is in the position returned by URLForItemWithIdentifier, then call the completion handler
 
         // TODO: get the contents of file at <url> from model
-        let fileData = NSData()
+        _ = NSData()
 
-        do {
-     //       _ = try fileData.writeToURL(url, options: NSDataWritingOptions())
-        } catch {
-            // Handle error
-        }
+//        do {
+//     //       _ = try fileData.writeToURL(url, options: NSDataWritingOptions())
+//        } catch {
+//            // Handle error
+//        }
 
         completionHandler?(error: nil);
     }
@@ -75,12 +75,12 @@ class FileProvider: NSFileProviderExtension {
     override func stopProvidingItemAtURL(url: NSURL) {
         // Called after the last claim to the file has been released. At this point, it is safe for the file provider to remove the content file.
         // Care should be taken that the corresponding placeholder file stays behind after the content file has been deleted.
-
-        do {
- //           _ = try NSFileManager.defaultManager().removeItemAtURL(url)
-        } catch {
-            // Handle error
-        }
+//
+//        do {
+// //           _ = try NSFileManager.defaultManager().removeItemAtURL(url)
+//        } catch {
+//            // Handle error
+//        }
         self.providePlaceholderAtURL(url, completionHandler: { error in
             // TODO: handle any error, do any necessary cleanup
         })
