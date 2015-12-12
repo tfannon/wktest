@@ -22,7 +22,8 @@ class Procedure : BaseObject, IssueParent  {
         "resultsText1":"Record of Work Done",
         "resultsText2":"Conclusion",
         "resultsText3":"Notes",
-        "resultsText4":"Results 4"]
+        "resultsText4":"Results 4"
+    ]
 
     class func getTerminology(key: String) -> String {
         return term[key] ?? BaseObject.baseTerm[key]!

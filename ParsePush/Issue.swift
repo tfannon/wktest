@@ -12,16 +12,6 @@ import ObjectMapper
 class Issue : BaseObject {
 
     static var term = [
-        "title":"Title",
-        "code":"Code",
-        "parentTitle":"Parent",
-        "parentType":"Parent",
-        "workflowState":"State",
-        
-        "manager":"Manager",
-        "reviewer":"Reviewer",
-        "businessContact":"Business Contact",
-        
         "text1":"Finding",
         "text2":"Criteria",
         "text3":"Condition",
@@ -34,8 +24,6 @@ class Issue : BaseObject {
         "numericValue1":"Cost Avoidance",
         "numericValue2":"Cost Savings",
         
-        "createdUser":"Creator",
-        "createdDate":"Created",
         "released":"Released",
     ]
     

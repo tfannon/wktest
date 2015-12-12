@@ -35,6 +35,11 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         "tester":"Tester",
         "reviewer":"Reviewer",
         "manager":"Manager",
+        "businessContact":"Business Contact",
+
+        "createdUser":"Creator",
+        "createdDate":"Created",
+
         "dueDate":"Due",
         "reviewDueDate":"Review Due",
         
