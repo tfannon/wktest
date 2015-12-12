@@ -130,8 +130,13 @@ extension FormHelper {
     
     private func createObjectCellData<T : BaseObject>(baseObject : T, visible : Bool) -> CellData {
         
+        // image name is handled differently for workpapers
+        let workpaper = baseObject as? Workpaper
+        
         let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
-            imageName: baseObject.objectType.imageName,
+            imageName: (workpaper != nil) ?
+                (workpaper!.documentType?.imageName ?? "icon-document") :
+                baseObject.objectType.imageName,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = true
