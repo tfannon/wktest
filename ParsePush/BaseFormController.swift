@@ -32,6 +32,8 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
             vc = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController") as ProcedureFormController
         case .Issue:
             vc = Misc.getViewController("Issue", viewIdentifier: "IssueFormController") as IssueFormController
+        case .Workpaper:
+            vc = Misc.getViewController("Workpaper", viewIdentifier: "WorkpaperFormController") as WorkpaperFormController
         default:
             vc = nil
         }

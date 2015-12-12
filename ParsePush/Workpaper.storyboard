@@ -8,10 +8,10 @@
         <scene sceneID="Y5Y-0R-Umb">
             <objects>
                 <tableViewController storyboardIdentifier="WorkpaperFormController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hhL-Rl-deP" customClass="WorkpaperFormController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eti-co-6bf">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="eti-co-6bf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="hhL-Rl-deP" id="FXr-Yv-TNM"/>
                             <outlet property="delegate" destination="hhL-Rl-deP" id="lrC-bJ-WTM"/>
