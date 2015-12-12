@@ -137,6 +137,26 @@ extension FormHelper {
         addSection(" ", data: issueCellData)
     }
     
+    private func createIssueCellData(issue : Issue, visible : Bool) -> CellData {
+        let data = CellData(identifier: "_NavigationCell", label: issue.title,
+            imageName: "icon_issue",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = true
+            },
+            visible: visible,
+            selected: { cell, data, indexPath in
+                let vc = IssueFormController.create()
+                vc.primaryObject = issue
+                vc.parentForm = self.controllerAsDelegate
+                vc.parent = self.controllerAsDelegate.primaryObject
+                self.controllerAsDelegate.savedChildIndexPath = indexPath
+                self.controller.navigationController?.pushViewController(vc, animated: true)
+            }
+        )
+        return data
+    }
+    
     func addChangeTracking(changes : [Change]?) {
         self.addSection("", data: [
             CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",

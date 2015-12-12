@@ -232,6 +232,91 @@ class IssueFormController: BaseFormController {
         ///////////////////
         formHelper.hideHtmlSections()
     }
+    
+    //MARK: - TableViewController methods
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return formHelper.getSectionTitle(section)
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return clearTable ? 0 : formHelper.getNumberOfSections()
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return clearTable ? 0 : formHelper.getNumberOfRowsInSection(section)
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell : UITableViewCell
+        let data = formHelper.getCellData(indexPath)
+        
+        if let nibName = data.nibIdentifier {
+            if nibName == "HtmlCell" {
+                cell = self.tableView.dequeueReusableCellWithIdentifier(data.uuid, forIndexPath: indexPath)
+            }
+            else {
+                cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
+            }
+        }
+        else if let identifier = data.identifier {
+            if let c = tableView.dequeueReusableCellWithIdentifier(identifier) {
+                cell = c
+            }
+            else {
+                cell = data.initialize()
+            }
+            
+        }
+        else {
+            fatalError("cellForRowAtIndexPath has not been handled")
+        }
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        let data = formHelper.getCellData(indexPath)
+        data.selected(cell, indexPath: indexPath)
+    }
+    
+    // need this so we can detect the tapping of an accessory view, which is otherwise independant of the UITableViewCell
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        let data = formHelper.getCellData(indexPath)
+        if data.selectedIfAccessoryButtonTapped {
+            data.selected(cell, indexPath: indexPath)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let cellData = formHelper.getCellData(indexPath)
+        
+        // so that the separator appears under the image
+        cell.separatorInset = UIEdgeInsetsZero
+        // other initialization to clear previous usage of the cell
+        cell.accessoryType = .None
+        
+        cell.textLabel?.text = cellData.label
+        cell.detailTextLabel?.text = cellData.value as! String?
+        cell.textLabel?.textAlignment = NSTextAlignment.Left
+        
+        if let imageName = cellData.imageName {
+            cell.imageView?.image = UIImage(named: imageName)
+        }
+        else {
+            cell.imageView?.image = nil
+        }
+        
+        cellData.willDisplay(cell)
+    }
+    
+    //MARK: - Navbar
+    private func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 }
 
 
