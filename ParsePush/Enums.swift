@@ -14,6 +14,8 @@ protocol ImageProvider {
 
 
 enum ObjectType: Int, ImageProvider {
+    case None = 0
+    case Issue = 43
     case Risk = 45
     case Control = 46
     case Procedure = 48
@@ -22,10 +24,12 @@ enum ObjectType: Int, ImageProvider {
     var imageName: String {
         get {
             switch self {
+            case .Issue: return "icons_issue"
             case .Risk: return "icons_risk"
             case .Control: return  "icons_control"
             case .Procedure: return "icons_procedure"
             case .Entity: return "icons_assessment"
+            default: return ""
             }
         }
     }

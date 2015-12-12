@@ -79,6 +79,7 @@
 		664F2A901C1C746B0005C27D /* WorkpaperFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A8F1C1C746B0005C27D /* WorkpaperFormController.swift */; };
 		664F2A941C1C74C90005C27D /* Workpaper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664F2A931C1C74C90005C27D /* Workpaper.storyboard */; };
 		664F2A971C1C7AB80005C27D /* BaseFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A961C1C7AB80005C27D /* BaseFormController.swift */; };
+		664F2A991C1C9CD80005C27D /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A981C1C9CD80005C27D /* CellData.swift */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
@@ -229,6 +230,7 @@
 		664F2A8F1C1C746B0005C27D /* WorkpaperFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperFormController.swift; sourceTree = "<group>"; };
 		664F2A931C1C74C90005C27D /* Workpaper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Workpaper.storyboard; sourceTree = "<group>"; };
 		664F2A961C1C7AB80005C27D /* BaseFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFormController.swift; sourceTree = "<group>"; };
+		664F2A981C1C9CD80005C27D /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				663259BD1BF1975000D3C76E /* CustomCells.swift */,
+				664F2A981C1C9CD80005C27D /* CellData.swift */,
 				6616C38C1BF4DAA4004D763E /* FormHelper.swift */,
 				66FFCBAE1C1A7E0B0001BF38 /* FormHelperSpecialized.swift */,
 				664F2A961C1C7AB80005C27D /* BaseFormController.swift */,
@@ -826,6 +829,7 @@
 				66FFCBAF1C1A7E0B0001BF38 /* FormHelperSpecialized.swift in Sources */,
 				6564FFEF1BDF91530014FE08 /* SPUGalleryManagedViewController.m in Sources */,
 				664F2A901C1C746B0005C27D /* WorkpaperFormController.swift in Sources */,
+				664F2A991C1C9CD80005C27D /* CellData.swift in Sources */,
 				653F66241C07E7BD00B9058A /* WorkpaperChooser.swift in Sources */,
 				652CD43D1C1A5CA10012E012 /* Protocols.swift in Sources */,
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,

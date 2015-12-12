@@ -58,6 +58,7 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     var lmg: String?
     var wasChangedOnServer : Bool?
     var syncState: SyncState = .Unchanged
+    var objectType: ObjectType = .None
     
     var isNew : Bool { return id < 0 }
     

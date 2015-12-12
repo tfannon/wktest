@@ -127,10 +127,10 @@ extension FormHelper {
             },
             selected: { cell, data, indexPath in
                 let vc = IssueFormController.create()
+                vc.parentForm = self.controllerAsDelegate
                 vc.primaryObject = Issue.create()
                 vc.parent = self.controllerAsDelegate.primaryObject
                 self.controllerAsDelegate.savedChildIndexPath = indexPath
-                vc.parentForm = self.controllerAsDelegate
                 self.controller.navigationController?.pushViewController(vc, animated: true)
             }
             ))

@@ -184,15 +184,11 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     }
 
     func childSaved(child : BaseObject) {
-        if let issue = child as? Issue {
-            formHelper.repaintObjectRow(self.savedChildIndexPath!, baseObject: issue)
-        }
+        formHelper.repaintObjectRow(self.savedChildIndexPath!, baseObject: child)
     }
     
     func childCancelled(child : BaseObject) {
-        if let issue = child as? Issue {
-            formHelper.revertObject(self.savedChildIndexPath!, baseObject: issue)
-        }
+        formHelper.revertObject(self.savedChildIndexPath!, baseObject: child)
     }
     
     private func dismiss() {
@@ -200,11 +196,13 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     }
     
     func navbarCancelClicked() {
+        parentForm?.childCancelled(self.primaryObject)
         dismiss()
     }
     
     func navbarSaveClicked() {
         Services.saveObject(self.primaryObject, log: true)
+        parentForm?.childSaved(self.primaryObject)
         dismiss()
     }
     
