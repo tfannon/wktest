@@ -10,7 +10,7 @@ import Foundation
 import ObjectMapper
 
 
-class Procedure : BaseObject, IssueParent  {
+class Procedure : BaseObject  {
     
     static var term =  [
         "text1":"Details",

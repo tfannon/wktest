@@ -9,13 +9,6 @@
 import Foundation
 import ObjectMapper
 
-protocol IssueParent {
-    var issues : [Issue] { get }
-}
-protocol WorkpaperParent {
-    var workpapers : [Workpaper] { get }
-}
-
 class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     
     required init(_ map: Map) {
@@ -58,7 +51,18 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     var lmg: String?
     var wasChangedOnServer : Bool?
     var syncState: SyncState = .Unchanged
-    var objectType: ObjectType = .None
+    var objectType : ObjectType {
+        if let _ = self as? Issue {
+            return ObjectType.Issue
+        }
+        else if let _ = self as? Procedure {
+            return ObjectType.Procedure
+        }
+        else if let _ = self as? Workpaper {
+            return ObjectType.Workpaper
+        }
+        return ObjectType.None
+    }
     
     var isNew : Bool { return id < 0 }
     
@@ -70,7 +74,6 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     var issueIds = [Int]()
     var workpaperIds = [Int]()
     
-
     //grid cannot read enums
     var sync: String { get { return syncState.displayName } }
     //another hack for the grid
@@ -122,6 +125,18 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         }
     }
     
+    func replaceChild(child : BaseObject) {
+        if let issue = child as? Issue {
+            let p = issues.indexOf{ x in x.id! == child.id }!
+            self.issues[p] = issue
+        }
+        else if let workpaper = child as? Workpaper {
+            let p = workpapers.indexOf{ x in x.id! == child.id }!
+            self.workpapers[p] = workpaper
+        }
+        fatalError("not handling child of type \(child.className)")
+    }
+    
     func addChild(child : BaseObject) -> Bool {
         if let issue = child as? Issue {
             if !self.issueIds.contains(issue.id!) {
@@ -141,6 +156,17 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
             fatalError("not handling child of type \(child.className)")
         }
         return false
+    }
+    
+    func getChildren(objectType : ObjectType) -> [BaseObject]? {
+        switch objectType {
+        case .Issue:
+            return issues
+        case .Workpaper:
+            return workpapers
+        default:
+            return nil
+        }
     }
     
     var changes : [Change]?

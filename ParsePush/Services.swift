@@ -355,6 +355,15 @@ public class Services {
         }
     }
 
+    static func getObject(baseObject : BaseObject) -> BaseObject? {
+        switch baseObject.objectType {
+        case .Issue:
+            return getIssue(baseObject.id!)
+        default:
+            return nil
+        }
+    }
+    
     static func getIssue(id : Int) -> Issue? {
         if let issues: [Issue] = loadObjectsImpl() {
             return issues.filter { x in x.id == id }.first

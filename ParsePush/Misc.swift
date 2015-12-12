@@ -32,7 +32,7 @@ class Misc {
         let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
         return array[randomIndex]
     }
-    
+
     enum CustomError : ErrorType {
         case DevelopmentError(String)
     }
@@ -41,3 +41,16 @@ class Misc {
         throw CustomError.DevelopmentError(message)
     }
 }
+
+class ClassName<T: AnyObject> {
+    var name : String {
+        let fullName: String = NSStringFromClass(T.self)
+        let range = fullName.rangeOfString(".", options: .BackwardsSearch)
+        if let range = range {
+            return fullName.substringFromIndex(range.endIndex)
+        } else {
+            return fullName
+        }
+    }
+}
+

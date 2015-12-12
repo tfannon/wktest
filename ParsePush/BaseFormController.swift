@@ -28,9 +28,9 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     class func create(objectType : ObjectType) -> BaseFormController {
         var vc : BaseFormController?
         switch objectType {
-        case .Issue:
-            vc = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController") as ProcedureFormController
         case .Procedure:
+            vc = Misc.getViewController("Procedure", viewIdentifier: "ProcedureFormController") as ProcedureFormController
+        case .Issue:
             vc = Misc.getViewController("Issue", viewIdentifier: "IssueFormController") as IssueFormController
         default:
             vc = nil

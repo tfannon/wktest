@@ -51,72 +51,27 @@ extension FormHelper {
         return data
     }
     
-    // create cell data for each of the workpapers
-    func addWorkpaperCells(workpapers : [Workpaper]) {
-        var workpaperCellData = [CellData]()
-        workpaperCellData.append(CellData(identifier: "_Workpapers",
+    func addChildCells(parent : BaseObject, objectType : ObjectType) {
+        var datas = [CellData]()
+        let children = parent.getChildren(objectType)!
+        datas.append(CellData(
+            identifier: "_" + String(objectType),
             style: UITableViewCellStyle.Value1,
-            label: "Workpapers",
-            imageName:  "icons_workpaper",
+            label: String(objectType) + "s",
+            imageName:  objectType.imageName,
             toggled: false,
             selectedIfAccessoryButtonTapped: true,
             willDisplay: self.hideSectionWillDisplay,
             selected: { cell, data, indexPath in
-                self.hideRows(cell, data: data, indexPath: indexPath, rowCount: workpapers.count + 1)
+                self.hideRows(cell, data: data, indexPath: indexPath, rowCount: children.count + 1)
         }))
-        for w in workpapers {
-            let cellData =
-            CellData(identifier: "_NavigationCell", label: w.title,
-                imageName: w.documentType?.imageName ?? "icon-document",
-                willDisplay: { cell, data in
-                    cell.accessoryType = .DisclosureIndicator
-                    cell.userInteractionEnabled = true
-                },
-                visible: false,
-                selected: { cell, data, indexPath in
-                    //                        let vc : [Workpaper form]
-                    //                        vc.workpaper = w
-                    //                        self.navigationController?.pushViewController(vc, animated: true)
-                    self.controller.alert("", message: "Show workpaper form here")
-                }
-            )
-            workpaperCellData.append(cellData)
+        for child in children {
+            let cellData = createObjectCellData(child, visible: false)
+            datas.append(cellData)
         }
-        workpaperCellData.append(CellData(
+        datas.append(CellData(
             identifier: "_NavigationCell",
-            label: "Add",
-            visible: false,
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-                cell.textLabel?.textAlignment = NSTextAlignment.Right
-            },
-            selected: { cell, data, indexPath in
-                self.controller.alert("", message: "Show wp form here in ADD mode")
-            }
-            ))
-        addSection(" ", data: workpaperCellData)
-    }
-    
-    // create cell data for each of the issues
-    func addIssueCells(issues : [Issue]) {
-        var issueCellData = [CellData]()
-        issueCellData.append(CellData(identifier: "_issues",
-            style: UITableViewCellStyle.Value1,
-            label: "issues",
-            imageName:  "icons_issue",
-            toggled: false,
-            selectedIfAccessoryButtonTapped: true,
-            willDisplay: self.hideSectionWillDisplay,
-            selected: { cell, data, indexPath in
-                self.hideRows(cell, data: data, indexPath: indexPath, rowCount: issues.count + 1)
-        }))
-        for iss in issues {
-            let cellData = createObjectCellData(iss, visible: false)
-            issueCellData.append(cellData)
-        }
-        issueCellData.append(CellData(
-            identifier: "_NavigationCell",
+            objectType: .Issue,
             label: "Add",
             isAddCell: true,
             visible: false,
@@ -126,7 +81,7 @@ extension FormHelper {
                 cell.textLabel?.textAlignment = NSTextAlignment.Right
             },
             selected: { cell, data, indexPath in
-                let vc = IssueFormController.create()
+                let vc = BaseFormController.create(objectType)
                 vc.parentForm = self.controllerAsDelegate
                 vc.primaryObject = Issue.create()
                 vc.parent = self.controllerAsDelegate.primaryObject
@@ -134,29 +89,9 @@ extension FormHelper {
                 self.controller.navigationController?.pushViewController(vc, animated: true)
             }
             ))
-        addSection(" ", data: issueCellData)
+        addSection(" ", data: datas)
     }
-    
-    private func createIssueCellData(issue : Issue, visible : Bool) -> CellData {
-        let data = CellData(identifier: "_NavigationCell", label: issue.title,
-            imageName: "icon_issue",
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-            },
-            visible: visible,
-            selected: { cell, data, indexPath in
-                let vc = IssueFormController.create()
-                vc.primaryObject = issue
-                vc.parentForm = self.controllerAsDelegate
-                vc.parent = self.controllerAsDelegate.primaryObject
-                self.controllerAsDelegate.savedChildIndexPath = indexPath
-                self.controller.navigationController?.pushViewController(vc, animated: true)
-            }
-        )
-        return data
-    }
-    
+
     func addChangeTracking(changes : [Change]?) {
         self.addSection("", data: [
             CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
@@ -196,17 +131,17 @@ extension FormHelper {
     private func createObjectCellData<T : BaseObject>(baseObject : T, visible : Bool) -> CellData {
         
         let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
-            imageName: "icon_issue",
+            imageName: baseObject.objectType.imageName,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = true
             },
             visible: visible,
             selected: { cell, data, indexPath in
-                let vc = IssueFormController.create()
-                vc.primaryObject = baseObject
-                vc.parent = self.controllerAsDelegate.primaryObject
+                let vc = BaseFormController.create(baseObject.objectType)
                 vc.parentForm = self.controllerAsDelegate
+                vc.parent = self.controllerAsDelegate.primaryObject
+                vc.primaryObject = baseObject
                 self.controllerAsDelegate.savedChildIndexPath = indexPath
                 self.controller.navigationController?.pushViewController(vc, animated: true)
             }
@@ -235,11 +170,10 @@ extension FormHelper {
     }
     
     func revertObject<T : BaseObject> (indexPath : NSIndexPath, baseObject : T) {
-        if let reloaded = Services.getIssue(baseObject.id!) {
+        if let reloaded = Services.getObject(baseObject) {
             let newData = createObjectCellData(reloaded, visible: true)
             let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
-            let p = self.controllerAsDelegate.primaryObject.issues.indexOf{ x in x.id! == reloaded.id }!
-            self.controllerAsDelegate.primaryObject.issues[p] = reloaded
+            self.controllerAsDelegate.primaryObject.replaceChild(reloaded)
             self.data[sectionIndex][indexPath.row] = newData
             tableView.beginUpdates()
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)

@@ -214,7 +214,7 @@ class IssueFormController: BaseFormController {
         ///////////////////
         // workpapers
         ///////////////////
-        formHelper.addWorkpaperCells(self.issue.workpapers)
+        formHelper.addChildCells(self.primaryObject, objectType: .Workpaper)
         
         ///////////////////
         // Change Tracking

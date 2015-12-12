@@ -207,12 +207,12 @@ class ProcedureFormController: BaseFormController {
         ///////////////////
         // workpapers
         ///////////////////
-        formHelper.addWorkpaperCells(self.procedure.workpapers)
+        formHelper.addChildCells(self.primaryObject, objectType: .Workpaper)
 
         ///////////////////
         // issues
         ///////////////////
-        formHelper.addIssueCells(self.procedure.issues)
+        formHelper.addChildCells(self.primaryObject, objectType: .Issue)
 
         ///////////////////
         // Change Tracking

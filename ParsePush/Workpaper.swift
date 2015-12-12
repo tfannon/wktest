@@ -10,7 +10,22 @@ import Foundation
 import ObjectMapper
 
 class Workpaper : BaseObject {
-    
+
+    var oDescription: String? { didSet { setDirty("Description") } }
+    var dueDate: NSDate? { didSet { setDirty("DueDate") } }
+    var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
+    var manager: String = ""
+    var reviewer: String = ""
+    var attachmentId: Int = 0
+    var attachmentTitle: String?
+    var attachmentExtension: String?
+    var attachmentSize: Int64 = 0
+    var documentType : DocumentType? {
+        get {
+            return DocumentType(rawValue: attachmentExtension ?? "")
+        }
+    }
+
     //this syntax is to allow for a pseudo-c# like initializer
     init(initializer:((Workpaper)->Void)? = nil) {
         super.init()
@@ -29,20 +44,10 @@ class Workpaper : BaseObject {
     class func getTerminology(key: String) -> String {
         return term[key] ?? BaseObject.baseTerm[key]!
     }
-    
-    var oDescription: String? { didSet { setDirty("Description") } }
-    var dueDate: NSDate? { didSet { setDirty("DueDate") } }
-    var reviewDueDate: NSDate? { didSet { setDirty("ReviewDueDate") } }
-    var manager: String = ""
-    var reviewer: String = ""
-    var attachmentId: Int = 0
-    var attachmentTitle: String?
-    var attachmentExtension: String?
-    var attachmentSize: Int64 = 0
-    var documentType : DocumentType? {
-        get {
-            return DocumentType(rawValue: attachmentExtension ?? "")
-        }
+    class func create() -> Issue {
+        let i = Issue()
+        i.id = Application.getNewId()
+        return i
     }
     
     var attachmentData: NSData?
