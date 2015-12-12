@@ -62,7 +62,7 @@ class SplitMasterViewController: UITableViewController {
         //nav.navigationBar.t = procedures[indexPath.row].title
         let detail = nav.topViewController as! ProcedureFormController
         selectedIndex = indexPath
-        detail.procedure = procedures[indexPath.row]
+        detail.primaryObject = procedures[indexPath.row]
     }
     
        /*

@@ -101,7 +101,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         if pfController == nil {
             pfController  = ProcedureFormController.create()
         }
-        pfController!.procedure = procedure
+        pfController!.primaryObject = procedure
         self.navigationController?.pushViewController(pfController!, animated: true)
     }
     
@@ -131,7 +131,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     //MARK: - Procedures
     @IBAction func editProcedurePressed(sender: AnyObject) {
         let vc = ProcedureFormController.create()
-        vc.procedure = Mock.getProcedures()[0]
+        vc.primaryObject = Mock.getProcedures()[0]
 
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)

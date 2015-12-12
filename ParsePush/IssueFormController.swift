@@ -9,115 +9,22 @@
 import UIKit
 import DTFoundation
 
-extension IssueFormController : CustomCellDelegate {
+class IssueFormController: BaseFormController {
     
-    func getViewController() -> UIViewController {
-        return self
-    }
-    
-    func changed(cell: UITableViewCell) {
-        if let indexPath = tableView.indexPathForCell(cell) {
-            let cellData = formHelper.getCellData(indexPath)
-            cellData.changed(cell)
-        }
-    }
-    
-    func beganEditing(cell: UITableViewCell) {
-        self.editingCell = cell
-    }
-    
-    func finishedEditing(cell: UITableViewCell) {
-        // make sure we only set to nil if we're finishing the start we started on
-        // don't know the order if you select another cell (if finished fires before start)
-        if cell == self.editingCell {
-            self.editingCell = nil
-        }
-    }
-}
+    private var issue : Issue { get { return self.primaryObject as! Issue } }
 
-
-class IssueFormController: UITableViewController, SaveableFormControllerDelegate {
-    
-    private var clearTable = true
-    private var watchForChanges = false
-    private var formHelper : FormHelper!
-    private var editingCell : UITableViewCell?
-
-    var parent : BaseObject?
-    var primaryObject : BaseObject { return self.issue }
-    var savedChildIndexPath : NSIndexPath?
-    var parentForm : SaveableFormControllerDelegate?
-    
-    var issue : Issue! {
-        didSet {
-            initializeFormHelper()
-        }
+    // MARK: - Static
+    class func create() -> IssueFormController {
+        let vc : IssueFormController = Misc.getViewController("Issue", viewIdentifier: "IssueFormController")
+        return vc
     }
-    
-    //MARK: - View Controller methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.toolbarHidden = true
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavbar()
-        self.navigationController?.navigationBarHidden = false
-    }
-    
     
     //MARK: - Helpers
     private func t(key : String) -> String {
         return Issue.getTerminology(key)
     }
     
-    class func create() -> IssueFormController {
-        let vc : IssueFormController = Misc.getViewController("Issue", viewIdentifier: "IssueFormController")
-        return vc
-    }
-    
-     //MARK: - Form setup
-    private func initializeFormHelper() {
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "Issue"
-        
-        tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
-        // Automatic dimensions to tell the table view to use dynamic height
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        clearTable = true
-        self.tableView.reloadData()
-        clearTable = false
-        
-        watchForChanges = false
-        formHelper = FormHelper(controller: self)
-        setupForm()
-        watchForChanges = true
-    }
-    
-    private func setupNavbar() {
-        if let _ = self.navigationController?.navigationBar {
-            let left = UIBarButtonItem(title: "Cancel",
-                style: UIBarButtonItemStyle.Plain,
-                target: self, action: "navbarCancelClicked")
-            self.navigationItem.leftBarButtonItem = left
-            
-            let right = UIBarButtonItem(title: "Save",
-                style: UIBarButtonItemStyle.Plain,
-                target: self, action: "navbarSaveClicked")
-            
-            self.navigationItem.rightBarButtonItem = right
-            self.navigationItem.rightBarButtonItem?.enabled = false
-        }
-    }
-    
-    private func setupForm() {
+    override func setupForm() {
         formHelper.addSection(" ",
             data: [
                 CellData(identifier: "TextCell", value: issue.title, placeHolder: self.t("title"),
@@ -325,132 +232,6 @@ class IssueFormController: UITableViewController, SaveableFormControllerDelegate
         ///////////////////
         formHelper.hideHtmlSections()
     }
-    
-    //MARK: - TableViewController methods
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return formHelper.getSectionTitle(section)
-    }
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return clearTable ? 0 : formHelper.getNumberOfSections()
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clearTable ? 0 : formHelper.getNumberOfRowsInSection(section)
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        var cell : UITableViewCell
-        let data = formHelper.getCellData(indexPath)
-        
-        if let nibName = data.nibIdentifier {
-            if nibName == "HtmlCell" {
-                cell = self.tableView.dequeueReusableCellWithIdentifier(data.uuid, forIndexPath: indexPath)
-            }
-            else {
-                cell = self.tableView.dequeueReusableCellWithNibName(nibName)!
-            }
-        }
-        else if let identifier = data.identifier {
-            if let c = tableView.dequeueReusableCellWithIdentifier(identifier) {
-                cell = c
-            }
-            else {
-                cell = data.initialize()
-            }
-            
-        }
-        else {
-            fatalError("cellForRowAtIndexPath has not been handled")
-        }
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        let data = formHelper.getCellData(indexPath)
-        data.selected(cell, indexPath: indexPath)
-    }
-    
-    // need this so we can detect the tapping of an accessory view, which is otherwise independant of the UITableViewCell
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        let data = formHelper.getCellData(indexPath)
-        if data.selectedIfAccessoryButtonTapped {
-            data.selected(cell, indexPath: indexPath)
-        }
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let cellData = formHelper.getCellData(indexPath)
-        
-        // so that the separator appears under the image
-        cell.separatorInset = UIEdgeInsetsZero
-        // other initialization to clear previous usage of the cell
-        cell.accessoryType = .None
-        
-        cell.textLabel?.text = cellData.label
-        cell.detailTextLabel?.text = cellData.value as! String?
-        cell.textLabel?.textAlignment = NSTextAlignment.Left
-        
-        if let imageName = cellData.imageName {
-            cell.imageView?.image = UIImage(named: imageName)
-        }
-        else {
-            cell.imageView?.image = nil
-        }
-        
-        cellData.willDisplay(cell)
-    }
-    
-    func enableSave()
-    {
-        if watchForChanges {
-            self.navigationItem.rightBarButtonItem?.enabled = true
-        }
-    }
-    
-    func childSaved(child : BaseObject) {
-    }
-    func childCancelled(child : BaseObject) {
-    }
-    
-    private func dismiss()
-    {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func navbarCancelClicked()
-    {
-        self.parentForm?.childCancelled(self.issue)
-        dismiss()
-    }
-    
-    func navbarSaveClicked()
-    {
-        Services.saveObject(self.issue, parent: self.parent!, log: true)
-        self.parentForm?.childSaved(self.issue)
-        dismiss()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
 
 

@@ -14,9 +14,15 @@ import RichEditorView
     func changed(cell : UITableViewCell)
     func getViewController() -> UIViewController
     var parent : BaseObject? { get set }
-    var primaryObject : BaseObject { get }
+    var primaryObject : BaseObject! { get set }
     optional func beganEditing(cell : UITableViewCell)
     optional func finishedEditing(cell : UITableViewCell)
+
+    func enableSave()
+    func childSaved(child : BaseObject)
+    func childCancelled(child : BaseObject)
+    var savedChildIndexPath : NSIndexPath? { get set }
+    var parentForm : CustomCellDelegate? { get set }
 }
 
 public class CustomCell : UITableViewCell {

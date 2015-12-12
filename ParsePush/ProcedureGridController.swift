@@ -163,7 +163,7 @@ class ProcedureGridController: BaseGridController {
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let procedure = items[row.rowIndex] as! Procedure
         let controller = ProcedureFormController.create()
-        controller.procedure = procedure
+        controller.primaryObject = procedure
         controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
     }

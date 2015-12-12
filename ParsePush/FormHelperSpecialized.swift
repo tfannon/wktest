@@ -15,8 +15,6 @@ extension FormHelper {
     // used for creating a Workflow selector cell
     func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData
     {
-        let saveableFormController = viewController as! SaveableFormControllerDelegate
-        
         let data = CellData(identifier: "_BasicCell",
             value: WorkflowState(rawValue: workflowObject.workflowState)?.displayName,
             style: UITableViewCellStyle.Value1,
@@ -31,7 +29,7 @@ extension FormHelper {
                 let choices = WorkflowState.getFilteredDisplayNames(workflowObject.allowedStates, current: workflowObject.workflowState)
                 for choice in choices {
                     let action = UIAlertAction(title: choice, style: UIAlertActionStyle.Default, handler: { alertAction in
-                        saveableFormController.enableSave()
+                        self.controllerAsDelegate.enableSave()
                         workflowObject.workflowState = WorkflowState.getFromDisplayName(alertAction.title!).rawValue
                         cell.detailTextLabel?.text = alertAction.title
                         cell.imageView?.image = UIImage(named: WorkflowState(rawValue: workflowObject.workflowState)!.imageName)
@@ -114,7 +112,7 @@ extension FormHelper {
                 self.hideRows(cell, data: data, indexPath: indexPath, rowCount: issues.count + 1)
         }))
         for iss in issues {
-            let cellData = createIssueCellData(iss, visible: false)
+            let cellData = createObjectCellData(iss, visible: false)
             issueCellData.append(cellData)
         }
         issueCellData.append(CellData(
@@ -129,36 +127,14 @@ extension FormHelper {
             },
             selected: { cell, data, indexPath in
                 let vc = IssueFormController.create()
-                vc.issue = Issue.create()
+                vc.primaryObject = Issue.create()
                 vc.parent = self.controllerAsDelegate.primaryObject
-                var sd = self.controller as! SaveableFormControllerDelegate
-                sd.savedChildIndexPath = indexPath
-                vc.parentForm = sd
+                self.controllerAsDelegate.savedChildIndexPath = indexPath
+                vc.parentForm = self.controllerAsDelegate
                 self.controller.navigationController?.pushViewController(vc, animated: true)
             }
             ))
         addSection(" ", data: issueCellData)
-    }
-    
-    private func createIssueCellData(issue : Issue, visible : Bool) -> CellData {
-        let data = CellData(identifier: "_NavigationCell", label: issue.title,
-            imageName: "icon_issue",
-            willDisplay: { cell, data in
-                cell.accessoryType = .DisclosureIndicator
-                cell.userInteractionEnabled = true
-            },
-            visible: visible,
-            selected: { cell, data, indexPath in
-                let vc = IssueFormController.create()
-                vc.issue = issue
-                vc.parent = self.controllerAsDelegate.primaryObject
-                var sd = self.controller as! SaveableFormControllerDelegate
-                sd.savedChildIndexPath = indexPath
-                vc.parentForm = sd
-                self.controller.navigationController?.pushViewController(vc, animated: true)
-            }
-        )
-        return data
     }
     
     func addChangeTracking(changes : [Change]?) {
@@ -197,9 +173,30 @@ extension FormHelper {
         self.hideSections(hideSections)
     }
     
-    func repaintIssueRow(indexPath : NSIndexPath, issue : Issue?) {
+    private func createObjectCellData<T : BaseObject>(baseObject : T, visible : Bool) -> CellData {
+        
+        let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
+            imageName: "icon_issue",
+            willDisplay: { cell, data in
+                cell.accessoryType = .DisclosureIndicator
+                cell.userInteractionEnabled = true
+            },
+            visible: visible,
+            selected: { cell, data, indexPath in
+                let vc = IssueFormController.create()
+                vc.primaryObject = baseObject
+                vc.parent = self.controllerAsDelegate.primaryObject
+                vc.parentForm = self.controllerAsDelegate
+                self.controllerAsDelegate.savedChildIndexPath = indexPath
+                self.controller.navigationController?.pushViewController(vc, animated: true)
+            }
+        )
+        return data
+    }
+    
+    func repaintObjectRow<T : BaseObject>(indexPath : NSIndexPath, baseObject : T) {
  
-        let newData = createIssueCellData(issue!, visible: true)
+        let newData = createObjectCellData(baseObject, visible: true)
         let currentData = getCellData(indexPath)
         let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
         
@@ -217,9 +214,9 @@ extension FormHelper {
         tableView.endUpdates()
     }
     
-    func revertIssue(indexPath : NSIndexPath, issue : Issue) {
-        if let reloaded = Services.getIssue(issue.id!) {
-            let newData = createIssueCellData(reloaded, visible: true)
+    func revertObject<T : BaseObject> (indexPath : NSIndexPath, baseObject : T) {
+        if let reloaded = Services.getIssue(baseObject.id!) {
+            let newData = createObjectCellData(reloaded, visible: true)
             let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
             let p = self.controllerAsDelegate.primaryObject.issues.indexOf{ x in x.id! == reloaded.id }!
             self.controllerAsDelegate.primaryObject.issues[p] = reloaded

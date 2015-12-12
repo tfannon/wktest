@@ -68,7 +68,7 @@ class IssueGridController: BaseGridController {
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
         let issue = items[row.rowIndex] as! Issue
         let controller = IssueFormController.create()
-        controller.issue = issue
+        controller.primaryObject = issue
         controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
     }

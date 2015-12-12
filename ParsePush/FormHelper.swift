@@ -9,14 +9,6 @@
 import Foundation
 import DTFoundation
 
-protocol SaveableFormControllerDelegate {
-    func enableSave()
-    func childSaved(child : BaseObject)
-    func childCancelled(child : BaseObject)
-    var savedChildIndexPath : NSIndexPath? { get set }
-    var parentForm : SaveableFormControllerDelegate? { get set }
-}
-
 class CellData {
     static var tagCount = 0
     

@@ -23,18 +23,11 @@ class Workpaper : BaseObject {
 
 
     static var term = [
-        "title":"Title",
         "description":"Description",
-        "parentTitle":"Parent",
-        "parentType":"Parent",
-        "reviewer":"Reviewer",
-        "manager":"Manager",
-        "dueDate":"Due Date",
-        "reviewDueDate":"Review Due Date",
-        "workflowState":"State"]
+    ]
     
     class func getTerminology(key: String) -> String {
-        return term[key] ?? ""
+        return term[key] ?? BaseObject.baseTerm[key]!
     }
     
     var oDescription: String? { didSet { setDirty("Description") } }
