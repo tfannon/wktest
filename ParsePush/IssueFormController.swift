@@ -210,21 +210,6 @@ class IssueFormController: BaseFormController {
         // workpapers
         ///////////////////
         formHelper.addChildCells(self.primaryObject, objectType: .Workpaper)
-        
-        ///////////////////
-        // Change Tracking
-        ///////////////////
-        formHelper.addChangeTracking(self.issue.changes)
-        
-        ///////////////////
-        // now that our data is wired up - reload
-        ///////////////////
-        tableView.reloadData()
-        
-        ///////////////////
-        // hide html
-        ///////////////////
-        formHelper.hideHtmlSections()
     }
 }
 

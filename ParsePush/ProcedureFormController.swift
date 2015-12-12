@@ -208,21 +208,6 @@ class ProcedureFormController: BaseFormController {
         // issues
         ///////////////////
         formHelper.addChildCells(self.primaryObject, objectType: .Issue)
-
-        ///////////////////
-        // Change Tracking
-        ///////////////////
-        formHelper.addChangeTracking(self.procedure.changes)
-        
-        ///////////////////
-        // now that our data is wired up - reload
-        ///////////////////
-        tableView.reloadData()
-
-        ///////////////////
-        // hide html
-        ///////////////////
-        formHelper.hideHtmlSections()
     }
 }
 

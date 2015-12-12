@@ -92,11 +92,29 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
         watchForChanges = false
         formHelper = FormHelper(controller: self)
         setupForm()
+        setupFormPost()
         watchForChanges = true
     }
     
     func setupForm() {
         preconditionFailure("This method must be overridden")
+    }
+    
+    private func setupFormPost() {
+        ///////////////////
+        // Change Tracking
+        ///////////////////
+        formHelper.addChangeTracking(primaryObject.changes)
+        
+        ///////////////////
+        // now that our data is wired up - reload
+        ///////////////////
+        tableView.reloadData()
+        
+        ///////////////////
+        // hide html
+        ///////////////////
+        formHelper.hideHtmlSections()
     }
     
     private func setupNavbar() {

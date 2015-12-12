@@ -93,21 +93,6 @@ class WorkpaperFormController: BaseFormController {
                     self.enableSave()
             })
             ])
-                
-        ///////////////////
-        // Change Tracking
-        ///////////////////
-        formHelper.addChangeTracking(self.workpaper.changes)
-        
-        ///////////////////
-        // now that our data is wired up - reload
-        ///////////////////
-        tableView.reloadData()
-        
-        ///////////////////
-        // hide html
-        ///////////////////
-        formHelper.hideHtmlSections()
     }
 }
 
