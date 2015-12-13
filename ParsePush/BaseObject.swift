@@ -44,7 +44,11 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     var code: String?
     var parentTitle: String?
     var parentType: Int = 0
-    var title: String? { didSet { setDirty("Title") } }
+    var title: String? {
+        didSet {
+            setDirty("Title")
+        }
+    }
     var workflowState: Int = 1 { didSet { setDirty("WorkflowState") } }
     var readOnly  : Bool?
     var allowedStates : [Int]?
@@ -67,17 +71,15 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     // issues
     var issues : [Issue] {
         var issues = [Issue]()
-        Services.getMyData(objectTypes: [.Issue], completed: { result in
-            issues = (result?.issues.filter{ x in
-                self.issueIds.contains(x.id!) })! })
+        Services.getMyData(objectTypes: [.Issue], explicitIds: self.issueIds) { result in
+            issues = result!.issues }
         return issues
     }
     // workpapers
     var workpapers : [Workpaper] {
         var workpapers = [Workpaper]()
-        Services.getMyData(objectTypes: [.Workpaper], completed: { result in
-            workpapers = (result?.workpapers.filter{ x in
-                self.workpaperIds.contains(x.id!) })! })
+        Services.getMyData(objectTypes: [.Workpaper], explicitIds: self.workpaperIds) { result in
+            workpapers = result!.workpapers }
         return workpapers
     }
     
@@ -135,21 +137,28 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         }
     }
     
-    func addChild(child : BaseObject) -> Bool {
+    func isChild(child : BaseObject) -> Bool {
         if let issue = child as? Issue {
-            if !self.issueIds.contains(issue.id!) {
-                self.issueIds.append(issue.id!)
-                return true
-            }
+            return self.issueIds.contains(issue.id!)
         }
         else if let workpaper = child as? Workpaper {
-            if !self.workpaperIds.contains(workpaper.id!) {
-                self.workpaperIds.append(workpaper.id!)
-                return true
-            }
+            return self.workpaperIds.contains(workpaper.id!)
         }
         else {
             fatalError("not handling child of type \(child.className)")
+        }
+        return false
+    }
+    
+    func addChild(child : BaseObject) -> Bool {
+        if !self.isChild(child) {
+            if let issue = child as? Issue {
+                self.issueIds.append(issue.id!)
+            }
+            else if let workpaper = child as? Workpaper {
+                self.workpaperIds.append(workpaper.id!)
+            }
+            return true
         }
         return false
     }
