@@ -473,8 +473,8 @@ public class Services {
                 obj.parentTitle = p.title
                 obj.parentType = p.objectType.rawValue
             }
-        } else if syncRedundantFieldsToChildren {
-            // if this is an update to the obj
+        } else if syncRedundantFieldsToChildren && obj.isDirty("Title") {
+            // if this is an update to the obj and title is dirty
             // update any children whose parentTitle is not a match
             let children =
                 (obj.issues.map { x in x as BaseObject }

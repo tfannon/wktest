@@ -122,8 +122,12 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         set { setDirtyFields = Set<String>(newValue) }
     }
     
-    func isDirty() -> Bool{
-        return id < 0 || setDirtyFields.count > 0
+    func isDirty(field : String? = nil) -> Bool{
+        if let f = field {
+            return setDirtyFields.contains(f)
+        } else {
+            return id < 0 || setDirtyFields.count > 0
+        }
     }
     
     func clean() {
