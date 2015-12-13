@@ -61,7 +61,7 @@ extension FormHelper {
             selectedIfAccessoryButtonTapped: true,
             willDisplay: self.hideSectionWillDisplay,
             selected: { cell, data, indexPath in
-                self.hideRows(cell, data: data, indexPath: indexPath, rowCount: children.count + 1)
+                self.showOrHideRows(cell, data: data, indexPath: indexPath, rowCount: children.count + 1)
         }))
         for child in children {
             let cellData = createObjectCellData(child, visible: false)

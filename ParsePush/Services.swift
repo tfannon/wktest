@@ -168,9 +168,11 @@ public class Services {
         case LocalOnly
     }
     
-    
-    
-    static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
+    static func getMyData(
+        fetchOptions: FetchOptions = .Default,
+        objectTypes: [ObjectType]? = nil,
+        explicitIds: [Int]? = nil,
+        completed: (container: ObjectContainer?)->()) {
         print(__FUNCTION__)
 
         if (mock) {
@@ -179,14 +181,14 @@ public class Services {
         
         //this is to test local store without going to server
         if fetchOptions == .LocalOnly {
-            if let container: ObjectContainer = loadObjects() {
+            if let container: ObjectContainer = loadObjects(objectTypes, explicitIds: explicitIds) {
                 print("\tfetched \(container) using local store")
             }
             return
         }
         //this is the default which is to check the local store first
         if fetchOptions == .Default {
-            if let container: ObjectContainer = loadObjects() {
+            if let container: ObjectContainer = loadObjects(objectTypes, explicitIds: explicitIds) {
                 print("\tfetched \(container) using local store")
                 completed(container: container)
                 return
@@ -361,6 +363,8 @@ public class Services {
         switch baseObject.objectType {
         case .Issue:
             return getIssue(baseObject.id!)
+        case .Workpaper:
+            return getWorkpaper(baseObject.id!)
         default:
             return nil
         }
@@ -443,36 +447,74 @@ public class Services {
             objects.each { saveObject($0, log: objects is [Attachment]) }
         }
     }
-    
-    static func saveObject(obj: BaseObject, parent: BaseObject? = nil, log: Bool = false) {
 
-        // if there is a parent
+    static func saveObject(obj: BaseObject, parent: BaseObject? = nil, log: Bool = false) {
+        saveObjectImpl(obj, parent: parent, log: log, syncRedundantFieldsToChildren: true)
+    }
+    
+    ///
+    /// implementation of saveObject
+    /// syncRedundantFieldsToChildren is used to tell the function whether to sync up the 
+    ///     immediate childrens' redundant parent fields (e.g. parentTitle) if they are not a match
+    ///     we only look to immediate children - we do not recurse down the entire tree
+    ///     that's why syncRedundantFieldsToChildren defaults to false - it's only set to true
+    ///     when saving the initial object in saveObject()
+    ///
+    private static func saveObjectImpl(
+        obj: BaseObject,
+        parent: BaseObject? = nil,
+        log: Bool = false,
+        syncRedundantFieldsToChildren : Bool = false)
+    {
+        // if we have a parent object - and obj
+        // is not yet a child of the parent object,
+        // set the child's redundant parent properties
+        //  before we save it
         if let p = parent {
-            // and it's actually a brand new child
-            if p.addChild(obj) {
-                // save the parent so that the parent's id list gets saved
-                saveObject(p, log: true)
+            if !p.isChild(obj) {
+                obj.parentTitle = p.title
+                obj.parentType = p.objectType.rawValue
+            }
+        } else if syncRedundantFieldsToChildren && obj.isDirty("Title") {
+            // if this is an update to the obj and title is dirty
+            // update any children whose parentTitle is not a match
+            let children =
+                (obj.issues.map { x in x as BaseObject }
+                + obj.workpapers.map { x in x as BaseObject })
+                    .filter { x in x.parentTitle != obj.title }
+            for child in children {
+                child.parentTitle = obj.title
+                saveObjectImpl(child)
             }
         }
-
+        
         //save it in its own slot.  will overwrite anything there
         let json = Mapper().toJSONString(obj, prettyPrint: true)
         let key = DataKey.getKeyForObject(obj)
         if log { print("Saving \(key) sizeof:\(json!.length) to local store") }
         NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+        
+        // if there is a parent
+        if let p = parent {
+            // and it's actually a brand new child
+            if p.addChild(obj) {
+                // save the parent so that the parent's id list gets saved
+                saveObjectImpl(p, log: true)
+            }
+        }
 
-        // add the id
+        // update the id lists to store
         var idListKey : String
         var ids = [Int]()
-        if let _ = obj as? Procedure {
+        if obj is Procedure {
             ids = loadProcedureIds() ?? [Int]()
             idListKey = DataKey.ProcedureIds.rawValue
         }
-        else if let _ = obj as? Issue {
+        else if obj is Issue {
             ids = loadIssueIds() ?? [Int]()
             idListKey = DataKey.IssueIds.rawValue
         }
-        else if let _ = obj as? Workpaper {
+        else if obj is Workpaper {
             ids = loadWorkpaperIds() ?? [Int]()
             idListKey = DataKey.WorkpaperIds.rawValue
         }
@@ -491,9 +533,28 @@ public class Services {
     
     
     //MARK: load local store
-    private static func loadObjects() -> ObjectContainer? {
+    private static func loadObjects(objectTypes: [ObjectType]? = nil, explicitIds : [Int]? = nil) -> ObjectContainer? {
         print(__FUNCTION__)
-        if let
+        
+        if let types = objectTypes {
+            if types.count > 1 && explicitIds != nil {
+                fatalError("can't ask for explicit ids for two or more types of objects")
+            }
+            
+            var procedures = [Procedure]()
+            var workpapers = [Workpaper]()
+            var issues = [Issue]()
+            if types.contains(.Procedure) {
+                procedures = loadObjectsImpl(explicitIds) ?? [Procedure]()
+            }
+            if types.contains(.Workpaper) {
+                workpapers = loadObjectsImpl(explicitIds) ?? [Workpaper]()
+            }
+            if types.contains(.Issue) {
+                issues = loadObjectsImpl(explicitIds) ?? [Issue]()
+            }
+            return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+        } else if let
             procedures:  [Procedure] = loadObjectsImpl(),
             workpapers:  [Workpaper] = loadObjectsImpl(),
             issues:      [Issue] =     loadObjectsImpl() {
@@ -502,21 +563,21 @@ public class Services {
         return nil
     }
     
-    private static func loadObjectsImpl<T: Mappable>() -> [T]? {
+    private static func loadObjectsImpl<T: Mappable>(explicitIds : [Int]? = nil) -> [T]? {
                let defaults = NSUserDefaults.standardUserDefaults()
         //may be empty
         var ids: [Int]?
         var keyFunc: ((Int)->(String))
         if T.self is Procedure.Type {
-            ids = loadProcedureIds()
+            ids = explicitIds ?? loadProcedureIds()
             keyFunc = DataKey.getProcKey
         }
         else if T.self is Workpaper.Type {
-            ids = loadWorkpaperIds()
+            ids = explicitIds ?? loadWorkpaperIds()
             keyFunc = DataKey.getWorkpaperKey
         }
         else if T.self is Issue.Type {
-            ids = loadIssueIds()
+            ids = explicitIds ?? loadIssueIds()
             keyFunc = DataKey.getIssueKey
         }
         else {

@@ -22,7 +22,7 @@ class IssueGridController: BaseGridController {
     func getIssues(completed: ()->()) {
         self.items = []
         self.sortedItems = []
-        Services.getMyData { result in
+        Services.getMyData(objectTypes: [.Issue]) { result in
             if result?.issues.count > 0 {
                 result?.issues.each {
                     self.items.append($0)

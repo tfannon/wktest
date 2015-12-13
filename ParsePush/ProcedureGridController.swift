@@ -35,7 +35,7 @@ class ProcedureGridController: BaseGridController {
     func getProcedures(completed: ()->()) {
         self.items = []
         self.sortedItems = []
-        Services.getMyData { result in
+        Services.getMyData(objectTypes: [.Procedure]) { result in
             if result?.procedures.count > 0 {
                 result?.procedures.each {
                     self.items.append($0)
