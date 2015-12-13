@@ -215,22 +215,24 @@ public class Services {
     static func sync(completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         getMyData() { result in
-            let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any }
-            sendDataToServer(dirty!) {
+            let objects = ObjectContainer()
+            objects.procedures = (result?.procedures.filter { $0.isDirty() == true || $0.hasNewChildren })!
+            objects.issues = (result?.issues.filter { $0.isDirty() == true || $0.hasNewChildren })!
+            sendDataToServer(objects) {
                 completed(result:$0)
             }
         }
     }
     
-    private static func sendDataToServer(dirty: [Procedure], completed: (result: ObjectContainer?)->()) {
+    private static func sendDataToServer(dirty: ObjectContainer, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
-        print ("\t \(dirty.count { $0.workpapers.any }) procedures have new workpapers")
-
+        
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let json = Mapper().toJSONArray(dirty)
+        //let json = Mapper().toJSONArray(dirty)
+        let json = Mapper().toJSON(dirty)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
         request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
@@ -238,13 +240,13 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    if  let jsonAlamo = data as? [String:AnyObject],
-                        server = Mapper<ObjectContainer>().map(jsonAlamo),
-                        local = loadObjects() {
+                    if let jsonAlamo = data as? [String:AnyObject],
+                           server = Mapper<ObjectContainer>().map(jsonAlamo),
+                           local = loadObjects() {
                             
-                        checkObjectState(dirty, local: local.procedures, server: server.procedures)
-                        checkObjectState([], local: local.issues, server: server.issues)
-                        checkObjectState([], local: local.workpapers, server: server.workpapers)
+                        checkObjectState(dirty.procedures,  local: local.procedures, server: server.procedures)
+                        checkObjectState(dirty.issues,      local: local.issues,     server: server.issues)
+                        checkObjectState(dirty.workpapers,  local: local.workpapers, server: server.workpapers)
                         
                         saveObjects(server)
                         
@@ -474,8 +476,12 @@ public class Services {
             ids = loadWorkpaperIds() ?? [Int]()
             idListKey = DataKey.WorkpaperIds.rawValue
         }
+        else if let _ = obj as? Attachment {
+            ids = loadAttachmentIds() ?? [Int]()
+            idListKey = DataKey.AttachmentIds.rawValue
+        }
         else {
-            fatalError("save object not handled")
+            fatalError("save object not handled for \(obj.dynamicType)")
         }
         if !ids.contains(obj.id!) {
             ids.append(obj.id!)

@@ -14,6 +14,9 @@ class ObjectContainer : Mappable, CustomStringConvertible {
     required init(_ map: Map) {
     }
     
+    init() {
+    }
+    
     init(procedures: [Procedure], workpapers: [Workpaper], issues: [Issue]) {
         self.procedures = procedures
         self.workpapers = workpapers

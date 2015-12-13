@@ -126,6 +126,11 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         return id < 0 || setDirtyFields.count > 0
     }
     
+    //todo: can we merge this into isDirty?
+    var hasNewChildren : Bool {
+        return issueIds.any { $0 < 0 } || workpaperIds.any { $0 < 0 }
+    }
+    
     func clean() {
         setDirtyFields = []
     }
