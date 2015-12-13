@@ -56,7 +56,7 @@ enum DocumentType: String, ImageProvider {
             case .Excel, .ExcelX: return  "icons_excel"
             case .Powerpoint, .PowerpointX: return "icons_powerpoint"
             case .PDF: return  "icons_pdf"
-            case .ImageJpg, .ImagePng: return "icons_image_file"
+            case .ImageJpg, .ImagePng: return "icons_image"
             }
         }
     }

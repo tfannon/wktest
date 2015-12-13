@@ -14,7 +14,6 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     
     var documentInteractionController: UIDocumentInteractionController!
     
-    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
@@ -26,7 +25,7 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     func getWorkpapers(completed: ()->()) {
         self.items = []
         self.sortedItems = []
-        Services.getMyData { result in
+        Services.getMyData(objectTypes: [.Workpaper]) { result in
             if result?.workpapers.count > 0 {
                 result?.workpapers.each {
                     self.items.append($0)
@@ -70,13 +69,13 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     }
     
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
-        let procedure = object as! Workpaper
+        let workpaper = object as! Workpaper
         
         switch (propertyKey) {
         case "sync" :
             let wCell = cell as! SDataGridTextCell
-            wCell.textField.text = procedure.syncState.displayName
-            switch procedure.syncState {
+            wCell.textField.text = workpaper.syncState.displayName
+            switch workpaper.syncState {
             case .New :
                 wCell.backgroundColor = UIColor.lightGrayColor()
             case .Modified :
@@ -89,33 +88,33 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
             
         case "attachmentExtension" :
             let wCell = cell as! DataGridImageCell
-            wCell.documentType = DocumentType(rawValue: procedure.attachmentExtension!)!
+            wCell.documentType = DocumentType(rawValue: workpaper.attachmentExtension!)  
             return true
             
         case "sync" :
             let wCell = cell as! DataGridImageCell
-            wCell.documentType = DocumentType(rawValue: procedure.attachmentExtension!)!
+            wCell.documentType = DocumentType(rawValue: workpaper.attachmentExtension!)!
             return true
             
         case "workflowState" :
             let wCell = cell as! DataGridImageCell
-            wCell.state = WorkflowState(rawValue: procedure.workflowState)!
+            wCell.state = WorkflowState(rawValue: workpaper.workflowState)!
             return true
             
         case "parentType" :
             let wCell = cell as! DataGridImageCell
-            wCell.parentType = ObjectType(rawValue: procedure.parentType)!
-            //wCell.imageProvider = ObjectType(rawValue: procedure.parentType)!
+            wCell.parentType = ObjectType(rawValue: workpaper.parentType)!
+            //wCell.imageProvider = ObjectType(rawValue: workpaper.parentType)!
             return true
             
         case "dueDate" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  procedure.dueDate?.toShortString()
+            wCell.text =  workpaper.dueDate?.toShortString()
             return true
             
         case "reviewDueDate" :
             let wCell = cell as! SDataGridTextCell
-            wCell.text =  procedure.reviewDueDate?.toShortString()
+            wCell.text =  workpaper.reviewDueDate?.toShortString()
             return true
             
         default: return false
@@ -123,15 +122,20 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        let id = (items[row.rowIndex] as! Workpaper).attachmentId
-        Services.getAttachment(id) { result in
-            if self.documentInteractionController == nil {
-                self.documentInteractionController = UIDocumentInteractionController()
-                self.documentInteractionController.delegate = self
-            }
-            self.documentInteractionController.URL = NSURL(fileURLWithPath: result)
-            self.documentInteractionController.presentPreviewAnimated(true)
-        }
+//        let id = (items[row.rowIndex] as! Workpaper).attachmentId
+//        Services.getAttachment(id) { result in
+//            if self.documentInteractionController == nil {
+//                self.documentInteractionController = UIDocumentInteractionController()
+//                self.documentInteractionController.delegate = self
+//            }
+//            self.documentInteractionController.URL = NSURL(fileURLWithPath: result)
+//            self.documentInteractionController.presentPreviewAnimated(true)
+//        }
+        let workpaper = items[row.rowIndex] as! Workpaper
+        let controller = BaseFormController.create(.Workpaper)
+        controller.primaryObject = workpaper
+        controller.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK: - DocumentInteractionController

@@ -67,19 +67,17 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     // issues
     var issues : [Issue] {
         var issues = [Issue]()
-        for id in self.issueIds {
-            let issue = Services.getIssue(id)!
-            issues.append(issue)
-        }
+        Services.getMyData(objectTypes: [.Issue], completed: { result in
+            issues = (result?.issues.filter{ x in
+                self.issueIds.contains(x.id!) })! })
         return issues
     }
     // workpapers
     var workpapers : [Workpaper] {
         var workpapers = [Workpaper]()
-        for id in self.workpaperIds {
-            let workpaper = Services.getWorkpaper(id)!
-            workpapers.append(workpaper)
-        }
+        Services.getMyData(objectTypes: [.Workpaper], completed: { result in
+            workpapers = (result?.workpapers.filter{ x in
+                self.workpaperIds.contains(x.id!) })! })
         return workpapers
     }
     

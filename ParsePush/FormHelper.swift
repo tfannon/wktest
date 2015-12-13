@@ -62,7 +62,7 @@ class FormHelper {
         controller.tableView.endUpdates()
     }
 
-    func hideRows(cell : UITableViewCell, data : CellData, indexPath: NSIndexPath, rowCount : Int) {
+    func showOrHideRows(cell : UITableViewCell, data : CellData, indexPath: NSIndexPath, rowCount : Int) {
         self.tableView.beginUpdates()
         data.toggled = !data.toggled
         let section = indexPath.section

@@ -29,6 +29,8 @@ class Mock {
     
     static private func createNewProcedure(id: Int, code: String, title: String, text1: String) -> Procedure
     {
+        let extensions = ["docx", "xlsx", "pdf", "ppt"]
+        
         let procedure = Procedure()
         
         procedure.id = id
@@ -54,9 +56,9 @@ class Mock {
         for i in 0...3 {
             let wp = Workpaper()
             wp.id = id * 100 + i
-            wp.title = "Workpaper \(wp.id)"
+            wp.title = "Workpaper \(wp.id!)"
             wp.workflowState = i % 4 + 1
-            wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
+            wp.attachmentExtension = extensions[i % extensions.count]
             wp.parentTitle = procedure.title
             wp.parentType = ObjectType.Procedure.rawValue
             wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))
@@ -67,7 +69,7 @@ class Mock {
         for i in 0...3 {
             let iss = Issue()
             iss.id = id * 100 + i
-            iss.title = "Issue \(iss.id)"
+            iss.title = "Issue \(iss.id!)"
             iss.workflowState = i % 4 + 1
             iss.allowedStates = [1, 2, 3, 4]
             iss.parentTitle = procedure.title
@@ -83,9 +85,9 @@ class Mock {
             for i in 0...3 {
                 let wp = Workpaper()
                 wp.id = iss.id! * 100 + i
-                wp.title = "Workpaper \(wp.id)"
+                wp.title = "Workpaper \(wp.id!)"
                 wp.workflowState = i % 4 + 1
-                wp.attachmentExtension = ["docx", "xlsx", "pdf", "unk"][i % 4]
+                wp.attachmentExtension = extensions[i % extensions.count]
                 wp.parentTitle = procedure.title
                 wp.parentType = ObjectType.Procedure.rawValue
                 wp.reviewDueDate = NSDate(fromString: "2015-10-30", format: DateFormat.ISO8601(.Date))

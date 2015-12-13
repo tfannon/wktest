@@ -168,9 +168,10 @@ public class Services {
         case LocalOnly
     }
     
-    
-    
-    static func getMyData(fetchOptions: FetchOptions = .Default, completed: (container: ObjectContainer?)->()) {
+    static func getMyData(
+        fetchOptions: FetchOptions = .Default,
+        objectTypes: [ObjectType]? = nil,
+        completed: (container: ObjectContainer?)->()) {
         print(__FUNCTION__)
 
         if (mock) {
@@ -179,14 +180,14 @@ public class Services {
         
         //this is to test local store without going to server
         if fetchOptions == .LocalOnly {
-            if let container: ObjectContainer = loadObjects() {
+            if let container: ObjectContainer = loadObjects(objectTypes) {
                 print("\tfetched \(container) using local store")
             }
             return
         }
         //this is the default which is to check the local store first
         if fetchOptions == .Default {
-            if let container: ObjectContainer = loadObjects() {
+            if let container: ObjectContainer = loadObjects(objectTypes) {
                 print("\tfetched \(container) using local store")
                 completed(container: container)
                 return
@@ -359,6 +360,8 @@ public class Services {
         switch baseObject.objectType {
         case .Issue:
             return getIssue(baseObject.id!)
+        case .Workpaper:
+            return getWorkpaper(baseObject.id!)
         default:
             return nil
         }
@@ -485,9 +488,24 @@ public class Services {
     
     
     //MARK: load local store
-    private static func loadObjects() -> ObjectContainer? {
+    private static func loadObjects(objectTypes: [ObjectType]? = nil) -> ObjectContainer? {
         print(__FUNCTION__)
-        if let
+        
+        if let types = objectTypes {
+            var procedures = [Procedure]()
+            var workpapers = [Workpaper]()
+            var issues = [Issue]()
+            if types.contains(.Procedure) {
+                procedures = loadObjectsImpl()!
+            }
+            if types.contains(.Workpaper) {
+                workpapers = loadObjectsImpl()!
+            }
+            if types.contains(.Issue) {
+                issues = loadObjectsImpl()!
+            }
+            return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+        } else if let
             procedures:  [Procedure] = loadObjectsImpl(),
             workpapers:  [Workpaper] = loadObjectsImpl(),
             issues:      [Issue] =     loadObjectsImpl() {
