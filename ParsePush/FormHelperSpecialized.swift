@@ -136,10 +136,11 @@ extension FormHelper {
         
         // image name is handled differently for workpapers
         let workpaper = baseObject as? Workpaper
+        let issue = baseObject as? Issue
         
         let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
             imageName: (workpaper != nil) ?
-                (workpaper!.documentType?.imageName ?? "icon-document") :
+                (workpaper!.documentType?.imageName ?? "icon_document") :
                 baseObject.objectType.imageName,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
