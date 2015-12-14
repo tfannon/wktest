@@ -119,10 +119,14 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     
     private func setupNavbar() {
         if let _ = self.navigationController?.navigationBar {
-            let left = UIBarButtonItem(title: "Cancel",
-                style: UIBarButtonItemStyle.Plain,
-                target: self, action: "navbarCancelClicked")
-            self.navigationItem.leftBarButtonItem = left
+            if self.splitViewController == nil {
+                let left = UIBarButtonItem(title: "Cancel",
+                    style: UIBarButtonItemStyle.Plain,
+                    target: self, action: "navbarCancelClicked")
+                self.navigationItem.leftBarButtonItem = left
+            } else {
+                self.navigationItem.leftBarButtonItem = nil
+            }
             
             let right = UIBarButtonItem(title: "Save",
                 style: UIBarButtonItemStyle.Plain,
