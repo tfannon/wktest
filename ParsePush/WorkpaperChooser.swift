@@ -75,7 +75,7 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
                 workpaper.oDescription = _description
                 workpaper.attachmentExtension = "jpg"
                 
-                let attachment = Attachment.create(.Attachment, parent: workpaper) as! Attachment
+                let attachment = BaseObject.create(.Attachment, parent: workpaper) as! Attachment
                 attachment.attachmentData = jpg.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
                 Services.saveObject(attachment, log: true)
                 
