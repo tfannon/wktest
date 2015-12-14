@@ -73,6 +73,7 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
                 let workpaper = BaseObject.create(ObjectType.Workpaper, parent: self.delegate.workpaperOwner) as! Workpaper
                 workpaper.title = _title
                 workpaper.oDescription = _description
+                workpaper.attachmentTitle = "temppic"
                 workpaper.attachmentExtension = "jpg"
                 
                 let attachment = BaseObject.create(.Attachment, parent: workpaper) as! Attachment
