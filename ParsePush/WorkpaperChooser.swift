@@ -73,6 +73,7 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
                 let workpaper = Workpaper.create(self.delegate.workpaperOwner) as Workpaper
                 workpaper.title = _title
                 workpaper.oDescription = _description
+                workpaper.attachmentExtension = "jpg"
                 
                 let attachment = Attachment.create(workpaper) as Attachment
                 attachment.attachmentData = jpg.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
@@ -81,7 +82,7 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
                 workpaper.attachmentId = attachment.id!
                 Services.saveObject(workpaper, parent: self.delegate.workpaperOwner, log: true)
 
-                self.delegate.workpaperAddedCallback(true)
+                self.delegate.workpaperAddedCallback(true, workpaper: workpaper)
         }
         self.delegate.owningViewController.dismissViewControllerAnimated(true, completion: nil)
     }

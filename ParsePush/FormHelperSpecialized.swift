@@ -199,8 +199,8 @@ extension FormHelper : WorkpaperChooserDelegate {
         return self.controller
     }}
         
-    func workpaperAddedCallback(wasAdded: Bool) {
+    func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
         let controller = self.controller as! BaseFormController
-        controller.childSaved(controller.primaryObject)
+        self.controllerAsDelegate.childSaved(workpaper)
     }
 }

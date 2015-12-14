@@ -14,5 +14,5 @@ import ObjectMapper
 protocol WorkpaperChooserDelegate {
     var workpaperOwner: Procedure { get }
     var owningViewController: UIViewController { get }
-    func workpaperAddedCallback(wasAdded: Bool)
+    func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper)
 }

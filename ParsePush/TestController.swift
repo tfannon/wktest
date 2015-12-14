@@ -183,7 +183,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         }
     }
     
-    func workpaperAddedCallback(wasAdded: Bool) {
+    func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
     }
 }
 
