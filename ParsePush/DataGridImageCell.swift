@@ -25,18 +25,6 @@ class DataGridImageCell : SDataGridCell {
         }
     }
 
-//uncommenting this line causes the cell class to bomb
-//var _imageProvider: ImageProvider
-//    var imageProvider: ImageProvider! {
-//        get {
-//            return _imageProvider
-//        }
-//        set(val) {
-//            setImage(val.imageName)
-//            _imageProvider = val
-//        }
-//    }
-
     var state: WorkflowState! {
         get {
             return _state

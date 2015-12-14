@@ -13,8 +13,7 @@ import Foundation
 extension FormHelper {
     
     // used for creating a Workflow selector cell
-    func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData
-    {
+    func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData {
         let data = CellData(identifier: "_BasicCell",
             value: WorkflowState(rawValue: workflowObject.workflowState)?.displayName,
             style: UITableViewCellStyle.Value1,
@@ -38,8 +37,7 @@ extension FormHelper {
                 }
                 alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                 
-                if let popover = alertController.popoverPresentationController
-                {
+                if let popover = alertController.popoverPresentationController {
                     popover.sourceView = cell;
                     popover.sourceRect = cell.bounds;
                     popover.permittedArrowDirections = UIPopoverArrowDirection.Any;
@@ -83,8 +81,8 @@ extension FormHelper {
             selected: { cell, data, indexPath in
                 let vc = BaseFormController.create(objectType)
                 vc.parentForm = self.controllerAsDelegate
-                vc.primaryObject = Issue.create()
                 vc.parent = self.controllerAsDelegate.primaryObject
+                vc.primaryObject = Issue.create(vc.parent as! Procedure)
                 self.controllerAsDelegate.savedChildIndexPath = indexPath
                 self.controller.navigationController?.pushViewController(vc, animated: true)
             }

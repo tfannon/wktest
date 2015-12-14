@@ -14,6 +14,9 @@ class ObjectContainer : Mappable, CustomStringConvertible {
     required init(_ map: Map) {
     }
     
+    init() {
+    }
+    
     init(procedures: [Procedure], workpapers: [Workpaper], issues: [Issue]) {
         self.procedures = procedures
         self.workpapers = workpapers
@@ -36,6 +39,10 @@ class ObjectContainer : Mappable, CustomStringConvertible {
         workpapers <- map["Workpapers"]
         issues <- map["Issues"]
         attachments <- map["Attachments"]
+    }
+    
+    var any: Bool {
+        return procedures.any || workpapers.any || issues.any || attachments.any
     }
     
     var description: String {

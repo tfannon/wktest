@@ -189,9 +189,11 @@ public class Services {
         //this is the default which is to check the local store first
         if fetchOptions == .Default {
             if let container: ObjectContainer = loadObjects(objectTypes, explicitIds: explicitIds) {
-                print("\tfetched \(container) using local store")
-                completed(container: container)
-                return
+                if container.any {
+                    print("\tfetched \(container) using local store")
+                    completed(container: container)
+                    return
+                }
             }
         }
         //if the store had nothing or we force a refresh fetch from services
@@ -202,7 +204,7 @@ public class Services {
                     let jsonAlamo = data as? [String:AnyObject]
                     if let objects = Mapper<ObjectContainer>().map(jsonAlamo) {
                         print("\tfetched objects using web service")
-                        saveObjects(objects)
+                        saveObjectsFromServer(objects)
                         completed(container: objects)
                     }
                 case .Failure(_, let error):
@@ -211,28 +213,29 @@ public class Services {
         }
     }
     
-    
     //MARK: Sync
     //grab the dirty procedures from the local store and send them to server
     static func sync(completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         getMyData() { result in
-            let dirty = result?.procedures.filter { $0.isDirty() == true || $0.workpapers.any }
-            sendDataToServer(dirty!) {
+            let objects = ObjectContainer()
+            objects.procedures = (result?.procedures.filter { $0.isDirty() == true || $0.hasNewChildren } )!
+            objects.issues = (result?.issues.filter { $0.id < 0 || $0.isDirty() == true })!
+            sendDataToServer(objects) {
                 completed(result:$0)
             }
         }
     }
     
-    private static func sendDataToServer(dirty: [Procedure], completed: (result: ObjectContainer?)->()) {
+    private static func sendDataToServer(dirty: ObjectContainer, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
-        print ("\t \(dirty.count { $0.workpapers.any }) procedures have new workpapers")
-
+        
         let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let json = Mapper().toJSONArray(dirty)
+        //let json = Mapper().toJSONArray(dirty)
+        let json = Mapper().toJSON(dirty)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
         request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
@@ -240,15 +243,15 @@ public class Services {
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
-                    if  let jsonAlamo = data as? [String:AnyObject],
-                        server = Mapper<ObjectContainer>().map(jsonAlamo),
-                        local = loadObjects() {
+                    if let jsonAlamo = data as? [String:AnyObject],
+                           server = Mapper<ObjectContainer>().map(jsonAlamo),
+                           local = loadObjects() {
                             
-                        checkObjectState(dirty, local: local.procedures, server: server.procedures)
-                        checkObjectState([], local: local.issues, server: server.issues)
-                        checkObjectState([], local: local.workpapers, server: server.workpapers)
+                        checkObjectState(dirty.procedures,  local: local.procedures, server: server.procedures)
+                        checkObjectState(dirty.issues,      local: local.issues,     server: server.issues)
+                        checkObjectState(dirty.workpapers,  local: local.workpapers, server: server.workpapers)
                         
-                        saveObjects(server)
+                        saveObjectsFromServer(server)
                         
                         completed(result: server)
                     } else {
@@ -427,22 +430,23 @@ public class Services {
     */
     
     //MARK: save local store
-    private static func saveObjects(objects: ObjectContainer) {
+    private static func saveObjectsFromServer(objects: ObjectContainer) {
         print(__FUNCTION__)
         clearStore()
-        saveObjectsImpl(objects.procedures)
-        saveObjectsImpl(objects.workpapers)
-        saveObjectsImpl(objects.issues)
-        saveObjectsImpl(objects.attachments)
+        saveObjectsFromServerImpl(objects.procedures)
+        saveObjectsFromServerImpl(objects.workpapers)
+        saveObjectsFromServerImpl(objects.issues)
+        saveObjectsFromServerImpl(objects.attachments)
     }
     
-    private static func saveObjectsImpl(objects: [BaseObject]) {
+    private static func saveObjectsFromServerImpl(objects: [BaseObject]) {
         if objects.count > 0 {
             print ("\tsaving \(objects.count) \(objects[0].dynamicType)s")
             let ids = objects.map { $0.id! }
             let idListKey = DataKey.getKeyForIdList(objects)
             NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
-            objects.each { saveObject($0, log: objects is [Attachment]) }
+            objects.each { saveObjectImpl($0, log: objects is [Attachment]) }
+            //objects.each { saveObject($0, log: objects is [Attachment]) }
         }
     }
 
@@ -516,8 +520,12 @@ public class Services {
             ids = loadWorkpaperIds() ?? [Int]()
             idListKey = DataKey.WorkpaperIds.rawValue
         }
+        else if let _ = obj as? Attachment {
+            ids = loadAttachmentIds() ?? [Int]()
+            idListKey = DataKey.AttachmentIds.rawValue
+        }
         else {
-            fatalError("save object not handled")
+            fatalError("save object not handled for \(obj.dynamicType)")
         }
         if !ids.contains(obj.id!) {
             ids.append(obj.id!)
@@ -527,9 +535,9 @@ public class Services {
     
     
     //MARK: load local store
-    private static func loadObjects(objectTypes: [ObjectType]? = nil, explicitIds : [Int]? = nil) -> ObjectContainer? {
+    static func loadObjects(objectTypes: [ObjectType]? = nil, explicitIds : [Int]? = nil) -> ObjectContainer? {
         print(__FUNCTION__)
-        
+        var objects: ObjectContainer?
         if let types = objectTypes {
             if types.count > 1 && explicitIds != nil {
                 fatalError("can't ask for explicit ids for two or more types of objects")
@@ -538,6 +546,7 @@ public class Services {
             var procedures = [Procedure]()
             var workpapers = [Workpaper]()
             var issues = [Issue]()
+            var attachments = [Attachment]()
             if types.contains(.Procedure) {
                 procedures = loadObjectsImpl(explicitIds) ?? [Procedure]()
             }
@@ -547,14 +556,19 @@ public class Services {
             if types.contains(.Issue) {
                 issues = loadObjectsImpl(explicitIds) ?? [Issue]()
             }
-            return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
-        } else if let
-            procedures:  [Procedure] = loadObjectsImpl(),
-            workpapers:  [Workpaper] = loadObjectsImpl(),
-            issues:      [Issue] =     loadObjectsImpl() {
-            return ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+            if types.contains(.Attachment) {
+                attachments = loadObjectsImpl(explicitIds) ?? [Attachment]()
+            }
+            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues, attachments: attachments)
         }
-        return nil
+        else if let
+            procedures:  [Procedure] =  loadObjectsImpl(),
+            workpapers:  [Workpaper] =  loadObjectsImpl(),
+            issues:      [Issue] =      loadObjectsImpl(),
+            attachments: [Attachment] = loadObjectsImpl() {
+            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues, attachments: attachments)
+        }
+        return objects
     }
     
     private static func loadObjectsImpl<T: Mappable>(explicitIds : [Int]? = nil) -> [T]? {
@@ -574,6 +588,11 @@ public class Services {
             ids = explicitIds ?? loadIssueIds()
             keyFunc = DataKey.getIssueKey
         }
+        else if T.self is Attachment.Type {
+            ids = explicitIds ?? loadAttachmentIds()
+            keyFunc = DataKey.getAttachmentKey
+        }
+            
         else {
             preconditionFailure("loadObjects not implemented for \(T.self)")
         }
