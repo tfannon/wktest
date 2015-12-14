@@ -79,12 +79,18 @@ extension FormHelper {
                 cell.textLabel?.textAlignment = NSTextAlignment.Right
             },
             selected: { cell, data, indexPath in
-                let vc = BaseFormController.create(objectType)
-                vc.parentForm = self.controllerAsDelegate
-                vc.parent = self.controllerAsDelegate.primaryObject
-                vc.primaryObject = Issue.create(vc.parent as! Procedure)
-                self.controllerAsDelegate.savedChildIndexPath = indexPath
-                self.controller.navigationController?.pushViewController(vc, animated: true)
+                if (objectType == .Workpaper) {
+                    self.controllerAsDelegate.savedChildIndexPath = indexPath
+                    WorkpaperChooser.choose(self)
+                }
+                else {
+                    let vc = BaseFormController.create(objectType)
+                    vc.parentForm = self.controllerAsDelegate
+                    vc.parent = self.controllerAsDelegate.primaryObject
+                    vc.primaryObject = Issue.create(vc.parent as! Procedure)
+                    self.controllerAsDelegate.savedChildIndexPath = indexPath
+                    self.controller.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             ))
         addSection(" ", data: datas)
@@ -181,5 +187,20 @@ extension FormHelper {
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             tableView.endUpdates()
         }
+    }
+}
+
+extension FormHelper : WorkpaperChooserDelegate {
+    var workpaperOwner: Procedure { get {
+        return self.controllerAsDelegate.primaryObject as! Procedure
+    }}
+        
+    var owningViewController: UIViewController { get {
+        return self.controller
+    }}
+        
+    func workpaperAddedCallback(wasAdded: Bool) {
+        let controller = self.controller as! BaseFormController
+        controller.childSaved(controller.primaryObject)
     }
 }

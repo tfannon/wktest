@@ -26,17 +26,6 @@ class Workpaper : BaseObject {
         }
     }
 
-    //this syntax is to allow for a pseudo-c# like initializer
-    init(initializer:((Workpaper)->Void)? = nil) {
-        super.init()
-        initializer?(self)
-    }
-    
-    required init(_ map: Map) {
-        super.init(map)
-    }
-
-
     static var term = [
         "description":"Description",
         "attachmentExtension":"ext",
@@ -47,6 +36,7 @@ class Workpaper : BaseObject {
     class func getTerminology(key: String) -> String {
         return term[key] ?? BaseObject.baseTerm[key]!
     }
+
     class func create() -> Issue {
         let i = Issue()
         i.id = Application.getNewId()
