@@ -79,7 +79,7 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     //MARK: - Form setup
     private func initializeFormHelper() {
         self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "Procedure"
+        self.title = String(self.primaryObject.objectType)
         
         tableView.estimatedRowHeight = 200.0 // Replace with your actual estimation
         // Automatic dimensions to tell the table view to use dynamic height
@@ -240,6 +240,7 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     }
     
     func navbarSaveClicked() {
+        self.navigationItem.rightBarButtonItem?.enabled = false
         Services.saveObject(self.primaryObject, parent: self.parent, log: true)
         parentForm?.childSaved(self.primaryObject)
         dismiss()
