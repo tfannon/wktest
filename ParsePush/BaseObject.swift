@@ -14,8 +14,18 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     required init(_ map: Map) {
     }
     
-    override init() {
+    required override init() {
     }
+    
+    class func create<T : BaseObject>(parent: BaseObject) -> T {
+        let o = T()
+        o.id = Application.getNewId()
+        o.parentType = parent.objectType.rawValue
+        o.parentTitle = parent.title
+        o.workflowState = WorkflowState.NotStarted.rawValue
+        return o
+    }
+    
     
     static let baseTerm = [
         "sync":"Sync",
