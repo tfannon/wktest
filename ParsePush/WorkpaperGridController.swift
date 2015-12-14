@@ -147,7 +147,6 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     
     //MARK: - DocumentInteractionController
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
-        self.title = "foo"
         return self
     }
     

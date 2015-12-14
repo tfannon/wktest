@@ -221,6 +221,8 @@ public class Services {
             let objects = ObjectContainer()
             objects.procedures = (result?.procedures.filter { $0.isDirty() == true || $0.hasNewChildren } )!
             objects.issues = (result?.issues.filter { $0.id < 0 || $0.isDirty() == true })!
+            objects.workpapers = (result?.workpapers.filter { $0.id < 0 || $0.isDirty() == true })!
+            objects.attachments = (result?.attachments.filter { $0.id < 0 || $0.isDirty() == true })!
             sendDataToServer(objects) {
                 completed(result:$0)
             }
