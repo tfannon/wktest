@@ -122,20 +122,27 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     }
     
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-//        let id = (items[row.rowIndex] as! Workpaper).attachmentId
-//        Services.getAttachment(id) { result in
-//            if self.documentInteractionController == nil {
-//                self.documentInteractionController = UIDocumentInteractionController()
-//                self.documentInteractionController.delegate = self
-//            }
-//            self.documentInteractionController.URL = NSURL(fileURLWithPath: result)
-//            self.documentInteractionController.presentPreviewAnimated(true)
-//        }
-        let workpaper = items[row.rowIndex] as! Workpaper
-        let controller = BaseFormController.create(.Workpaper)
-        controller.primaryObject = workpaper
-        controller.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(controller, animated: true)
+        let wp = items[row.rowIndex] as! Workpaper
+        let att = Services.loadObjects([.Attachment], explicitIds: [wp.attachmentId])!.attachments.first!
+        let data = NSData(base64EncodedString: att.attachmentData!, options: .IgnoreUnknownCharacters)
+        
+        let baseUrl = Services.storageProviderLocation
+            .URLByAppendingPathExtension(wp.attachmentTitle!)
+            .URLByAppendingPathExtension(wp.attachmentExtension!)
+        FileHelper.deleteFile(baseUrl)
+        data!.writeToURL(baseUrl, atomically: true)
+        if self.documentInteractionController == nil {
+            self.documentInteractionController = UIDocumentInteractionController()
+            self.documentInteractionController.delegate = self
+        }
+        self.documentInteractionController.URL = baseUrl
+        self.documentInteractionController.presentPreviewAnimated(true)
+        
+//        let workpaper = items[row.rowIndex] as! Workpaper
+//        let controller = BaseFormController.create(.Workpaper)
+//        controller.primaryObject = workpaper
+//        controller.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK: - DocumentInteractionController

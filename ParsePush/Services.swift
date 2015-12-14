@@ -445,7 +445,8 @@ public class Services {
             let ids = objects.map { $0.id! }
             let idListKey = DataKey.getKeyForIdList(objects)
             NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
-            objects.each { saveObject($0, log: objects is [Attachment]) }
+            objects.each { saveObjectImpl($0, log: objects is [Attachment]) }
+            //objects.each { saveObject($0, log: objects is [Attachment]) }
         }
     }
 
@@ -545,6 +546,7 @@ public class Services {
             var procedures = [Procedure]()
             var workpapers = [Workpaper]()
             var issues = [Issue]()
+            var attachments = [Attachment]()
             if types.contains(.Procedure) {
                 procedures = loadObjectsImpl(explicitIds) ?? [Procedure]()
             }
@@ -554,13 +556,17 @@ public class Services {
             if types.contains(.Issue) {
                 issues = loadObjectsImpl(explicitIds) ?? [Issue]()
             }
-            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+            if types.contains(.Attachment) {
+                attachments = loadObjectsImpl(explicitIds) ?? [Attachment]()
+            }
+            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues, attachments: attachments)
         }
         else if let
-            procedures:  [Procedure] = loadObjectsImpl(),
-            workpapers:  [Workpaper] = loadObjectsImpl(),
-            issues:      [Issue] =     loadObjectsImpl() {
-            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues)
+            procedures:  [Procedure] =  loadObjectsImpl(),
+            workpapers:  [Workpaper] =  loadObjectsImpl(),
+            issues:      [Issue] =      loadObjectsImpl(),
+            attachments: [Attachment] = loadObjectsImpl() {
+            objects = ObjectContainer(procedures: procedures, workpapers: workpapers, issues: issues, attachments: attachments)
         }
         return objects
     }
@@ -582,6 +588,11 @@ public class Services {
             ids = explicitIds ?? loadIssueIds()
             keyFunc = DataKey.getIssueKey
         }
+        else if T.self is Attachment.Type {
+            ids = explicitIds ?? loadAttachmentIds()
+            keyFunc = DataKey.getAttachmentKey
+        }
+            
         else {
             preconditionFailure("loadObjects not implemented for \(T.self)")
         }

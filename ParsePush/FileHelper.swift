@@ -33,6 +33,14 @@ class FileHelper {
         return NSURL(fileURLWithPath: tmpName)
     }
     
+    static func deleteFile(sourceUrl: NSURL) {
+        let path = sourceUrl.path!
+        let fileManager = NSFileManager.defaultManager()
+        if fileManager.fileExistsAtPath(path) {
+            try! fileManager.removeItemAtPath(path)
+        }
+    }
+    
     static func deleteDirectory(directoryUrl: NSURL) {
         let fileManager = NSFileManager.defaultManager()
         let enumerator = fileManager.enumeratorAtPath(directoryUrl.path!)
