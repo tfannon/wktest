@@ -134,14 +134,15 @@ extension FormHelper {
     
     private func createObjectCellData<T : BaseObject>(baseObject : T, visible : Bool) -> CellData {
         
-        // image name is handled differently for workpapers
+        // image used for workpapers.  other objects dont use one
         let workpaper = baseObject as? Workpaper
-        let issue = baseObject as? Issue
-        
+        let imageName = workpaper != nil ? workpaper!.documentType?.imageName ?? "icon_document" : ""
+//        else {
+//           baseObject.objectType.imageName
+//        }
+
         let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
-            imageName: (workpaper != nil) ?
-                (workpaper!.documentType?.imageName ?? "icon_document") :
-                baseObject.objectType.imageName,
+            imageName: imageName,
             willDisplay: { cell, data in
                 cell.accessoryType = .DisclosureIndicator
                 cell.userInteractionEnabled = true
@@ -201,7 +202,6 @@ extension FormHelper : WorkpaperChooserDelegate {
     }}
         
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
-        let controller = self.controller as! BaseFormController
         self.controllerAsDelegate.childSaved(workpaper)
     }
 }
