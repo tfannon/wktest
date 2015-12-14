@@ -70,11 +70,11 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
     internal func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
             let jpg = UIImageJPEGRepresentation(image, 0.0) {
-                let workpaper = Workpaper.create(self.delegate.workpaperOwner) as Workpaper
+                let workpaper = BaseObject.create(ObjectType.Workpaper, parent: self.delegate.workpaperOwner) as! Workpaper
                 workpaper.title = _title
                 workpaper.oDescription = _description
                 
-                let attachment = Attachment.create(workpaper) as Attachment
+                let attachment = Attachment.create(.Attachment, parent: workpaper) as! Attachment
                 attachment.attachmentData = jpg.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
                 Services.saveObject(attachment, log: true)
                 

@@ -87,7 +87,7 @@ extension FormHelper {
                     let vc = BaseFormController.create(objectType)
                     vc.parentForm = self.controllerAsDelegate
                     vc.parent = self.controllerAsDelegate.primaryObject
-                    vc.primaryObject = Issue.create(vc.parent as! Procedure)
+                    vc.primaryObject = BaseObject.create(objectType, parent: vc.parent)
                     self.controllerAsDelegate.savedChildIndexPath = indexPath
                     self.controller.navigationController?.pushViewController(vc, animated: true)
                 }
