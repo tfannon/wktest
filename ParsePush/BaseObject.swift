@@ -17,11 +17,25 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     required override init() {
     }
     
-    class func create<T : BaseObject>(parent: BaseObject) -> T {
-        let o = T()
+    class func create(objectType : ObjectType, parent: BaseObject?) -> BaseObject {
+        var o : BaseObject
+        switch objectType {
+        case .Procedure:
+            o = Procedure()
+        case .Issue:
+            o = Issue()
+        case .Workpaper:
+            o = Workpaper()
+        case .Attachment:
+            o = Attachment()
+        default:
+            fatalError("Missed One!")
+        }
         o.id = Application.getNewId()
-        o.parentType = parent.objectType.rawValue
-        o.parentTitle = parent.title
+        if let p = parent {
+            o.parentType = p.objectType.rawValue
+            o.parentTitle = p.title
+        }
         o.workflowState = WorkflowState.NotStarted.rawValue
         return o
     }
