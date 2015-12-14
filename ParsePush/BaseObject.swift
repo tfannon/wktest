@@ -68,19 +68,18 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
         return ObjectType.None
     }
     
+    // only go looking for a realized child if there are ids
     // issues
     var issues : [Issue] {
-        var issues = [Issue]()
-        Services.getMyData(objectTypes: [.Issue], explicitIds: self.issueIds) { result in
-            issues = result!.issues }
-        return issues
+        let local = Services.loadObjects([.Issue], explicitIds: self.issueIds)!
+        print ("\t\(local.issues.count) child issues")
+        return local.issues
     }
     // workpapers
     var workpapers : [Workpaper] {
-        var workpapers = [Workpaper]()
-        Services.getMyData(objectTypes: [.Workpaper], explicitIds: self.workpaperIds) { result in
-            workpapers = result!.workpapers }
-        return workpapers
+        let local = Services.loadObjects([.Workpaper], explicitIds: self.workpaperIds)!
+        print ("\t\(local.workpapers.count) child workpapers")
+        return local.workpapers
     }
     
     var issueIds = [Int]()

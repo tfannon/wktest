@@ -41,6 +41,10 @@ class ObjectContainer : Mappable, CustomStringConvertible {
         attachments <- map["Attachments"]
     }
     
+    var any: Bool {
+        return procedures.any || workpapers.any || issues.any || attachments.any
+    }
+    
     var description: String {
         return ("\(procedures.count) procs, \(workpapers.count) workpapers, \(issues.count) issues  \(attachments.count)")
     }
