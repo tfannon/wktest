@@ -309,7 +309,6 @@
                         <segue destination="WkL-bK-6Vb" kind="relationship" relationship="viewControllers" id="60r-0I-UqT"/>
                         <segue destination="t4T-QP-yTb" kind="relationship" relationship="viewControllers" id="akF-Ho-Btp"/>
                         <segue destination="at1-ED-CIF" kind="relationship" relationship="viewControllers" id="fUW-Zo-WsT"/>
-                        <segue destination="j1m-mE-xI7" kind="relationship" relationship="viewControllers" id="e5W-8l-QQH"/>
                         <segue destination="d0z-2q-xr7" kind="relationship" relationship="viewControllers" id="hMD-Qa-Ifr"/>
                     </connections>
                 </tabBarController>
@@ -616,11 +615,11 @@
             </objects>
             <point key="canvasLocation" x="-772" y="2891"/>
         </scene>
-        <!--TestSplit-->
+        <!--Split View-->
         <scene sceneID="etG-5q-rQQ">
             <objects>
                 <splitViewController id="d0z-2q-xr7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="TestSplit" image="854-list" id="7jM-KI-Axc"/>
+                    <tabBarItem key="tabBarItem" title="Split View" image="854-list" id="7jM-KI-Axc"/>
                     <connections>
                         <segue destination="KKX-nm-mNZ" kind="relationship" relationship="masterViewController" id="FME-p2-46D"/>
                         <segue destination="3fh-yM-0de" kind="relationship" relationship="detailViewController" id="09Y-1L-G3P"/>

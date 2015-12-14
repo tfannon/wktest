@@ -10,8 +10,12 @@ import Foundation
 import UIKit
 
 
-class ProcedureGridController: BaseGridController {
+class ProcedureGridController: BaseGridController, SDataGridPullToActionDelegate {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
@@ -93,7 +97,7 @@ class ProcedureGridController: BaseGridController {
                 
             case "testResults": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
-            case "dueDate": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), sortMode: SDataGridColumnSortModeTriState)
+            case "dueDate": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
             case "reviewDueDate": addColumnWithTitle(key, title: title, width: width, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
@@ -167,15 +171,16 @@ class ProcedureGridController: BaseGridController {
         controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
     }
+ 
     
-//    override func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-//        Services.sync { result in
-//            self.items = result!.procedures
-//            self.dataSourceHelper.data = self.items
-//            self.grid.pullToAction.actionCompleted()
-//        }
-//    }
-//    
+    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
+        Services.sync { result in
+            self.items = result!.procedures
+            self.dataSourceHelper.data = self.items
+            self.grid.pullToAction.actionCompleted()
+        }
+    }
+//
     /*
     func shinobiDataGrid(grid: ShinobiDataGrid!, didChangeSortOrderForColumn column: SDataGridColumn!, to newSortOrder: SDataGridColumnSortOrder) {
         if newSortOrder == SDataGridColumnSortOrderNone {
