@@ -240,6 +240,7 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     }
     
     func navbarSaveClicked() {
+        self.navigationItem.rightBarButtonItem?.enabled = false
         Services.saveObject(self.primaryObject, parent: self.parent, log: true)
         parentForm?.childSaved(self.primaryObject)
         dismiss()
