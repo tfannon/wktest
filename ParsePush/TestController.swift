@@ -11,7 +11,7 @@ import ObjectMapper
 import Alamofire
 
 
-class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperChooserDelegate {
+class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperChooserDelegate, ProgressDelegate {
 
     //MARK: - WorkpaperChooserDelegate
     var procedure: Procedure?
@@ -190,9 +190,16 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     @IBAction func sync2Pressed(sender: AnyObject) {
         self.lblSync.text = ""
-        Services.sync2 { result in
+        progressBar.setProgress(0, animated: false)
+        progressBar.hidden = false
+        Services.sync2(self) { result in
             self.lblSync.text = result!.description
+            self.progressBar.hidden = false
         }
+    }
+    
+    func setProgress(current: Float, total: Float) {
+        progressBar.setProgress(current/total, animated: true)
     }
     
     @IBAction func downloadPressed(sender: AnyObject) {

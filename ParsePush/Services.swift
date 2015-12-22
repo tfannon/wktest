@@ -16,29 +16,11 @@ public class Services {
     static var userName = "joe.tester"
     static var deviceToken = ""
     static var mock = false
+    private static var syncFileName = "sync.json"
 
     static var appGroupStorageDirectory = "File Provider Storage"
-    
-    internal static func initializeServices() {
-        
-        //grab the default ipaddress from last used
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let ipAddress = defaults.objectForKey("ipAddress") as? String {
-            Services.ipAddress = ipAddress
-        }
-        if let userName = defaults.objectForKey("userName") as? String {
-            Services.userName = userName
-        }
-        if let mock = defaults.objectForKey("mock") as? Bool {
-            Services.mock = mock
-        }
-    
-    }
-    
-    public static func setDeviceToken(token: NSData) {
-        Services.deviceToken = tokenToString(token)
-    }
-    
+
+    //MARK: - computed variables
     static var loginUrl: String {
         return "http://\(Services.ipAddress)/Offline/api/login"
     }
@@ -47,7 +29,7 @@ public class Services {
         return "http://\(Services.ipAddress)/Offline/api/Notification"
     }
     
-    static var procedureUrl: String {
+    static var offlineUrl: String {
         return "http://\(Services.ipAddress)/Offline/api/Offline"
     }
     
@@ -65,9 +47,34 @@ public class Services {
         return NSUserDefaults.init(suiteName: Shared.appGroupName)!
     }
     
+    private static var syncFileUrl: NSURL {
+        return FileHelper.getUrlUsingDocumentsDirectory(syncFileName)
+    }
+    
+    //MARK: - Initialization
+    static func initializeServices() {
+        //grab the default ipaddress from last used
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ipAddress = defaults.objectForKey("ipAddress") as? String {
+            Services.ipAddress = ipAddress
+        }
+        if let userName = defaults.objectForKey("userName") as? String {
+            Services.userName = userName
+        }
+        if let mock = defaults.objectForKey("mock") as? Bool {
+            Services.mock = mock
+        }
+    }
+    
+    static func setDeviceToken(token: NSData) {
+        Services.deviceToken = tokenToString(token)
+    }
+    
+
+    
     //MARK:  Assessments
     static func getPOCAssessmentId(completed: (result: Int?)->()) {
-        Alamofire.request(.GET, procedureUrl + "/GetPOCAssessmentId", parameters: nil, headers:Services.headers, encoding: .JSON)
+        Alamofire.request(.GET, offlineUrl + "/GetPOCAssessmentId", parameters: nil, headers:Services.headers, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -197,7 +204,7 @@ public class Services {
             }
         }
         //if the store had nothing or we force a refresh fetch from services
-        Alamofire.request(.GET, procedureUrl + "/GetMyObjects", headers:Services.headers, parameters: nil, encoding: .JSON)
+        Alamofire.request(.GET, offlineUrl + "/GetMyObjects", headers:Services.headers, parameters: nil, encoding: .JSON)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let data):
@@ -214,8 +221,7 @@ public class Services {
     }
     
     //MARK: new sync with generated file
-
-    static func sync2(completed: (result: ObjectContainer?)->()) {
+    static func sync2(progress: ProgressDelegate, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         //grab all dirty objects from local store
         getMyData() {
@@ -224,60 +230,68 @@ public class Services {
             objects.issues = ($0?.issues.filter { $0.id < 0 || $0.isDirty() == true })!
             objects.workpapers = ($0?.workpapers.filter { $0.id < 0 || $0.isDirty() == true })!
             objects.attachments = ($0?.attachments.filter { $0.id < 0 || $0.isDirty() == true })!
+            print("\tdirty: \(objects)")
             //generate sync file on server
-            generateSyncFileOnServer(objects) { fileName in
-                downloadSyncFile(fileName) { _ in
-                    
+            generateSyncFileOnServer(objects) { serverFileName in
+                //now download this file
+                downloadSyncFile(progress, fileName: serverFileName) {
+                    //convert these to objects
+                    let objects = materializeSyncFile()
+                    completed(result: objects)
                 }
             }
         }
     }
     
-    private static func generateSyncFileOnServer(dirtyObjects: ObjectContainer, completed: (fileName: String)->()) {
+    private static func generateSyncFileOnServer(dirtyObjects: ObjectContainer, completed: (serverFileName: String)->()) {
         print(__FUNCTION__)
+        //let request = getRequest("GenerateDummySyncFile", data: dirtyObjects)
         let request = getRequest("GenerateSyncFile", data: dirtyObjects)
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
                 case .Success(let fileName):
-                    print("\tfilename:\(fileName)")
-                    completed(fileName: fileName as! String)
+                    print("\tserver filename:\(fileName)")
+                    completed(serverFileName: fileName as! String)
                 case .Failure(_, let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    private static func downloadSyncFile(fileName: String, completed: (result: ObjectContainer?)->()) {
+    private static func downloadSyncFile(progress: ProgressDelegate, fileName: String, completed: ()->()) {
         print(__FUNCTION__)
-        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
-
-        let url = "\(procedureUrl)/GetSyncFile?fileName=\(fileName)"
-        print("\tcalling \(url)")
-        Alamofire.download(.GET, url, destination: destination).progress {
-            bytesRead, totalBytesRead, totalBytesExpectedToRead in
-
-            dispatch_async(dispatch_get_main_queue()) {
-                //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
-                //self.progressBar.setProgress(Float(totalBytesRead) / Float(totalBytesExpectedToRead), animated: true)
-                print ("total:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
-                
-                if totalBytesRead == totalBytesExpectedToRead {
-                    //Once the download is finished, hide it
-                    print("done")
-                    //self.progressBar.hidden = false
-                    materializeSyncFile(completed)
-                }
-            }
+        //delete the file if its already there
+        FileHelper.deleteFile(syncFileUrl)
+       
+        //this is a closure that alamofire calls to which will return the location to store the local file
+        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = { tempURL, response in
+            print("\tsaving to \(syncFileUrl.URLString)")
+            return syncFileUrl
         }
+
+        let url = "\(offlineUrl)/GetSyncFile?fileName=\(fileName)"
+        print("\tcalling \(url)")
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                print ("\ttotal:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
+                //call on diff thread so we don't block download
+                dispatch_async(dispatch_get_main_queue()) {
+                    progress.setProgress(Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
+                }}
+            .response { _,_,_, error in
+                if error == nil {
+                    completed()
+                }}
     }
     
-    private static func materializeSyncFile(completed: (result: ObjectContainer?)->()) {
-        completed(result: nil)
+    
+    internal static func materializeSyncFile() -> ObjectContainer? {
+        //read the file from local storage and transform he json into objects
+        let data = NSData(contentsOfFile: syncFileUrl.path!)!
+        let json = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+        return Mapper<ObjectContainer>().map(json)
     }
-    
-    
-    
     
     //MARK: Sync
     //grab the dirty objects from the local store and send them to server
@@ -296,7 +310,8 @@ public class Services {
     }
     
     private static func getRequest(url: String, data: ObjectContainer) -> NSURLRequest {
-        let request = NSMutableURLRequest(URL: NSURL(string:  "\(procedureUrl)/\(url)")!)
+        let request = NSMutableURLRequest(URL: NSURL(string:  "\(offlineUrl)/\(url)")!)
+        print("\tcalling \(request.URLString)")
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -311,7 +326,7 @@ public class Services {
     private static func sendDataToServer(dirty: ObjectContainer, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         
-        let request = NSMutableURLRequest(URL: NSURL(string:  procedureUrl + "/Sync")!)
+        let request = NSMutableURLRequest(URL: NSURL(string:  offlineUrl + "/Sync")!)
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -714,7 +729,7 @@ public class Services {
             completed(destination)
             return
         }
-        Alamofire.download(.GET, procedureUrl + "/GetAttachment/\(id)", headers:Services.headers) { temporaryURL, response in
+        Alamofire.download(.GET, offlineUrl + "/GetAttachment/\(id)", headers:Services.headers) { temporaryURL, response in
             let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl:self.storageProviderLocation, fileName: response.suggestedFilename!)
             print("Downloaded file was stored at: \(destination.path!)")
             //write this location into the app group defaults.
@@ -732,7 +747,7 @@ public class Services {
     
     //test only
     static func getAttachment(completed: (String->())) {
-        Alamofire.download(.GET, procedureUrl + "/GetFile") { temporaryURL, response in
+        Alamofire.download(.GET, offlineUrl + "/GetFile") { temporaryURL, response in
             let destination = FileHelper.moveFile(temporaryURL, targetDirectoryUrl: self.storageProviderLocation, fileName: response.suggestedFilename!, overwrite: true)
             print("Downloaded file was stored at: \(destination.path!)")
             completed(destination.path!)

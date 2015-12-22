@@ -49,5 +49,13 @@ class FileHelper {
             try! fileManager.removeItemAtURL(directoryUrl.URLByAppendingPathComponent(file))
         }
     }
-
+    
+    static var documentsDirectory: NSURL {
+        return try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+    }
+    
+    static func getUrlUsingDocumentsDirectory(fileName: String) -> NSURL {
+        let url = documentsDirectory
+        return url.URLByAppendingPathComponent(fileName)
+    }
 }

@@ -16,3 +16,7 @@ protocol WorkpaperChooserDelegate {
     var owningViewController: UIViewController { get }
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper)
 }
+
+protocol ProgressDelegate {
+    func setProgress(current: Float, total: Float)
+}
