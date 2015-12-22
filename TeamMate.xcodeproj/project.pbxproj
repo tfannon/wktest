@@ -298,6 +298,13 @@
 		6527F6051C1E5DF100E89758 /* GridControllers */ = {
 			isa = PBXGroup;
 			children = (
+				65F4D0291C03C0FE009D7C0A /* BaseGridController.swift */,
+				65F4D0271C03C066009D7C0A /* IssueGridController.swift */,
+				659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */,
+				651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */,
+				6518EF771BD3464400DD558A /* DataGridImageCell.swift */,
+				668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */,
+				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 			);
 			name = GridControllers;
 			sourceTree = "<group>";
@@ -420,13 +427,6 @@
 				659A64C51BBEDEE10047AAD3 /* NotificationController.swift */,
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
-				65F4D0291C03C0FE009D7C0A /* BaseGridController.swift */,
-				65F4D0271C03C066009D7C0A /* IssueGridController.swift */,
-				659A64C71BBEDF050047AAD3 /* ProcedureGridController.swift */,
-				651A4C391BEE80E3008737A2 /* WorkpaperGridController.swift */,
-				6518EF771BD3464400DD558A /* DataGridImageCell.swift */,
-				668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */,
-				6643CDFE1BDFEFF100F16D52 /* ChangeDetailController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
 			);
 			name = UI;

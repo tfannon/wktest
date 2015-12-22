@@ -183,7 +183,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 procs, 1 workpaper" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-hO-BXD">
-                                <rect key="frame" x="174" y="269" width="211" height="21"/>
+                                <rect key="frame" x="174" y="269" width="357" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -197,6 +197,23 @@
                                     <rect key="frame" x="150" y="148" width="143" height="30"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRW-ka-F6C">
+                                <rect key="frame" x="145" y="387" width="94" height="30"/>
+                                <state key="normal" title="Download"/>
+                                <connections>
+                                    <action selector="downloadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Swx-D9-jfB"/>
+                                </connections>
+                            </button>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6a4-lr-sII">
+                                <rect key="frame" x="152" y="374" width="150" height="2"/>
+                            </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vic-Gf-3xU">
+                                <rect key="frame" x="113" y="302" width="76" height="30"/>
+                                <state key="normal" title="Sync2"/>
+                                <connections>
+                                    <action selector="sync2Pressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="844-cd-l01"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -247,6 +264,7 @@
                         <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
                         <outlet property="lblProcedures" destination="Kht-xO-4kp" id="Wzd-EA-ea5"/>
                         <outlet property="lblSync" destination="FFe-hO-BXD" id="ygS-qj-42A"/>
+                        <outlet property="progressBar" destination="6a4-lr-sII" id="N69-qA-ekE"/>
                         <outlet property="segMockMode" destination="QgD-cT-tdB" id="QiB-BG-SCm"/>
                         <outlet property="txtIPAddress" destination="zvx-9e-MNm" id="qV5-vQ-2hz"/>
                         <outlet property="txtUserName" destination="z25-cC-dZS" id="zBp-Ku-Hst"/>
@@ -447,25 +465,6 @@
             </objects>
             <point key="canvasLocation" x="-699" y="-21"/>
         </scene>
-        <!--Conversation-->
-        <scene sceneID="WSt-Te-bRl">
-            <objects>
-                <viewController id="j1m-mE-xI7" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ucj-Uc-khi"/>
-                        <viewControllerLayoutGuide type="bottom" id="7YL-PW-6ll"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vrh-hG-vAo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Conversation" image="779-users" id="WOQ-sm-doF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dur-qD-Gl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1795" y="1470"/>
-        </scene>
         <!--Issue Grid Controller-->
         <scene sceneID="ujz-jW-3kq">
             <objects>
@@ -662,7 +661,6 @@
         <image name="739-question" width="28" height="28"/>
         <image name="740-gear" width="28" height="28"/>
         <image name="756-bell" width="24" height="28"/>
-        <image name="779-users" width="28" height="25"/>
         <image name="791-warning" width="28" height="26"/>
         <image name="832-stack-1" width="28" height="22"/>
         <image name="854-list" width="26" height="16"/>

@@ -8,6 +8,7 @@
 
 import UIKit
 import ObjectMapper
+import Alamofire
 
 
 class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperChooserDelegate {
@@ -46,6 +47,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     @IBOutlet weak var segMockMode: UISegmentedControl!
     @IBOutlet weak var imgIPAddressResult: UIImageView!
     @IBOutlet weak var lblSync: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     //MARK: - Connection options
     @IBAction func segMockModeChanged(sender: UISegmentedControl) {
@@ -185,5 +187,44 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
     }
+    
+    @IBAction func sync2Pressed(sender: AnyObject) {
+        self.lblSync.text = ""
+        Services.sync2 { result in
+            self.lblSync.text = result!.description
+        }
+    }
+    
+    @IBAction func downloadPressed(sender: AnyObject) {
+        //let url = "http://ipv4.download.thinkbroadband.com/1GB.zip"
+        //let url = "http://ipv4.download.thinkbroadband.com/100MB.zip"
+        //let url = "http://ipv4.download.thinkbroadband.com/5MB.zip"
+        let url = "http://192.168.1.17/Offline/api/Offline/GetFile"
+        progressBar.setProgress(0, animated: false)
+        progressBar.hidden = false
+        //var destination = Services.storageProviderLocation
+        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+        
+
+        Alamofire.download(.GET, url, destination: destination).progress {
+            bytesRead, totalBytesRead, totalBytesExpectedToRead in
+            
+            //This closure is NOT called on the main queue for performance reasons !
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
+                self.progressBar.setProgress(Float(totalBytesRead) / Float(totalBytesExpectedToRead), animated: true)
+                
+                if totalBytesRead == totalBytesExpectedToRead {
+                    //Once the download is finished, hide it
+                    print(destination)
+                    self.progressBar.hidden = false
+                }
+            }
+        }
+        
+        
+    }
+    
 }
 

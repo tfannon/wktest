@@ -213,8 +213,74 @@ public class Services {
         }
     }
     
+    //MARK: new sync with generated file
+
+    static func sync2(completed: (result: ObjectContainer?)->()) {
+        print(__FUNCTION__)
+        //grab all dirty objects from local store
+        getMyData() {
+            let objects = ObjectContainer()
+            objects.procedures = ($0?.procedures.filter { $0.isDirty() == true || $0.hasNewChildren } )!
+            objects.issues = ($0?.issues.filter { $0.id < 0 || $0.isDirty() == true })!
+            objects.workpapers = ($0?.workpapers.filter { $0.id < 0 || $0.isDirty() == true })!
+            objects.attachments = ($0?.attachments.filter { $0.id < 0 || $0.isDirty() == true })!
+            //generate sync file on server
+            generateSyncFileOnServer(objects) { fileName in
+                downloadSyncFile(fileName) { _ in
+                    
+                }
+            }
+        }
+    }
+    
+    private static func generateSyncFileOnServer(dirtyObjects: ObjectContainer, completed: (fileName: String)->()) {
+        print(__FUNCTION__)
+        let request = getRequest("GenerateSyncFile", data: dirtyObjects)
+        Alamofire.request(request)
+            .responseJSON { request, response, result in
+                switch result {
+                case .Success(let fileName):
+                    print("\tfilename:\(fileName)")
+                    completed(fileName: fileName as! String)
+                case .Failure(_, let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+    }
+    
+    private static func downloadSyncFile(fileName: String, completed: (result: ObjectContainer?)->()) {
+        print(__FUNCTION__)
+        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+
+        let url = "\(procedureUrl)/GetSyncFile?fileName=\(fileName)"
+        print("\tcalling \(url)")
+        Alamofire.download(.GET, url, destination: destination).progress {
+            bytesRead, totalBytesRead, totalBytesExpectedToRead in
+
+            dispatch_async(dispatch_get_main_queue()) {
+                //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
+                //self.progressBar.setProgress(Float(totalBytesRead) / Float(totalBytesExpectedToRead), animated: true)
+                print ("total:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
+                
+                if totalBytesRead == totalBytesExpectedToRead {
+                    //Once the download is finished, hide it
+                    print("done")
+                    //self.progressBar.hidden = false
+                    materializeSyncFile(completed)
+                }
+            }
+        }
+    }
+    
+    private static func materializeSyncFile(completed: (result: ObjectContainer?)->()) {
+        completed(result: nil)
+    }
+    
+    
+    
+    
     //MARK: Sync
-    //grab the dirty procedures from the local store and send them to server
+    //grab the dirty objects from the local store and send them to server
     static func sync(completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         getMyData() { result in
@@ -227,6 +293,19 @@ public class Services {
                 completed(result:$0)
             }
         }
+    }
+    
+    private static func getRequest(url: String, data: ObjectContainer) -> NSURLRequest {
+        let request = NSMutableURLRequest(URL: NSURL(string:  "\(procedureUrl)/\(url)")!)
+        request.HTTPMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        //let json = Mapper().toJSONArray(dirty)
+        let json = Mapper().toJSON(data)
+        
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
+        request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
+        return request
     }
     
     private static func sendDataToServer(dirty: ObjectContainer, completed: (result: ObjectContainer?)->()) {
