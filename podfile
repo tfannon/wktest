@@ -11,3 +11,5 @@ pod 'DTFoundation/UIKit', '~> 1.7'
 
 pod 'RichEditorView'
 
+pod 'SwiftR'
+

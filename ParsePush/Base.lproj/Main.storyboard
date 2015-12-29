@@ -204,9 +204,6 @@
                                     <action selector="downloadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Swx-D9-jfB"/>
                                 </connections>
                             </button>
-                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6a4-lr-sII">
-                                <rect key="frame" x="152" y="374" width="150" height="2"/>
-                            </progressView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vic-Gf-3xU">
                                 <rect key="frame" x="113" y="302" width="76" height="30"/>
                                 <state key="normal" title="Sync2"/>
@@ -214,6 +211,16 @@
                                     <action selector="sync2Pressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="844-cd-l01"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bv1-xr-SkI">
+                                <rect key="frame" x="129" y="336" width="52" height="30"/>
+                                <state key="normal" title="SignalR"/>
+                                <connections>
+                                    <action selector="signalRPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="b3Z-pu-X7a"/>
+                                </connections>
+                            </button>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6a4-lr-sII">
+                                <rect key="frame" x="216" y="353" width="150" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>

@@ -9,6 +9,8 @@
 import UIKit
 import ObjectMapper
 import Alamofire
+import SwiftR
+
 
 
 class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteractionControllerDelegate, WorkpaperChooserDelegate, ProgressDelegate {
@@ -17,6 +19,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     var procedure: Procedure?
     var workpaperOwner: Procedure { return procedure! }
     var owningViewController: UIViewController  { return self }
+    
+    var hub: Hub!
+    var hubConnection: SignalR!
     
 
     //MARK: - view controller
@@ -34,7 +39,37 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         self.lblProcedures.text = ""
         self.lblNotifications.text = ""
         self.lblCount.text = ""
-    }
+        
+        //SwiftR (signalR support)
+        hubConnection = SwiftR.connect("http://\(Services.ipAddress)/SignalRChatBasic") { [weak self] connection in
+            connection.headers = ["userName":"joe.tester"]
+            self?.hub = connection.createHubProxy("chatHub")
+            self?.hub.on("sendProgress", parameters: ["message", "current", "total"]) { args in
+                let message = args!["message"] as! String
+                let current = args!["current"] as! Int
+                let total = args!["total"] as! Int
+                dispatch_async(dispatch_get_main_queue()) {
+                    self!.lblSync.text = message
+                    self!.progressBar.setProgress(Float(current) / Float(total), animated: true)
+                    if current == total {
+                        //Once the download is finished, hide it
+                        self!.lblSync.text = "Finished"
+                        self!.progressBar.hidden = true
+                    }
+                }
+            }
+            
+            connection.starting = {
+                print("Starting...")
+            }
+            
+            connection.connected = {
+                print("Connected. Connection ID: \(connection.connectionID!)")
+            }
+        }
+        
+        
+   }
     
     
     //MARK: - Outlets
@@ -186,6 +221,22 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
+    }
+    
+    
+   @IBAction func signalRPressed(sender: AnyObject) {
+        progressBar.setProgress(0, animated: false)
+        progressBar.hidden = false
+        hub.invoke("send", arguments: ["Tommy", "This is a simple message"]) { (result, error) in
+            if let e = error {
+                print(e)
+            }
+        }
+        hub.invoke("initiateSync", arguments: ["Tommy"]) { (result, error) in
+            if let e = error {
+                print(e)
+            }
+        }
     }
     
     @IBAction func sync2Pressed(sender: AnyObject) {
