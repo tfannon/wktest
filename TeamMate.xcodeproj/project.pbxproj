@@ -80,6 +80,7 @@
 		664F2A941C1C74C90005C27D /* Workpaper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664F2A931C1C74C90005C27D /* Workpaper.storyboard */; };
 		664F2A971C1C7AB80005C27D /* BaseFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A961C1C7AB80005C27D /* BaseFormController.swift */; };
 		664F2A991C1C9CD80005C27D /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A981C1C9CD80005C27D /* CellData.swift */; };
+		664F54E31C336CAA005D1326 /* WorkpaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
@@ -231,6 +232,7 @@
 		664F2A931C1C74C90005C27D /* Workpaper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Workpaper.storyboard; sourceTree = "<group>"; };
 		664F2A961C1C7AB80005C27D /* BaseFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFormController.swift; sourceTree = "<group>"; };
 		664F2A981C1C9CD80005C27D /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperPreview.swift; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
+				664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				65E85BB71BB8E99B00C5C272 /* Notification.swift in Sources */,
 				65890DFA1BC763D700506192 /* Procedure.swift in Sources */,
 				66FFCBA91C1A1D5A0001BF38 /* IssueFormController.swift in Sources */,
+				664F54E31C336CAA005D1326 /* WorkpaperPreview.swift in Sources */,
 				65768AE11BA641C500DADD43 /* AppDelegate.swift in Sources */,
 				659A64C81BBEDF050047AAD3 /* ProcedureGridController.swift in Sources */,
 				66E55B291C11F16600733A3B /* SwiftColorPickerViewController.swift in Sources */,

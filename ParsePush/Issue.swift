@@ -31,17 +31,6 @@ class Issue : BaseObject {
         return term[key] ?? BaseObject.baseTerm[key]!
     }
 
-    /*
-    class func create(parent: Procedure) -> Issue {
-        let i = Issue()
-        i.id = Application.getNewId()
-        i.parentType = parent.objectType.rawValue
-        i.parentTitle = parent.title
-        i.workflowState = WorkflowState.NotStarted.rawValue
-        return i
-    }
-    */
-    
     var businessContact: String = ""
     var manager: String = ""
     var reviewer: String = ""
