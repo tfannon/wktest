@@ -41,9 +41,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         self.lblCount.text = ""
         
         //SwiftR (signalR support)
-        hubConnection = SwiftR.connect("http://\(Services.ipAddress)/SignalRChatBasic") { [weak self] connection in
+        hubConnection = SwiftR.connect("http://\(Services.ipAddress)/Offline") { [weak self] connection in
             connection.headers = ["userName":"joe.tester"]
-            self?.hub = connection.createHubProxy("chatHub")
+            self?.hub = connection.createHubProxy("progressHub")
             self?.hub.on("sendProgress", parameters: ["message", "current", "total"]) { args in
                 let message = args!["message"] as! String
                 let current = args!["current"] as! Int
