@@ -101,7 +101,8 @@ class IssueFormController: BaseFormController {
             ])
         
         formHelper.addSection("Properties", data: [
-            CellData(identifier: "TextCellWithLabel", value: self.issue.numericValue1,                 willDisplay: formHelper.getTextCellWillDisplay(
+            CellData(identifier: "TextCellWithLabel", value: self.issue.numericValue1,
+                willDisplay: formHelper.getTextCellWillDisplay(
                 UIKeyboardType.DecimalPad,
                 label: self.t("numericValue1")),
                 changed: { cell, _ in
