@@ -116,6 +116,9 @@ class BaseObject : NSObject, Mappable, CustomDebugStringConvertible {
     
     var isMapping = false
     
+    // dummy property for grid
+    var preview = ""
+    
     func mapping(map: Map) {
         isMapping = true
         id <- map["Id"]

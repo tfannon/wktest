@@ -10,9 +10,15 @@ import Foundation
 import UIKit
 
 
-class WorkpaperGridController: BaseGridController, UIDocumentInteractionControllerDelegate {
+class WorkpaperGridController: BaseGridController, WorkpaperPreviewerDelegate {
     
-    var documentInteractionController: UIDocumentInteractionController!
+    private let PREVIEW_TAG = 1
+    
+    lazy var documentInteractionController: UIDocumentInteractionController! = {
+        var v = UIDocumentInteractionController()
+        v.delegate = self
+        return v
+    }()
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
@@ -38,15 +44,38 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     
     override func addColumns() {
         if gridColumnsOrder == nil {
-            gridColumnsOrder = ["sync","title","attachmentExtension","parentType","parentTitle","workflowState","workflowStateTitle","manager","dueDate","reviewer","reviewDueDate"]
+            gridColumnsOrder = [
+                "sync",
+                "preview",
+                "title",
+                "attachmentExtension",
+                "parentType",
+                "parentTitle",
+                "workflowState",
+                "workflowStateTitle",
+                "manager",
+                "dueDate",
+                "reviewer",
+                "reviewDueDate"]
         }
         for (var i=0;i<gridColumnsOrder.count;i++) {
             let key = gridColumnsOrder[i]
-            let title = Workpaper.getTerminology(key)
+            var title = ""
+            switch key {
+            case "preview":
+                title = ""
+            default:
+                title = Workpaper.getTerminology(key)
+            }
+
             switch key {
                 
-            case "sync": addColumnWithTitle(key, title: "Sync", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
+            case "sync":
+                addColumnWithTitle(key, title: "Sync", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5))
                 
+            case "preview":
+                addColumnWithTitle(key, title: "", width: 50, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), cellClass:DataGridImageCell.self)
+
             case "title": addColumnWithTitle(key, title: title, width: 220, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
                 
             case "attachmentExtension": addColumnWithTitle(key, title: "Type", width: 75, textAlignment: NSTextAlignment.Left, edgeInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), cellClass:DataGridImageCell.self)
@@ -71,80 +100,76 @@ class WorkpaperGridController: BaseGridController, UIDocumentInteractionControll
     func dataGridDataSourceHelper(helper: SDataGridDataSourceHelper!, populateCell cell: SDataGridCell!, withValue value: AnyObject!, forProperty propertyKey: String!, sourceObject object: AnyObject!) -> Bool {
         let workpaper = object as! Workpaper
         
-        switch (propertyKey) {
-        case "sync" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.textField.text = workpaper.syncState.displayName
-            switch workpaper.syncState {
-            case .New :
-                wCell.backgroundColor = UIColor.lightGrayColor()
-            case .Modified :
-                wCell.backgroundColor = UIColor.lightGrayColor()
-            case .Dirty:""
-            case .Unchanged:
-                wCell.textField.text = ""
+            switch (propertyKey) {
+            case "sync" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.textField.text = workpaper.syncState.displayName
+                switch workpaper.syncState {
+                case .New :
+                    wCell.backgroundColor = UIColor.lightGrayColor()
+                case .Modified :
+                    wCell.backgroundColor = UIColor.lightGrayColor()
+                case .Dirty:""
+                case .Unchanged:
+                    wCell.textField.text = ""
+                }
+                return true
+            
+            case "preview":
+                let wCell = cell as! DataGridImageCell
+                wCell.setImage("binoculars")
+                return true
+                
+            case "attachmentExtension" :
+                let wCell = cell as! DataGridImageCell
+                wCell.documentType = DocumentType(rawValue: workpaper.attachmentExtension!)
+                return true
+                
+            case "workflowState" :
+                let wCell = cell as! DataGridImageCell
+                wCell.state = WorkflowState(rawValue: workpaper.workflowState)!
+                return true
+                
+            case "parentType" :
+                let wCell = cell as! DataGridImageCell
+                wCell.parentType = ObjectType(rawValue: workpaper.parentType)!
+                return true
+                
+            case "dueDate" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.text =  workpaper.dueDate?.toShortString()
+                return true
+                
+            case "reviewDueDate" :
+                let wCell = cell as! SDataGridTextCell
+                wCell.text =  workpaper.reviewDueDate?.toShortString()
+                return true
+                
+            default: return false
             }
-            return true
-            
-        case "attachmentExtension" :
-            let wCell = cell as! DataGridImageCell
-            wCell.documentType = DocumentType(rawValue: workpaper.attachmentExtension!)  
-            return true
-            
-        case "sync" :
-            let wCell = cell as! DataGridImageCell
-            wCell.documentType = DocumentType(rawValue: workpaper.attachmentExtension!)!
-            return true
-            
-        case "workflowState" :
-            let wCell = cell as! DataGridImageCell
-            wCell.state = WorkflowState(rawValue: workpaper.workflowState)!
-            return true
-            
-        case "parentType" :
-            let wCell = cell as! DataGridImageCell
-            wCell.parentType = ObjectType(rawValue: workpaper.parentType)!
-            //wCell.imageProvider = ObjectType(rawValue: workpaper.parentType)!
-            return true
-            
-        case "dueDate" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text =  workpaper.dueDate?.toShortString()
-            return true
-            
-        case "reviewDueDate" :
-            let wCell = cell as! SDataGridTextCell
-            wCell.text =  workpaper.reviewDueDate?.toShortString()
-            return true
-            
-        default: return false
-        }
     }
     
+    var previewColumnWasSelected = false
+    func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectCellAtCoordinate gridCoordinate: SDataGridCoord!) {
+        previewColumnWasSelected = gridCoordinate.column.propertyKey == "preview"
+        grid.setSelectedRows([ gridCoordinate.row ])
+    }
+
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {
-        let wp = items[row.rowIndex] as! Workpaper
-        let att = Services.loadObjects([.Attachment], explicitIds: [wp.attachmentId])!.attachments.first!
-        let data = NSData(base64EncodedString: att.attachmentData!, options: .IgnoreUnknownCharacters)
-        
-        let baseUrl = Services.storageProviderLocation
-            .URLByAppendingPathExtension(wp.attachmentTitle!)
-            .URLByAppendingPathExtension(wp.attachmentExtension!)
-        FileHelper.deleteFile(baseUrl)
-        data!.writeToURL(baseUrl, atomically: true)
-        if self.documentInteractionController == nil {
-            self.documentInteractionController = UIDocumentInteractionController()
-            self.documentInteractionController.delegate = self
+        let workpaper = items[row.rowIndex] as! Workpaper
+        if previewColumnWasSelected {
+            // preview the workpaper
+            WorkpaperHelper.preview(self, workpaper: workpaper)
         }
-        self.documentInteractionController.URL = baseUrl
-        self.documentInteractionController.presentPreviewAnimated(true)
-        
-//        let workpaper = items[row.rowIndex] as! Workpaper
-//        let controller = BaseFormController.create(.Workpaper)
-//        controller.primaryObject = workpaper
-//        controller.hidesBottomBarWhenPushed = true
-//        navigationController?.pushViewController(controller, animated: true)
+        else {
+            // open the form
+            let controller = BaseFormController.create(.Workpaper)
+            controller.primaryObject = workpaper
+            controller.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
-    
+
     //MARK: - DocumentInteractionController
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return self
