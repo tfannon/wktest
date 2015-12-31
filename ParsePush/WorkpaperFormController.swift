@@ -9,8 +9,14 @@
 import UIKit
 import DTFoundation
 
-class WorkpaperFormController: BaseFormController {
+class WorkpaperFormController: BaseFormController, WorkpaperPreviewerDelegate {
     private var workpaper : Workpaper { get { return self.primaryObject as! Workpaper } }
+    
+    lazy var documentInteractionController: UIDocumentInteractionController! = {
+        var v = UIDocumentInteractionController()
+        v.delegate = self
+        return v
+    }()
     
     //MARK: - Helpers
     private func t(key : String) -> String {
@@ -61,6 +67,15 @@ class WorkpaperFormController: BaseFormController {
                         self.enableSave()
                 }),
             ])
+
+        formHelper.addSection("", data: [
+            CellData(identifier: "_PreviewCell", label: "Preview", imageName: "binoculars",
+                willDisplay: { cell, data in
+                    cell.accessoryType = .None
+                },
+                selected: { cell, data, indexPath in
+                    WorkpaperHelper.preview(self, workpaper: self.workpaper)
+            })])
         
         formHelper.addSection("Workflow",
             data: [formHelper.getWorkflowCellData(self, workflowObject: workpaper)])
@@ -93,6 +108,24 @@ class WorkpaperFormController: BaseFormController {
                     self.enableSave()
             })
             ])
+    }
+
+    //MARK: - DocumentInteractionController
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    
+    func documentInteractionControllerWillBeginPreview(controller: UIDocumentInteractionController) {
+        
+    }
+    
+    func documentInteractionControllerDidEndPreview(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerWillPresentOpenInMenu(controller: UIDocumentInteractionController) {
+    }
+    
+    func documentInteractionControllerDidDismissOpenInMenu(controller: UIDocumentInteractionController) {
     }
 }
 

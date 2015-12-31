@@ -12,8 +12,6 @@ import UIKit
 
 class WorkpaperGridController: BaseGridController, WorkpaperPreviewerDelegate {
     
-    private let PREVIEW_TAG = 1
-    
     lazy var documentInteractionController: UIDocumentInteractionController! = {
         var v = UIDocumentInteractionController()
         v.delegate = self
