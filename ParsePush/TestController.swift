@@ -41,9 +41,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         self.lblCount.text = ""
         
         //SwiftR (signalR support)
-        hubConnection = SwiftR.connect("http://\(Services.ipAddress)/SignalRChatBasic") { [weak self] connection in
+        hubConnection = SwiftR.connect("http://\(Services.ipAddress)/Offline") { [weak self] connection in
             connection.headers = ["userName":"joe.tester"]
-            self?.hub = connection.createHubProxy("chatHub")
+            self?.hub = connection.createHubProxy("progressHub")
             self?.hub.on("sendProgress", parameters: ["message", "current", "total"]) { args in
                 let message = args!["message"] as! String
                 let current = args!["current"] as! Int
@@ -227,11 +227,6 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
    @IBAction func signalRPressed(sender: AnyObject) {
         progressBar.setProgress(0, animated: false)
         progressBar.hidden = false
-        hub.invoke("send", arguments: ["Tommy", "This is a simple message"]) { (result, error) in
-            if let e = error {
-                print(e)
-            }
-        }
         hub.invoke("initiateSync", arguments: ["Tommy"]) { (result, error) in
             if let e = error {
                 print(e)
@@ -249,7 +244,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         }
     }
     
-    func setProgress(current: Float, total: Float) {
+    func setProgress(message: String, current: Float, total: Float) {
+        self.lblSync.text = message
         progressBar.setProgress(current/total, animated: true)
     }
     
@@ -257,32 +253,24 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         //let url = "http://ipv4.download.thinkbroadband.com/1GB.zip"
         //let url = "http://ipv4.download.thinkbroadband.com/100MB.zip"
         //let url = "http://ipv4.download.thinkbroadband.com/5MB.zip"
-        let url = "http://192.168.1.17/Offline/api/Offline/GetFile"
+        let url = "\(Services.offlineUrl)/GetFile"
+
         progressBar.setProgress(0, animated: false)
         progressBar.hidden = false
-        //var destination = Services.storageProviderLocation
-        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
         
-
-        Alamofire.download(.GET, url, destination: destination).progress {
-            bytesRead, totalBytesRead, totalBytesExpectedToRead in
-            
-            //This closure is NOT called on the main queue for performance reasons !
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
-                self.progressBar.setProgress(Float(totalBytesRead) / Float(totalBytesExpectedToRead), animated: true)
-                
-                if totalBytesRead == totalBytesExpectedToRead {
-                    //Once the download is finished, hide it
-                    print(destination)
-                    self.progressBar.hidden = false
-                }
-            }
-        }
+        let destination = FileHelper.prepFileForDownload(Services.syncFileUrl)
         
-        
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                //This closure is NOT called on the main queue for performance reasons !
+                dispatch_async(dispatch_get_main_queue()) {
+                    //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
+                    self.setProgress("Downloading", current: Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
+                }}
+            .response { _,_,_, error in
+                if error == nil {
+                    self.lblSync.text = "Finished"
+                }}
     }
-    
 }
 

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Alamofire
+
 
 class FileHelper {
     //return the url of the location where it was stored.
@@ -39,6 +41,18 @@ class FileHelper {
         if fileManager.fileExistsAtPath(path) {
             try! fileManager.removeItemAtPath(path)
         }
+    }
+    
+    //this will clear the destination path and return a closure which can be used by alamofire to call for the location to move the file
+    static func prepFileForDownload(url: NSURL) -> Request.DownloadFileDestination {
+        FileHelper.deleteFile(url)
+        
+        //this is a closure that alamofire calls to which will return the location to store the local file
+        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = { tempURL, response in
+            print("\tsaving to \(url.URLString)")
+            return url
+        }
+        return destination
     }
     
     static func deleteDirectory(directoryUrl: NSURL) {
