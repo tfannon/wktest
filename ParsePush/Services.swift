@@ -47,7 +47,7 @@ public class Services {
         return NSUserDefaults.init(suiteName: Shared.appGroupName)!
     }
     
-    private static var syncFileUrl: NSURL {
+    static var syncFileUrl: NSURL {
         return FileHelper.getUrlUsingDocumentsDirectory(syncFileName)
     }
     
@@ -232,7 +232,7 @@ public class Services {
             objects.attachments = ($0?.attachments.filter { $0.id < 0 || $0.isDirty() == true })!
             print("\tdirty: \(objects)")
             //generate sync file on server
-            generateSyncFileOnServer(objects) { serverFileName in
+            generateSyncFileOnServer(progress, dirtyObjects: objects) { serverFileName in
                 //now download this file
                 downloadSyncFile(progress, fileName: serverFileName) {
                     //convert these to objects
@@ -243,9 +243,8 @@ public class Services {
         }
     }
     
-    private static func generateSyncFileOnServer(dirtyObjects: ObjectContainer, completed: (serverFileName: String)->()) {
+    private static func generateSyncFileOnServer(progress: ProgressDelegate, dirtyObjects: ObjectContainer, completed: (serverFileName: String)->()) {
         print(__FUNCTION__)
-        //let request = getRequest("GenerateDummySyncFile", data: dirtyObjects)
         let request = getRequest("GenerateSyncFile", data: dirtyObjects)
         Alamofire.request(request)
             .responseJSON { request, response, result in
@@ -261,23 +260,17 @@ public class Services {
     
     private static func downloadSyncFile(progress: ProgressDelegate, fileName: String, completed: ()->()) {
         print(__FUNCTION__)
-        //delete the file if its already there
-        FileHelper.deleteFile(syncFileUrl)
-       
-        //this is a closure that alamofire calls to which will return the location to store the local file
-        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = { tempURL, response in
-            print("\tsaving to \(syncFileUrl.URLString)")
-            return syncFileUrl
-        }
-
+        
+        let destination = FileHelper.prepFileForDownload(syncFileUrl)
         let url = "\(offlineUrl)/GetSyncFile?fileName=\(fileName)"
+        
         print("\tcalling \(url)")
         Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-                print ("\ttotal:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
+                //print ("\ttotal:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
                 //call on diff thread so we don't block download
                 dispatch_async(dispatch_get_main_queue()) {
-                    progress.setProgress(Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
+                    progress.setProgress("downloading", current: Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
                 }}
             .response { _,_,_, error in
                 if error == nil {
