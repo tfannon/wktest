@@ -41,34 +41,27 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         self.lblCount.text = ""
         
         //SwiftR (signalR support)
+        //i'd like to move this to services and establish it at the start 
         hubConnection = SwiftR.connect("http://\(Services.ipAddress)/Offline") { [weak self] connection in
             connection.headers = ["userName":"joe.tester"]
-            self?.hub = connection.createHubProxy("progressHub")
-            self?.hub.on("sendProgress", parameters: ["message", "current", "total"]) { args in
+            self!.hub = connection.createHubProxy("progressHub")
+            self!.hub.on("sendProgress", parameters: ["message", "current", "total"]) { args in
                 let message = args!["message"] as! String
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.lblSync.text = message
-                    self!.progressBar.setProgress(Float(current) / Float(total), animated: true)
-                    if current == total {
-                        //Once the download is finished, hide it
-                        self!.lblSync.text = "Finished"
-                        self!.progressBar.hidden = true
-                    }
+                    self!.setProgress(message, current: Float(current), total: Float(total))
+//                    if current == total {
+//                        //Once the download is finished, hide it
+//                        self!.lblSync.text = "Finished"
+//                        self!.progressBar.hidden = true
+//                    }
                 }
             }
-            
-            connection.starting = {
-                print("Starting...")
-            }
-            
             connection.connected = {
-                print("Connected. Connection ID: \(connection.connectionID!)")
+                print("SignalR Connected with ID: \(connection.connectionID!)")
             }
         }
-        
-        
    }
     
     
@@ -225,8 +218,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     
    @IBAction func signalRPressed(sender: AnyObject) {
-        progressBar.setProgress(0, animated: false)
-        progressBar.hidden = false
+        self.initializeProgress()
         hub.invoke("initiateSync", arguments: ["Tommy"]) { (result, error) in
             if let e = error {
                 print(e)
@@ -235,18 +227,36 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     @IBAction func sync2Pressed(sender: AnyObject) {
-        self.lblSync.text = ""
-        progressBar.setProgress(0, animated: false)
-        progressBar.hidden = false
         Services.sync2(self) { result in
-            self.lblSync.text = result!.description
+            self.finalizeProgress(result!.description)
+        }
+    }
+
+    //MARK: - ProgressDelegate
+    func setProgress(message: String? = nil, current: Float, total: Float) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.progressBar.setProgress(current/total, animated: true)
+            if message != nil {
+                print ("\tProgress callback: \(message!)")
+                self.lblSync.text = message
+            }
+        }
+    }
+    
+    func initializeProgress() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.lblSync.text = ""
+            self.progressBar.setProgress(0, animated: false)
             self.progressBar.hidden = false
         }
     }
     
-    func setProgress(message: String, current: Float, total: Float) {
-        self.lblSync.text = message
-        progressBar.setProgress(current/total, animated: true)
+    func finalizeProgress(message: String? = nil) {
+        self.progressBar.hidden = true
+        if message != nil {
+            print ("\t\(message!)")
+            self.lblSync.text = message!
+        }
     }
     
     @IBAction func downloadPressed(sender: AnyObject) {
@@ -254,10 +264,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         //let url = "http://ipv4.download.thinkbroadband.com/100MB.zip"
         //let url = "http://ipv4.download.thinkbroadband.com/5MB.zip"
         let url = "\(Services.offlineUrl)/GetFile"
-
-        progressBar.setProgress(0, animated: false)
-        progressBar.hidden = false
         
+        initializeProgress()
+
         let destination = FileHelper.prepFileForDownload(Services.syncFileUrl)
         
         Alamofire.download(.GET, url, destination: destination)

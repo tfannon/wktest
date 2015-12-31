@@ -46,6 +46,6 @@ class ObjectContainer : Mappable, CustomStringConvertible {
     }
     
     var description: String {
-        return ("\(procedures.count) procs, \(workpapers.count) workpapers, \(issues.count) issues  \(attachments.count) attachments")
+        return ("\(procedures.count) procs, \(issues.count) issues, \(workpapers.count) workpapers, \(attachments.count) attachments")
     }
 }

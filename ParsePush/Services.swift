@@ -245,7 +245,8 @@ public class Services {
     
     private static func generateSyncFileOnServer(progress: ProgressDelegate, dirtyObjects: ObjectContainer, completed: (serverFileName: String)->()) {
         print(__FUNCTION__)
-        let request = getRequest("GenerateSyncFile", data: dirtyObjects)
+        let request = getRequest("SyncToFile", data: dirtyObjects)
+        progress.initializeProgress()
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
@@ -265,21 +266,20 @@ public class Services {
         let url = "\(offlineUrl)/GetSyncFile?fileName=\(fileName)"
         
         print("\tcalling \(url)")
+        progress.initializeProgress()
         Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-                //print ("\ttotal:\(totalBytesExpectedToRead) read:\(totalBytesRead)")
-                //call on diff thread so we don't block download
-                dispatch_async(dispatch_get_main_queue()) {
-                    progress.setProgress("downloading", current: Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
-                }}
+                progress.setProgress(nil, current: Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
+            }
             .response { _,_,_, error in
                 if error == nil {
                     completed()
-                }}
+            }
+        }
     }
     
-    
-    internal static func materializeSyncFile() -> ObjectContainer? {
+    private static func materializeSyncFile() -> ObjectContainer? {
+        print(__FUNCTION__)
         //read the file from local storage and transform he json into objects
         let data = NSData(contentsOfFile: syncFileUrl.path!)!
         let json = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
@@ -318,16 +318,7 @@ public class Services {
     
     private static func sendDataToServer(dirty: ObjectContainer, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
-        
-        let request = NSMutableURLRequest(URL: NSURL(string:  offlineUrl + "/Sync")!)
-        request.HTTPMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        //let json = Mapper().toJSONArray(dirty)
-        let json = Mapper().toJSON(dirty)
-        
-        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
-        request.addValue(Services.headers["UserName"]!, forHTTPHeaderField: "UserName")
+        let request = getRequest("GetSyncData", data: dirty)
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
@@ -714,7 +705,7 @@ public class Services {
         return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.AttachmentIds.rawValue) as? [Int]
     }
     
-    
+    //MARK: - One off get attachments from server is no longer used.  keeping around in case we need something similar
     static func getAttachment(id: Int, completed: (String->())) {
         let key = DataKey.getAttachmentKey(id)
         if let destination = appGroupDefaults.valueForKey(key) as? String {
