@@ -51,8 +51,6 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
 
     var dataSourceHelper: SDataGridDataSourceHelper!
     
-    
-    
     //MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,24 +144,10 @@ class BaseGridController: UIViewController, SDataGridDataSourceHelperDelegate, S
         column.canResizeViaPinch = true
         self.grid.addColumn(column)
     }
-    
-//    func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-//        //override this if supports refresh
-//    }
-//    
-//    //MARK: - Data
-//    func getItems(completed: ()->()) {
-//        self.items = []
-//        self.sortedItems = []
-//        Services.getMyData { result in
-//            
-//            if result?.procedures.count > 0 {
-//                result?.procedures.each {
-//                    self.items.append($0)
-//                }
-//                self.sortedItems = self.items
-//                completed()
-//            }
-//        }
-//    }
+
+    func shinobiDataGrid(grid: ShinobiDataGrid!, shouldSelectCellAtCoordinate gridCoordinate: SDataGridCoord!) -> Bool
+    {
+        grid.setSelectedRows([ gridCoordinate.row ])
+        return false
+    }
 }

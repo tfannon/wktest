@@ -148,11 +148,10 @@ class WorkpaperGridController: BaseGridController, WorkpaperPreviewerDelegate {
     }
     
     var previewColumnWasSelected = false
-    func shinobiDataGrid(grid: ShinobiDataGrid!, shouldSelectCellAtCoordinate gridCoordinate: SDataGridCoord!) -> Bool
+    override func shinobiDataGrid(grid: ShinobiDataGrid!, shouldSelectCellAtCoordinate gridCoordinate: SDataGridCoord!) -> Bool
     {
         previewColumnWasSelected = gridCoordinate.column.propertyKey == "preview"
-        grid.setSelectedRows([ gridCoordinate.row ])
-        return false
+        return super.shinobiDataGrid(grid, shouldSelectCellAtCoordinate: gridCoordinate)
     }
 
     func shinobiDataGrid(grid: ShinobiDataGrid!, didSelectRow row: SDataGridRow!) {

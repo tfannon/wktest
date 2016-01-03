@@ -12,6 +12,8 @@ protocol WorkpaperPreviewerDelegate : UIDocumentInteractionControllerDelegate {
     var documentInteractionController: UIDocumentInteractionController! { get }
 }
 
+// used to preview a 'workpaper' object from any object that implements WorkpaperPreviewerDelegate
+// basically takes over the enter screen.
 class WorkpaperHelper {
     class func preview(previewer : WorkpaperPreviewerDelegate, workpaper : Workpaper) {
         let att = Services.loadObjects([.Attachment], explicitIds: [workpaper.attachmentId])!.attachments.first!
@@ -24,6 +26,5 @@ class WorkpaperHelper {
         data!.writeToURL(baseUrl, atomically: true)
         previewer.documentInteractionController.URL = baseUrl
         previewer.documentInteractionController.presentPreviewAnimated(true)
-        
     }
 }
