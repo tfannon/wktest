@@ -430,6 +430,7 @@
 				659A64CA1BBEE9270047AAD3 /* NotificationCell.swift */,
 				65768AE21BA641C500DADD43 /* TestController.swift */,
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
+				653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */,
 				664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */,
 			);
 			name = UI;
@@ -451,7 +452,6 @@
 				651A4C3D1BEE834E008737A2 /* ChangeTracking.swift */,
 				655DEF851BF16D5100120892 /* FileHelper.swift */,
 				652CD43A1C1A58F50012E012 /* Attachment.swift */,
-				653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */,
 				652CD43C1C1A5CA10012E012 /* Protocols.swift */,
 			);
 			name = MT;
