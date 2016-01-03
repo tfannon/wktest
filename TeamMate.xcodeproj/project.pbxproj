@@ -81,6 +81,8 @@
 		664F2A971C1C7AB80005C27D /* BaseFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A961C1C7AB80005C27D /* BaseFormController.swift */; };
 		664F2A991C1C9CD80005C27D /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F2A981C1C9CD80005C27D /* CellData.swift */; };
 		664F54E31C336CAA005D1326 /* WorkpaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */; };
+		664F54E71C38E723005D1326 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F54E61C38E723005D1326 /* SyncController.swift */; };
+		664F54EA1C38E896005D1326 /* Sync.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664F54E81C38E896005D1326 /* Sync.storyboard */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
@@ -233,6 +235,8 @@
 		664F2A961C1C7AB80005C27D /* BaseFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFormController.swift; sourceTree = "<group>"; };
 		664F2A981C1C9CD80005C27D /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
 		664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperPreview.swift; sourceTree = "<group>"; };
+		664F54E61C38E723005D1326 /* SyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
+		664F54E91C38E896005D1326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Sync.storyboard; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
@@ -432,6 +436,7 @@
 				65DAB1B51C0C131500D949CC /* SplitMasterController.swift */,
 				653F66231C07E7BD00B9058A /* WorkpaperChooser.swift */,
 				664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */,
+				664F54E61C38E723005D1326 /* SyncController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -538,6 +543,7 @@
 			isa = PBXGroup;
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
+				664F54E81C38E896005D1326 /* Sync.storyboard */,
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
 				66FFCBA61C1A1D210001BF38 /* Issue.storyboard */,
 				668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */,
@@ -740,6 +746,7 @@
 				66A87FEB1BFFCF230042A95A /* DatePickerNullableCell.xib in Resources */,
 				669BD11B1C093C7B008EBFC4 /* HtmlCell.xib in Resources */,
 				6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */,
+				664F54EA1C38E896005D1326 /* Sync.storyboard in Resources */,
 				663259BC1BF1972D00D3C76E /* TextCell.xib in Resources */,
 				6564FFEB1BDF91530014FE08 /* Roboto-MediumItalic.ttf in Resources */,
 				664F2A941C1C74C90005C27D /* Workpaper.storyboard in Resources */,
@@ -845,6 +852,7 @@
 				652CD43D1C1A5CA10012E012 /* Protocols.swift in Sources */,
 				659A64CB1BBEE9270047AAD3 /* NotificationCell.swift in Sources */,
 				66E65F721BD5D94700B8B351 /* AFDateExtension.swift in Sources */,
+				664F54E71C38E723005D1326 /* SyncController.swift in Sources */,
 				66E65F751BD5DAD800B8B351 /* NSDateExtensions.swift in Sources */,
 				65636CE51BD8092500C94D6D /* Misc.swift in Sources */,
 				66FFCBB31C1B27B30001BF38 /* Application.swift in Sources */,
@@ -949,6 +957,14 @@
 				65B1FE0E1BF0251C0096EA07 /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		664F54E81C38E896005D1326 /* Sync.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				664F54E91C38E896005D1326 /* Base */,
+			);
+			name = Sync.storyboard;
 			sourceTree = "<group>";
 		};
 		66E65F641BD5B4D200B8B351 /* Procedure.storyboard */ = {

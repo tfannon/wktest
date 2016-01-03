@@ -13,3 +13,4 @@ pod 'RichEditorView'
 
 pod 'SwiftR'
 
+pod 'CircleProgressBar', '~> 0.22’
