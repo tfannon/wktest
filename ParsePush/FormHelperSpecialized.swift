@@ -12,7 +12,9 @@ import Foundation
 
 extension FormHelper {
     
+    //
     // used for creating a Workflow selector cell
+    //
     func getWorkflowCellData(viewController : UIViewController, workflowObject : BaseObject) -> CellData {
         let data = CellData(identifier: "_BasicCell",
             value: WorkflowState(rawValue: workflowObject.workflowState)?.displayName,
@@ -49,9 +51,17 @@ extension FormHelper {
         return data
     }
     
+    //
+    // used for creating a "collection" cell of children (e.g workpapers, issues)
+    //
     func addChildCells(parent : BaseObject, objectType : ObjectType) {
+        // the cells to add
         var datas = [CellData]()
+        
+        // the children of the specified type
         let children = parent.getChildren(objectType)!
+        
+        // add the top cell
         datas.append(CellData(
             identifier: "_" + String(objectType),
             style: UITableViewCellStyle.Value1,
@@ -63,10 +73,14 @@ extension FormHelper {
             selected: { cell, data, indexPath in
                 self.showOrHideRows(cell, data: data, indexPath: indexPath, rowCount: children.count + 1)
         }))
+        
+        // add a cell for each child
         for child in children {
             let cellData = createObjectCellData(child, visible: false)
             datas.append(cellData)
         }
+        
+        // add the "Add" cell (for adding a new child)
         datas.append(CellData(
             identifier: "_NavigationCell",
             objectType: .Issue,
@@ -84,11 +98,17 @@ extension FormHelper {
                     WorkpaperChooser.choose(self)
                 }
                 else {
+                    // creates a form controller for the newly added object
                     let vc = BaseFormController.create(objectType)
+                    // the parent form is set as a CustomCellDelegate
                     vc.parentForm = self.controllerAsDelegate
+                    // the parent form's primary object (parent)
                     vc.parent = self.controllerAsDelegate.primaryObject
+                    // the pending child to be
                     vc.primaryObject = BaseObject.create(objectType, parent: vc.parent)
+                    // where it goes in the list after it's added
                     self.controllerAsDelegate.savedChildIndexPath = indexPath
+                    // show it
                     self.controller.navigationController?.pushViewController(vc, animated: true)
                 }
             }
@@ -132,14 +152,14 @@ extension FormHelper {
         self.hideSections(hideSections)
     }
     
+    //
+    // creates a table cell for adding a new child object of type T
+    //
     private func createObjectCellData<T : BaseObject>(baseObject : T, visible : Bool) -> CellData {
         
         // image used for workpapers.  other objects dont use one
         let workpaper = baseObject as? Workpaper
         let imageName = workpaper != nil ? workpaper!.documentType?.imageName ?? "icon_document" : ""
-//        else {
-//           baseObject.objectType.imageName
-//        }
 
         let data = CellData(identifier: "_NavigationCell", label: baseObject.title,
             imageName: imageName,
@@ -160,6 +180,9 @@ extension FormHelper {
         return data
     }
     
+    //
+    // used for repainting a child table row after its properties may have been altered (e.g title)
+    //
     func repaintObjectRow<T : BaseObject>(indexPath : NSIndexPath, baseObject : T) {
  
         let newData = createObjectCellData(baseObject, visible: true)
@@ -167,19 +190,25 @@ extension FormHelper {
         let sectionIndex = getActualVisibleSectionDataIndex(indexPath.section)
         
         tableView.beginUpdates()
+        // if we've added a new object
         if currentData.isAddCell {
+            // insert the new object's row right at the current "Add" row
             self.data[sectionIndex].insert(newData, atIndex: indexPath.row)
             tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            // and move the "add" row down one
             let newAddIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
             tableView.moveRowAtIndexPath(indexPath, toIndexPath: newAddIndexPath)
         }
         else {
+            // else just set the new data on the existing row
             self.data[sectionIndex][indexPath.row] = newData
+            // and reload the row w/o animation
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         }
         tableView.endUpdates()
     }
     
+    // revert the object to its original state by reloading it from storage
     func revertObject<T : BaseObject> (indexPath : NSIndexPath, baseObject : T) {
         if let reloaded = Services.getObject(baseObject) {
             let newData = createObjectCellData(reloaded, visible: true)
@@ -193,8 +222,8 @@ extension FormHelper {
 }
 
 extension FormHelper : WorkpaperChooserDelegate {
-    var workpaperOwner: Procedure { get {
-        return self.controllerAsDelegate.primaryObject as! Procedure
+    var workpaperOwner: BaseObject { get {
+        return self.controllerAsDelegate.primaryObject
     }}
         
     var owningViewController: UIViewController { get {

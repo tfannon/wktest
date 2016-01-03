@@ -17,7 +17,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
 
     //MARK: - WorkpaperChooserDelegate
     var procedure: Procedure?
-    var workpaperOwner: Procedure { return procedure! }
+    var workpaperOwner: BaseObject { return procedure! }
     var owningViewController: UIViewController  { return self }
     
     var hub: Hub!

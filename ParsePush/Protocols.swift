@@ -12,7 +12,7 @@ import ObjectMapper
 
 //the workpaper chooser needs to know about its owner and viewcontroller so it can present and save
 protocol WorkpaperChooserDelegate {
-    var workpaperOwner: Procedure { get }
+    var workpaperOwner: BaseObject { get }
     var owningViewController: UIViewController { get }
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper)
 }
