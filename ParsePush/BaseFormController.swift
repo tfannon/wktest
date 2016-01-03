@@ -120,7 +120,7 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     private func setupNavbar() {
         if let _ = self.navigationController?.navigationBar {
             if self.splitViewController == nil {
-                let left = UIBarButtonItem(title: "Cancel",
+                let left = UIBarButtonItem(title: "Back",
                     style: UIBarButtonItemStyle.Plain,
                     target: self, action: "navbarCancelClicked")
                 self.navigationItem.leftBarButtonItem = left
@@ -222,8 +222,11 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
         }
     }
 
-    func childSaved(child : BaseObject) {
+    func childSaved(child : BaseObject, showForm : Bool = false) {
         formHelper.repaintObjectRow(self.savedChildIndexPath!, baseObject: child)
+        if showForm {
+            formHelper.showFormForObject(child, indexPath: self.savedChildIndexPath!)
+        }
     }
     
     func childCancelled(child : BaseObject) {
@@ -242,7 +245,7 @@ class BaseFormController : UITableViewController, CustomCellDelegate {
     func navbarSaveClicked() {
         self.navigationItem.rightBarButtonItem?.enabled = false
         Services.saveObject(self.primaryObject, parent: self.parent, log: true)
-        parentForm?.childSaved(self.primaryObject)
+        parentForm?.childSaved(self.primaryObject, showForm: false)
         dismiss()
     }
     

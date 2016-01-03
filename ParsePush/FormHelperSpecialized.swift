@@ -94,6 +94,13 @@ extension FormHelper {
             },
             selected: { cell, data, indexPath in
                 if (objectType == .Workpaper) {
+                    // deselect the cell
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+                    
+                    // show the attachment chooser which immediately requires a title & image
+                    // *this seemed better than first navigating to the form AND then asking for an image
+                    //  since you'd never create a workpaper without an image (or document)
+                    // seemed more fluid this way
                     self.controllerAsDelegate.savedChildIndexPath = indexPath
                     WorkpaperChooser.choose(self)
                 }
@@ -116,6 +123,9 @@ extension FormHelper {
         addSection(" ", data: datas)
     }
 
+    // 
+    // adds the Change Tracking cell
+    //
     func addChangeTracking(changes : [Change]?) {
         self.addSection("", data: [
             CellData(identifier: "_NavigationCell", label: "Change Tracking", imageName: "icons_change",
@@ -131,8 +141,10 @@ extension FormHelper {
             })])
     }
     
+    //
     // register up ALL the html cells - each with their own idenfifier
     //  so we don't reuse html cells - and hide the sections
+    //
     func hideHtmlSections() {
         var hideSections = [Int]()
         for i in 0..<self.data.count {
@@ -169,15 +181,22 @@ extension FormHelper {
             },
             visible: visible,
             selected: { cell, data, indexPath in
-                let vc = BaseFormController.create(baseObject.objectType)
-                vc.parentForm = self.controllerAsDelegate
-                vc.parent = self.controllerAsDelegate.primaryObject
-                vc.primaryObject = baseObject
-                self.controllerAsDelegate.savedChildIndexPath = indexPath
-                self.controller.navigationController?.pushViewController(vc, animated: true)
+                self.showFormForObject(baseObject, indexPath: indexPath)
             }
         )
         return data
+    }
+    
+    //
+    // shows the edit form for an object
+    //
+    func showFormForObject<T : BaseObject>(baseObject : T, indexPath : NSIndexPath) {
+        let vc = BaseFormController.create(baseObject.objectType)
+        vc.parentForm = self.controllerAsDelegate
+        vc.parent = self.controllerAsDelegate.primaryObject
+        vc.primaryObject = baseObject
+        self.controllerAsDelegate.savedChildIndexPath = indexPath
+        self.controller.navigationController?.pushViewController(vc, animated: true)
     }
     
     //
@@ -231,6 +250,8 @@ extension FormHelper : WorkpaperChooserDelegate {
     }}
         
     func workpaperAddedCallback(wasAdded: Bool, workpaper: Workpaper) {
-        self.controllerAsDelegate.childSaved(workpaper)
+        if wasAdded {
+            self.controllerAsDelegate.childSaved(workpaper, showForm: true)
+        }
     }
 }

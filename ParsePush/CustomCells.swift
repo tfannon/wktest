@@ -19,7 +19,7 @@ import RichEditorView
     optional func finishedEditing(cell : UITableViewCell)
 
     func enableSave()
-    func childSaved(child : BaseObject)
+    func childSaved(child : BaseObject, showForm : Bool)
     func childCancelled(child : BaseObject)
     var savedChildIndexPath : NSIndexPath? { get set }
     var parentForm : CustomCellDelegate? { get set }

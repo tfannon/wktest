@@ -29,11 +29,11 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
     
     //MARK: - add workpaper
     func handleAddWorkpaper() {
-        let alertController = UIAlertController(title: "Add Workpaper", message: "Choose title and attachment", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Add Workpaper", message: "Choose attachment", preferredStyle: .Alert)
         
         let photoAction = UIAlertAction(title: "Add photo", style: .Default) { (_) in
             self._title = alertController.textFields![0].text!
-            self._description = alertController.textFields![1].text
+//            self._description = alertController.textFields![1].text
             let imagePicker = UIImagePickerController()
             imagePicker.allowsEditing = false
             imagePicker.sourceType = .PhotoLibrary
@@ -56,10 +56,10 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
                 documentAction.enabled = textField.text != ""
             }
         }
-        
-        alertController.addTextFieldWithConfigurationHandler { (textField) in
-            textField.placeholder = "Description"
-        }
+//
+//        alertController.addTextFieldWithConfigurationHandler { (textField) in
+//            textField.placeholder = "Description"
+//        }
         
         alertController.addAction(photoAction)
         alertController.addAction(documentAction)
@@ -72,7 +72,7 @@ class WorkpaperChooser : NSObject, UIImagePickerControllerDelegate, UINavigation
             let jpg = UIImageJPEGRepresentation(image, 0.0) {
                 let workpaper = BaseObject.create(ObjectType.Workpaper, parent: self.delegate.workpaperOwner) as! Workpaper
                 workpaper.title = _title
-                workpaper.oDescription = _description
+//                workpaper.oDescription = _description
                 workpaper.attachmentTitle = "temppic"
                 workpaper.attachmentExtension = "jpg"
                 
