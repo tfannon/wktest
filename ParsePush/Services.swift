@@ -269,7 +269,8 @@ public class Services {
         progress.initializeProgress()
         Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-                progress.setProgress(nil, current: Float(totalBytesRead), total: Float(totalBytesExpectedToRead))
+                progress.setProgress(nil, progress:
+                    ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
             }
             .response { _,_,_, error in
                 if error == nil {

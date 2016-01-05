@@ -32,7 +32,7 @@ class SyncController : UIViewController, ProgressDelegate {
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.setProgress(message, current: Float(current), total: Float(total))
+                    self!.setProgress(message, progress: ProgressCalculator.get(current, total: total))
                 }
             }
             connection.connected = {
@@ -69,9 +69,8 @@ class SyncController : UIViewController, ProgressDelegate {
     }
      
     //MARK: - ProgressDelegate
-    func setProgress(message: String? = nil, current: Float, total: Float) {
+    func setProgress(message: String? = nil, progress: Float) {
         dispatch_async(dispatch_get_main_queue()) {
-            let progress = ProgressCalculator.get1(current, total: total)
             print(progress)
             self.circleProgressBar.setProgress(CGFloat(progress), animated: true)
             self.showMessage(message)

@@ -18,7 +18,7 @@ protocol WorkpaperChooserDelegate {
 }
 
 protocol ProgressDelegate {
-    func setProgress(message: String?, current: Float, total: Float)
+    func setProgress(message: String?, progress: Float)
     func initializeProgress()
     func finalizeProgress(message: String?)
 }

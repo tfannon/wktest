@@ -42,14 +42,19 @@ class Misc {
     }
 }
 
+// 
+// functions that all return a number between 0..1 representing the progress
+//
 class ProgressCalculator {
-    class func get100(completed : Int, total : Int) -> Int {
-        let d = Double(completed) / Double(total)
-        return Int(d * 100.0)
-    }
-    class func get1(completed : Float, total : Float) -> Float {
-        let d = completed / total
+    class func get(current : Float, total : Float) -> Float {
+        let d = current / total
         return d
+    }
+    class func get(current : Int, total : Int) -> Float {
+        return get(Float(current), total: Float(total))
+    }
+    class func get(current : Int64, total : Int64) -> Float {
+        return get(Float(current), total: Float(total))
     }
 }
 
