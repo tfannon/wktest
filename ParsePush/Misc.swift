@@ -42,6 +42,17 @@ class Misc {
     }
 }
 
+class ProgressCalculator {
+    class func get100(completed : Int, total : Int) -> Int {
+        let d = Double(completed) / Double(total)
+        return Int(d * 100.0)
+    }
+    class func get1(completed : Float, total : Float) -> Float {
+        let d = completed / total
+        return d
+    }
+}
+
 class ClassName<T: AnyObject> {
     var name : String {
         let fullName: String = NSStringFromClass(T.self)

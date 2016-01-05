@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gdM-zz-Vag">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Sync Controller-->
@@ -12,20 +13,55 @@
                         <viewControllerLayoutGuide type="top" id="Wof-1p-Zzx"/>
                         <viewControllerLayoutGuide type="bottom" id="InQ-K1-0wk"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NKy-yJ-Cqn" customClass="CircleProgressBar">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="NKy-yJ-Cqn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alf-tk-BIy">
+                                <rect key="frame" x="20" y="477" width="560" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNZ-sl-bBe" customClass="CircleProgressBar">
+                                <rect key="frame" x="20" y="28" width="560" height="441"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiL-py-VQY">
+                                <rect key="frame" x="20" y="216" width="560" height="65"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                                <state key="normal" title="Press to Sync"/>
+                                <connections>
+                                    <action selector="syncButtonClicked:" destination="gdM-zz-Vag" eventType="touchUpInside" id="dAS-Bn-FOi"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="alf-tk-BIy" firstAttribute="trailing" secondItem="NKy-yJ-Cqn" secondAttribute="trailingMargin" id="2Lq-GO-dx8"/>
+                            <constraint firstItem="HNZ-sl-bBe" firstAttribute="top" secondItem="Wof-1p-Zzx" secondAttribute="bottom" constant="8" id="3aH-VP-YwO"/>
+                            <constraint firstItem="alf-tk-BIy" firstAttribute="leading" secondItem="NKy-yJ-Cqn" secondAttribute="leadingMargin" id="3iW-JF-os0"/>
+                            <constraint firstItem="InQ-K1-0wk" firstAttribute="top" secondItem="alf-tk-BIy" secondAttribute="bottom" constant="39" id="7Qm-QF-eWi"/>
+                            <constraint firstItem="kiL-py-VQY" firstAttribute="centerY" secondItem="HNZ-sl-bBe" secondAttribute="centerY" id="9d5-R5-eqd"/>
+                            <constraint firstItem="kiL-py-VQY" firstAttribute="leading" secondItem="NKy-yJ-Cqn" secondAttribute="leadingMargin" id="9mT-80-Rm3"/>
+                            <constraint firstItem="kiL-py-VQY" firstAttribute="centerX" secondItem="HNZ-sl-bBe" secondAttribute="centerX" id="Cbq-Fo-0HZ"/>
+                            <constraint firstItem="HNZ-sl-bBe" firstAttribute="trailing" secondItem="NKy-yJ-Cqn" secondAttribute="trailingMargin" id="EZe-7w-zCq"/>
+                            <constraint firstItem="alf-tk-BIy" firstAttribute="top" secondItem="HNZ-sl-bBe" secondAttribute="bottom" constant="8" id="Ggw-tD-HYy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kiL-py-VQY" secondAttribute="trailing" id="Mab-B8-m3L"/>
+                            <constraint firstItem="HNZ-sl-bBe" firstAttribute="leading" secondItem="NKy-yJ-Cqn" secondAttribute="leadingMargin" id="eUd-X2-6hS"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Sync" image="sync" id="t7P-uK-BTK"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="circleProgressBar" destination="NKy-yJ-Cqn" id="sg6-he-fd9"/>
+                        <outlet property="circleProgressBar" destination="HNZ-sl-bBe" id="RNf-5q-YKS"/>
+                        <outlet property="progressLabel" destination="alf-tk-BIy" id="cgb-2o-VhA"/>
+                        <outlet property="syncButton" destination="kiL-py-VQY" id="QGm-t5-ip3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bJv-Em-c2e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-695" y="-748"/>
+            <point key="canvasLocation" x="-1049" y="-1034"/>
         </scene>
     </scenes>
     <resources>
