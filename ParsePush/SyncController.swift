@@ -32,7 +32,8 @@ class SyncController : UIViewController, ProgressDelegate {
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.setProgress(message, progress: ProgressCalculator.get(current, total: total))
+                    self!.setMessage(message)
+                    self!.setProgress(ProgressCalculator.get(current, total: total))
                 }
             }
             connection.connected = {
@@ -62,35 +63,22 @@ class SyncController : UIViewController, ProgressDelegate {
     
     @IBAction func syncButtonClicked(sender: AnyObject) {
         setState(1)
-        showMessage("Sync started...")
+        setMessage("Sync started...")
         Services.sync2(self) { result in
-            self.finalizeProgress(result!.description)
+            self.setMessage(result!.description)
         }
     }
      
     //MARK: - ProgressDelegate
-    func setProgress(message: String? = nil, progress: Float) {
+    func setProgress(progress: Float) {
         dispatch_async(dispatch_get_main_queue()) {
             print(progress)
             self.circleProgressBar.setProgress(CGFloat(progress), animated: true)
-            self.showMessage(message)
         }
     }
     
-    func initializeProgress() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.circleProgressBar.setProgress(0, animated: false)
-        }
-    }
-    
-    func finalizeProgress(message: String? = nil) {
-        showMessage(message)
-    }
-    
-    func showMessage(message : String?) {
-        if message != nil {
-            print ("\t\(message!)")
-            progressLabel.text = message
-        }
+    func setMessage(message : String) {
+        print ("\t\(message)")
+        progressLabel.text = message
     }
 }

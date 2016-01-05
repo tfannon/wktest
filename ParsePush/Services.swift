@@ -246,7 +246,6 @@ public class Services {
     private static func generateSyncFileOnServer(progress: ProgressDelegate, dirtyObjects: ObjectContainer, completed: (serverFileName: String)->()) {
         print(__FUNCTION__)
         let request = getRequest("SyncToFile", data: dirtyObjects)
-        progress.initializeProgress()
         Alamofire.request(request)
             .responseJSON { request, response, result in
                 switch result {
@@ -266,11 +265,9 @@ public class Services {
         let url = "\(offlineUrl)/GetSyncFile?fileName=\(fileName)"
         
         print("\tcalling \(url)")
-        progress.initializeProgress()
         Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-                progress.setProgress(nil, progress:
-                    ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
+                progress.setProgress(ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
             }
             .response { _,_,_, error in
                 if error == nil {

@@ -50,7 +50,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.setProgress(message, progress: ProgressCalculator.get(current, total: total))
+                    self!.setMessage(message)
+                    self!.setProgress(ProgressCalculator.get(current, total: total))
 //                    if current == total {
 //                        //Once the download is finished, hide it
 //                        self!.lblSync.text = "Finished"
@@ -228,18 +229,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     
     @IBAction func sync2Pressed(sender: AnyObject) {
         Services.sync2(self) { result in
-            self.finalizeProgress(result!.description)
-        }
-    }
-
-    //MARK: - ProgressDelegate
-    func setProgress(message: String? = nil, progress: Float) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.progressBar.setProgress(progress, animated: true)
-            if message != nil {
-                print ("\tProgress callback: \(message!)")
-                self.lblSync.text = message
-            }
+            self.progressBar.hidden = true
+            self.setMessage(result!.description)
         }
     }
     
@@ -251,12 +242,17 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
         }
     }
     
-    func finalizeProgress(message: String? = nil) {
-        self.progressBar.hidden = true
-        if message != nil {
-            print ("\t\(message!)")
-            self.lblSync.text = message!
+    //MARK: - ProgressDelegate
+    func setProgress(progress: Float) {
+        dispatch_async(dispatch_get_main_queue()) {
+            print ("\tProgress callback: \(progress)")
+            self.progressBar.setProgress(progress, animated: true)
         }
+    }
+    
+    func setMessage(message: String) {
+        print ("\tProgress callback: \(message)")
+        self.lblSync.text = message
     }
     
     @IBAction func downloadPressed(sender: AnyObject) {
@@ -274,8 +270,8 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
                 //This closure is NOT called on the main queue for performance reasons !
                 dispatch_async(dispatch_get_main_queue()) {
                     //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
-                    self.setProgress("Downloading",
-                        progress: ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
+                    self.setMessage("Downloading")
+                    self.setProgress(ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
                 }}
             .response { _,_,_, error in
                 if error == nil {
