@@ -50,8 +50,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.setMessage(message)
-                    self!.setProgress(ProgressCalculator.get(current, total: total))
+                    ProgressDelegateHelper.set(self!, message: message, progress: ProgressCalculator.get(current, total: total))
 //                    if current == total {
 //                        //Once the download is finished, hide it
 //                        self!.lblSync.text = "Finished"
@@ -270,8 +269,9 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
                 //This closure is NOT called on the main queue for performance reasons !
                 dispatch_async(dispatch_get_main_queue()) {
                     //Simply divide totalBytesRead by totalBytesExpectedToRead and you’ll get a number between 0 and 1 that represents the progress of the download task. This closure may execute multiple times if the if the download time isn’t near-instantaneous; each execution gives you a chance to update a progress bar on the screen
-                    self.setMessage("Downloading")
-                    self.setProgress(ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
+                    ProgressDelegateHelper.set(self,
+                        message: "Downloading",
+                        progress: ProgressCalculator.get(totalBytesRead, total: totalBytesExpectedToRead))
                 }}
             .response { _,_,_, error in
                 if error == nil {

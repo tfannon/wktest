@@ -21,3 +21,11 @@ protocol ProgressDelegate {
     func setProgress(progress: Float)
     func setMessage(message: String)
 }
+class ProgressDelegateHelper {
+    class func set(delegate : ProgressDelegate, message: String?, progress : Float) {
+        if let m = message {
+            delegate.setMessage(m)
+        }
+        delegate.setProgress(progress)
+    }
+}

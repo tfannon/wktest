@@ -32,8 +32,7 @@ class SyncController : UIViewController, ProgressDelegate {
                 let current = args!["current"] as! Int
                 let total = args!["total"] as! Int
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.setMessage(message)
-                    self!.setProgress(ProgressCalculator.get(current, total: total))
+                    ProgressDelegateHelper.set(self!, message: message, progress: ProgressCalculator.get(current, total: total))
                 }
             }
             connection.connected = {
