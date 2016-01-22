@@ -5,282 +5,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Test Controller-->
-        <scene sceneID="ufC-wZ-h7g">
-            <objects>
-                <viewController id="vXZ-lx-hvc" customClass="TestController" customModule="TeamMate" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toG-cj-t0E">
-                                <rect key="frame" x="25" y="101" width="82" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="25" y="57" width="105" height="21"/>
-                                </variation>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zvx-9e-MNm">
-                                <rect key="frame" x="132" y="98" width="143" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="9f2-fO-fM9"/>
-                                    <constraint firstAttribute="width" constant="143" id="oud-KG-e73"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="150" y="54" width="143" height="30"/>
-                                </variation>
-                            </textField>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icons_implemented" translatesAutoresizingMaskIntoConstraints="NO" id="QW0-3M-gjj" userLabel="IP Address Result">
-                                <rect key="frame" x="292" y="103" width="25" height="25"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AkQ-tf-u7H">
-                                <rect key="frame" x="25" y="151" width="86" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z25-cC-dZS">
-                                <rect key="frame" x="132" y="145" width="143" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons_implemented" translatesAutoresizingMaskIntoConstraints="NO" id="BGA-ai-Bla" userLabel="Login Result">
-                                <rect key="frame" x="292" y="150" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="2iT-qR-dtw"/>
-                                    <constraint firstAttribute="height" constant="25" id="O8j-tk-9Hm"/>
-                                </constraints>
-                            </imageView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QgD-cT-tdB">
-                                <rect key="frame" x="132" y="193" width="121" height="29"/>
-                                <segments>
-                                    <segment title="Service"/>
-                                    <segment title="Mock"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segMockModeChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KMg-ja-8Qp"/>
-                                </connections>
-                            </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKb-wJ-uMH">
-                                <rect key="frame" x="30" y="223" width="78" height="30"/>
-                                <state key="normal" title="GetObjects"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="25" y="156.5" width="105" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="proceduresPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="epQ-sX-NE5"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00k-W1-lfG">
-                                <rect key="frame" x="30" y="264" width="62" height="30"/>
-                                <state key="normal" title="Edit Proc"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="25" y="203" width="105" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="editProcedurePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Exy-Hf-rpI"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-G2-Qdd">
-                                <rect key="frame" x="10" y="305" width="78" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="78" id="qHQ-Ea-p5c"/>
-                                </constraints>
-                                <state key="normal" title="Count"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="25" y="269.5" width="105" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="countPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aRS-0s-L9z"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pO1-0o-na5">
-                                <rect key="frame" x="129" y="313" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="119" y="110" width="125" height="26"/>
-                                </variation>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnH-4i-QhM">
-                                <rect key="frame" x="30" y="346" width="87" height="30"/>
-                                <state key="normal" title="Notifications"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="25" y="317.5" width="105" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="getNotificationsPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XzZ-Oq-I8U"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ2-SF-Efm">
-                                <rect key="frame" x="129" y="354" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="161" y="179" width="170" height="21"/>
-                                </variation>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PL-UW-pNg">
-                                <rect key="frame" x="30" y="387" width="74" height="30"/>
-                                <state key="normal" title="Mark Read"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="28" y="361.5" width="102" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="markReadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m76-sq-vQ2"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAc-xo-tMT">
-                                <rect key="frame" x="30" y="428" width="75" height="30"/>
-                                <state key="normal" title="Read Local"/>
-                                <connections>
-                                    <action selector="readLocalPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="KDj-jT-zyl"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIm-Aa-P5R">
-                                <rect key="frame" x="30" y="469" width="77" height="30"/>
-                                <state key="normal" title="Clear Local"/>
-                                <connections>
-                                    <action selector="clearLocalPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="c6v-BA-u7f"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZc-6T-KmO">
-                                <rect key="frame" x="30" y="510" width="109" height="30"/>
-                                <state key="normal" title="Get Attachment"/>
-                                <connections>
-                                    <action selector="getAttachmentPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="f1M-at-k1L"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZ9-mI-7WB">
-                                <rect key="frame" x="30" y="182" width="33" height="30"/>
-                                <state key="normal" title="Misc"/>
-                                <connections>
-                                    <action selector="miscPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="d5c-Pi-eVL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OEp-RJ-dzU">
-                                <rect key="frame" x="180" y="510" width="122" height="30"/>
-                                <state key="normal" title="Add Workpaper"/>
-                                <connections>
-                                    <action selector="addWorkpaperPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nME-20-NiR"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4I9-cc-Yfo">
-                                <rect key="frame" x="123" y="264" width="46" height="30"/>
-                                <state key="normal" title="Sync"/>
-                                <connections>
-                                    <action selector="syncPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vKr-29-ax7"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 procs, 4 wp, 2 issues" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-xO-4kp" userLabel="Objects">
-                                <rect key="frame" x="129" y="232" width="138" height="14.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="150" y="148" width="143" height="30"/>
-                                </variation>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRW-ka-F6C">
-                                <rect key="frame" x="145" y="387" width="94" height="30"/>
-                                <state key="normal" title="Download"/>
-                                <connections>
-                                    <action selector="downloadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Swx-D9-jfB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vic-Gf-3xU">
-                                <rect key="frame" x="113" y="302" width="76" height="30"/>
-                                <state key="normal" title="Sync2"/>
-                                <connections>
-                                    <action selector="sync2Pressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="844-cd-l01"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bv1-xr-SkI">
-                                <rect key="frame" x="129" y="336" width="52" height="30"/>
-                                <state key="normal" title="SignalR"/>
-                                <connections>
-                                    <action selector="signalRPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="b3Z-pu-X7a"/>
-                                </connections>
-                            </button>
-                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6a4-lr-sII">
-                                <rect key="frame" x="189" y="316" width="205" height="2"/>
-                            </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 procs, 1 workpaper" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-hO-BXD">
-                                <rect key="frame" x="189" y="266" width="357" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="QgD-cT-tdB" firstAttribute="leading" secondItem="z25-cC-dZS" secondAttribute="leading" id="0LA-Cq-DPw"/>
-                            <constraint firstItem="jZc-6T-KmO" firstAttribute="top" secondItem="aIm-Aa-P5R" secondAttribute="bottom" constant="11" id="1zl-VM-taj"/>
-                            <constraint firstItem="jZ9-mI-7WB" firstAttribute="top" secondItem="AkQ-tf-u7H" secondAttribute="bottom" constant="11" id="5dh-hY-wna"/>
-                            <constraint firstItem="aIm-Aa-P5R" firstAttribute="top" secondItem="jAc-xo-tMT" secondAttribute="bottom" constant="11" id="6Pf-Md-Oot"/>
-                            <constraint firstItem="jAc-xo-tMT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="6x2-1U-eGR"/>
-                            <constraint firstItem="z25-cC-dZS" firstAttribute="width" secondItem="zvx-9e-MNm" secondAttribute="width" id="7ST-cD-t49"/>
-                            <constraint firstItem="RnH-4i-QhM" firstAttribute="top" secondItem="5Wn-G2-Qdd" secondAttribute="bottom" constant="11" id="7Th-dw-VYw"/>
-                            <constraint firstItem="pO1-0o-na5" firstAttribute="top" secondItem="5Wn-G2-Qdd" secondAttribute="top" constant="8" id="7pq-ku-VYh"/>
-                            <constraint firstItem="Kht-xO-4kp" firstAttribute="top" secondItem="mKb-wJ-uMH" secondAttribute="top" constant="9" id="7vD-BB-85L"/>
-                            <constraint firstItem="aIm-Aa-P5R" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="9hP-CB-lET"/>
-                            <constraint firstItem="mKb-wJ-uMH" firstAttribute="top" secondItem="jZ9-mI-7WB" secondAttribute="bottom" constant="11" id="9vr-tc-S4O"/>
-                            <constraint firstItem="AkQ-tf-u7H" firstAttribute="top" secondItem="toG-cj-t0E" secondAttribute="bottom" constant="29.5" id="C8K-Ut-gUV"/>
-                            <constraint firstItem="00k-W1-lfG" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="CTt-SV-sry"/>
-                            <constraint firstItem="Kht-xO-4kp" firstAttribute="leading" secondItem="mKb-wJ-uMH" secondAttribute="trailing" constant="21" id="DbR-xk-ikb"/>
-                            <constraint firstItem="PZ2-SF-Efm" firstAttribute="top" secondItem="RnH-4i-QhM" secondAttribute="top" constant="8" id="Dhd-Fg-05Y"/>
-                            <constraint firstItem="QgD-cT-tdB" firstAttribute="top" secondItem="z25-cC-dZS" secondAttribute="bottom" constant="18" id="Ihp-NV-fzQ"/>
-                            <constraint firstItem="z25-cC-dZS" firstAttribute="leading" secondItem="zvx-9e-MNm" secondAttribute="leading" id="JRc-NC-IUF"/>
-                            <constraint firstItem="jZ9-mI-7WB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="KXh-Vi-Fvn"/>
-                            <constraint firstItem="pO1-0o-na5" firstAttribute="leading" secondItem="Kht-xO-4kp" secondAttribute="leading" id="PxP-5S-mOX"/>
-                            <constraint firstItem="z25-cC-dZS" firstAttribute="top" secondItem="zvx-9e-MNm" secondAttribute="bottom" constant="17" id="QJt-U0-XWu"/>
-                            <constraint firstItem="jAc-xo-tMT" firstAttribute="top" secondItem="0PL-UW-pNg" secondAttribute="bottom" constant="11" id="Ryj-rE-9fw"/>
-                            <constraint firstItem="PZ2-SF-Efm" firstAttribute="leading" secondItem="pO1-0o-na5" secondAttribute="leading" id="SVn-pj-6hu"/>
-                            <constraint firstItem="0PL-UW-pNg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="U7V-fd-ZQK"/>
-                            <constraint firstItem="BGA-ai-Bla" firstAttribute="leading" secondItem="z25-cC-dZS" secondAttribute="trailing" constant="17" id="Ytt-6C-dpm"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="5Wn-G2-Qdd" secondAttribute="leading" constant="10" id="YuL-TK-hGO"/>
-                            <constraint firstItem="0PL-UW-pNg" firstAttribute="top" secondItem="RnH-4i-QhM" secondAttribute="bottom" constant="11" id="ZGE-bU-P1K"/>
-                            <constraint firstItem="toG-cj-t0E" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="5" id="cAe-tJ-Xzx"/>
-                            <constraint firstItem="5Wn-G2-Qdd" firstAttribute="top" secondItem="00k-W1-lfG" secondAttribute="bottom" constant="11" id="dJ1-Tr-KjT"/>
-                            <constraint firstItem="BGA-ai-Bla" firstAttribute="bottom" secondItem="z25-cC-dZS" secondAttribute="bottom" id="dir-BE-2T9"/>
-                            <constraint firstItem="00k-W1-lfG" firstAttribute="top" secondItem="mKb-wJ-uMH" secondAttribute="bottom" constant="11" id="fwi-Z2-KJn"/>
-                            <constraint firstItem="toG-cj-t0E" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="37" id="mIA-cW-2gk"/>
-                            <constraint firstItem="zvx-9e-MNm" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="34" id="qK4-RT-XkE"/>
-                            <constraint firstItem="mKb-wJ-uMH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="qQh-Ry-bmG"/>
-                            <constraint firstItem="RnH-4i-QhM" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="rQo-8b-LKg"/>
-                            <constraint firstItem="zvx-9e-MNm" firstAttribute="leading" secondItem="toG-cj-t0E" secondAttribute="trailing" constant="25" id="sr3-lL-FQ8"/>
-                            <constraint firstItem="AkQ-tf-u7H" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="5" id="uFu-2S-ASG"/>
-                            <constraint firstItem="jZc-6T-KmO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="yZw-Jb-mIc"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="kBh-l0-xqp"/>
-                    <connections>
-                        <outlet property="imgIPAddressResult" destination="QW0-3M-gjj" id="WiL-ZQ-IiS"/>
-                        <outlet property="imgLoginResult" destination="BGA-ai-Bla" id="hCM-HC-Mde"/>
-                        <outlet property="lblCount" destination="pO1-0o-na5" id="C8k-P1-htP"/>
-                        <outlet property="lblNotifications" destination="PZ2-SF-Efm" id="nST-lV-6Uh"/>
-                        <outlet property="lblProcedures" destination="Kht-xO-4kp" id="Wzd-EA-ea5"/>
-                        <outlet property="lblSync" destination="FFe-hO-BXD" id="ygS-qj-42A"/>
-                        <outlet property="progressBar" destination="6a4-lr-sII" id="N69-qA-ekE"/>
-                        <outlet property="segMockMode" destination="QgD-cT-tdB" id="QiB-BG-SCm"/>
-                        <outlet property="txtIPAddress" destination="zvx-9e-MNm" id="qV5-vQ-2hz"/>
-                        <outlet property="txtUserName" destination="z25-cC-dZS" id="zBp-Ku-Hst"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="69" y="-21"/>
-        </scene>
         <!--Workpaper Grid Controller-->
         <scene sceneID="33b-T8-3v7">
             <objects>
@@ -466,7 +190,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="spK-Z0-fTV"/>
+                        <segue destination="YPW-NJ-xr1" kind="relationship" relationship="rootViewController" id="spK-Z0-fTV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5qQ-wO-zFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -674,6 +398,16 @@
             </objects>
             <point key="canvasLocation" x="-695" y="-748"/>
         </scene>
+        <!--Test-->
+        <scene sceneID="dZo-vJ-5oV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Test" id="YPW-NJ-xr1" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kDd-Rv-k0r"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TmT-a9-rRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="69" y="-21"/>
+        </scene>
     </scenes>
     <resources>
         <image name="739-question" width="28" height="28"/>
@@ -683,7 +417,6 @@
         <image name="832-stack-1" width="28" height="22"/>
         <image name="854-list" width="26" height="16"/>
         <image name="icons_completed" width="42" height="42"/>
-        <image name="icons_implemented" width="42" height="42"/>
         <image name="icons_procedure" width="42" height="42"/>
         <image name="icons_workflow" width="42" height="42"/>
     </resources>

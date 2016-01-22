@@ -83,6 +83,9 @@
 		664F54E31C336CAA005D1326 /* WorkpaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */; };
 		664F54E71C38E723005D1326 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F54E61C38E723005D1326 /* SyncController.swift */; };
 		664F54EA1C38E896005D1326 /* Sync.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664F54E81C38E896005D1326 /* Sync.storyboard */; };
+		665A96BE1C52BB34008EE522 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DEF871BF1836600120892 /* Shared.swift */; };
+		665A96BF1C52BD1E008EE522 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A64CF1BBF4A2D0047AAD3 /* Media.xcassets */; };
+		665A96C21C52C2AF008EE522 /* Test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 665A96C11C52C2AF008EE522 /* Test.storyboard */; };
 		6676E2021BF3D77B003E2BAE /* SegmentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */; };
 		668E5B6A1BFD0AF30047852E /* ChangeTracking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */; };
 		668E5B6C1BFD0C7E0047852E /* ChangeGridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */; };
@@ -237,6 +240,7 @@
 		664F54E21C336CAA005D1326 /* WorkpaperPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkpaperPreview.swift; sourceTree = "<group>"; };
 		664F54E61C38E723005D1326 /* SyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		664F54E91C38E896005D1326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Sync.storyboard; sourceTree = "<group>"; };
+		665A96C11C52C2AF008EE522 /* Test.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Test.storyboard; sourceTree = "<group>"; };
 		6676E2011BF3D77B003E2BAE /* SegmentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedCell.xib; sourceTree = "<group>"; };
 		668E5B691BFD0AF30047852E /* ChangeTracking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeTracking.storyboard; sourceTree = "<group>"; };
 		668E5B6B1BFD0C7E0047852E /* ChangeGridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeGridController.swift; sourceTree = "<group>"; };
@@ -543,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				65768AE41BA641C500DADD43 /* Main.storyboard */,
+				665A96C11C52C2AF008EE522 /* Test.storyboard */,
 				664F54E81C38E896005D1326 /* Sync.storyboard */,
 				66E65F641BD5B4D200B8B351 /* Procedure.storyboard */,
 				66FFCBA61C1A1D210001BF38 /* Issue.storyboard */,
@@ -762,6 +767,7 @@
 				6611F4911BE31083008204A5 /* TextAutoSizeCell.xib in Resources */,
 				6564FFEC1BDF91530014FE08 /* Roboto-Regular.ttf in Resources */,
 				6564FFE31BDF91530014FE08 /* Roboto-Black.ttf in Resources */,
+				665A96C21C52C2AF008EE522 /* Test.storyboard in Resources */,
 				6564FFE81BDF91530014FE08 /* Roboto-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -777,6 +783,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				665A96BF1C52BD1E008EE522 /* Media.xcassets in Resources */,
 				65B1FE0F1BF0251C0096EA07 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -909,6 +916,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				665A96BE1C52BB34008EE522 /* Shared.swift in Sources */,
 				65B1FE0C1BF0251C0096EA07 /* DocumentPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

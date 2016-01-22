@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol ImageProvider {
-    var imageName: String { get }
-}
 
 
 enum ObjectType: Int, ImageProvider {
@@ -38,32 +35,6 @@ enum ObjectType: Int, ImageProvider {
         }
     }
 }
-
-
-enum DocumentType: String, ImageProvider {
-    case Word = "doc"
-    case WordX = "docx"
-    case Excel = "xls"
-    case ExcelX = "xlsx"
-    case PDF = "pdf"
-    case Powerpoint = "ppt"
-    case PowerpointX = "pptx"
-    case ImageJpg = "jpg"
-    case ImagePng = "png"
-    
-    var imageName: String {
-        get {
-            switch self {
-            case .Word, .WordX: return "icons_word"
-            case .Excel, .ExcelX: return  "icons_excel"
-            case .Powerpoint, .PowerpointX: return "icons_powerpoint"
-            case .PDF: return  "icons_pdf"
-            case .ImageJpg, .ImagePng: return "icons_image"
-            }
-        }
-    }
-}
-
 
 
 enum SyncState: Int {

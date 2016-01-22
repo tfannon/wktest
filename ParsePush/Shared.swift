@@ -30,3 +30,53 @@ public class Shared {
         print ("File marked as dirty: \(documentUrl.path!)")
     }
 }
+
+public class WorkpaperShared {
+    
+    var id: Int?
+    var code: String?
+    var parentTitle: String?
+    var parentType: Int = 0
+    var title: String?
+    var workflowState: Int = 1
+    var readOnly  : Bool?
+    var oDescription: String?
+    var dueDate: NSDate?
+    var reviewDueDate: NSDate?
+    var manager: String = ""
+    var reviewer: String = ""
+    var attachmentId: Int = 0
+    var attachmentTitle: String?
+    var attachmentExtension: String?
+    var attachmentSize: Int64 = 0
+    var documentType : DocumentType?
+}
+
+
+protocol ImageProvider {
+    var imageName: String { get }
+}
+
+enum DocumentType: String, ImageProvider {
+    case Word = "doc"
+    case WordX = "docx"
+    case Excel = "xls"
+    case ExcelX = "xlsx"
+    case PDF = "pdf"
+    case Powerpoint = "ppt"
+    case PowerpointX = "pptx"
+    case ImageJpg = "jpg"
+    case ImagePng = "png"
+    
+    var imageName: String {
+        get {
+            switch self {
+            case .Word, .WordX: return "icons_word"
+            case .Excel, .ExcelX: return  "icons_excel"
+            case .Powerpoint, .PowerpointX: return "icons_powerpoint"
+            case .PDF: return  "icons_pdf"
+            case .ImageJpg, .ImagePng: return "icons_image"
+            }
+        }
+    }
+}
