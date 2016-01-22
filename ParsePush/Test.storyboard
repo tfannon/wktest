@@ -175,13 +175,6 @@
                                     <action selector="addWorkpaperPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nME-20-NiR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4I9-cc-Yfo">
-                                <rect key="frame" x="123" y="264" width="46" height="30"/>
-                                <state key="normal" title="Sync"/>
-                                <connections>
-                                    <action selector="syncPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vKr-29-ax7"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 procs, 4 wp, 2 issues" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-xO-4kp" userLabel="Objects">
                                 <rect key="frame" x="129" y="232" width="138" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -196,13 +189,6 @@
                                 <state key="normal" title="Download"/>
                                 <connections>
                                     <action selector="downloadPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Swx-D9-jfB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vic-Gf-3xU">
-                                <rect key="frame" x="113" y="302" width="76" height="30"/>
-                                <state key="normal" title="Sync2"/>
-                                <connections>
-                                    <action selector="sync2Pressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="844-cd-l01"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bv1-xr-SkI">
@@ -221,6 +207,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vic-Gf-3xU">
+                                <rect key="frame" x="110" y="285" width="76" height="30"/>
+                                <state key="normal" title="Sync2"/>
+                                <connections>
+                                    <action selector="sync2Pressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="844-cd-l01"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
