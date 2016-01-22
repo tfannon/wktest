@@ -221,7 +221,7 @@ public class Services {
     }
     
     //MARK: new sync with generated file
-    static func sync2(progress: ProgressDelegate, completed: (result: ObjectContainer?)->()) {
+    static func sync(progress: ProgressDelegate, completed: (result: ObjectContainer?)->()) {
         print(__FUNCTION__)
         //grab all dirty objects from local store
         getMyData() {
@@ -284,21 +284,6 @@ public class Services {
         return Mapper<ObjectContainer>().map(json)
     }
     
-    //MARK: Sync
-    //grab the dirty objects from the local store and send them to server
-    static func sync(completed: (result: ObjectContainer?)->()) {
-        print(__FUNCTION__)
-        getMyData() { result in
-            let objects = ObjectContainer()
-            objects.procedures = (result?.procedures.filter { $0.isDirty() == true || $0.hasNewChildren } )!
-            objects.issues = (result?.issues.filter { $0.id < 0 || $0.isDirty() == true })!
-            objects.workpapers = (result?.workpapers.filter { $0.id < 0 || $0.isDirty() == true })!
-            objects.attachments = (result?.attachments.filter { $0.id < 0 || $0.isDirty() == true })!
-            sendDataToServer(objects) {
-                completed(result:$0)
-            }
-        }
-    }
     
     private static func getRequest(url: String, data: ObjectContainer) -> NSURLRequest {
         let request = NSMutableURLRequest(URL: NSURL(string:  "\(offlineUrl)/\(url)")!)
@@ -522,9 +507,10 @@ public class Services {
             print ("\tsaving \(objects.count) \(objects[0].dynamicType)s")
             let ids = objects.map { $0.id! }
             let idListKey = DataKey.getKeyForIdList(objects)
-            NSUserDefaults.standardUserDefaults().setObject(ids, forKey: idListKey)
+            //attachment ids are stored in the app group location,  other ids are in standard
+            let defaults: NSUserDefaults = objects is [Attachment] ? NSUserDefaults.standardUserDefaults() : Services.appGroupDefaults
+            defaults.setObject(ids, forKey: idListKey)
             objects.each { saveObjectImpl($0, log: objects is [Attachment]) }
-            //objects.each { saveObject($0, log: objects is [Attachment]) }
         }
     }
 
@@ -567,12 +553,23 @@ public class Services {
                 saveObjectImpl(child)
             }
         }
-        
-        //save it in its own slot.  will overwrite anything there
-        let json = Mapper().toJSONString(obj, prettyPrint: true)
-        let key = DataKey.getKeyForObject(obj)
-        if log { print("Saving \(key) sizeof:\(json!.length) to local store") }
-        NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+
+        //attachments are stored as files so they can be handed off to DocProvider of Word
+        if let att = obj as? Attachment {
+            let data = NSData(base64EncodedString: att.attachmentData!, options: .IgnoreUnknownCharacters)
+            let baseUrl = Services.storageProviderLocation
+                    .URLByAppendingPathExtension(String(att.id!))
+                    .URLByAppendingPathExtension(att.fileExtension!)
+            FileHelper.deleteFile(baseUrl)
+            data!.writeToURL(baseUrl, atomically: true)
+        }
+        //other objects are stored as json
+        else {
+            let json = Mapper().toJSONString(obj, prettyPrint: true)
+            let key = DataKey.getKeyForObject(obj)
+            if log { print("Saving \(key) sizeof:\(json!.length) to local store") }
+            NSUserDefaults.standardUserDefaults().setValue(json, forKey: key)
+        }
         
         // if there is a parent
         if let p = parent {
@@ -700,7 +697,7 @@ public class Services {
     }
     
     private static func loadAttachmentIds() -> [Int]? {
-        return NSUserDefaults.standardUserDefaults().valueForKey(DataKey.AttachmentIds.rawValue) as? [Int]
+        return Services.appGroupDefaults.valueForKey(DataKey.AttachmentIds.rawValue) as? [Int]
     }
     
     //MARK: - One off get attachments from server is no longer used.  keeping around in case we need something similar

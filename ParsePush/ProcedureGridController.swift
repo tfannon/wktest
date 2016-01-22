@@ -174,11 +174,11 @@ class ProcedureGridController: BaseGridController, SDataGridPullToActionDelegate
  
     
     func pullToActionTriggeredAction(pullToAction: SDataGridPullToAction!) {
-        Services.sync { result in
-            self.items = result!.procedures
-            self.dataSourceHelper.data = self.items
-            self.grid.pullToAction.actionCompleted()
-        }
+//        Services.sync { result in
+//            self.items = result!.procedures
+//            self.dataSourceHelper.data = self.items
+//            self.grid.pullToAction.actionCompleted()
+//        }
     }
 //
     /*

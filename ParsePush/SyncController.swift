@@ -63,7 +63,7 @@ class SyncController : UIViewController, ProgressDelegate {
     @IBAction func syncButtonClicked(sender: AnyObject) {
         setState(1)
         setMessage("Sync started...")
-        Services.sync2(self) { result in
+        Services.sync(self) { result in
             self.setMessage(result!.description)
         }
     }

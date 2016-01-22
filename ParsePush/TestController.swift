@@ -181,13 +181,6 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     
-    @IBAction func syncPressed(sender: AnyObject) {
-        self.lblSync.text = ""
-        Services.sync { result in
-            self.lblSync.text = result!.description
-        }
-    }
-    
     //MARK: - Attachments
     @IBAction func getAttachmentPressed(sender: AnyObject) {
         Services.getAttachment { result in
@@ -227,7 +220,7 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
     }
     
     @IBAction func sync2Pressed(sender: AnyObject) {
-        Services.sync2(self) { result in
+        Services.sync(self) { result in
             self.progressBar.hidden = true
             self.setMessage(result!.description)
         }
