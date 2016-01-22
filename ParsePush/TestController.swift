@@ -62,8 +62,21 @@ class TestController: UIViewController, UITextFieldDelegate, UIDocumentInteracti
                 print("SignalR Connected with ID: \(connection.connectionID!)")
             }
         }
-   }
+   
+        let lpr = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+        self.view.addGestureRecognizer(lpr)
+        
+        let sgr = UISwipeGestureRecognizer(target: self, action: "swiped:")
+        sgr.direction = .Right
+        self.view.addGestureRecognizer(sgr)
+    }
     
+    func longPressed(sender: UILongPressGestureRecognizer) {
+        self.alert("Alert", message: "Long Press!")
+    }
+    func swiped(sender: UISwipeGestureRecognizer) {
+        self.alert("Alert", message: "Swiped!")
+    }
     
     //MARK: - Outlets
     @IBOutlet weak var txtIPAddress: UITextField!
